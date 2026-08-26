@@ -1,0 +1,304 @@
+% -----------------------------------------------------------------------------
+% Inhaltsteil zum direkten Einbinden in die Masterarbeit
+% Benoetigte Pakete:
+% booktabs, longtable, array, ragged2e, xcolor, colortbl, tcolorbox,
+% enumitem, pdflscape, hyperref, microtype
+% -----------------------------------------------------------------------------
+
+\section{Stakeholder Requirements und Implementierungsabdeckung}
+\label{sec:stakeholder_requirements_coverage}
+
+\subsection{Zweck der Requirement-Sicht}
+
+Die Systemfunktionen beschreiben, welche fachlichen Leistungen der Turing
+Generator erbringt. Die Stakeholder Requirements dokumentieren dagegen,
+\emph{welche beobachtbaren Ergebnisse und Qualitäten aus Sicht der Stakeholder
+erwartet werden}. Die nachfolgende Requirement-Tabelle stellt deshalb die
+normative Stakeholder-Sicht in den Mittelpunkt.
+
+Insgesamt umfasst die aktuelle CATIA-Baseline 39 Stakeholder Requirements. Sie
+sind über die System Requirements vollständig mit den zwölf Systemfunktionen
+verknüpft. Die detaillierten System Requirements werden in dieser Übersicht
+bewusst nicht eingeblendet. Die sichtbare Traceability lautet damit:
+
+\begin{center}
+\textbf{Stakeholder Requirement}
+$\longrightarrow$
+\textbf{System Requirement}
+$\longrightarrow$
+\textbf{System Function}
+$\longrightarrow$
+\textbf{Implementierungsevidenz}
+\end{center}
+
+\begin{tcolorbox}[
+  enhanced,
+  breakable,
+  colback=blue!3,
+  colframe=TuringBlue,
+  title={Lesart der Tabelle},
+  fonttitle=\bfseries,
+  boxrule=0.8pt,
+  arc=2mm
+]
+Die Spalte \emph{Systemfunktionen} zeigt die fachliche Modellabdeckung eines
+Stakeholder Requirements. Die Spalte \emph{Aktueller Stand} bewertet dagegen
+die reale Implementierung in der Phase-F/P-Baseline. Vollständige
+Modellabdeckung ist daher nicht gleichbedeutend mit vollständiger
+Implementierung.
+\end{tcolorbox}
+
+\subsection{Kategorien und Statusdefinitionen}
+
+Die 39 Stakeholder Requirements sind in fünf Anforderungskategorien gegliedert.
+
+\begin{table}[htbp]
+\centering
+\caption{Kategorien der Stakeholder Requirements}
+\label{tab:sr_categories}
+\begin{tabular}{p{3.3cm}p{1.7cm}p{9.4cm}}
+\toprule
+\textbf{Kategorie} & \textbf{Anzahl} & \textbf{Schwerpunkt} \\
+\midrule
+Datenqualität & 8 & Eignung, Vollständigkeit, Konsistenz, Constraints, Completion und Evidenzabdeckung der Eingangsinformationen. \\
+Funktional & 9 & Fachliche Systemleistungen von Projekt- und Quellenverwaltung bis zur SysML-v2-Zielrepräsentation. \\
+Architektur & 10 & Strukturkonformität, Modularität, Wiederverwendung, Integration, Constraints, Patterns und Schnittstellen. \\
+Absicherung & 9 & Ambiguitäten, Erklärbarkeit, Human Review, Validierung, Freigabegrenzen und Verarbeitungshistorie. \\
+Semantik & 3 & Technisches Vokabular, semantische Äquivalenz und Ontologiekonflikte. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Bedeutung der verwendeten Implementierungsstatus}
+\label{tab:sr_status_definitions}
+\begin{tabular}{p{4.1cm}p{10.3cm}}
+\toprule
+\textbf{Status} & \textbf{Bedeutung} \\
+\midrule
+\statusdone{Implementiert und verifiziert} & Das Stakeholder Requirement ist innerhalb der aktuellen Systemgrenze durch implementierte Funktionalität und Test- oder Review-Evidenz belastbar abgedeckt. \\
+\statuspartial{Teilweise implementiert} & Wesentliche Grundlagen oder Teilfähigkeiten existieren, der vollständige normative Zielumfang ist jedoch noch nicht erreicht. \\
+\statusopen{Architektur definiert} & Requirement, Systemfunktion und Architekturverantwortung sind modelliert; die zentrale Runtime-Fähigkeit ist noch nicht implementiert. \\
+\statusfuture{Optionaler Ausblick} & Das Requirement liegt ausdrücklich außerhalb des aktuellen MVP und benötigt vor einer Umsetzung eine eigene Architektur- und Validierungsentscheidung. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Referenz der Systemfunktionen}
+
+Die Requirement-Tabelle verwendet aus Platzgründen die IDs der zwölf
+Systemfunktionen. Die folgende Legende dient als Kurzreferenz.
+
+\begin{table}[htbp]
+\centering
+\caption{Systemfunktionen als Referenz für die Requirement-Tabelle}
+\label{tab:sr_function_reference}
+\begin{tabular}{p{1.7cm}p{6.0cm}p{1.7cm}p{6.0cm}}
+\toprule
+\textbf{ID} & \textbf{Kurzbeschreibung} & \textbf{ID} & \textbf{Kurzbeschreibung} \\
+\midrule
+SF\_001 & Projekt- und Quellenkontext verwalten & SF\_007 & Human Review und Freigabe unterstützen \\
+SF\_002 & Quellinformationen bewerten und vorbereiten & SF\_008 & Architekturinformation ableiten und strukturieren \\
+SF\_003 & Semantische Leitplanken anwenden & SF\_009 & Architekturinhalt validieren und integrieren \\
+SF\_004 & Coverage und Evidenz bewerten & SF\_010 & SysML-v2-Artefakte erzeugen und validieren \\
+SF\_005 & Processing Runs konfigurieren und steuern & SF\_011 & Evidenz und Traceability erhalten \\
+SF\_006 & Engineering Candidates erzeugen und vergleichen & SF\_012 & Status und Historie darstellen \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+\pagestyle{empty}
+\begin{landscape}
+\subsection{Ausführliche Stakeholder-Requirement-Tabelle}
+\label{sec:detailed_sr_table}
+
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{0pt}
+\setlength{\tabcolsep}{2.1pt}
+\renewcommand{\arraystretch}{1.12}
+\scriptsize
+
+\begin{longtable}{
+  >{\RaggedRight\arraybackslash}p{1.25cm}
+  >{\RaggedRight\arraybackslash}p{4.65cm}
+  >{\RaggedRight\arraybackslash}p{1.90cm}
+  >{\RaggedRight\arraybackslash}p{4.00cm}
+  >{\RaggedRight\arraybackslash}p{2.55cm}
+  >{\RaggedRight\arraybackslash}p{5.05cm}
+  >{\RaggedRight\arraybackslash}p{4.05cm}
+}
+\caption{Ausführliche Stakeholder-Requirement-Tabelle mit Funktions- und Implementierungsabdeckung}
+\label{tab:detailed_stakeholder_requirements}\\
+\toprule
+\textbf{ID} &
+\textbf{Stakeholder Requirement} &
+\textbf{Kategorie} &
+\textbf{Rationale und Quelle} &
+\textbf{\shortstack[l]{System-\\funktionen}} &
+\textbf{Aktueller Stand} &
+\textbf{Verbleibender Zielumfang} \\
+\midrule
+\endfirsthead
+
+\multicolumn{7}{l}{\footnotesize\itshape Fortsetzung von Tabelle~\ref{tab:detailed_stakeholder_requirements}}\\
+\toprule
+\textbf{ID} &
+\textbf{Stakeholder Requirement} &
+\textbf{Kategorie} &
+\textbf{Rationale und Quelle} &
+\textbf{\shortstack[l]{System-\\funktionen}} &
+\textbf{Aktueller Stand} &
+\textbf{Verbleibender Zielumfang} \\
+\midrule
+\endhead
+
+\midrule
+\multicolumn{7}{r}{\footnotesize Fortsetzung auf der nächsten Seite}\\
+\endfoot
+
+\bottomrule
+\endlastfoot
+
+\multicolumn{7}{l}{\cellcolor{CategoryData}\textbf{Datenqualität} -- Bewertung der Eignung, Vollständigkeit, Konsistenz und Evidenz der Eingangsinformationen.} \\
+\addlinespace[1.5pt]
+\textbf{SR\_001} & \textbf{Input Data Suitability Assessment}\par\smallskip The system shall assess whether legacy engineering data is suitable for automated processing. & Datenqualität & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_01\_001; UN\_01\_002; UN\_04\_001} & SF\_002, SF\_005 & \statusdone{Implementiert und verifiziert}\par\smallskip Phase F bewertet die Verarbeitbarkeit registrierter Quellen; P9 bindet die Prüfung an Projekt, Source Projection und Processing Run. & Eignungskriterien für zusätzliche Quelltypen und spätere modellbildende Stufen weiter operationalisieren. \\
+\addlinespace[2pt]
+\textbf{SR\_002} & \textbf{Input Data Completeness Check}\par\smallskip The system shall identify incomplete input data before it is used for downstream engineering processing. & Datenqualität & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_01\_004; UN\_04\_003} & SF\_002, SF\_005 & \statusdone{Implementiert und verifiziert}\par\smallskip Gaps und fehlende Informationen werden vor der nachgelagerten Nutzung im Ingestion Review Report ausgewiesen. & Vollständigkeitskriterien für spätere Architektur- und Generierungsstufen ergänzen. \\
+\addlinespace[2pt]
+\textbf{SR\_003} & \textbf{Input Data Consistency Check}\par\smallskip The system shall identify inconsistent input data before it is used for downstream engineering processing. & Datenqualität & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_01\_030; UN\_04\_003} & SF\_002, SF\_005 & \statuspartial{Teilweise implementiert}\par\smallskip Inkonsistenzen erscheinen als Risks, Ambiguities und Review Findings; eine vollständige quellenübergreifende Konsistenzprüfung ist noch nicht geschlossen. & Deterministische Konsistenzregeln über mehrere Quellen und spätere Modellartefakte implementieren. \\
+\addlinespace[2pt]
+\textbf{SR\_004} & \textbf{Source Reliability Classification}\par\smallskip The system shall classify source information according to defined reliability criteria. & Datenqualität & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_01\_003; UN\_04\_002} & SF\_002, SF\_005 & \statuspartial{Teilweise implementiert}\par\smallskip Quellenmetadaten, Rollen und Review-Evidence existieren; eine eigenständige, vollständig operationalisierte Reliability-Klassifikation ist nur teilweise abgebildet. & Reliability-Kriterien, Skala und nachvollziehbare Klassifikationsentscheidung vervollständigen. \\
+\addlinespace[2pt]
+\textbf{SR\_005} & \textbf{Source Relevance Classification}\par\smallskip The system shall classify source information according to its relevance to the selected engineering task. & Datenqualität & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_01\_001; UN\_04\_012} & SF\_001, SF\_002, SF\_005 & \statuspartial{Teilweise implementiert}\par\smallskip Engineering-source/context-only-Rollen, Framework-Zuordnung und taskbezogene Kontextselektion bilden wesentliche Relevanzmechanismen. & Explizite Relevanzklassifikation für jede ausgewählte Engineering Task konsolidieren. \\
+\addlinespace[2pt]
+\textbf{SR\_023} & \textbf{Input Constraint Violation Detection}\par\smallskip The system shall identify violations of defined input constraints in legacy engineering data. & Datenqualität & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_01\_005} & SF\_002 & \statuspartial{Teilweise implementiert}\par\smallskip Phase F erkennt Risks und Verletzungen; einzelne technische Verträge und Manifestregeln werden fail-closed validiert. & Einheitlichen Input-Constraint-Katalog für Engineering-Inhalte definieren. \\
+\addlinespace[2pt]
+\textbf{SR\_026} & \textbf{Legacy Data Completion}\par\smallskip The system shall support controlled completion of incomplete legacy engineering data before downstream engineering processing. & Datenqualität & \textbf{Rationale:} Incomplete legacy information may require reviewed domain knowledge before it can be used for subsequent engineering processing.\par\smallskip \textbf{Source:} \texttt{UN\_01\_004; UN\_02\_003; UN\_02\_006} & SF\_002, SF\_011 & \statuspartial{Teilweise implementiert}\par\smallskip Review Decisions, Terminology Decisions und persistente Evidenz bilden Grundlagen für kontrollierte Ergänzungen. & Expliziten Completion Workflow mit Domain Knowledge, Review und Approved Input implementieren. \\
+\addlinespace[2pt]
+\textbf{SR\_033} & \textbf{Engineering Information Coverage}\par\smallskip The system shall indicate which defined model areas are supported by available engineering information. & Datenqualität & \textbf{Rationale:} Indicated information coverage shall not be interpreted as approved model-generation readiness.\par\smallskip \textbf{Source:} \texttt{UN\_01\_027} & SF\_004, SF\_011 & \statusdone{Implementiert und verifiziert}\par\smallskip Preliminary Coverage unterscheidet covered, uncovered und attention-required Framework Nodes und stellt die Evidenz dar. & Approved Generation Readiness getrennt ergänzen und evaluieren. \\
+\addlinespace[2pt]
+\multicolumn{7}{l}{\cellcolor{CategoryFunctional}\textbf{Funktional} -- Fachliche Leistungen des Systems von Projektverwaltung bis Architecture as Code.} \\
+\addlinespace[1.5pt]
+\textbf{SR\_006} & \textbf{Architecture Information Derivation}\par\smallskip The system shall derive system-architecture content from heterogeneous legacy engineering information. & Funktional & \textbf{Rationale:} Separates the derivation of system-architecture content from its textual representation and the required target notation.\par\smallskip \textbf{Source:} \texttt{UN\_01\_006} & SF\_008 & \statusopen{Architektur definiert}\par\smallskip RFLP-Zielstruktur, Mapping Targets und Logical Architecture sind definiert; die eigentliche Architekturableitung ist noch nicht implementiert. & Architecture Candidate Layer und automatisierte Derivation umsetzen. \\
+\addlinespace[2pt]
+\textbf{SR\_019} & \textbf{Source Traceability}\par\smallskip The system shall maintain traceability between each generated engineering result and its originating source information. & Funktional & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_01\_019; UN\_01\_020; UN\_04\_006} & SF\_001, SF\_002, SF\_010, SF\_011 & \statusdone{Implementiert und verifiziert}\par\smallskip Source IDs, Locators, Hashes, Information Units, Processing Runs und Artifact References erhalten die Herkunft durchgängig. & Traceability bis zu finalen SysML-v2-Elementen und CATIA-Objekten verlängern. \\
+\addlinespace[2pt]
+\textbf{SR\_027} & \textbf{Architecture as Code Provision}\par\smallskip The system shall provide system architecture as machine-processable textual artifacts. & Funktional & \textbf{Rationale:} Enables system architecture to be stored, processed, compared and transferred as textual engineering information.\par\smallskip \textbf{Source:} \texttt{UN\_01\_022} & SF\_010 & \statusopen{Architektur definiert}\par\smallskip Architecture-as-Code ist als Zielrepräsentation und versionierte Artefaktstruktur definiert. & Maschinenverarbeitbare Architekturartefakte zur Laufzeit erzeugen. \\
+\addlinespace[2pt]
+\textbf{SR\_028} & \textbf{SysML v2 Target Representation}\par\smallskip The system shall represent architecture artifacts in SysML v2 textual notation. & Funktional & \textbf{Rationale:} SysML v2 is the target architecture representation defined by the scope of the Master's thesis.\par\smallskip \textbf{Source:} \texttt{UN\_01\_023; Master's thesis proposal} & SF\_010 & \statusopen{Architektur definiert}\par\smallskip SysML v2 Target Notation und CATIA/SYSIDE-Zielumgebung sind festgelegt. & Automatische SysML-v2-Erzeugung und Zielumgebungsvalidierung implementieren. \\
+\addlinespace[2pt]
+\textbf{SR\_029} & \textbf{Multiple Project Support}\par\smallskip The system shall maintain multiple distinct engineering projects. & Funktional & \textbf{Rationale:} Multiple projects may coexist within the system. This requirement does not require parallel processing execution.\par\smallskip \textbf{Source:} \texttt{UN\_01\_024} & SF\_001 & \statusdone{Implementiert und verifiziert}\par\smallskip Mehrere persistente Projekt-Workspaces können angelegt, ausgewählt, geladen und deterministisch wieder geöffnet werden. & Projektbearbeitung und kontrolliertes Löschen ergänzen. \\
+\addlinespace[2pt]
+\textbf{SR\_031} & \textbf{Processing State Transparency}\par\smallskip The system shall indicate the current processing state of each registered engineering source. & Funktional & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_01\_025} & SF\_005, SF\_011, SF\_012 & \statusdone{Implementiert und verifiziert}\par\smallskip Run- und Source-Aggregation, Event Chains und Dashboard zeigen den aktuellen Verarbeitungszustand. & Spätere Architektur- und Generierungszustände integrieren. \\
+\addlinespace[2pt]
+\textbf{SR\_032} & \textbf{Review Need Transparency}\par\smallskip The system shall identify processing results awaiting human review. & Funktional & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_01\_026} & SF\_011, SF\_012 & \statusdone{Implementiert und verifiziert}\par\smallskip review\_requested-Events, awaiting\_review und Attention/Review-Ansichten kennzeichnen offenen Review-Bedarf. & Mehrstufige Review-Bedarfe für Approved Input und Model Candidates ergänzen. \\
+\addlinespace[2pt]
+\textbf{SR\_037} & \textbf{Non-Textual Engineering Information}\par\smallskip The system shall extract engineering information from supported non-textual source artifacts. & Funktional & \textbf{Rationale:} Optional future capability outside the current MVP. Technical drawings are an example of a potential source type. The extraction and validation workflow is not yet defined.\par\smallskip \textbf{Source:} \texttt{UN\_04\_010; post-MVP outlook} & SF\_002, SF\_011 & \statusfuture{Optionaler Ausblick}\par\smallskip Die aktuelle MVP-Grenze unterstützt nur native Textquellen und deterministische Textprojektionen; PDF ist auf extrahierbare Textschichten begrenzt. & Separate Architektur für OCR, Bildverständnis und technische Zeichnungen definieren und validieren. \\
+\addlinespace[2pt]
+\textbf{SR\_038} & \textbf{Multiple Source Support}\par\smallskip The system shall maintain multiple distinct engineering source artifacts within each engineering project. & Funktional & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_01\_029} & SF\_001, SF\_002, SF\_005 & \statusdone{Implementiert und verifiziert}\par\smallskip Jedes Projekt kann mehrere getrennte Source Manifests und Source Artifacts verwalten. & Gemeinsame Multi-source-Runs und quellenübergreifende Verarbeitung ergänzen. \\
+\addlinespace[2pt]
+\multicolumn{7}{l}{\cellcolor{CategoryArchitecture}\textbf{Architektur} -- Strukturelle Eigenschaften, Modularität, Integrationsfähigkeit und Konformität der Zielarchitektur.} \\
+\addlinespace[1.5pt]
+\textbf{SR\_007} & \textbf{Structural Pattern Conformance}\par\smallskip The system shall generate model content according to the defined target-model structure. & Architektur & \textbf{Rationale:} This requirement addresses conformance to the mandatory target-model structure rather than the application of reusable architectural patterns.\par\smallskip \textbf{Source:} \texttt{UN\_01\_007} & SF\_008, SF\_009, SF\_010 & \statusopen{Architektur definiert}\par\smallskip Versionierte Framework- und Target-Structure-Artefakte definieren die Zielstruktur; es wird noch kein Modellinhalt generiert. & Konformitätsprüfung bei der späteren Architekturgenerierung implementieren. \\
+\addlinespace[2pt]
+\textbf{SR\_008} & \textbf{Model Reusability}\par\smallskip The system shall generate model elements that are reusable across modeling contexts. & Architektur & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_01\_008} & SF\_008 & \statusopen{Architektur definiert}\par\smallskip Wiederverwendbarkeit ist in Anforderungen und Zielarchitektur verankert, aber noch nicht an generierten Model Units nachgewiesen. & Wiederverwendbare Model Units erzeugen und in mehreren Modellierungskontexten evaluieren. \\
+\addlinespace[2pt]
+\textbf{SR\_009} & \textbf{Modular Model Growth}\par\smallskip The system shall preserve modular model structures during iterative model growth. & Architektur & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_01\_010; UN\_03\_001} & SF\_008 & \statusopen{Architektur definiert}\par\smallskip Modulare Zielstruktur und immutable Artefaktprinzipien sind definiert; iteratives Modellwachstum wird noch nicht ausgeführt. & Versioniertes Wachstum erzeugter Modelle und Regressionstests umsetzen. \\
+\addlinespace[2pt]
+\textbf{SR\_010} & \textbf{Non Destructive Submodel Integration}\par\smallskip The system shall enable generated submodels to be integrated without restructuring existing model elements. & Architektur & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_01\_009; UN\_03\_002} & SF\_008, SF\_009 & \statusopen{Architektur definiert}\par\smallskip Non-destructive Integration ist als Zielanforderung und Validierungsfunktion modelliert. & Integration erzeugter Submodelle in bestehende Kontexte implementieren und evaluieren. \\
+\addlinespace[2pt]
+\textbf{SR\_020} & \textbf{Integrated Model Consistency}\par\smallskip The system shall identify architectural inconsistencies between integrated model elements. & Architektur & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_01\_021; UN\_03\_004} & SF\_009 & \statusopen{Architektur definiert}\par\smallskip Die Validierungsfunktion für integrierte Architektur ist im Systemmodell definiert. & Modellübergreifende Konsistenzregeln und Integrationsprüfung implementieren. \\
+\addlinespace[2pt]
+\textbf{SR\_021} & \textbf{Larger Context Compatibility}\par\smallskip The system shall ensure synthesized model structures remain compatible with larger system contexts. & Architektur & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_03\_005} & SF\_009 & \statusopen{Architektur definiert}\par\smallskip Larger-context compatibility ist als explizite Zielanforderung enthalten. & Kontextschnittstelle, Compatibility Checks und Evaluationsszenarien implementieren. \\
+\addlinespace[2pt]
+\textbf{SR\_022} & \textbf{Architectural Constraint Conformance}\par\smallskip The system shall reflect defined architectural constraints in generated model content. & Architektur & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_03\_006} & SF\_008, SF\_009 & \statusopen{Architektur definiert}\par\smallskip System Design Constraints und Architekturvalidierungsfunktion sind modelliert. & Constraints maschinenlesbar auf generierten Architekturinhalt anwenden. \\
+\addlinespace[2pt]
+\textbf{SR\_024} & \textbf{Interface Definition Consistency}\par\smallskip The system shall maintain consistent interface definitions across generated model structures. & Architektur & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_03\_003} & SF\_008, SF\_009 & \statusopen{Architektur definiert}\par\smallskip Interface Consistency ist normativ verankert und der Logical Architecture zugeordnet. & Schnittstellen ableiten, vergleichen und konfliktfrei integrieren. \\
+\addlinespace[2pt]
+\textbf{SR\_025} & \textbf{Reusable Architectural Pattern Application}\par\smallskip The system shall apply selected reusable architectural patterns to generated model content. & Architektur & \textbf{Rationale:} This requirement addresses reusable architectural patterns and is distinct from mandatory target-model structure conformance.\par\smallskip \textbf{Source:} \texttt{UN\_03\_007} & SF\_008, SF\_009 & \statusopen{Architektur definiert}\par\smallskip Framework Templates und Mapping Targets schaffen die Grundlage für wiederverwendbare Muster. & Ausgewählte Patterns auf Model Candidates anwenden und ihre Konformität validieren. \\
+\addlinespace[2pt]
+\textbf{SR\_030} & \textbf{Project Information Isolation}\par\smallskip The system shall prevent engineering information assigned to one project from being used within another project. & Architektur & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_04\_007} & SF\_001, SF\_005, SF\_011 & \statusdone{Implementiert und verifiziert}\par\smallskip Projektlokale IDs, Pfade, Repositories und Cross-project-Rejection verhindern Informationsvermischung. & Isolationsnachweis auf spätere Approved-Input- und Modellartefakte erweitern. \\
+\addlinespace[2pt]
+\multicolumn{7}{l}{\cellcolor{CategoryAssurance}\textbf{Absicherung} -- Erklärbarkeit, Review, Validierung, Freigabegrenzen und nachvollziehbare Entscheidungen.} \\
+\addlinespace[1.5pt]
+\textbf{SR\_011} & \textbf{Ambiguity Detection}\par\smallskip The system shall identify ambiguities during automated processing of legacy engineering information. & Absicherung & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_01\_011; UN\_02\_001} & SF\_003, SF\_006 & \statusdone{Implementiert und verifiziert}\par\smallskip Phase F identifiziert Ambiguities; Multi-Agenten-Konsens erhält Disagreement und Varianz als Review-Evidence. & Erkennung auf spätere Architektur- und Modellkandidaten ausweiten. \\
+\addlinespace[2pt]
+\textbf{SR\_012} & \textbf{Expert Review of Generated Interpretations}\par\smallskip The system shall provide generated interpretations for expert review before their subsequent engineering use. & Absicherung & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_01\_012; UN\_02\_002} & SF\_005, SF\_007, SF\_012 & \statuspartial{Teilweise implementiert}\par\smallskip Review Reports, review\_requested-Events und Dashboard-Navigation stellen Interpretationen zur Prüfung bereit. & Durchgängigen Review bis Approved Input und später zur Modellfreigabe schließen. \\
+\addlinespace[2pt]
+\textbf{SR\_013} & \textbf{Human Intervention for Conflicts}\par\smallskip The system shall allow users to intervene when conflicting interpretations of source data occur. & Absicherung & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_01\_013; UN\_02\_003} & SF\_006, SF\_007 & \statuspartial{Teilweise implementiert}\par\smallskip Human Review Decisions können Ergebnisse auswählen, ablehnen oder dispositionieren und sind fingerprintgebunden. & Bedienbaren Konfliktlösungs- und Änderungsworkflow über alle Prozessstufen ergänzen. \\
+\addlinespace[2pt]
+\textbf{SR\_014} & \textbf{Explanation of Generated Engineering Results}\par\smallskip The system shall provide the rationale for generated engineering results. & Absicherung & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_01\_014} & SF\_002, SF\_003, SF\_004, SF\_006, SF\_010, SF\_012 & \statuspartial{Teilweise implementiert}\par\smallskip Agent Outputs, Konsensberichte, Review Reports und Evidenzreferenzen liefern Begründungen für aktuelle Verarbeitungsergebnisse. & Erklärbarkeit auf Architekturentscheidungen und erzeugte SysML-v2-Elemente ausweiten. \\
+\addlinespace[2pt]
+\textbf{SR\_015} & \textbf{Model Content Validation}\par\smallskip The system shall support validation of generated model content before it becomes part of the target architecture. & Absicherung & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_01\_015; UN\_02\_004; UN\_02\_005} & SF\_009, SF\_010 & \statusopen{Architektur definiert}\par\smallskip Validierungsverantwortung und Zielumgebung sind definiert; generierter Modellinhalt existiert noch nicht. & Strukturelle, semantische und syntaktische Modellvalidierung implementieren. \\
+\addlinespace[2pt]
+\textbf{SR\_034} & \textbf{Insufficient Evidence Identification}\par\smallskip The system shall identify generated engineering results that are insufficiently supported by available source information. & Absicherung & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_01\_028} & SF\_002, SF\_004, SF\_007 & \statusdone{Implementiert und verifiziert}\par\smallskip Gaps, Coverage Findings und Attention Conditions kennzeichnen unzureichend gestützte Ergebnisse. & Evidenzschwellen für spätere Modellkandidaten operationalisieren. \\
+\addlinespace[2pt]
+\textbf{SR\_035} & \textbf{Human Review Decision Association}\par\smallskip The system shall associate each human review decision with the reviewed result. & Absicherung & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_04\_008} & SF\_007, SF\_011 & \statusdone{Implementiert und verifiziert}\par\smallskip Human Review Decisions sind an Zielinhalt und Validation Fingerprint gebunden und persistent gespeichert. & Association auf modellbezogene Review Decisions erweitern. \\
+\addlinespace[2pt]
+\textbf{SR\_036} & \textbf{Approved Information Boundary}\par\smallskip The system shall prevent unapproved intermediate results from being treated as approved engineering information. & Absicherung & \textbf{Rationale:} Processing evidence and preliminary results shall remain distinct from approved engineering knowledge.\par\smallskip \textbf{Source:} \texttt{UN\_04\_009} & SF\_004, SF\_007, SF\_008, SF\_010 & \statusdone{Implementiert und verifiziert}\par\smallskip P4/P9 trennen Kandidaten und Processing Evidence strikt von Approved Engineering Knowledge; P9 endet bei awaiting\_review. & Approved Input Promotion als explizit autorisierten Übergang implementieren. \\
+\addlinespace[2pt]
+\textbf{SR\_039} & \textbf{Processing History Traceability}\par\smallskip The system shall retain a traceable processing history for each registered engineering source. & Absicherung & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_04\_011} & SF\_001, SF\_005, SF\_007, SF\_011, SF\_012 & \statusdone{Implementiert und verifiziert}\par\smallskip Immutable Events, Decisions, Artifacts und Aggregationen erhalten eine rekonstruierbare Historie je Source und Run. & Historie bis Approved Input, Model Candidates und CATIA-Synchronisation fortführen. \\
+\addlinespace[2pt]
+\multicolumn{7}{l}{\cellcolor{CategorySemantic}\textbf{Semantik} -- Konsistente Bedeutung technischer Informationen durch Vokabulare und Ontologien.} \\
+\addlinespace[1.5pt]
+\textbf{SR\_016} & \textbf{Technical Vocabulary Alignment}\par\smallskip The system shall align extracted information with a standardized technical vocabulary. & Semantik & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_01\_016; UN\_04\_005} & SF\_003 & \statusdone{Implementiert und verifiziert}\par\smallskip Turing Core Vocabulary, Ontology Registry, Glossary Candidates und Terminology Mappings unterstützen die technische Vokabularausrichtung. & Domänenspezifische Erweiterungen und Evaluationsmetriken ergänzen. \\
+\addlinespace[2pt]
+\textbf{SR\_017} & \textbf{Semantic Equivalence Handling}\par\smallskip The system shall interpret semantically equivalent information consistently across heterogeneous source data. & Semantik & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_01\_017; UN\_02\_007} & SF\_003, SF\_011 & \statusdone{Implementiert und verifiziert}\par\smallskip Terminology Mapping, Referenzkonzepte und Human Decisions ermöglichen konsistente Behandlung semantischer Äquivalenz. & Konsistenz über spätere Architektur- und Modellartefakte nachweisen. \\
+\addlinespace[2pt]
+\textbf{SR\_018} & \textbf{Ontology Conflict Detection}\par\smallskip The system shall identify ontology conflicts before the affected information is used for downstream engineering processing. & Semantik & \textbf{Rationale:} Im Stakeholder Requirement nicht separat dokumentiert.\par\smallskip \textbf{Source:} \texttt{UN\_01\_018; UN\_04\_004} & SF\_003 & \statuspartial{Teilweise implementiert}\par\smallskip Ontologien sind versioniert, referenzvalidiert und integrity-checked; Konflikte können als semantische Findings sichtbar werden. & Explizite Ontology-Conflict-Klassifikation und downstream blocking vervollständigen. \\
+\addlinespace[2pt]
+
+\end{longtable}
+\normalsize
+\end{landscape}
+\pagestyle{fancy}
+
+\subsection{Zusammenfassung der Requirement-Abdeckung}
+
+Alle 39 Stakeholder Requirements sind im aktuellen Systemmodell mindestens
+einer Systemfunktion zugeordnet. Die Implementierungsbewertung ergibt für die
+Phase-F/P-Baseline folgenden Stand:
+
+\begin{table}[htbp]
+\centering
+\caption{Zusammenfassung des Implementierungsstands auf Stakeholder-Requirement-Ebene}
+\label{tab:sr_status_summary}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Status} & \textbf{Anzahl} & \textbf{Anteil} \\
+\midrule
+Implementiert und verifiziert & 16 & 41.0\,\% \\
+Teilweise implementiert & 9 & 23.1\,\% \\
+Architektur definiert & 13 & 33.3\,\% \\
+Optionaler Ausblick & 1 & 2.6\,\% \\
+\midrule
+\textbf{Gesamt} & \textbf{39} & \textbf{100\,\%} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Der aktuelle Implementierungsschwerpunkt liegt auf der kontrollierten
+Verarbeitung textueller Bestandsinformationen: Projekt- und Quellenverwaltung,
+Ingestion, Ambiguitätserkennung, semantische Zuordnung, Coverage, Human-Review-
+Evidenz, Traceability und Statusdarstellung sind weit fortgeschritten oder
+bereits verifiziert. Der größte offene Block betrifft die modellbildenden
+Requirements: Architekturableitung, Modellintegration, strukturelle und
+semantische Validierung sowie die automatische SysML-v2-Erzeugung.
+
+\begin{tcolorbox}[
+  enhanced,
+  breakable,
+  colback=gray!4,
+  colframe=TuringSlate,
+  title={Hinweis für die finale Fassung der Masterarbeit},
+  fonttitle=\bfseries,
+  arc=2mm
+]
+Nach Abschluss des Systems sollte die Spalte \emph{Aktueller Stand} erneut
+gegen die finale Implementierung, Testevidenz und Evaluation geprüft werden.
+Insbesondere die Requirements SR\_006 bis SR\_010, SR\_015, SR\_020 bis
+SR\_025 sowie SR\_027 und SR\_028 werden sich durch die späteren
+Architektur- und SysML-v2-Funktionen voraussichtlich wesentlich verändern.
+\end{tcolorbox}

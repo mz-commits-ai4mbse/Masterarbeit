@@ -1,0 +1,45 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{geometry}
+\usepackage{helvet}
+\usepackage{parskip}
+\usepackage{csquotes} % Für saubere Anführungszeichen
+
+% Seitenränder anpassen
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+
+% Schriftartwechsel auf Sans-Serif
+\renewcommand{\familydefault}{\sfdefault}
+
+\begin{document}
+
+\section*{One-Pager / Kurzzusammenfassung}
+\textbf{Arbeitstitel:} Konzeption einer Informationsverarbeitungsarchitektur für \enquote{Architecture as Code}: Bewertungs- und Synthesestrategien zur sicheren Überführung von Bestandsdaten in SysML v2
+
+\textbf{Bearbeiter:} Moritz Diez \quad | \quad \textbf{Datum:} \today
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\textbf{Problemstellung:} \\
+Im industriellen Umfeld liegen Informationen zu Bestandsystemen häufig unstrukturiert und heterogen vor (\enquote{Schuhschachtel-Dilemma}). Der Einsatz generativer KI bietet zwar neue Möglichkeiten zur Automatisierung, birgt jedoch ohne klare Architektur erhebliche Risiken: Wenn KI-Agenten autonom über die Relevanz und Interpretation unstrukturierter Daten entscheiden, drohen Halluzinationen und \enquote{Garbage In, Garbage Out}-Effekte. Es fehlt eine Referenzarchitektur, die definiert, welche Qualitätsanforderungen (Constraints) Eingangsdaten erfüllen müssen und wie der Ingenieur effektiv als Kontrollorgan eingebunden wird, um die technische Korrektheit des Zielmodells sicherzustellen.
+
+\vspace{0.5cm}
+
+\textbf{Lösungsansatz:} \\
+Die Arbeit konzipiert eine Informationsverarbeitungsarchitektur, die SysML v2 als Enabler nutzt, aber den Fokus auf die Prozess-Sicherheit legt. Anstelle einer reinen \enquote{Knopfdruck-Automatisierung} wird ein assistierter Prozess (\enquote{Human-in-the-Loop}) entwickelt:
+\begin{enumerate}
+    \item \textbf{Data Assessment Framework:} Eingangsdaten werden vor der Verarbeitung gegen definierte Constraints geprüft (z. B. Maschinenlesbarkeit). Daten, die für eine automatisierte Verarbeitung zu mehrdeutig sind, werden frühzeitig erkannt.
+    \item \textbf{Smart Agent \& Gatekeeping:} Ein KI-Agent antizipiert fehlende Zusammenhänge (\enquote{Pending Interfaces}), fordert jedoch bei Ontologie-Konflikten explizit eine menschliche Entscheidung an (\enquote{Effective Intervention}).
+    \item \textbf{Ontology-Guided Synthesis:} Die Codegenerierung erfolgt innerhalb starrer ontologischer Leitplanken, um validen und modularen SysML v2 Code zu gewährleisten.
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\textbf{Geplante Validierung:} \\
+Die Tragfähigkeit der Architektur wird anhand eines \enquote{Vertical Slice} (einem durchgängigen Pfad von der Rohdaten-Bewertung bis zum Code) validiert. Die Evaluation erfolgt nicht gegen eine Musterlösung, sondern anhand von Architektur-Metriken in Anlehnung an ISO 42030 (z. B. Gatekeeping-Effizienz, Ontologie-Treue). Damit wird aufgezeigt, dass erfolgreiches \enquote{Architecture as Code} primär durch intelligentes Architektur-Design und Daten-Assessment gelingt, nicht allein durch KI-Leistung.
+
+\end{document}

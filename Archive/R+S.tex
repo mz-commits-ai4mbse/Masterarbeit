@@ -1,0 +1,359 @@
+\documentclass[a4paper,11pt]{article}
+
+% --- Pakete ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref} 
+\usepackage{parskip}
+\usepackage[autostyle=true,german=quotes]{csquotes} 
+\usepackage{tabularx} % Für bessere Tabellenbreiten
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows.meta, positioning, fit, backgrounds, shadows}
+% --- Einstellungen ---
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+
+% Farben definieren
+\definecolor{primaryColor}{RGB}{0, 51, 102}    % Dunkelblau (R+S Corporate)
+\definecolor{accentColor}{RGB}{204, 0, 0}      % Rot (Highlights)
+\definecolor{visionColor}{RGB}{0, 128, 128}    % Teal (Wildcards)
+\definecolor{strategyColor}{RGB}{80, 0, 80}    % Dunkles Lila (Strategie/Hybrid)
+\definecolor{boxBack}{RGB}{245, 245, 250}      % Sehr helles Grau/Blau
+
+% Überschriften anpassen
+\titleformat{\section}
+{\color{primaryColor}\normalfont\Large\bfseries}
+{\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\color{primaryColor}\normalfont\large\bfseries}
+{\thesubsection}{1em}{}
+
+% Box-Stile definieren
+\newtcolorbox{scenariobox}[1]{
+  colback=boxBack, colframe=primaryColor, coltitle=white,
+  title=\textbf{#1}, fonttitle=\large, boxrule=0.5mm, arc=2mm
+}
+
+\newtcolorbox{wildcardbox}[1]{
+  colback=white, colframe=visionColor, coltitle=white,
+  title=\textbf{#1}, fonttitle=\large, boxrule=0.5mm, arc=2mm,
+  colbacktitle=visionColor
+}
+
+\newtcolorbox{strategybox}[1]{
+  colback=white, colframe=strategyColor, coltitle=white,
+  title=\textbf{#1}, fonttitle=\large, boxrule=0.5mm, arc=2mm,
+  colbacktitle=strategyColor
+}
+
+% --- Dokument ---
+\begin{document}
+
+% --- Titelbereich ---
+\begin{center}
+    {\Huge \textbf{Themenfindung: Masterarbeit}}\\[0.5em]
+    {\Large \textit{Schwerpunkt: Systems Engineering, AI \& \enquote{Everything is Code}}}\\[1em]
+    \textbf{Datum:} \today \quad | \quad \textbf{Partner:} Rücker + Schindele
+\end{center}
+
+\hrulefill
+
+\section{Ausgangslage \& Projektkontext}
+
+\textbf{Technologischer Hintergrund (Status Quo):}
+\begin{itemize}[itemsep=0pt]
+    \item Bestehendes Projekt \textit{AI4MBSE}: Integration von KI-Tools in SE-Umgebungen.
+    \item Nachgewiesene Kompetenzen: KI-gestützte Reviews, API-Entwicklung (Catia Magic), Identifikation von Modell-Inkonsistenzen (\enquote{Muda}).
+\end{itemize}
+
+\textbf{Strategische Ausrichtung des Industriepartners (R+S):}
+\begin{itemize}[itemsep=0pt]
+    \item \textbf{Leitbild:} \enquote{Everything is Code} – Transformation von grafischer Modellierung hin zu textbasierten, software-nahen Arbeitsweisen (SysML v2, DSLs).
+    \item \textbf{Zielsetzung:} Entwicklung eines kommerziell verwertbaren Produkts oder Dienstleistungsmodells (analog zu Assessments/Reifegradanalysen).
+\end{itemize}
+
+\section{Verständnisdefinition: \enquote{Everything is Code}}
+
+Der Begriff beschreibt den Paradigmenwechsel von proprietären, datenbankbasierten Modellen hin zu einer Repräsentation als menschen- und maschinenlesbarer Code.
+\begin{itemize}
+    \item \textbf{Operativer Vorteil:} Anwendung etablierter Software-Engineering-Methoden auf den Systementwurf (Git-Workflow, CI/CD-Pipelines, Diff/Merge).
+    \item \textbf{KI-Potential:} Da Large Language Models (LLMs) primär auf Code und Text trainiert sind, ermöglicht dieser Ansatz eine wesentlich tiefere KI-Integration als rein grafische Modelle.
+\end{itemize}
+
+\begin{tcolorbox}[colback=white, colframe=accentColor, title=Das zentrale Wertversprechen]
+\enquote{Die Behandlung von Systemmodellen als Code ermöglicht die Adaption von Qualitätswerkzeugen aus der Softwareentwicklung. Die Masterarbeit zielt auf die Entwicklung eines \textbf{automatisierten Code-Reviewers}, der die technische Qualität der Systemarchitektur (Syntax, Logik, Traceability) prüft und optimiert.}
+\end{tcolorbox}
+
+\section{Themenvorschläge (Kern-Szenarien)}
+
+\begin{scenariobox}{Szenario A: Der \enquote{Quality-Bot} (Produkt-Fokus)}
+    \textbf{Arbeitstitel:} Konzeption und Implementierung eines KI-basierten \enquote{Linting}-Assistenten für Code-basiertes Systems Engineering.
+    
+    \textbf{Konzept:} Entwicklung eines Analysetools (Linter), das textbasierte Systemmodelle scannt. Es identifiziert automatisch logische Brüche, fehlende Traces (\enquote{Muda}) und Verstöße gegen Modellierungsrichtlinien.
+    
+    \textbf{Mehrwert:} Skalierbares Softwareprodukt (\enquote{Modell-Audit auf Knopfdruck}).
+\end{scenariobox}
+
+\vspace{0.3cm}
+
+\begin{scenariobox}{Szenario B: Der \enquote{Transformations-Enabler} (Beratungs-Fokus)}
+    \textbf{Arbeitstitel:} Entwicklung eines Reifegradmodells und Migrationspfads für \enquote{AI-assisted MBSE}.
+    
+    \textbf{Konzept:} Erstellung eines Assessments zur Evaluierung der technischen und organisatorischen Reife (\enquote{Readiness Check}) für den Einsatz von KI und Code-basierten Arbeitsweisen.
+    
+    \textbf{Mehrwert:} Akquise-Instrument für Transformationsprojekte.
+\end{scenariobox}
+
+\vspace{0.3cm}
+
+\begin{scenariobox}{Szenario C: Die Brücke (Hybrid-Fokus)}
+    \textbf{Arbeitstitel:} Automatisierte Überführung von Legacy-Anforderungen in formale Systemmodelle mittels Generativer KI.
+    
+    \textbf{Konzept:} Einsatz von KI zur semantischen Analyse unstrukturierter Lastenhefte und deren Überführung in validen System-Code (SysML v2).
+    
+    \textbf{Mehrwert:} Beschleunigung von Migrationsprojekten bei Bestandskunden.
+\end{scenariobox}
+
+\newpage
+
+\section{Visionärer Ausblick (Wildcards)}
+\textit{Langfristige Innovationspfade und disruptive Konzepte:}
+
+\begin{wildcardbox}{1. \enquote{Reverse Engineering 2.0} -- Vom Bild zum Code}
+    \textbf{Vision:} Einsatz multimodaler KI zur Erkennung technischer Zeichnungen (P\&IDs, Schaltpläne) und direkten Generierung von validem System-Code.
+    \textbf{Business Case:} Automatisierter Digitalisierungsservice für Altdatenbestände.
+\end{wildcardbox}
+
+\vspace{0.3cm}
+
+\begin{wildcardbox}{2. Der \enquote{Self-Healing} Systemarchitekt}
+    \textbf{Vision:} Ein autonomer Agent überwacht Fehlerberichte aus dem operativen Betrieb, korreliert diese mit der Systemarchitektur und erstellt automatisiert Änderungsvorschläge (Pull Requests) zur Modellkorrektur.
+    \textbf{Business Case:} \enquote{Maintenance-as-a-Service} für die Systemdokumentation.
+\end{wildcardbox}
+
+\vspace{0.3cm}
+
+\begin{wildcardbox}{3. \enquote{Compliance-as-Code} -- Der KI-Auditor}
+    \textbf{Vision:} Echtzeit-Validierung bei jedem Speichervorgang (Commit). Die KI prüft sofort gegen formalisierte Normen (z.B. \enquote{Verletzung von ISO-15288 Kapitel X}).
+    \textbf{Business Case:} Verkauf von \enquote{Zertifizierungssicherheit} und Compliance-Monitoring.
+\end{wildcardbox}
+
+\newpage
+
+% --- ANHANG ---
+\appendix
+
+% --- Anhang A: Hybrid ---
+\section{Strategische Synergie: Das Hybrid-Konzept}
+\textit{Interne Strategie zur Harmonisierung der Anforderungen von R+S (Innovationspartner) und dem aktuellen Arbeitgeber (Bestandsarbeitgeber).}
+
+\subsection*{Konzeptioneller Ansatz: \enquote{Dual-Use Audit Technology}}
+Die divergierenden Anforderungen der beiden Stakeholder lassen sich durch eine abstrahierte technologische Basis vereinen. Das Kernthema ist die \textbf{automatisierte Auditierung / Qualitätsprüfung}.
+
+\begin{strategybox}{Architektur der Synergie}
+    Das geplante System fungiert als \textbf{generische Audit-Engine}. Der technologische Kern (die KI-Logik zur Regelprüfung) ist identisch, während die Schnittstellen (Input/Output) modular angepasst werden.
+    
+    \begin{itemize}
+        \item \textbf{Modul A: High-Tech SE (für R+S)}
+        \begin{itemize}
+            \item \textbf{Input:} Strukturierter Code / Systemmodelle (SysML v2).
+            \item \textbf{Prüflogik:} Syntaktische Korrektheit, Traceability, Logik, Architekturregeln.
+            \item \textbf{Ziel:} Innovationsführerschaft im Bereich \enquote{Automated Model Review}.
+        \end{itemize}
+        
+        \item \textbf{Modul B: Quality Management / Low Maturity (für Arbeitgeber)}
+        \begin{itemize}
+            \item \textbf{Input:} Unstrukturierter Text (Lastenhefte, Word, PDF).
+            \item \textbf{Prüflogik:} Semantische Konformität mit QM-Vorgaben, Vollständigkeit, Norm-Referenzierung.
+            \item \textbf{Ziel:} Effizienzsteigerung im internen Audit und QM-Prozess.
+        \end{itemize}
+    \end{itemize}
+\end{strategybox}
+
+\subsection*{Strategischer Nutzen (Win-Win-Argumentation)}
+
+\textbf{Vorteil für Rücker + Schindele:}
+\begin{itemize}
+    \item Entwicklung eines innovativen Produkts ohne volles Anstellungsrisiko.
+    \item \textbf{Robustheit:} Der Algorithmus wird im operativen Einsatz beim aktuellen Arbeitgeber mit \enquote{Real-World Data} (unstrukturiert, fehlerhaft) trainiert und gehärtet. Dies erhöht die Resilienz der späteren SE-Lösung massiv.
+\end{itemize}
+
+\textbf{Vorteil für aktuellen Arbeitgeber:}
+\begin{itemize}
+    \item Kostenneutrale Implementierung modernster KI-Methoden für das interne Qualitätsmanagement.
+    \item Automatisierung zeitintensiver, manueller Dokumentenprüfungen (Audit-Vorbereitung).
+    \item Schrittweise Heranführung an Systems Engineering Methoden durch die Hintertür des Qualitätsmanagements.
+\end{itemize}
+
+\subsection*{Terminologie-Transfer}
+Um beide Stakeholder adressatengerecht abzuholen, wird folgende Terminologie-Zuordnung verwendet:
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|X|X|X|}
+\hline
+\textbf{Konzept} & \textbf{Wording im Kontext R+S (Tech)} & \textbf{Wording im Kontext Arbeitgeber (QM)} \\
+\hline
+\textbf{Produkt} & SE-Linter / Code Reviewer & Digitaler Auditor / QM-Check \\
+\hline
+\textbf{Befund} & Syntax Error / Broken Trace & Non-Compliance / Abweichung \\
+\hline
+\textbf{Zielzustand} & Executable Models & Prozesssicherheit / Normkonformität \\
+\hline
+\textbf{Methode} & Static Code Analysis & Dokumentenprüfung \\
+\hline
+\end{tabularx}
+\end{center}
+
+\newpage
+
+% --- Anhang B: Brainstorming ---
+\section{Brainstorming-Wortspeicher}
+
+\subsection*{Cluster 1: \enquote{Everything is Code} \& Infrastruktur}
+\begin{itemize}[label=$\bullet$, nosep]
+    \item \textbf{SysML v2:} Standard für textbasierte Modellierung, API-first Ansatz.
+    \item \textbf{GitOps / CI/CD:} Übertragung von DevOps-Pipelines auf das Systems Engineering.
+    \item \textbf{Diffing / Merging:} Versionsvergleich auf Textebene statt binärer Modellvergleich.
+    \item \textbf{Single Source of Truth:} Das Code-Repository als alleinige Datenwahrheit.
+\end{itemize}
+
+\subsection*{Cluster 2: KI-Methoden \& Technologien}
+\begin{itemize}[label=$\bullet$, nosep]
+    \item \textbf{RAG (Retrieval Augmented Generation):} Kontextualisierung von KI durch Unternehmensdaten.
+    \item \textbf{Linting / Statische Code-Analyse:} Regelprüfung ohne Programmausführung.
+    \item \textbf{Multimodal Models:} Parallele Verarbeitung von Text- und Bildinformationen.
+    \item \textbf{Agentic Workflows:} Autonome Aufgabenketten durch KI-Agenten.
+\end{itemize}
+
+\subsection*{Cluster 3: Business Value \& Compliance}
+\begin{itemize}[label=$\bullet$, nosep]
+    \item \textbf{Muda (Verschwendung):} Identifikation von isolierten Anforderungen (\enquote{Dead-Ends}).
+    \item \textbf{Assessment 2.0:} Verschiebung von Prozessbewertung hin zur direkten Artefaktbewertung.
+    \item \textbf{Compliance-Check:} Automatisierter Abgleich gegen Normen (ISO 15288, ASPICE).
+\end{itemize}
+
+\vspace{1cm}
+
+\subsection*{Gesprächsnotizen:}
+\rule{\textwidth}{0.4pt}\\[1cm]
+\rule{\textwidth}{0.4pt}\\[1cm]
+\rule{\textwidth}{0.4pt}
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+    node distance=1cm and 1.5cm,
+    font=\small\sffamily,
+    % Stile definieren
+    inputbox/.style={
+        rectangle, 
+        draw=primaryColor, 
+        fill=white, 
+        thick, 
+        text width=3.5cm, 
+        align=center, 
+        minimum height=1.2cm, 
+        rounded corners,
+        drop shadow
+    },
+    processbox/.style={
+        rectangle, 
+        draw=primaryColor, 
+        fill=boxBack, 
+        very thick, 
+        text width=5cm, 
+        align=center, 
+        minimum height=1.5cm, 
+        rounded corners
+    },
+    database/.style={
+        cylinder, 
+        shape border rotate=90, 
+        draw=accentColor, 
+        aspect=0.25, 
+        fill=white, 
+        text width=3.5cm, 
+        align=center, 
+        minimum height=1.5cm
+    },
+    outputbox/.style={
+        rectangle, 
+        draw=teal, 
+        fill=teal!10, 
+        very thick, 
+        text width=4cm, 
+        align=center, 
+        minimum height=2cm, 
+        rounded corners,
+        drop shadow
+    },
+    arrow/.style={
+        -{Latex[length=3mm]}, 
+        thick, 
+        primaryColor
+    },
+    label/.style={
+        font=\bfseries\large, 
+        primaryColor
+    }
+]
+
+% --- 1. SPALTE: INPUTS ---
+\node[inputbox] (text) {\textbf{Natürliche Sprache}\\(Lastenhefte, Prompts)};
+\node[inputbox, below=0.5cm of text] (legacy) {\textbf{Legacy Modelle}\\(Dirty SysML, Dialekte)};
+\node[inputbox, below=0.5cm of legacy] (hybrid) {\textbf{Hybride Inputs}\\(Mix aus Text \& Modell)};
+
+% Label für Inputs
+\node[label, above=0.2cm of text] {INPUTS};
+
+% --- 2. SPALTE: DAS PRODUKT (CENTER) ---
+% Container Rahmen später
+\node[processbox, right=2.5cm of legacy, yshift=1.5cm] (ai) {
+    \textbf{KI-INTEGRATION}\\
+    (Mapping, Parser, \\Semantic Check)
+};
+
+\node[database, below=1cm of ai] (eic) {
+    \textbf{EiC LIBRARY}\\
+    (R+S Ontologie, \\Standard-Bausteine)
+};
+
+% Pfeile innerhalb des Produkts
+\draw[{Latex[length=3mm]}-{Latex[length=3mm]}, thick, accentColor] (ai) -- node[right, font=\footnotesize, text=black] {Abgleich} (eic);
+
+% Rahmen um das Produkt ziehen
+\begin{scope}[on background layer]
+    \node[fit=(ai)(eic), draw=primaryColor, dashed, fill=primaryColor!5, inner sep=0.5cm, rounded corners, label={[anchor=north, yshift=-0.5cm]north:\textbf{PRODUKT: R+S Semantic Standardizer}}] (product) {};
+\end{scope}
+
+% --- 3. SPALTE: OUTPUT ---
+\node[outputbox, right=2.5cm of product] (out) {
+    \textbf{EINEINDEUTIGER CODE}\\
+    (SysML v2 R+S Konform)\\[0.5em]
+    \textcolor{teal}{\textbf{$\checkmark$ KI-Reviewed}}\\
+    (Validiert \& Lückenfrei)
+};
+
+% Label für Output
+\node[label, above=0.2cm of out] {OUTPUT};
+
+
+% --- PFEILE VERBINDUNGEN ---
+% Inputs zum Produkt
+\draw[arrow] (text.east) -- (product.west|-text.east);
+\draw[arrow] (legacy.east) -- (product.west|-legacy.east);
+\draw[arrow] (hybrid.east) -- (product.west|-hybrid.east);
+
+% Produkt zum Output
+\draw[arrow] (product.east) -- (out.west);
+
+\end{tikzpicture}
+\caption{Architekturübersicht: Der \enquote{Full-Circle} Workflow des R+S Semantic Standardizers.}
+\label{fig:workflow}
+\end{figure}
+\end{document}

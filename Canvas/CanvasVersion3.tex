@@ -1,0 +1,170 @@
+\documentclass[a4paper, landscape, 10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage[left=1cm, right=1cm, top=1.5cm, bottom=1.5cm]{geometry}
+\usepackage{helvet}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage{ragged2e}
+
+% Schriftart und Layout
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\arraystretch}{1.5}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+% Farben
+\definecolor{headergray}{RGB}{230, 230, 230}
+\definecolor{textgray}{RGB}{50, 50, 50}
+
+% Hilfsbefehl für Box-Titel (Robust für Tabellen)
+\newcommand{\boxtitle}[1]{\textbf{\uppercase{#1}}}
+
+% Spaltenbreiten vordefinieren
+\newlength{\colW}
+\setlength{\colW}{0.192\textwidth}
+
+\begin{document}
+
+% --------------------------------------------------------------------------
+% KOPFZEILE
+% --------------------------------------------------------------------------
+\begin{minipage}{0.7\textwidth}
+    {\huge \textbf{THE PROJECT CANVAS}} \\
+    {\large Masterarbeit: Konzeption einer Informationsverarbeitungsarchitektur für \glqq Architecture as Code\grqq}
+\end{minipage}
+\hfill
+\begin{minipage}{0.25\textwidth}
+    \raggedleft
+    \textbf{Erstellt von:} Moritz Diez \\
+    \textbf{Datum:} \today
+\end{minipage}
+
+\vspace{0.5cm}
+
+% --------------------------------------------------------------------------
+% TABELLE
+% --------------------------------------------------------------------------
+
+% Struktur: 5 Spalten
+\begin{tabular}{|p{\colW}|p{\colW}|p{\colW}|p{\colW}|p{\colW}|}
+    \hline
+    
+    % ZEILE 1: ZWECK (2 Spalten) & KUNDE (3 Spalten)
+    \multicolumn{2}{|l|}{\cellcolor{headergray}\boxtitle{ZWECK (Purpose)}} & 
+    \multicolumn{3}{l|}{\cellcolor{headergray}\boxtitle{KUNDE (Customer)}} \\
+    
+    \multicolumn{2}{|p{0.384\textwidth}|}{
+        \footnotesize \RaggedRight
+        \textbf{Mehrwert \& Wissenszuwachs:} \par
+        Lösung des \glqq Schuhschachtel-Dilemmas\grqq{} durch eine Architektur, die Bestandsdaten bewertet (\glqq Assessment\grqq) und mittels \glqq Smart Agent\grqq{} sicher in SysML v2 überführt (Vermeidung von \glqq Garbage In\grqq). \par
+        \vspace{0.5em}
+        \textbf{Fragen, die beantwortet werden:} \par
+        Wie müssen Daten bewertet werden, um automatisierbar zu sein? Wie sieht eine Architektur aus, die den Ingenieur effektiv zur Qualitätssicherung (\glqq Gatekeeping\grqq) einbindet?
+    } & 
+    \multicolumn{3}{p{0.576\textwidth}|}{
+        \footnotesize \RaggedRight
+        \textbf{Nutzer der Ergebnisse:} \par
+        Unternehmen im Brownfield-Engineering; Systems Engineers, die vor der MBSE-Transformation stehen. \par
+        \vspace{0.5em}
+        \textbf{Anforderungssteller:} \par
+        Hochschule München (Wissenschaftlicher Anspruch: Architektur-Design); Rücker + Schindele (Praxisrelevanz: Skalierbarkeit).
+    } \\ \hline
+
+    % ZEILE 2: ERGEBNIS (2 Spalten) & QUALITÄT (3 Spalten)
+    \multicolumn{2}{|l|}{\cellcolor{headergray}\boxtitle{ERGEBNIS (Deliverables)}} & 
+    \multicolumn{3}{l|}{\cellcolor{headergray}\boxtitle{QUALITÄT (Quality)}} \\
+    
+    \multicolumn{2}{|p{0.384\textwidth}|}{
+        \footnotesize \RaggedRight
+        \textbf{Objekte, die entstehen:} \par
+        \textbullet\ \textbf{Masterarbeit (PDF):} Wissenschaftliche Dokumentation des Architektur-Designs. \par
+        \textbullet\ \textbf{Referenzarchitektur:} Blueprint für die Informationsverarbeitung (Assessment, Gatekeeping, Synthese). \par
+        \textbullet\ \textbf{Vertical Slice:} Prototypische Validierung an einem durchgängigen Pfad (Proof of Concept).
+    } & 
+    \multicolumn{3}{p{0.576\textwidth}|}{
+        \footnotesize \RaggedRight
+        \textbf{Erfolgsmaßstäbe (nach ISO 42030):} \par
+        \textbullet\ \textbf{Gatekeeping-Effizienz:} Unsichere Daten müssen zur Prüfung ausgesteuert werden (Vermeidung von Halluzinationen). \par
+        \textbullet\ \textbf{Ontologie-Adhärenz:} Generierter Code muss strikt den definierten \glqq Leitplanken\grqq{} (Namensregeln/Struktur) folgen. \par
+        \textbullet\ \textbf{Modularität:} Ergebnisse müssen \glqq Plug \& Play\grqq{}-fähig sein.
+    } \\ \hline
+
+    % ZEILE 3: MEILENSTEINE (3 Spalten) & RISIKEN (2 Spalten)
+    \multicolumn{3}{|l|}{\cellcolor{headergray}\boxtitle{MEILENSTEINE}} & 
+    \multicolumn{2}{l|}{\cellcolor{headergray}\boxtitle{RISIKEN + CHANCEN}} \\
+    
+    \multicolumn{3}{|p{0.576\textwidth}|}{
+        \footnotesize \RaggedRight
+        \textbf{Vorgehensmodell:} Iteratives Architektur-Design \& Prototyping. \par % HIER WAR EIN FEHLER (& -> \&)
+        \textbf{Wichtige Zeitpunkte:} \par
+        \textbullet\ \textbf{15.03.26:} Projektstart / Kick-Off. \par
+        \textbullet\ \textbf{15.04.26:} Assessment-Framework \& Constraints definiert. \par % HIER WAR EIN FEHLER (& -> \&)
+        \textbullet\ \textbf{31.05.26:} Architektur-Entwurf steht (Review Ontologie-Konzept). \par
+        \textbullet\ \textbf{15.07.26:} Vertical Slice validiert (Proof of Concept). \par
+        \textbullet\ \textbf{15.09.26:} Abgabe der Arbeit.
+    } & 
+    \multicolumn{2}{p{0.384\textwidth}|}{
+        \footnotesize \RaggedRight
+        \textbf{Risiken (Scheitern):} \par
+        \textbullet\ Input-Daten erfüllen notwendige Constraints nicht (nicht maschinenlesbar). \par
+        \textbullet\ Ontologie zu komplex für generalisierten Ansatz. \par
+        \textbf{Chancen:} \par
+        \textbullet\ Standardisierung der Datenaufnahme im Brownfield. \par
+        \textbullet\ Vertrauenswürdige KI-Integration (\glqq Assurance\grqq).
+    } \\ \hline
+    
+    % ZEILE 4: RESSOURCEN (1), TEAM (2), BUDGET (2)
+    \multicolumn{1}{|l|}{\cellcolor{headergray}\boxtitle{RESSOURCEN}} & 
+    \multicolumn{2}{l|}{\cellcolor{headergray}\boxtitle{TEAM}} & 
+    \multicolumn{2}{l|}{\cellcolor{headergray}\boxtitle{BUDGET}} \\
+    
+    \multicolumn{1}{|p{\colW}|}{
+        \footnotesize \RaggedRight
+        \textbf{Sachmittel:} \par
+        \textbullet\ LLM-API Zugang. \par
+        \textbullet\ SysML v2 Kernel. \par
+        \textbullet\ Testdaten (Schuhschachtel).
+    } & 
+    \multicolumn{2}{p{0.384\textwidth}|}{
+        \footnotesize \RaggedRight
+        \textbf{Beteiligte:} \par
+        \textbullet\ Moritz Diez (Konzeption \& POC). \par % HIER WAR EIN FEHLER (& -> \&)
+        \textbullet\ Prof. Zuccaro (Betreuer HM). \par
+        \textbullet\ Kai Heinrich (Fachlicher Betreuer R+S). \par
+        %\textbullet\ ??? (Firmenbetreuer PreciPoint)
+    } & 
+    \multicolumn{2}{p{0.384\textwidth}|}{
+        \footnotesize \RaggedRight
+        \textbf{Finanzmittel:} Keine. \par
+        \textbf{Zeitbudget:} \par
+        30 ECTS $\approx$ 900h Aufwand.
+    } \\ \hline
+
+    % ZEILE 5: UMFELD (2) & ZEIT (3)
+    \multicolumn{2}{|l|}{\cellcolor{headergray}\boxtitle{UMFELD}} & 
+    \multicolumn{3}{l|}{\cellcolor{headergray}\boxtitle{ZEIT (Time)}} \\
+    
+    \multicolumn{2}{|p{0.384\textwidth}|}{
+        \footnotesize \RaggedRight
+        \textbf{Rahmenbedingungen:} \par
+        Masterstudiengang Systems Engineering (HM). \par
+        Fokus auf \glqq Trustworthy AI\grqq{} und \glqq Architecture as Code\grqq. \par
+        Verfügbarkeit von LLMs.
+    } & 
+    \multicolumn{3}{p{0.576\textwidth}|}{
+        \footnotesize \RaggedRight
+        \textbf{Start Vorbereitung:} Februar 2026 \par
+        \textbf{Start Bearbeitung (Offiziell):} 15.03.2026 \par
+        \textbf{Abgabe:} 15.09.2026 (Fixer Termin)
+    } \\ \hline
+
+\end{tabular}
+
+% \vspace{0.5cm}
+% \tiny
+% \textit{Hinweis: PDF-Formular ist zwingend elektronisch auszufüllen (vgl. Infoblatt S. 7).}
+
+\end{document}

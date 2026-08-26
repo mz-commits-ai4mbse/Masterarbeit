@@ -1,0 +1,108 @@
+
+\documentclass[a4paper,11pt]{article}
+
+% --- Pakete ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage[left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{tcolorbox}
+\usepackage{booktabs}
+\usepackage{csquotes} % Für korrekte Anführungszeichen
+
+% --- Design ---
+\definecolor{rsBlue}{RGB}{0, 51, 102}
+\definecolor{accentColor}{RGB}{204, 0, 0}
+\definecolor{researchColor}{RGB}{70, 130, 180} % SteelBlue
+
+\titleformat{\section}{\color{rsBlue}\Large\bfseries\uppercase}{}{0em}{}[\titlerule]
+\titleformat{\subsection}{\color{rsBlue}\large\bfseries}{}{0em}{}
+
+% Box für Forschungsfragen
+\newtcolorbox{researchbox}[1]{
+    colback=researchColor!10, 
+    colframe=rsBlue, 
+    title=\textbf{#1}, 
+    fonttitle=\bfseries,
+    boxrule=0.5mm,
+    arc=2mm
+}
+
+\begin{document}
+
+% --- KOPF ---
+\begin{center}
+    {\LARGE \textbf{Masterarbeit Proposal}}\\[0.8em]
+    {\Large \textbf{Generative \enquote{Architecture is Code}: KI-basierte Synthese modularer SysML v2 Modelle aus heterogenen Bestandsdaten}}\\[2em]
+\end{center}
+
+\section{1. Motivation: Das \enquote{Schuhschachtel-Dilemma}}
+
+Im Brownfield-Engineering stehen Unternehmen vor der Herausforderung, komplexe Bestandssysteme in modellbasierte Umgebungen (MBSE) zu überführen. Die Ausgangslage gleicht oft einer \enquote{Schuhschachtel}: Die Informationen liegen unstrukturiert, fragmentiert und in verschiedenen Formaten vor (CAD-Zeichnungen, Excel-Stücklisten, PDF-Spezifikationen).
+
+Der aktuelle Ansatz der manuellen Modellierung führt zu zwei Problemen:
+\begin{itemize}
+    \item \textbf{Mangelnde Modularität (Silo-Problem):} Modelle werden oft \textit{ad-hoc} basierend auf den gerade verfügbaren Daten erstellt. Tauchen später neue Daten auf (z.\,B. eine Schnittstelle zu einem Nachbarsystem), passt das ursprüngliche Modell nicht mehr und muss aufwändig refaktoriert werden.
+    \item \textbf{Verlust impliziten Wissens:} Ein erfahrener Ingenieur weiß, dass ein Motor immer eine Energieversorgung braucht, auch wenn dies nicht in der Stückliste steht. Einer \enquote{dummen} Übersetzung fehlt dieses Wissen, was zu unvollständigen Modellen führt.
+\end{itemize}
+
+\section{2. Forschungsleitende Fragestellungen}
+
+Ziel der Arbeit ist es, dieses Dilemma durch einen KI-gestützten \enquote{Architecture is Code} (AiC) Ansatz zu lösen. Im Zentrum steht dabei nicht die einfache Übersetzung, sondern die intelligente Architektur-Synthese.
+
+\begin{researchbox}{Hauptforschungsfrage (HF)}
+    Wie lässt sich eine KI-gestützte Methodik gestalten, die aus heterogenen, unstrukturierten Bestandsdaten valide und modular erweiterbare SysML v2 Systemarchitekturen generiert?
+\end{researchbox}
+
+Zur Beantwortung der HF werden folgende Teilforschungsfragen (TF) adressiert:
+
+\textbf{TF 1 (Antizipation \& Erwartungshaltung):}
+Inwieweit können durch trainierte Architektur-Muster (Patterns) notwendige Strukturelemente (insb. Ports und Interfaces) antizipiert werden, die in den Quelldaten (noch) nicht explizit enthalten sind? 
+\textit{(Vermeidung von \enquote{Dead-End}-Architekturen durch KI-Implikation).}
+
+\textbf{TF 2 (Modularität \& Puzzle-Piece-Design):}
+Welche Anforderungen muss der generierte SysML v2 Code erfüllen, um eine nachträgliche, non-destruktive Integration isoliert generierter Teilmodelle zu gewährleisten?
+\textit{(Sicherstellung der \enquote{Plug \& Play}-Fähigkeit).}
+
+\section{3. Methodischer Ansatz}
+
+Das Lösungskonzept \enquote{AiC-Generator} basiert auf einem dreistufigen Prozess, der die genannten Forschungsfragen operativ umsetzt.
+
+\subsection*{Phase A: Feature Ingestion (Die Schuhschachtel)}
+Das System akzeptiert beliebige Datenfragmente als \enquote{Features}. 
+\begin{itemize}
+    \item Beispiel Input: \enquote{Bestellliste.xlsx} enthält \textit{Pumpe A} und \textit{Ventil B}.
+    \item Herausforderung: Die Beziehung zwischen A und B ist im Excel oft nicht definiert.
+\end{itemize}
+
+\subsection*{Phase B: Generative Pattern Matching (Die Intelligenz)}
+Hier greift TF 1. Anstatt starrer \enquote{Wenn-Dann}-Regeln nutzt die KI (LLM) generalisierte Erwartungshaltungen.
+\begin{itemize}
+    \item \textbf{Erwartung:} \enquote{Eine Pumpe in einem fluidischen System benötigt typischerweise einen Fluid-In, Fluid-Out und Power-In.}
+    \item \textbf{Aktion:} Die KI generiert diese Ports als \enquote{Pending Interfaces}, auch wenn das Excel sie verschweigt. Dies bereitet das Modell auf zukünftige Verbindungen vor.
+\end{itemize}
+
+\subsection*{Phase C: Modular Code Synthesis (Der Output)}
+Hier greift TF 2. Der generierte SysML v2 Code wird so strukturiert (Nutzung von Namespaces, Usages und Part Definitions), dass er wie ein Puzzleteil fungiert.
+\begin{itemize}
+    \item \textbf{Ergebnis:} Ein \enquote{Stand-Alone}-Modell, das syntaktisch korrekt ist, aber offene Schnittstellen für spätere Erweiterungen bereithält.
+\end{itemize}
+
+\section{4. Geplante Validierung (Proof of Concept)}
+
+Die Methodik wird anhand eines \enquote{Blind-Tests} validiert:
+\begin{enumerate}
+    \item \textbf{Szenario 1:} Generierung eines Teilmodells A (z.\,B. \textit{Mechanik}) aus Datensatz 1.
+    \item \textbf{Szenario 2:} Generierung eines Teilmodells B (z.\,B. \textit{Elektronik}) aus Datensatz 2 (ohne Kenntnis von A).
+    \item \textbf{Integrationstest:} Prüfung, ob sich Modell A und Modell B in einem SysML v2 \texttt{root}-Modell verbinden lassen, ohne den Code von A oder B umschreiben zu müssen.
+\end{enumerate}
+
+\section{5. Erwarteter Erkenntnisgewinn}
+
+Die Arbeit soll aufzeigen, dass der Einsatz von KI im Systems Engineering über die reine Assistenz (Chatbot) hinausgehen kann und als \textbf{Architektur-Enabler} fungiert. Sie liefert einen Blaupause für den Umgang mit Altdaten im Zeitalter von \enquote{Everything is Code}.
+
+\end{document}

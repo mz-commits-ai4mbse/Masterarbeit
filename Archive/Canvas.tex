@@ -1,0 +1,59 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{geometry}
+\usepackage{helvet}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+% Seitenränder anpassen
+\geometry{left=1.5cm, right=1.5cm, top=2cm, bottom=2cm}
+
+% Schriftartwechsel auf Sans-Serif
+\renewcommand{\familydefault}{\sfdefault}
+
+\begin{document}
+
+\section*{Project Canvas für die Masterarbeit}
+\textbf{Datum:} \today \quad | \quad \textbf{Bearbeiter:} Moritz Diez
+
+\vspace{0.5cm}
+
+\begin{tabularx}{\textwidth}{|X|X|X|}
+\hline
+\textbf{ZWECK} & \textbf{BUDGET} & \textbf{TEAM} \\ 
+\footnotesize
+Ein KI-gestützter Ansatz zur Lösung des 'Schuhschachtel-Dilemmas' wird entwickelt. Unstrukturierte Bestandsdaten werden in modulare SysML v2 Modelle überführt. Implizites Wissen wird durch LLMs antizipiert, um die Nutzbarkeit der Modelle sicherzustellen. & 
+\footnotesize
+Kein explizites Budget definiert. (Standardressourcen der Hochschule/Firma). & 
+\footnotesize
+\textbullet\ Moritz Diez (Masterand) \newline
+\textbullet\ [Betreuer HM] \newline
+\textbullet\ [Betreuer Extern] \\ \hline
+
+\textbf{UMFELD} & \textbf{MEILENSTEINE} & \textbf{QUALITÄT} \\ 
+\footnotesize
+Brownfield-Engineering, Transformation zu MBSE. Nutzung des technologischen Enablers SysML v2 für 'Everything as Code'. & 
+\footnotesize
+1. Konzept \& Analyse (15.04.) \newline
+2. Prototyp Implementierung (31.05.) \newline
+3. Validierung \& Test (15.07.) \newline
+4. Abgabe (15.09.) & 
+\footnotesize
+Syntaktische Korrektheit des SysML v2 Codes. Gewährleistung der 'Plug \& Play'-Fähigkeit generierter Teilmodelle ohne Refaktorierung. \\ \hline
+
+\textbf{RISIKEN} & \textbf{ERGEBNIS} & \textbf{KUNDE} \\ 
+\footnotesize
+\textbullet\ Fehlinterpretation der LLMs bei komplexen technischen Zusammenhängen. \newline
+\textbullet\ Mangelnde Kompatibilität isoliert generierter Teilmodelle. & 
+\footnotesize
+Ein dreistufiger 'AiC-Generator' (Ingestion, Pattern Matching, Synthesis). Nachweis der Eignung von SysML v2 als KI-Enabler. & 
+\footnotesize
+Unternehmen mit Bestandsanlagen. Systems Engineering Community. \\ \hline
+\end{tabularx}
+
+\vspace{0.5cm}
+\textbf{ZEITRAHMEN:} 15.03.2026 -- 15.09.2026
+
+\end{document}

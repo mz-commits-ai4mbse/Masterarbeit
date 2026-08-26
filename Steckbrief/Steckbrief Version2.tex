@@ -1,0 +1,63 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{geometry}
+\usepackage{helvet}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tabularx}
+\usepackage{parskip}
+\usepackage{csquotes} % Für saubere Anführungszeichen
+
+% Seitenränder anpassen
+\geometry{left=2cm, right=2cm, top=2cm, bottom=2cm}
+
+% Schriftartwechsel auf Sans-Serif
+\renewcommand{\familydefault}{\sfdefault}
+
+% Farben definieren
+\definecolor{hmblue}{RGB}{0, 51, 102} % HM-Blau
+\definecolor{white}{RGB}{255, 255, 255}
+
+\begin{document}
+
+\section*{Projektsteckbrief}
+\textbf{Thema:} Konzeption einer Informationsverarbeitungsarchitektur für \enquote{Architecture as Code}: Bewertungs- und Synthesestrategien zur sicheren Überführung von Bestandsdaten in SysML v2
+
+\vspace{0.5cm}
+
+\begin{tabularx}{\textwidth}{|>{\bfseries}l|X|}
+\hline
+\rowcolor{hmblue} \textcolor{white}{Bereich} & \textcolor{white}{Inhalt} \\ \hline
+1. Ausgangslage & 
+Im Brownfield-Engineering liegen Systeminformationen unstrukturiert vor (\enquote{Schuhschachtel}). Der einsatz generativer KI verspricht Automatisierung, birgt jedoch ohne klare Architektur hohe Risiken: Wenn KI-Agenten autonom über unsichere Daten entscheiden, entstehen Halluzinationen und inkonsistente Modelle (\enquote{Garbage In, Garbage Out}). \\ \hline
+2. Zielsetzung & 
+Entwicklung einer Referenzarchitektur für die sichere Informationsverarbeitung. Fokus ist nicht die bloße Codegenerierung, sondern ein vorgeschaltetes \textbf{Assessment-Framework} zur Datenbewertung und eine \textbf{Gatekeeping-Strategie}, die den Ingenieur bei Mehrdeutigkeiten effektiv einbindet. Die KI agiert als assistierender \enquote{Smart Agent} innerhalb definierter ontologischer Leitplanken. \\ \hline
+3. Vorgehen & 
+\textbf{1. Assessment-Design:} Definition von Constraints (Qualitätskriterien) für Eingangsdaten. \newline
+\textbf{2. Architektur-Design:} Konzeption der Pipeline (Assessment $\rightarrow$ Gatekeeping $\rightarrow$ Synthese). \newline
+\textbf{3. Prototyping:} Umsetzung eines \enquote{Vertical Slice} (Durchstich) als Proof of Concept. \newline
+\textbf{4. Validierung:} Bewertung der Architektur-Qualität anhand von ISO 42030 Metriken. \\ \hline
+4. Nutzen & 
+\textbullet\ \textbf{Assurance:} Vertrauenswürdige KI-Synthese durch Vermeidung von \enquote{Garbage In}. \newline
+\textbullet\ \textbf{Effizienz:} Gezielte Einbindung des Experten nur im Bedarfsfall (\enquote{Effective Intervention}). \newline
+\textbullet\ \textbf{Standardisierung:} Sicherstellung von Modularität durch erzwungene Ontologie-Treue. \\ \hline
+5. Zeitraum & 
+15.03.2026 bis 15.09.2026 (6 Monate) \\ \hline
+6. Beteiligte & 
+\textbf{Bearbeiter:} Moritz Diez \newline
+\textbf{Betreuer HM:} [Name einfügen] \newline
+\textbf{Firmenbetreuer:} Kai Heinrich (R + S)\\ \hline
+\end{tabularx}
+
+\vspace{1cm}
+\textbf{Meilensteinplan (Grob):}
+\begin{itemize}
+    \item \textbf{M1 (15.04.):} Assessment-Framework und Daten-Constraints definiert.
+    \item \textbf{M2 (31.05.):} Architektur-Entwurf finalisiert (inkl. Ontologie-Leitplanken).
+    \item \textbf{M3 (15.07.):} Vertical Slice (Proof of Concept) erfolgreich validiert.
+    \item \textbf{M4 (15.09.):} Abgabe der Masterarbeit.
+\end{itemize}
+
+\end{document}

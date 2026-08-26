@@ -1,0 +1,119 @@
+\documentclass[11pt,a4paper]{scrartcl}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{geometry}
+\geometry{left=20mm,right=20mm,top=21mm,bottom=23mm}
+
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage[most]{tcolorbox}
+\usepackage{pdflscape}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{setspace}
+
+\definecolor{TuringBlue}{HTML}{17365D}
+\definecolor{TuringTeal}{HTML}{2F6F73}
+\definecolor{TuringGreen}{HTML}{548235}
+\definecolor{TuringOrange}{HTML}{C65911}
+\definecolor{TuringSlate}{HTML}{5B6573}
+\definecolor{TuringPurple}{HTML}{7030A0}
+
+\definecolor{CategoryData}{HTML}{D9EAF7}
+\definecolor{CategoryFunctional}{HTML}{E2F0D9}
+\definecolor{CategoryArchitecture}{HTML}{E4DFEC}
+\definecolor{CategoryAssurance}{HTML}{FCE4D6}
+\definecolor{CategorySemantic}{HTML}{FFF2CC}
+
+\newcommand{\statusdone}[1]{\textcolor{TuringGreen}{\textbf{#1}}}
+\newcommand{\statuspartial}[1]{\textcolor{TuringOrange}{\textbf{#1}}}
+\newcommand{\statusopen}[1]{\textcolor{TuringSlate}{\textbf{#1}}}
+\newcommand{\statusfuture}[1]{\textcolor{TuringPurple}{\textbf{#1}}}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=TuringBlue,
+  urlcolor=TuringTeal,
+  pdftitle={Stakeholder Requirements und Implementierungsabdeckung},
+  pdfauthor={Moritz Diez}
+}
+
+\setkomafont{section}{\color{TuringBlue}\Large\bfseries}
+\setkomafont{subsection}{\color{TuringTeal}\large\bfseries}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt minus 1pt}
+\onehalfspacing
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize Turing Generator -- Stakeholder Requirements}
+\fancyhead[R]{\footnotesize Arbeitsstand 31.07.2026}
+\fancyfoot[C]{\footnotesize Seite \thepage\ von \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\begin{document}
+
+\begin{titlepage}
+  \centering
+  \vspace*{2.0cm}
+  {\color{TuringBlue}\rule{\textwidth}{1.2pt}}\\[1.2cm]
+  {\Huge\bfseries\color{TuringBlue}
+  Stakeholder Requirements und Implementierungsabdeckung\par}
+  \vspace{0.7cm}
+  {\Large Ausführliche Requirement-Tabelle des Turing Generators\par}
+  \vspace{1.4cm}
+
+  \begin{tcolorbox}[
+    width=0.84\textwidth,
+    colback=blue!3,
+    colframe=TuringBlue,
+    arc=2mm,
+    boxrule=0.8pt
+  ]
+  \centering
+  \textbf{Darstellungsperspektive}\par
+  39 Stakeholder Requirements mit normativem Inhalt, Rationale, Quelle,\\
+  Systemfunktionsabdeckung, Implementierungsstand und verbleibendem Zielumfang
+  \end{tcolorbox}
+
+  \vfill
+  {\large Moritz Diez\par}
+  \vspace{3mm}
+  {\normalsize Masterarbeit Systems Engineering\par}
+  \vspace{8mm}
+  {\normalsize Arbeitsstand: 31. Juli 2026\par}
+  \vspace{1.3cm}
+  {\color{TuringBlue}\rule{\textwidth}{1.2pt}}
+\end{titlepage}
+
+\tableofcontents
+\clearpage
+
+\input{RequirementReview/Turing_StakeholderRequirements_Requirementstabelle_Content}
+
+\clearpage
+\section*{Verwendete Arbeitsgrundlagen}
+\addcontentsline{toc}{section}{Verwendete Arbeitsgrundlagen}
+\begin{itemize}[leftmargin=7mm,itemsep=2mm]
+  \item Autoritatives CATIA-SysML-v2-Modell mit 39 Stakeholder Requirements,
+  102 System Requirements und 12 Systemfunktionen.
+  \item Transitive Traceability zwischen Stakeholder Requirements,
+  System Requirements und Systemfunktionen.
+  \item Verifizierte Phase-F/P-Implementierungsbaseline,
+  Commit \texttt{26acace4\ldots c7705}, 3.808 bestandene Tests und
+  manueller P9-Akzeptanzaudit.
+  \item Feature- und Requirement-Coverage-Matrix,
+  Arbeitsstand 31.07.2026.
+\end{itemize}
+
+\end{document}

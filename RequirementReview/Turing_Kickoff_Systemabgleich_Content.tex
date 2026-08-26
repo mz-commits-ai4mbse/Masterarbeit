@@ -1,0 +1,259 @@
+% -----------------------------------------------------------------------------
+% Inhaltsteil zum direkten Einbinden in die Masterarbeit
+% Benoetigte Pakete im Hauptdokument:
+% booktabs, tabularx, longtable, array, ragged2e, xcolor, tcolorbox, tikz,
+% enumitem, hyperref, microtype
+% TikZ-Library: arrows.meta, positioning, calc
+% -----------------------------------------------------------------------------
+
+\section{Abgleich der ursprünglichen Zielstruktur mit der aktuellen Systemarchitektur}
+\label{sec:kickoff_systemabgleich}
+
+Die im Kick-off vorgestellte Zielstruktur beschrieb den Architecture-as-Code-Generator zunächst als sechsstufige Prozesskette innerhalb einer Daten-, Prozess- und Wissensschicht. Die Schritte reichten von der Aufnahme heterogener Bestandsdaten über deren Qualitäts- und Semantikbewertung bis zur automatisierten Erzeugung von SysML-v2-Code. Diese Struktur bildete den konzeptionellen Ausgangspunkt der Arbeit. Im Verlauf der Systementwicklung wurde sie nicht verworfen, sondern in eine stärker vernetzte, rückgekoppelte und nachweisbar governte Systemarchitektur überführt.
+
+Der nachfolgende Abgleich bewertet daher nicht, ob der ursprüngliche Plan unverändert umgesetzt wurde. Entscheidend ist vielmehr, ob seine fachlichen Zielsetzungen im aktuellen System erhalten geblieben, präzisiert oder um notwendige Betriebs- und Governance-Fähigkeiten ergänzt worden sind. Als aktueller Vergleichsstand dienen das autoritative CATIA-SysML-v2-Modell sowie die verifizierte Implementierungsbaseline nach Abschluss der Phasen F und P. Diese Baseline umfasst 3.808 bestandene automatisierte Tests und den erfolgreich abgeschlossenen manuellen P9-Akzeptanzaudit.\footnote{Arbeitsstand vom 30.07.2026. Der Abschnitt dokumentiert den Zwischenstand und ist nach Abschluss der Architektur-Synthese und SysML-v2-Erzeugung erneut zu aktualisieren.}
+
+\begin{tcolorbox}[
+  enhanced,
+  breakable,
+  colback=blue!3,
+  colframe=TuringBlue,
+  title={Kernaussage des Abgleichs},
+  fonttitle=\bfseries,
+  boxrule=0.8pt,
+  arc=2mm
+]
+Der Kick-off-Plan wurde aus einer groben, weitgehend linearen Zielkette in eine traceable und governte Systemarchitektur überführt. Die Informationsaufnahme, Bewertung, semantische Verarbeitung, agentische Kandidatenerzeugung sowie die operative Run-, Evidence- und Review-Infrastruktur sind weitgehend realisiert. Die eigentliche Architektursynthese, deren modellbezogene Validierung und die automatisierte SysML-v2-Erzeugung bilden weiterhin den offenen Zielabschnitt.
+\end{tcolorbox}
+
+\subsection{Vom linearen Zielprozess zur vernetzten Systemarchitektur}
+
+Die ursprüngliche Prozessdarstellung war für den Projektstart geeignet, da sie die fachliche Transformation von links nach rechts verständlich machte. Für die konkrete Systemarchitektur erwies sich diese Sicht jedoch als zu grob. Insbesondere Human Review, Evidenzführung, semantische Konfliktbehandlung und Validierung treten nicht nur einmalig an einer festen Stelle auf. Sie wirken an mehreren Verarbeitungspunkten als Querschnittsfunktionen und erzeugen Rückkopplungen in frühere Verarbeitungsschritte.
+
+Das aktuelle System unterscheidet deshalb zwölf Systemfunktionen. Sie werden durch acht Logical Components realisiert und über explizite logische Interaktionen miteinander verbunden. Die ursprünglichen sechs Schritte sind weiterhin vollständig wiedererkennbar, wurden jedoch in klarer abgrenzbare und einzeln verifizierbare Verantwortlichkeiten zerlegt. Abbildung~\ref{fig:kickoff_mapping} fasst diesen Übergang zusammen.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  kickoff/.style={
+    draw=TuringBlue,
+    fill=TuringBlue!7,
+    rounded corners=2mm,
+    minimum height=12mm,
+    text width=4.15cm,
+    align=left,
+    font=\small
+  },
+  current/.style={
+    draw=TuringTeal,
+    fill=TuringTeal!7,
+    rounded corners=2mm,
+    minimum height=12mm,
+    text width=8.5cm,
+    align=left,
+    font=\small
+  },
+  statusdone/.style={font=\scriptsize\bfseries, text=TuringGreen},
+  statuspartial/.style={font=\scriptsize\bfseries, text=TuringOrange},
+  statusopen/.style={font=\scriptsize\bfseries, text=TuringSlate},
+  maparrow/.style={-{Latex[length=2.4mm]}, line width=0.7pt, draw=TuringSlate}
+]
+
+\node[kickoff] (k1) {\textbf{1 Feature Ingestion}\\Einlesen und Vorverarbeiten heterogener Quellen};
+\node[current, right=12mm of k1] (c1) {\textbf{SF\_001, SF\_002, SF\_011}\\Projekt- und Quellenkontext, Source Projection, Verarbeitungsvorbereitung und Provenienz\\[-1mm]\textcolor{TuringOrange}{\scriptsize\bfseries teilweise implementiert; Kern demonstrierbar}};
+
+\node[kickoff, below=5mm of k1] (k2) {\textbf{2 Sortier Agent}\\Kategorisierung und initiale Qualitätsbewertung};
+\node[current, right=12mm of k2] (c2) {\textbf{SF\_002, SF\_003, SF\_004}\\Qualität, Relevanz, Zuverlässigkeit, Semantik, Coverage und Evidence\\[-1mm]\textcolor{TuringOrange}{\scriptsize\bfseries teilweise implementiert}};
+
+\node[kickoff, below=5mm of k2] (k3) {\textbf{3 Ontologie Anpassung}\\Harmonisierung von Begrifflichkeiten};
+\node[current, right=12mm of k3] (c3) {\textbf{SF\_003, SF\_011}\\Versionierte Ontologien, Vocabulary, Glossary Candidates, Terminology Decisions und traceable Mappings\\[-1mm]\textcolor{TuringOrange}{\scriptsize\bfseries teilweise implementiert}};
+
+\node[kickoff, below=5mm of k3] (k4) {\textbf{4 Muster Antizipation}\\KI-gestützte Architekturvorschläge};
+\node[current, right=12mm of k4] (c4) {\textbf{SF\_006, SF\_008, SF\_009}\\Engineering Candidates, Architekturableitung und Architekturvalidierung\\[-1mm]\textcolor{TuringSlate}{\scriptsize\bfseries Kandidatenerzeugung implementiert; Architekturanteil noch offen}};
+
+\node[kickoff, below=5mm of k4] (k5) {\textbf{5 Human in the Loop}\\Validierung und Ergänzung durch den Ingenieur};
+\node[current, right=12mm of k5] (c5) {\textbf{SF\_005, SF\_007, SF\_011, SF\_012}\\Wiederkehrende Review Gates, Decision Binding, Accountability, Evidence und Statusdarstellung\\[-1mm]\textcolor{TuringOrange}{\scriptsize\bfseries Review-Infrastruktur vorhanden; Promotion noch offen}};
+
+\node[kickoff, below=5mm of k5] (k6) {\textbf{6 Synthese}\\Automatisierte Erzeugung von SysML-v2-Code};
+\node[current, right=12mm of k6] (c6) {\textbf{SF\_008, SF\_009, SF\_010}\\Architekturstrukturierung, Modellvalidierung sowie SysML-v2-Artefakterzeugung und Notationsprüfung\\[-1mm]\textcolor{TuringSlate}{\scriptsize\bfseries derzeit architecture only}};
+
+\foreach \a/\b in {k1/c1,k2/c2,k3/c3,k4/c4,k5/c5,k6/c6}{
+  \draw[maparrow] (\a.east) -- (\b.west);
+}
+
+\end{tikzpicture}
+\caption{Zuordnung der sechs Kick-off-Schritte zur heutigen Systemarchitektur}
+\label{fig:kickoff_mapping}
+\end{figure}
+
+\subsection{Abgleich der sechs geplanten Prozessschritte}
+
+Tabelle~\ref{tab:kickoff_six_steps} zeigt den fachlichen Match im Detail. Der Implementierungsstatus bezieht sich jeweils auf den vollständigen Zielumfang der heutigen Systemfunktion. Eine Funktion kann daher als teilweise implementiert bewertet sein, obwohl ihr für den aktuellen Prototyp benötigter Kern bereits demonstrierbar und verifiziert ist.
+
+\renewcommand{\arraystretch}{1.18}
+\setlength{\tabcolsep}{3.5pt}
+\small
+\begin{longtable}{
+  >{\RaggedRight\arraybackslash}p{2.5cm}
+  >{\RaggedRight\arraybackslash}p{4.0cm}
+  >{\RaggedRight\arraybackslash}p{5.8cm}
+  >{\RaggedRight\arraybackslash}p{2.7cm}
+}
+\caption{Abgleich der Kick-off-Prozesskette mit dem aktuellen Systemstand}
+\label{tab:kickoff_six_steps}\\
+\toprule
+\textbf{Kick-off-Schritt} & \textbf{Heutige Zuordnung} & \textbf{Architektonische Interpretation} & \textbf{Aktueller Stand} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Kick-off-Schritt} & \textbf{Heutige Zuordnung} & \textbf{Architektonische Interpretation} & \textbf{Aktueller Stand} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r}{\footnotesize Fortsetzung auf der nächsten Seite}\\
+\endfoot
+\bottomrule
+\endlastfoot
+
+\textbf{Feature Ingestion} &
+SF\_001 \emph{Manage Engineering Project and Source Context}; SF\_002 \emph{Assess and Prepare Source Information}; SF\_011 \emph{Maintain Processing Evidence and Traceability} &
+Aus dem ursprünglichen Einleseschritt wurden eine persistente Projekt- und Quellenverwaltung, deterministische Source Projections, eine aufgabenbezogene Verarbeitungsvorbereitung und eine unveränderliche Provenienz abgeleitet. Dadurch ist der Einstiegspunkt heute projektgebunden, reproduzierbar und auditierbar. &
+\statuspartial{Teilweise implementiert}. Projekt-, Quellen- und Ingestion-Kern sind demonstrierbar; echte Multi-Source-Verarbeitung in einem Run und nicht-textuelle Extraktion jenseits von PDF-Textschichten bleiben offen. \\
+\addlinespace
+
+\textbf{Sortier Agent} &
+SF\_002 \emph{Assess and Prepare Source Information}; SF\_004 \emph{Assess Coverage and Evidence Sufficiency}; teilweise SF\_003 \emph{Apply Semantic Governance} &
+Der konkrete Agentenname wurde durch technologieunabhängige Systemfähigkeiten ersetzt. Qualitäts-, Relevanz- und Zuverlässigkeitsbewertungen, Coverage und Evidence werden getrennt ermittelt und können unabhängig von einer bestimmten Agentenimplementierung verifiziert werden. &
+\statuspartial{Teilweise implementiert}. Qualitätsberichte, Coverage und Evidence sind vorhanden; kontrollierte Datenvervollständigung und umfassende Widerspruchsbewertung über mehrere Quellen sind noch unvollständig. \\
+\addlinespace
+
+\textbf{Ontologie Anpassung} &
+SF\_003 \emph{Apply Semantic Governance}; SF\_011 \emph{Maintain Processing Evidence and Traceability} &
+Die zunächst allgemein formulierte Basistechnologie wurde durch versionierte Ontologien, ein Turing Core Vocabulary, Glossary Candidates, Terminology Decisions und traceable Terminology Mappings konkretisiert. Semantische Entscheidungen bleiben an ihre Quellen und Verarbeitungskontexte gebunden. &
+\statuspartial{Teilweise implementiert}. Die semantische Governance-Infrastruktur ist vorhanden; die vollständige iterative Konfliktlösung einschließlich Rückkopplung aus späteren Modellvalidierungen bleibt offen. \\
+\addlinespace
+
+\textbf{Muster Antizipation} &
+SF\_006 \emph{Generate and Compare Engineering Candidates}; SF\_008 \emph{Derive and Structure Architecture Information}; SF\_009 \emph{Validate and Integrate Architecture Content} &
+Die frühere Einzelfunktion wurde in Kandidatenerzeugung, eigentliche Architekturableitung und Architekturvalidierung getrennt. Damit wird eine agentisch erzeugte Interpretation nicht automatisch als Architekturvorschlag oder als akzeptierter Modellinhalt behandelt. &
+\statusmixed{Gemischter Stand}. Die agentische Candidate Generation ist implementiert und verifiziert; Architecture Candidate Layer, Strukturierung, Pattern-Anwendung und Modellvalidierung sind noch nicht implementiert. \\
+\addlinespace
+
+\textbf{Human in the Loop} &
+SF\_007 \emph{Support Human Review and Approval}; unterstützt durch SF\_005, SF\_011 und SF\_012 &
+Human Review ist kein einzelner Endschritt mehr. Der Mensch wirkt als wiederkehrende Governance-Instanz mit Review Gates, nachvollziehbarer Entscheidungsbindung, Accountability, Evidenzzugriff und einem ausdrücklichen Verbot automatischer Freigabesubstitution. &
+\statuspartial{Teilweise implementiert}. Review Requests, Evidence und Decision Binding sind vorhanden; die Promotion geprüfter Ergebnisse zu Approved Input und spätere modellbezogene Freigaben fehlen noch. \\
+\addlinespace
+
+\textbf{Synthese} &
+SF\_008 \emph{Derive and Structure Architecture Information}; SF\_009 \emph{Validate and Integrate Architecture Content}; SF\_010 \emph{Generate and Validate SysML v2 Architecture Artifacts} &
+Das unveränderte Ziel der SysML-v2-Erzeugung wurde präzisiert: Zunächst wird Architekturinformation abgeleitet und strukturiert, anschließend modellbezogen validiert und erst danach als traceables Architecture-as-Code-Artefakt in SysML-v2-Notation erzeugt. &
+\statusopen{Architecture only}. Modellkandidaten, SysML-v2-Codegenerierung, Notationsvalidierung, Export und CATIA-Synchronisation sind noch nicht als Runtime-Fähigkeit umgesetzt. \\
+
+\end{longtable}
+\normalsize
+\setlength{\tabcolsep}{6pt}
+
+\subsection{Abgleich der Daten-, Prozess- und Wissensschicht}
+
+Die drei Kick-off-Schichten sind fachlich weiterhin gültig. Sie werden heute jedoch nicht mehr als drei strikt getrennte technische Blöcke verstanden. Insbesondere die Wissensschicht hat sich zu einem querschnittlichen Governance-Netz entwickelt, das mehrere Logical Components und Systemfunktionen umfasst.
+
+\begin{tcolorbox}[
+  enhanced,
+  breakable,
+  colback=TuringData!5,
+  colframe=TuringData,
+  title={Datenschicht: erhalten und operationalisiert},
+  fonttitle=\bfseries,
+  arc=2mm
+]
+\textbf{Logical Components:} LC\_02 \emph{Project and Source Context Management}, LC\_04 \emph{Engineering Information Processing}, LC\_06 \emph{Coverage Evidence and Traceability Management}.\\[1mm]
+\textbf{Systemfunktionen:} SF\_001, SF\_002, SF\_004 und SF\_011.\\[1mm]
+Die Datenschicht umfasst heute nicht nur das Einlesen von Dateien, sondern den vollständigen Projekt- und Quellenkontext, deterministische Projektionen, Information Units, Qualitäts- und Coverage-Evidence sowie unveränderliche Provenienz. Sie ist die am weitesten realisierte Schicht des aktuellen Prototyps.
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+  enhanced,
+  breakable,
+  colback=TuringProcess!5,
+  colframe=TuringProcess,
+  title={Prozessschicht: von linear zu vernetzt weiterentwickelt},
+  fonttitle=\bfseries,
+  arc=2mm
+]
+\textbf{Logical Components:} LC\_03 \emph{Processing Orchestration and State Control}, LC\_05 \emph{Candidate and Review Governance}, LC\_07 \emph{Architecture Synthesis and Validation}, LC\_08 \emph{SysML v2 Artifact Generation}; ergänzt durch LC\_01 als Interaktionsgrenze.\\[1mm]
+\textbf{Systemfunktionen:} SF\_005 bis SF\_010 sowie SF\_012.\\[1mm]
+Die Prozessschicht ist heute ein Run- und Stage-System mit Review Gates, Retries, Rework, Evidenzführung und expliziten Zustandsübergängen. Orchestration und agentische Ingestion tragen bereits den Prototyp; der operative Prozess endet derzeit bewusst mit dem Zustand \texttt{awaiting\_review}.
+\end{tcolorbox}
+
+\begin{tcolorbox}[
+  enhanced,
+  breakable,
+  colback=TuringKnowledge!5,
+  colframe=TuringKnowledge,
+  title={Wissensschicht: in ein querschnittliches Governance-Netz überführt},
+  fonttitle=\bfseries,
+  arc=2mm
+]
+\textbf{Logical Components:} querschnittlich über LC\_04, LC\_05, LC\_06 und LC\_07.\\[1mm]
+\textbf{Systemfunktionen:} insbesondere SF\_003, SF\_004, SF\_007 und SF\_009; ergänzt durch Ontologien, Vocabulary, Recipes, Agent Profiles, Framework Templates und Design Constraints.\\[1mm]
+Die Wissensschicht bildet kein separates technisches Silo mehr. Semantik, Evidence, Human Authority, Architekturregeln und Validierung wirken gemeinsam als regulatorisches Rückgrat über mehrere Verarbeitungsschritte hinweg. Diese strukturelle Auflösung erhält die ursprüngliche Zielsetzung, macht ihre Wirkung jedoch expliziter und besser prüfbar.
+\end{tcolorbox}
+
+\subsection{Erhaltene, präzisierte und ergänzte Architekturanteile}
+
+\begin{table}[htbp]
+\centering
+\caption{Architektonisches Delta zwischen Kick-off und aktuellem System}
+\label{tab:kickoff_delta}
+\small
+\begin{tabularx}{\textwidth}{
+  >{\RaggedRight\arraybackslash}p{3.0cm}
+  >{\RaggedRight\arraybackslash}X
+  >{\RaggedRight\arraybackslash}X
+}
+\toprule
+\textbf{Kategorie} & \textbf{Inhalt} & \textbf{Bedeutung} \\
+\midrule
+\textbf{Erhalten} &
+Ingestion, Qualitätsbewertung, semantische Harmonisierung, agentische Verarbeitung, Human Review und SysML-v2-Synthese. &
+Die fachliche Grundidee der Masterarbeit ist im aktuellen System vollständig wiedererkennbar. \\
+\addlinespace
+\textbf{Präzisiert} &
+Grobe Prozessschritte wurden in getrennte Systemfunktionen mit klarer Verantwortung und eigener Verifikationsperspektive zerlegt. &
+Candidate Generation, Architekturableitung und Architekturvalidierung sind beispielsweise nicht mehr in einer unscharfen Musterantizipation zusammengefasst. \\
+\addlinespace
+\textbf{Ergänzt} &
+Projekt- und Quellenverwaltung, Processing Runs, Zustandsmodell, Coverage, Evidence, Traceability, Statusdarstellung und Approval Boundary. &
+Diese Fähigkeiten waren im Kick-off unterrepräsentiert, sind für einen sicheren und industriell nutzbaren Generator jedoch notwendig. \\
+\addlinespace
+\textbf{Weiter-\newline entwickelt} &
+Die lineare Prozesskette wurde durch Gates, Rückkopplungen und querschnittliche Governance ersetzt. &
+Review, Semantik, Evidence und Validierung wirken an mehreren Stellen, ohne die Verantwortung der fachlichen Kernfunktionen zu vermischen. \\
+\addlinespace
+\textbf{Noch offen} &
+Architecture Candidate Layer, Architekturvalidierung und automatisierte SysML-v2-Artefakterzeugung. &
+Der aktuelle Prototyp belegt die Informationsverarbeitung bis zur Review-Anforderung, aber noch nicht den vollständigen Architecture-as-Code-Vertical-Slice. \\
+\bottomrule
+\end{tabularx}
+\normalsize
+\end{table}
+
+\subsection{Zwischenfazit}
+
+Der Abgleich zeigt eine hohe inhaltliche Kontinuität zwischen dem im Kick-off formulierten Plan und der aktuellen Systemarchitektur. Die ersten drei Prozessschritte wurden nicht nur umgesetzt, sondern durch Projektbindung, deterministische Artefakte, Evidenzführung und semantische Governance erheblich belastbarer gestaltet. Auch die agentische Kandidatenerzeugung sowie wesentliche Elemente des Human-in-the-Loop-Konzepts sind im Prototyp nachweisbar vorhanden.
+
+Die größte verbleibende Lücke liegt nicht in einer Abweichung vom ursprünglichen Ziel, sondern im noch ausstehenden letzten Abschnitt desselben Zielpfads. Die Verarbeitung endet aktuell bei reviewfähigen, traceablen Ergebnissen. Der Übergang zu Approved Input, die Ableitung strukturierter Architekturmodelle, deren modellbezogene Validierung sowie die automatisierte Erzeugung und Prüfung von SysML-v2-Artefakten sind als Systemfunktionen und Logical Components bereits vorgesehen, müssen jedoch noch implementiert und evaluiert werden.
+
+Damit stellt die aktuelle Architektur keinen Scope Drift dar. Sie ist vielmehr die notwendige Operationalisierung des ursprünglichen Konzepts: Aus einer verständlichen Zielkette wurde ein modulares, vernetztes und prüfbares System, dessen noch offene Zielanteile klar von den bereits implementierten Fähigkeiten abgegrenzt sind.
+
+\begin{tcolorbox}[
+  enhanced,
+  colback=gray!4,
+  colframe=TuringSlate,
+  title={Hinweis für die finale Fassung},
+  fonttitle=\bfseries,
+  arc=2mm
+]
+Nach Abschluss des Systems sollte dieser Abschnitt insbesondere in drei Punkten aktualisiert werden: (1) finaler Implementierungsstatus von SF\_008 bis SF\_010, (2) empirische Ergebnisse zur Modellvalidität und Modularität sowie (3) endgültige Bewertung, ob der vollständige Vertical Slice von der Bestandsquelle bis zum validierten SysML-v2-Artefakt geschlossen werden konnte.
+\end{tcolorbox}
