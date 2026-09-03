@@ -1,0 +1,110 @@
+\documentclass[11pt,a4paper]{scrartcl}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{geometry}
+\geometry{left=24mm,right=24mm,top=23mm,bottom=25mm}
+
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{setspace}
+
+\definecolor{TuringBlue}{HTML}{17365D}
+\definecolor{TuringTeal}{HTML}{2F6F73}
+\definecolor{TuringGreen}{HTML}{548235}
+\definecolor{TuringOrange}{HTML}{C65911}
+\definecolor{TuringSlate}{HTML}{5B6573}
+\definecolor{TuringData}{HTML}{4472C4}
+\definecolor{TuringProcess}{HTML}{70AD47}
+\definecolor{TuringKnowledge}{HTML}{A64D79}
+
+\newcommand{\statusdone}[1]{\textcolor{TuringGreen}{\textbf{#1}}}
+\newcommand{\statuspartial}[1]{\textcolor{TuringOrange}{\textbf{#1}}}
+\newcommand{\statusmixed}[1]{\textcolor{TuringOrange}{\textbf{#1}}}
+\newcommand{\statusopen}[1]{\textcolor{TuringSlate}{\textbf{#1}}}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=TuringBlue,
+  urlcolor=TuringTeal,
+  pdftitle={Abgleich der Kick-off-Zielstruktur mit der aktuellen Systemarchitektur},
+  pdfauthor={Moritz Diez}
+}
+
+\setkomafont{section}{\color{TuringBlue}\Large\bfseries}
+\setkomafont{subsection}{\color{TuringTeal}\large\bfseries}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt minus 1pt}
+\onehalfspacing
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize Architecture as Code -- Systemabgleich}
+\fancyhead[R]{\footnotesize Arbeitsstand 30.07.2026}
+\fancyfoot[C]{\footnotesize Seite \thepage\ von \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\begin{document}
+
+\begin{titlepage}
+  \centering
+  \vspace*{2.0cm}
+  {\color{TuringBlue}\rule{\textwidth}{1.2pt}}\\[1.2cm]
+  {\Huge\bfseries\color{TuringBlue} Abgleich der ursprünglichen Zielstruktur\\[3mm]
+  mit der aktuellen Systemarchitektur\par}
+  \vspace{0.9cm}
+  {\Large Architecture-as-Code-Generator für SysML v2\par}
+  \vspace{1.4cm}
+  \begin{tcolorbox}[
+    width=0.82\textwidth,
+    colback=blue!3,
+    colframe=TuringBlue,
+    arc=2mm,
+    boxrule=0.8pt
+  ]
+  \centering
+  \textbf{Grundlage}\par
+  Kick-off-Präsentation vom 18.03.2026, Folien 9 und 10\\
+  Aktuelles CATIA-SysML-v2-Modell und verifizierte Phase-F/P-Implementierungsbaseline
+  \end{tcolorbox}
+  \vfill
+  {\large Moritz Diez\par}
+  \vspace{3mm}
+  {\normalsize Masterarbeit Systems Engineering\par}
+  \vspace{8mm}
+  {\normalsize Arbeitsstand: 30. Juli 2026\par}
+  \vspace{1.3cm}
+  {\color{TuringBlue}\rule{\textwidth}{1.2pt}}
+\end{titlepage}
+
+\tableofcontents
+\clearpage
+
+\input{RequirementReview/Turing_Kickoff_Systemabgleich_Content}
+
+\clearpage
+\section*{Verwendete Arbeitsgrundlagen}
+\addcontentsline{toc}{section}{Verwendete Arbeitsgrundlagen}
+\begin{itemize}[leftmargin=7mm,itemsep=2mm]
+  \item Kick-off-Präsentation \emph{Konzeption einer Informationsverarbeitungsarchitektur für Architecture as Code}, Stand 18.03.2026, insbesondere Folien 9 und 10.
+  \item Autoritatives CATIA-SysML-v2-Systemmodell, Arbeitsstand 30.07.2026.
+  \item Implementierungsbaseline des Turing Generators, Commit \texttt{26acace4\ldots c7705}, 3.808 bestandene Tests und manueller P9-Akzeptanzaudit.
+  \item Feature- und Requirement-Coverage-Matrix mit Zuordnung der zwölf Systemfunktionen zu acht Logical Components und zu den 39 Stakeholder Requirements.
+\end{itemize}
+
+\end{document}

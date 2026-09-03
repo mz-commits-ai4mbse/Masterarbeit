@@ -1,0 +1,72 @@
+\documentclass[12pt, a4paper, oneside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english, ngerman]{babel}
+\usepackage{caption}
+\captionsetup[table]{name=Tabelle}
+\captionsetup[figure]{name=Abbildung}
+\counterwithin{table}{section}
+\counterwithin{figure}{section}
+\addto\captionsngerman{
+  \renewcommand{\tablename}{Tabelle}
+  \renewcommand{\figurename}{Abbildung}
+  \renewcommand{\listtablename}{Tabellenverzeichnis}
+  \renewcommand{\listfigurename}{Abbildungsverzeichnis}}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{xltabular}
+\usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
+\addbibresource{literatur.bib} % Einbindung der Datenbankdatei
+\geometry{a4paper, left=30mm, right=25mm, top=25mm, bottom=25mm}
+\onehalfspacing
+
+
+\begin{document}
+
+% Formale Seiten (zwingend in Deutsch)
+\input{titelblatt}
+\newpage
+
+\input{selbststaendigkeitserklaerung}
+\newpage
+
+\input{sperrvermerk}
+\newpage
+
+\input{abstract}
+\newpage
+
+\tableofcontents
+\newpage
+\listoffigures % Erzeugt das Abbildungsverzeichnis
+\newpage
+\listoftables  % Erzeugt das Tabellenverzeichnis
+\newpage
+% Hier werden die Inhaltskapitel eingefügt
+\input{Kapitel/01_Einleitung}
+\newpage
+\input{Kapitel/02_Grundlagen_StandDerTechnik}
+\newpage
+\input{Kapitel/03_MethodischesVorgehen}
+\newpage
+\input{Kapitel/04_StakeholderAnalyse}
+\newpage
+\input{Kapitel/05_Architekturkonzeption}
+\newpage
+\input{Kapitel/06_PrototypischeUmsetzung}
+\newpage
+\input{Kapitel/07_Evaluation}
+\newpage
+\input{Kapitel/08_Diskussion}
+\newpage
+\input{Kapitel/09_Fazit}
+%\input{Kapitel/LSP}
+%\newpage
+%\input{Kapitel/LSR}
+%\newpage
+
+\printbibliography[heading=bibintoc, title={Literaturverzeichnis}]
+\end{document}

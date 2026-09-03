@@ -1,0 +1,105 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage[left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{tcolorbox}
+\usepackage{booktabs}
+\usepackage{csquotes} % Wichtig für \enquote{}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, shadows, fit, backgrounds}
+
+% Seitenränder
+\geometry{a4paper, left=2cm, right=2cm, top=2cm, bottom=2cm}
+
+% Definition der Farben für das Diagramm
+\definecolor{colorInput}{RGB}{230, 240, 250} 
+\definecolor{colorAI}{RGB}{255, 240, 220}    
+\definecolor{colorDet}{RGB}{220, 250, 220}   
+\definecolor{colorHuman}{RGB}{240, 230, 250} 
+\definecolor{colorProc}{RGB}{80, 80, 80}     
+
+% Titelformatierung
+\title{\textbf{Masterarbeit Proposal} \\ \vspace{0.5cm} \large \textit{Konzeption einer Informationsverarbeitungsarchitektur für \enquote{Architecture as Code}: Bewertungs- und Synthesestrategien zur sicheren Überführung von Bestandsdaten in SysML v2}}
+\author{\textbf{Moritz Diez}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% --- VERSIONS-UPDATE: FINAL CANDIDATE ---
+\section*{Versionshistorie}
+\begin{tcolorbox}[colback=gray!10!white, colframe=gray!50!black, title=\textbf{Update zu Version 0.1 (Architektur \& Assurance)}]
+    Gegenüber dem initialen Entwurf wurden folgende strategische Schärfungen vorgenommen:
+    \begin{itemize}[leftmargin=*, label=\textbullet]
+        \item \textbf{Fokus auf Architektur-Design:} Ziel ist nicht die Implementierung eines Generators, sondern die Konzeption der Informationsverarbeitungs-Pipeline.
+        \item \textbf{Input-Assessment (\enquote{Schuhschachtel-Bewertung}):} Einführung eines Bewertungsschritts für Eingangsdaten. Es wird untersucht, welche Constraints (z. B. Maschinenlesbarkeit vs. Screenshots) erfüllt sein müssen, damit ein KI-Agent halluzinationsfrei arbeiten kann.
+        \item \textbf{Effektive Interaktion (\enquote{Assurance}):} Definition des Ingenieurs als Kontrollorgan. Der Fokus liegt auf der Ermöglichung effektiven Eingreifens bei Mehrdeutigkeiten (Ontologie-Konflikten), nicht auf permanenter manueller Arbeit.
+        \item \textbf{Ontologie als Leitplanke:} Die Ontologie dient als Prüfrahmen für die Plug \& Play-Fähigkeit. Teil der Arbeit ist die Definition der Regeln dieser Leitplanke.
+        \item \textbf{Validierung nach ISO 42030:} Ersatzlose Streichung des Musterlösungs-Vergleichs zugunsten von Architektur-Qualitätsmetriken.
+    \end{itemize}
+\end{tcolorbox}
+\vspace{0.5cm}
+%-------------------------------------
+\newpage
+\section{Motivation: Automatisierung braucht Leitplanken}
+
+Im Brownfield-Engineering stehen Unternehmen vor der Herausforderung, heterogene Bestandsdaten (\enquote{Schuhschachtel}) in SysML v2 zu überführen. KI-basierte Agenten bieten hierfür enorme Potenziale, bergen aber ohne klare Architektur Risiken wie Halluzinationen oder Inkonsistenzen.
+
+Die zentrale Herausforderung ist nicht die Generierung von Code an sich, sondern die Bewertung und Aufbereitung der Eingangsdaten. Ein KI-Agent kann nur dann sauber arbeiten, wenn definiert ist, welche Qualität die Rohdaten haben müssen (z. B. strukturierte Datei vs. Screenshot) und wenn eine klare Ontologie als \enquote{Leitplanke} existiert. Fehlt diese Einordnung, \enquote{wackelt} das Modell bei mehrdeutigen Inputs.
+
+\textbf{Problemstellung:}
+Es fehlt eine Referenzarchitektur, die definiert, wie Eingangsdaten bewertet werden müssen, um automatisierbar zu sein, und wie der Ingenieur effektiv als Kontrollorgan eingebunden wird. Das Ziel ist keine manuelle Dauerüberwachung, sondern eine Architektur, die Mehrdeutigkeiten erkennt und dem Ingenieur gezielte Vorschläge zur Auflösung macht (\enquote{Effective Intervention}), um die Konsistenz und Plug \& Play-Fähigkeit des Zielmodells sicherzustellen.
+
+\section{Forschungsleitende Fragestellungen}
+
+Das Ziel ist die Konzeption einer Architektur für die sichere Informationsverarbeitung im AaC-Kontext.
+
+\textbf{Hauptforschungsfrage (HF):}
+Wie muss eine Informationsverarbeitungsarchitektur gestaltet sein, um heterogene Bestandsdaten durch ein systematisches Bewertungs- und Synthese-Framework sicher in valide SysML v2 Strukturen zu überführen?
+
+Zur Beantwortung der HF werden folgende Teilforschungsfragen (TF) adressiert:
+
+\textbf{TF 1 (Input Assessment \& Constraints):}
+Welche Anforderungen (Constraints) müssen an die Eingangsdaten gestellt werden, damit ein KI-Agent zuverlässig arbeiten kann? Es wird ein Bewertungsrahmen erarbeitet, der die \enquote{Schuhschachtel-Inhalte} nach Automatisierbarkeit klassifiziert (z. B. Maschinenlesbarkeit, Ontologie-Konformität).
+
+\textbf{TF 2 (Assurance \& Effective Intervention):}
+Wie wird der Ingenieur als Kontrollorgan in die Architektur eingebunden, um bei detektierten Mehrdeutigkeiten effektiv einzugreifen? Hierbei steht das Design der Interaktion im Fokus: Wie kann der Agent den Nutzer gezielt zur Ergänzung fehlender Informationen anleiten, ohne den Automatisierungsgrad unnötig zu senken?
+
+\textbf{TF 3 (Leitplanken-Design):}
+Wie müssen die ontologischen Regeln (\enquote{Leitplanken}) gestaltet sein, gegen die die Eingangsdaten geprüft werden, um die Plug \& Play-Fähigkeit der resultierenden SysML v2 Modelle (Modularität) zu gewährleisten?
+\newpage
+\section{Methodischer Ansatz}
+
+Der Ansatz fokussiert auf das Architektur-Design und die Definition von Qualitäts-Gates.
+
+\subsection*{Phase A: Data Assessment Framework (Die Bewertung)}
+Bevor eine Synthese stattfindet, durchlaufen Daten einen \enquote{Assessment-Layer}. Ein KI-Agent (Sortier-Funktion) analysiert die Rohdaten nicht nur inhaltlich, sondern bewertet deren Qualität: Liegen die Daten maschinenlesbar vor? Sind sie ontologisch eindeutig? Daten, die die Constraints verletzen, werden zur manuellen Klärung ausgesteuert.
+
+\subsection*{Phase B: Architecture Design (Die Pipeline)}
+Kern der Arbeit ist das Design der Verarbeitungspipeline. Sie definiert den Fluss von der Bewertung über den Abgleich mit der Ontologie (Leitplanke) bis zur Synthese. Ein wesentliches Element ist der \enquote{Ambiguity Handler}: Wenn die Daten nicht eindeutig sind (Ontologie-Konflikt), fordert das System gezielt eine menschliche Entscheidung an. Der Ingenieur agiert hier als \enquote{Supervisor}, unterstützt durch Lösungsvorschläge des Agenten.
+
+\subsection*{Phase C: Validierung (ISO 42030)}
+Die Bewertung der Architektur erfolgt anhand von Metriken der ISO 42030, die die bisherige Validierung ersetzen. Bewertet wird die Güte der Architektur, nicht die inhaltliche Korrektheit einer spezifischen Musterlösung.
+
+
+\section{Geplante Validierung (ISO 42030)}
+
+Die Bewertung der konzipierten Architektur erfolgt nicht gegen eine Musterlösung, sondern anhand von Qualitätsmetriken gemäß ISO/IEC/IEEE 42030:
+\begin{enumerate}
+    \item \textbf{Completeness (Vollständigkeit):} Wurden alle relevanten Informationen aus den bewerteten Eingangsdaten in das Modell überführt?
+    \item \textbf{Consistency (Konsistenz):} Widerspricht das generierte Modell den Regeln der definierten Ontologie-Leitplanken?
+    \item \textbf{Modularity (Modularität):} Gewährleistet die Architektur, dass resultierende Modelle ohne Refactoring in größere Kontexte integriert werden können (Plug \& Play)?
+\end{enumerate}
+
+\section{Erwarteter Erkenntnisgewinn}
+
+Die Arbeit liefert eine Referenzarchitektur für die Automatisierung im MBSE. Sie zeigt auf, dass der Schlüssel zur erfolgreichen Generierung (\enquote{Architecture as Code}) nicht allein in der KI-Leistung liegt, sondern in der vorgelagerten Bewertung der Datenqualität und der Definition klarer ontologischer Leitplanken, die eine effektive menschliche Kontrolle ermöglichen.
+
+\end{document}

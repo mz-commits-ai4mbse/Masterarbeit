@@ -1,0 +1,103 @@
+\documentclass[a4paper,10pt]{article}
+
+% --- Pakete ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{titlesec}
+\usepackage{parskip}
+
+% --- Design-Anpassungen ---
+\definecolor{rsBlue}{RGB}{0, 51, 102} % R+S Dunkelblau-Ton
+\definecolor{highlight}{RGB}{230, 240, 255} % Helles Hintergrundblau
+
+% Überschriften kompakt und farbig
+\titleformat{\section}{\color{rsBlue}\large\bfseries\uppercase}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{5pt}
+
+% Listen kompakt
+\setlist[itemize]{leftmargin=*, nosep, label={\scriptsize\textbullet}}
+
+% Boxen-Stil
+\newtcolorbox{productbox}{
+    colback=highlight, 
+    colframe=rsBlue, 
+    boxrule=0.5mm, 
+    arc=2mm, 
+    title=\textbf{Das kommerzielle Zielprodukt},
+    coltitle=white,
+    fonttitle=\small\bfseries
+}
+
+\begin{document}
+
+% --- KOPFZEILE ---
+\begin{center}
+    {\Large \textbf{Konzeptpapier: AI-Driven \glqq Everything is Code\grqq{}}}\\[0.3em]
+    {\small Masterarbeit Proposal | Fokus: Systems Engineering Automation \& Semantic Standards}
+\end{center}
+
+\vspace{0.3cm}
+
+% --- 1. AUSGANGSLAGE & PAINS (WARUM?) ---
+\section{Ausgangslage: Die aktuellen Herausforderungen (Pains)}
+Obwohl Systems Engineering (SE) etabliert ist, leidet die Effizienz unter Medienbrüchen und mangelnder Standardisierung.
+\begin{itemize}
+    \item \textbf{Inkonsistenz (\glqq Dialekte\grqq):} Ingenieure modellieren gleiche Sachverhalte unterschiedlich (z.\,B. \textit{Netzteil} vs. \textit{PowerSupply}). Dies verhindert automatisierte Analysen.
+    \item \textbf{Medienbrüche:} Anforderungen liegen oft als unstrukturierter Text (Lastenhefte, Word) vor und müssen manuell in Modelle übersetzt werden.
+    \item \textbf{Hoher manueller Aufwand:} Qualitätsprüfungen (Reviews) sind zeitintensiv und fehleranfällig.
+    \item \textbf{SysML v2 Hürde:} Der Umstieg auf textbasierte Modellierung (\glqq Everything is Code\grqq) erfordert hohe Syntax-Kenntnisse, die oft fehlen.
+\end{itemize}
+
+% --- 2. DIE LÖSUNG (WAS?) ---
+\section{Lösungskonzept: Der \glqq R+S Semantic Standardizer\grqq}
+Entwicklung eines KI-gestützten Frameworks, das unstrukturierte Inputs (Text oder \glqq Dirty Models\grqq) in standardisierten, validen SysML v2 Code transformiert.
+
+\textbf{Kern-Komponenten:}
+\begin{enumerate}[nosep, label=\textbf{\arabic*.}]
+    \item \textbf{Die \glqq Single Source of Truth\grqq{} (Bibliothek/Ontologie):} Eine definierte SysML v2 Library, die alle erlaubten Bausteine (R+S Standard) festlegt.
+    \item \textbf{Die Transformation Engine (KI):} Ein Tool, das Inputs semantisch analysiert und auf die Bibliothek mappt (Generator \& Refactoring).
+    \item \textbf{Der Validierungs-Layer:} Automatisierte Prüfung auf Logik, Traceability und Vollständigkeit (\glqq Linter\grqq).
+\end{enumerate}
+
+% --- 3. METHODIK & VORGEHEN (WIE?) ---
+\section{Inhalt der Masterarbeit (Scope)}
+Die Arbeit gliedert sich in architektonische Definition und softwaretechnische Implementierung.
+\begin{itemize}
+    \item \textbf{Definition der Ontologie:} Erstellung einer exemplarischen SysML v2 Bibliothek für einen konkreten Anwendungsfall (z.\,B. IoT-Modul), inkl. Definition von Pflichtfeldern (Multiplizitäten).
+    \item \textbf{Implementierung des Parsers:} Entwicklung eines Python-basierten Tools (Backend: Google Gemini API), das Text/Code einliest.
+    \item \textbf{Entwicklung der \glqq Missing-Link-Logik\grqq:} Strategien für den Umgang mit fehlenden Informationen (autom. Platzhalter vs. Standardwerte).
+    \item \textbf{Proof of Concept (PoC):} Validierung durch Migration eines \glqq Legacy-Datensatzes\grqq{} (Text zu Modell) in eine saubere Struktur.
+\end{itemize}
+
+% --- 4. BENÖTIGTE RESSOURCEN (WAS ICH BRAUCHE) ---
+\section{Ressourcen-Anforderung an R+S}
+Damit der \glqq Code\grqq{} R+S-konform ist, werden folgende Inputs benötigt:
+\begin{itemize}
+    \item \textbf{Ziel-Struktur:} Existierende SysML-Bibliotheken, Namenskonventionen oder Architektur-Richtlinien (falls nicht vorhanden: Mandat zur Erstellung im Rahmen der Arbeit).
+    \item \textbf{Infrastruktur:} Zugang zu SysML v2 Ausführungsumgebung (Jupyter/Catia Magic Beta) und Git-Repository.
+    \item \textbf{KI-Zugang:} API-Key oder Enterprise-Zugang zu LLMs (Gemini/Azure OpenAI).
+    \item \textbf{Daten:} Ein Referenz-Projekt (\glqq Gold Standard\grqq) als Trainings-Schablone.
+\end{itemize}
+
+% --- 5. ERGEBNISSE & MEHRWERT (WAS ICH LIEFERE) ---
+\section{Deliverables \& Mehrwert}
+\begin{itemize}
+    \item \textbf{R+S IoT Library (Exemplarisch):} Eine saubere, wiederverwendbare SysML v2 Baukasten-Struktur.
+    \item \textbf{Funktionsfähiger Prototyp:} Tool zur automatisierten Generierung von Modellen aus Text/Altdaten.
+    \item \textbf{Prozess-Blaupause:} Ein Leitfaden für die Einführung von \glqq AI-assisted Everything is Code\grqq.
+\end{itemize}
+
+\vspace{0.4cm}
+
+\begin{productbox}
+    \textbf{Vision: Das kommerzielle Produkt}\\
+    Das Ergebnis bildet die Basis für den \textbf{\glqq R+S Automated Model Audit\grqq}.\\
+    Dienstleistung: Kunden laden ihre (alten/chaotischen) Modelle hoch. Das Tool prüft diese vollautomatisch gegen Standards, identifiziert Fehler (\glqq Muda\grqq) und liefert ein bereinigtes, standardkonformes Modell zurück (\textit{Refactoring-as-a-Service}).
+\end{productbox}
+
+\end{document}

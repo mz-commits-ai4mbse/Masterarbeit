@@ -1,0 +1,62 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{geometry}
+\usepackage{helvet}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+% Seitenränder anpassen
+\geometry{left=2cm, right=2cm, top=2cm, bottom=2cm}
+
+% Schriftartwechsel auf Sans-Serif
+\renewcommand{\familydefault}{\sfdefault}
+
+% Farben definieren
+\definecolor{hmblue}{RGB}{0, 51, 102} % HM-Blau
+\definecolor{white}{RGB}{255, 255, 255}
+
+\begin{document}
+
+\section*{Projektsteckbrief}
+\textbf{Thema:} Generative 'Architecture is Code': KI-basierte Synthese modularer SysML v2 Modelle aus heterogenen Bestandsdaten
+
+\vspace{0.5cm}
+
+\begin{tabularx}{\textwidth}{|>{\bfseries}l|X|}
+\hline
+\rowcolor{hmblue} \textcolor{white}{Bereich} & \textcolor{white}{Inhalt} \\ \hline
+1. Ausgangslage & 
+Im Brownfield-Engineering liegen Systeminformationen unstrukturiert und fragmentiert vor (CAD, Excel, PDF). Die manuelle Überführung in MBSE ist fehleranfällig und führt zu monolithischen Modellen ('Silo-Problem'). Implizites Wissen geht bei der reinen Datenkonvertierung verloren. \\ \hline
+2. Zielsetzung & 
+Entwicklung eines KI-gestützten 'AiC-Generators' unter Nutzung von SysML v2. Das Ziel ist die automatisierte Erzeugung valider, modularer Systemarchitekturen aus Altdaten. Fehlende Schnittstellen sollen durch LLM-basierte Mustererkennung antizipiert werden. \\ \hline
+3. Vorgehen & 
+\textbf{1. Analyse:} State-of-the-Art Recherche zu SysML v2 und Generative Engineering. \newline
+\textbf{2. Konzeption:} Entwurf der dreistufigen Pipeline (Ingestion, Pattern Matching, Synthesis). \newline
+\textbf{3. Implementierung:} Entwicklung des Prototypen. \newline
+\textbf{4. Validierung:} Durchführung von Blind-Tests und Integration isolierter Teilmodelle. \\ \hline
+4. Nutzen & 
+\textbullet\ Automatisierte Digitalisierung von Bestandsanlagen ('Schuhschachtel' zu Modell). \newline
+\textbullet\ Vermeidung von 'Dead-End'-Architekturen durch intelligente Antizipation. \newline
+\textbullet\ Sicherstellung der Modularität durch standardisierten SysML v2 Code. \\ \hline
+5. Zeitraum & 
+15.03.2026 bis 15.09.2026 (6 Monate) \\ \hline
+6. Beteiligte & 
+\textbf{Bearbeiter:} Moritz Diez \newline
+\textbf{Betreuer HM:} [Name einfügen] \newline
+\textbf{Firmenbetreuer:} Kai Heinrich (R + S)\\ \hline
+\end{tabularx}
+
+\vspace{1cm}
+\textbf{Meilensteinplan (Grob):}
+\begin{itemize}
+    \item \textbf{M1 (15.04.):} Konzeptreview und Anforderungsdefinition abgeschlossen.
+    \item \textbf{M2 (31.05.):} Prototyp des Generators funktionsfähig implementiert.
+    \item \textbf{M3 (15.07.):} Validierung durch Fallstudien erfolgreich durchgeführt.
+    \item \textbf{M4 (15.09.):} Abgabe der Masterarbeit.
+\end{itemize}
+
+\end{document}

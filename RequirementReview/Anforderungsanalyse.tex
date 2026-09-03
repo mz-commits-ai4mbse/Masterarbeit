@@ -1,0 +1,138 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{geometry}
+
+\geometry{a4paper, margin=2.5cm}
+
+\begin{document}
+
+\section*{Anforderungsübersicht und Traceability-Matrix}
+
+\begin{table}[ht]
+\small
+\centering
+\begin{tabularx}{\textwidth}{@{} l X X X @{}}
+\toprule
+\textbf{Stakeholder-ID} & \textbf{Bezeichnung} & \textbf{Stakeholder Requirement} & \textbf{Refined by System-ID} \\
+\midrule
+
+SR\_1 & Automated Model Synthesis &
+The system shall automatically generate valid SysML v2 code from heterogeneous, unstructured legacy data. &
+SYS\_RQ\_1, SYS\_RQ\_3, SYS\_RQ\_5, SYS\_RQ\_6, SYS\_RQ\_11 \\
+
+\addlinespace
+SR\_2 & Modular Architecture &
+The generated models shall be structured as independent modules to allow non-destructive integration of new components. &
+SYS\_RQ\_10 \\
+
+\addlinespace
+SR\_3 & Interface Anticipation &
+The system shall use architectural patterns to anticipate required interfaces not explicitly present in the source data. &
+SYS\_RQ\_8 \\
+
+\addlinespace
+SR\_4 & Expert Validation &
+The system shall provide mechanisms for domain experts to validate and refine AI-generated architectural hypotheses. &
+SYS\_RQ\_12, SYS\_RQ\_13, SYS\_RQ\_14 \\
+
+\addlinespace
+SR\_5 & Model Consistency &
+The synthesis process shall ensure that integrated sub-models maintain overall system consistency. &
+SYS\_RQ\_7, SYS\_RQ\_9, SYS\_RQ\_11, SYS\_RQ\_15 \\
+
+\addlinespace
+SR\_6 & Data Prioritization &
+The system shall resolve data conflicts by prioritizing source information based on its reliability and relevance to the physical product. &
+SYS\_RQ\_4, SYS\_RQ\_9 \\
+
+\addlinespace
+SR\_7 & Semantic Standard &
+The system shall align all extracted information with a standardized technical vocabulary to ensure inter-tool compatibility. &
+SYS\_RQ\_2 \\
+
+\bottomrule
+\end{tabularx}
+\end{table}
+\newpage
+\subsection*{Detaillierte Systemanforderungen}
+
+\begin{table}[ht]
+\small
+\centering
+\begin{tabularx}{\textwidth}{@{} l X X l @{}}
+\toprule
+\textbf{System-ID} & \textbf{Bezeichnung} & \textbf{System Requirement} & \textbf{Refines} \\
+\midrule
+
+SYS\_RQ\_1 & Multi-Format Ingestion &
+The system shall implement specialized parsers for Excel, PDF, and CAD metadata fragments. &
+SR\_1 \\
+
+SYS\_RQ\_2 & JSON Normalization &
+All ingested data fragments shall be normalized into a standardized JSON format to ensure interoperability. &
+SR\_7 \\
+
+SYS\_RQ\_3 & Data Slicing &
+The system shall fragment standardized data into small, context-preserving packages for reliable LLM processing. &
+SR\_1 \\
+
+SYS\_RQ\_4 & Source Reliability Tagging &
+Every data fragment shall be tagged with its source origin and a reliability score. &
+SR\_6 \\
+
+SYS\_RQ\_5 & Orchestrated Task Allocation &
+The Orchestrator shall dynamically invoke specialized agents based on the data type and quality. &
+SR\_1 \\
+
+SYS\_RQ\_6 & Multi-Agent Persona Ensemble &
+Each synthesis task shall be processed by at least three agents with varying temperatures and skills. &
+SR\_1 \\
+
+SYS\_RQ\_7 & Variance Quantification &
+The system shall compute the statistical variance between results of the agent ensemble to assess reproducibility. &
+SR\_5 \\
+
+SYS\_RQ\_8 & Pattern Matching &
+Specialized agents shall use an architectural pattern library to anticipate missing system structures. &
+SR\_3 \\
+
+SYS\_RQ\_9 & Semantic Conflict Resolution &
+Contradictory information shall be resolved using a rule-based prioritization matrix. &
+SR\_6, SR\_5 \\
+
+SYS\_RQ\_10 & Modular Code Synthesis &
+The system shall generate SysML v2 code using namespaces and usages to ensure plug-and-play modularity. &
+SR\_2 \\
+
+SYS\_RQ\_11 & Grammar Validation &
+All generated SysML v2 fragments shall be validated against the formal KerML abstract syntax. &
+SR\_1, SR\_5 \\
+
+SYS\_RQ\_12 & Graphical User Interface &
+The system shall provide a UI for managing data ingestion and reviewing synthesis results. &
+SR\_4 \\
+
+SYS\_RQ\_13 & Variance Reporting &
+The UI shall highlight differences and similarities between agent results for expert evaluation. &
+SR\_4 \\
+
+SYS\_RQ\_14 & Expert Decision Gate &
+The Orchestrator shall require manual confirmation before committing a low-confidence synthesis result. &
+SR\_4 \\
+
+SYS\_RQ\_15 & Traceability Logging &
+The system shall maintain a log linking every generated SysML v2 element back to its source data fragment. &
+SR\_5 \\
+
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\end{document}

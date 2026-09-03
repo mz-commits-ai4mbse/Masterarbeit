@@ -1,0 +1,546 @@
+% -----------------------------------------------------------------------------
+% Inhaltsteil zum direkten Einbinden in die Masterarbeit
+% Benoetigte Pakete:
+% booktabs, tabularx, longtable, array, ragged2e, xcolor, tcolorbox,
+% enumitem, hyperref, microtype
+% -----------------------------------------------------------------------------
+
+\section{Systemfunktionen und Feature-Abdeckung}
+\label{sec:systemfunktionen_featureabdeckung}
+
+\subsection{Zweck der funktionsorientierten Sicht}
+
+Die bisherige Darstellung nach Logical Components eignet sich insbesondere zur
+Beschreibung der inneren Systemarchitektur: Sie zeigt, welche logischen
+Verantwortungsbereiche vorgesehen sind und wie diese miteinander interagieren.
+Für die Beantwortung der Frage, \emph{was das System fachlich leistet}, ist eine
+funktionsorientierte Sicht jedoch verständlicher.
+
+Die nachfolgende Feature-Übersicht wird deshalb anhand der zwölf
+Systemfunktionen strukturiert. Jede Funktion beschreibt einen abgegrenzten
+fachlichen Beitrag des Turing Generators. Die Logical Components bleiben
+weiterhin relevant, dienen hier jedoch nur als Realisierungsstruktur und nicht
+als primäre Gliederung der Features.
+
+\begin{tcolorbox}[
+  enhanced,
+  breakable,
+  colback=blue!3,
+  colframe=TuringBlue,
+  title={Lesart der folgenden Darstellung},
+  fonttitle=\bfseries,
+  boxrule=0.8pt,
+  arc=2mm
+]
+Die Systemfunktionen beschreiben den vollständigen angestrebten Systemumfang.
+Der Implementierungsstatus zeigt dagegen, welcher Anteil davon in der
+aktuellen Phase-F/P-Baseline bereits umgesetzt und verifiziert ist. Eine
+Funktion kann daher bereits einen demonstrierbaren Kern besitzen und trotzdem
+als \emph{teilweise implementiert} bewertet werden, wenn ihr vollständiger
+Zielumfang noch nicht erreicht ist.
+\end{tcolorbox}
+
+\subsection{Was macht das System?}
+
+Auf einer hohen Abstraktionsebene verarbeitet der Turing Generator
+heterogene technische Bestandsinformationen in vier zusammenhängenden
+Funktionsbereichen.
+
+\subsubsection*{1. Kontext schaffen und Eingangsinformationen bewerten}
+
+Zunächst verwaltet das System Projekte und die ihnen zugeordneten Quellen.
+Anschließend werden die verfügbaren Informationen extrahiert, auf ihre
+Verarbeitbarkeit geprüft, semantisch eingeordnet und hinsichtlich ihrer
+Abdeckung bewertet.
+
+\begin{itemize}[leftmargin=7mm,itemsep=1mm]
+  \item \textbf{SF\_001} verwaltet Projekte, Quellen und deren Kontext.
+  \item \textbf{SF\_002} bewertet und bereitet Quellinformationen auf.
+  \item \textbf{SF\_003} sorgt für eine konsistente technische Bedeutung.
+  \item \textbf{SF\_004} bewertet, welche Modellbereiche durch Evidenz gestützt sind.
+\end{itemize}
+
+\subsubsection*{2. Verarbeitung steuern und menschliche Entscheidungen einbinden}
+
+Die Verarbeitung wird nicht als starre lineare Kette ausgeführt. Das System
+konfiguriert Processing Runs, erzeugt bei Bedarf alternative fachliche
+Interpretationen und bindet den Menschen an den entscheidenden Stellen als
+Review- und Freigabeinstanz ein.
+
+\begin{itemize}[leftmargin=7mm,itemsep=1mm]
+  \item \textbf{SF\_005} konfiguriert und orchestriert Processing Runs.
+  \item \textbf{SF\_006} erzeugt und vergleicht fachliche Kandidaten.
+  \item \textbf{SF\_007} unterstützt Review, Konfliktlösung und Freigabe.
+\end{itemize}
+
+\subsubsection*{3. Architektur ableiten, validieren und als SysML v2 bereitstellen}
+
+Aus geprüften Informationen sollen strukturierte Architekturinformationen
+abgeleitet werden. Diese werden gegen Struktur-, Konsistenz- und
+Integrationskriterien geprüft und schließlich als textuelle SysML-v2-Artefakte
+bereitgestellt.
+
+\begin{itemize}[leftmargin=7mm,itemsep=1mm]
+  \item \textbf{SF\_008} leitet Architekturinformation ab und strukturiert sie.
+  \item \textbf{SF\_009} validiert und integriert Architekturinhalt.
+  \item \textbf{SF\_010} erzeugt und prüft SysML-v2-Architekturartefakte.
+\end{itemize}
+
+\subsubsection*{4. Evidenz, Traceability und Transparenz sicherstellen}
+
+Zwei Funktionen wirken über den gesamten Verarbeitungsweg hinweg. Sie sorgen
+dafür, dass Ergebnisse nicht nur erzeugt, sondern auch nachvollzogen,
+rekonstruiert und für den Nutzer verständlich dargestellt werden können.
+
+\begin{itemize}[leftmargin=7mm,itemsep=1mm]
+  \item \textbf{SF\_011} erhält Evidenz, Provenienz und Traceability.
+  \item \textbf{SF\_012} stellt Status, Review-Bedarf und Historie dar.
+\end{itemize}
+
+\begin{tcolorbox}[
+  enhanced,
+  breakable,
+  colback=gray!4,
+  colframe=TuringSlate,
+  title={Zusammenspiel der Funktionen},
+  fonttitle=\bfseries,
+  arc=2mm
+]
+Die Funktionen bilden kein reines Fließband. Semantische Konflikte,
+unzureichende Evidenz, Review-Entscheidungen oder Validierungsbefunde können
+Rücksprünge in frühere Funktionen auslösen. SF\_005 koordiniert diese
+Verarbeitung, während SF\_011 und SF\_012 den gesamten Ablauf mit Evidenz,
+Traceability und Transparenz unterstützen.
+\end{tcolorbox}
+\pagebreak
+\subsection{Kompakte Funktionsübersicht}
+
+\renewcommand{\arraystretch}{1.18}
+\small
+\begin{longtable}{
+  >{\RaggedRight\arraybackslash}p{1.45cm}
+  >{\RaggedRight\arraybackslash}p{4.1cm}
+  >{\RaggedRight\arraybackslash}p{6.3cm}
+  >{\RaggedRight\arraybackslash}p{2.8cm}
+}
+\caption{Funktionsorientierte Übersicht des Turing Generators}
+\label{tab:function_summary}\\
+\toprule
+\textbf{ID} & \textbf{Systemfunktion} & \textbf{Verständliche Kurzbeschreibung} & \textbf{Aktueller Status} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Systemfunktion} & \textbf{Verständliche Kurzbeschreibung} & \textbf{Aktueller Status} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r}{\footnotesize Fortsetzung auf der nächsten Seite}\\
+\endfoot
+\bottomrule
+\endlastfoot
+
+SF\_001 & Manage Engineering Project and Source Context &
+Verwaltet getrennte Engineering-Projekte und die zugehörigen Quellen, sodass
+jede Verarbeitung im richtigen fachlichen Kontext erfolgt. &
+\statuspartial{Teilweise implementiert} \\
+
+SF\_002 & Assess and Prepare Source Information &
+Liest unterstützte Quellen aus, bewertet ihre Qualität und bereitet die
+verwendbaren Informationen für die weitere Verarbeitung vor. &
+\statuspartial{Teilweise implementiert} \\
+
+SF\_003 & Apply Semantic Governance &
+Gleicht Begriffe und Bedeutungen mit Vokabularen und Ontologien ab und macht
+semantische Konflikte sichtbar. &
+\statuspartial{Teilweise implementiert} \\
+
+SF\_004 & Assess Coverage and Evidence Sufficiency &
+Zeigt, welche Zielbereiche durch vorhandene Informationen gestützt sind und
+wo belastbare Evidenz fehlt. &
+\statuspartial{Teilweise implementiert} \\
+
+SF\_005 & Configure and Orchestrate Processing Runs &
+Konfiguriert Verarbeitungsläufe, steuert ihre Schritte und erzwingt notwendige
+Qualitäts- und Review-Gates. &
+\statuspartial{Teilweise implementiert} \\
+
+SF\_006 & Generate and Compare Engineering Candidates &
+Erzeugt plausible fachliche Interpretationen, vergleicht Alternativen und
+bereitet Unterschiede für den Review auf. &
+\statusdone{Implementiert und verifiziert} \\
+
+SF\_007 & Support Human Review and Approval &
+Ermöglicht dem Menschen, Ergebnisse zu prüfen, anzupassen, auszuwählen,
+abzulehnen und nachvollziehbar freizugeben. &
+\statuspartial{Teilweise implementiert} \\
+
+SF\_008 & Derive and Structure Architecture Information &
+Überführt geprüfte Informationen in strukturierte, modulare
+Architekturkandidaten. &
+\statusopen{Architektur definiert} \\
+
+SF\_009 & Validate and Integrate Architecture Content &
+Prüft Architekturinhalt auf Konsistenz, Randbedingungen und
+Integrationsfähigkeit. &
+\statusopen{Architektur definiert} \\
+
+SF\_010 & Generate and Validate SysML v2 Architecture Artifacts &
+Erzeugt traceable Architecture-as-Code-Artefakte in SysML-v2-Notation und
+prüft deren textuelle Konformität. &
+\statusopen{Architektur definiert} \\
+
+SF\_011 & Maintain Processing Evidence and Traceability &
+Hält Quellen, Verarbeitungsschritte, Entscheidungen, Ergebnisse und Artefakte
+durchgängig nachvollziehbar. &
+\statusdone{Implementiert und verifiziert} \\
+
+SF\_012 & Present Processing Status and History &
+Zeigt dem Nutzer den aktuellen Zustand, offene Review-Bedarfe, Auffälligkeiten
+und die bisherige Verarbeitungshistorie. &
+\statusdone{Implementiert und verifiziert} \\
+
+\end{longtable}
+\normalsize
+
+\subsection{Feature- und Stakeholder-Requirement-Abdeckung nach Systemfunktion}
+
+Die nachfolgenden Funktionsprofile verbinden vier Perspektiven:
+
+\begin{enumerate}[leftmargin=8mm,itemsep=1mm]
+  \item die fachliche Bedeutung der Systemfunktion,
+  \item die durch sie abgedeckten Stakeholder Requirements,
+  \item den aktuellen Implementierungsstand,
+  \item den noch offenen Zielumfang.
+\end{enumerate}
+
+Die Zuordnung der Stakeholder Requirements wurde transitiv über die
+System Requirements ermittelt. Die System Requirements bleiben in dieser
+Darstellung bewusst ausgeblendet, da sie für die fachliche Übersicht zu
+detailliert wären.
+
+\newcommand{\featureprofile}[7]{%
+\begin{tcolorbox}[
+  enhanced,
+  breakable,
+  colback=white,
+  colframe=TuringBlue,
+  title={#1 -- #2},
+  fonttitle=\bfseries,
+  boxrule=0.8pt,
+  arc=2mm,
+  before skip=4mm,
+  after skip=4mm
+]
+\textbf{Fachlicher Zweck}\par
+#3
+
+\medskip
+\textbf{Abgedeckte Stakeholder Requirements}\par
+#4
+
+\medskip
+\begin{tabularx}{\linewidth}{>{\bfseries\RaggedRight\arraybackslash}p{3.2cm}X}
+Status & #5\\
+Bereits vorhanden & #6\\
+Verbleibender Zielumfang & #7\\
+\end{tabularx}
+\end{tcolorbox}
+}
+
+\featureprofile
+{SF\_001}
+{Manage Engineering Project and Source Context}
+{Die Funktion stellt sicher, dass jede Verarbeitung einem eindeutigen
+Engineering-Projekt und den richtigen Quellen zugeordnet ist. Sie verhindert
+die Vermischung verschiedener Projekte und schafft den Kontext für alle
+weiteren Verarbeitungsschritte.}
+{\textbf{SR\_005} Source Relevance Classification;
+\textbf{SR\_019} Source Traceability;
+\textbf{SR\_029} Multiple Project Support;
+\textbf{SR\_030} Project Information Isolation;
+\textbf{SR\_038} Multiple Source Support;
+\textbf{SR\_039} Processing History Traceability.}
+{\statuspartial{Teilweise implementiert}; der zentrale Projekt- und
+Quellenkontext ist demonstrierbar.}
+{Persistente Projekt-Workspaces und Manifeste, sechsstellige Projektidentität,
+Projektanlage und Wiederöffnung, Projektisolation, projektlokale
+Quellenregistrierung, Source IDs, Rollen, Hashes, Dublettenprüfung,
+Projektauswahl und Source Upload.}
+{Gemeinsame Verarbeitung mehrerer Quellen innerhalb eines Engineering Runs,
+Bearbeiten bestehender Projekte sowie kontrolliertes Löschen von Projekten und
+zugeordneten Daten.}
+\pagebreak
+\featureprofile
+{SF\_002}
+{Assess and Prepare Source Information}
+{Die Funktion macht heterogene Quellen technisch und fachlich nutzbar. Sie
+extrahiert Informationen, bewertet deren Qualität und identifiziert Lücken,
+Widersprüche oder Randbedingungsverletzungen vor der weiteren Nutzung.}
+{\textbf{SR\_001} Input Data Suitability Assessment;
+\textbf{SR\_002} Input Data Completeness Check;
+\textbf{SR\_003} Input Data Consistency Check;
+\textbf{SR\_004} Source Reliability Classification;
+\textbf{SR\_005} Source Relevance Classification;
+\textbf{SR\_014} Explanation of Generated Engineering Results;
+\textbf{SR\_019} Source Traceability;
+\textbf{SR\_023} Input Constraint Violation Detection;
+\textbf{SR\_026} Legacy Data Completion;
+\textbf{SR\_034} Insufficient Evidence Identification;
+\textbf{SR\_037} Non-Textual Engineering Information;
+\textbf{SR\_038} Multiple Source Support.}
+{\statuspartial{Teilweise implementiert}; die textuelle Ingestion und
+Bewertung sind demonstrierbar.}
+{Deterministische Source Projections für Text, Markdown, JSON, CSV, TSV und
+PDF-Textschichten; Phase-F-Assessment mit Gaps, Ambiguities, Risks und
+Review Questions; projekt- und rungebundene Verarbeitungsvorbereitung.}
+{Kontrollierte Datenvervollständigung, vollständige
+quellenübergreifende Konsistenzbewertung sowie OCR,
+Zeichnungsinterpretation und allgemeine multimodale Extraktion.}
+
+\featureprofile
+{SF\_003}
+{Apply Semantic Governance}
+{Die Funktion sorgt dafür, dass gleiche oder ähnliche Begriffe konsistent
+interpretiert werden. Sie bindet Vokabulare und Ontologien ein und macht
+semantische Konflikte für nachfolgende Entscheidungen sichtbar.}
+{\textbf{SR\_011} Ambiguity Detection;
+\textbf{SR\_014} Explanation of Generated Engineering Results;
+\textbf{SR\_016} Technical Vocabulary Alignment;
+\textbf{SR\_017} Semantic Equivalence Handling;
+\textbf{SR\_018} Ontology Conflict Detection.}
+{\statuspartial{Teilweise implementiert}; die semantische Infrastruktur ist
+vorhanden, aber noch nicht über den gesamten Zielprozess geschlossen.}
+{Versionierte Ontologie-Snapshots, Ontology Registry, Turing Core Vocabulary,
+Glossary Candidates, Terminology Decisions, Terminology Mappings und
+semantischer Multi-Agenten-Konsens mit sichtbarer Varianz.}
+{Vollständige Ontologie-Konfliktlösung und iterative semantische Rückkopplung
+aus späteren Architektur- und Modellvalidierungen.}
+\pagebreak
+\featureprofile
+{SF\_004}
+{Assess Coverage and Evidence Sufficiency}
+{Die Funktion beantwortet, welche Teile des angestrebten Modells durch
+vorhandene Informationen gestützt sind. Sie verhindert, dass aus unzureichender
+Evidenz unzulässige technische Schlussfolgerungen entstehen.}
+{\textbf{SR\_014} Explanation of Generated Engineering Results;
+\textbf{SR\_033} Engineering Information Coverage;
+\textbf{SR\_034} Insufficient Evidence Identification;
+\textbf{SR\_036} Approved Information Boundary.}
+{\statuspartial{Teilweise implementiert}; Preliminary Coverage ist
+implementiert, Approved Generation Readiness noch nicht.}
+{Deterministische Preliminary-Coverage-Bewertung, Support Profile,
+Unterscheidung von covered, uncovered und attention required sowie
+Darstellung der Coverage-Evidence im Dashboard.}
+{Verbindliche Evidence-Sufficiency-Entscheidung für modellbildende Schritte
+und die spätere Approved Generation Readiness.}
+
+\featureprofile
+{SF\_005}
+{Configure and Orchestrate Processing Runs}
+{Die Funktion bildet das operative Rückgrat des Systems. Sie bindet Kontext,
+Rezepte und Agentenprofile, startet Verarbeitungsschritte und kontrolliert
+Zustände, Gates, Retry, Recovery und Nachfolgeläufe.}
+{\textbf{SR\_001} Input Data Suitability Assessment;
+\textbf{SR\_002} Input Data Completeness Check;
+\textbf{SR\_003} Input Data Consistency Check;
+\textbf{SR\_004} Source Reliability Classification;
+\textbf{SR\_005} Source Relevance Classification;
+\textbf{SR\_012} Expert Review of Generated Interpretations;
+\textbf{SR\_030} Project Information Isolation;
+\textbf{SR\_031} Processing State Transparency;
+\textbf{SR\_038} Multiple Source Support;
+\textbf{SR\_039} Processing History Traceability.}
+{\statuspartial{Teilweise implementiert}; Orchestration bis
+\texttt{awaiting\_review} ist demonstrierbar.}
+{Immutable Run-, Event- und Decision-Manifeste, deterministische
+Zustandsrekonstruktion, Stage-Steuerung, Attempts, Retry, Supersession,
+Invalidation, Recovery-Diagnostik und projektgebundene P9-Orchestration.}
+{Orchestration der späteren Architektur- und SysML-v2-Stufen,
+bedienbare Retry-/Successor-Workflows und operative Performancebewertung
+vollständiger Live-Agententeams.}
+
+\featureprofile
+{SF\_006}
+{Generate and Compare Engineering Candidates}
+{Die Funktion erzeugt bei mehrdeutiger oder interpretationsbedürftiger
+Information mehrere fachliche Kandidaten. Sie stellt Gemeinsamkeiten,
+Unterschiede, Annahmen und Evidenz so bereit, dass ein belastbarer Review
+möglich ist.}
+{\textbf{SR\_011} Ambiguity Detection;
+\textbf{SR\_013} Human Intervention for Conflicts;
+\textbf{SR\_014} Explanation of Generated Engineering Results.}
+{\statusdone{Implementiert und verifiziert}.}
+{Modulare Agenten- und Teamausführung, verschiedene Personas und Runs,
+deterministischer Konsens, Varianz- und Disagreement-Evidence, Agent Outputs,
+Engineering Candidates und Review Reports.}
+{Weitergehende domänenspezifische Ranking- und Auflösungsstrategien.
+Architektur- beziehungsweise Modellkandidaten gehören bewusst zu SF\_008.}
+
+\featureprofile
+{SF\_007}
+{Support Human Review and Approval}
+{Die Funktion hält den Menschen als fachliche Autorität im Prozess. Ergebnisse
+können geprüft, ausgewählt, kombiniert, verändert oder abgelehnt werden;
+Entscheidungen bleiben dabei an den tatsächlich geprüften Inhalt gebunden.}
+{\textbf{SR\_012} Expert Review of Generated Interpretations;
+\textbf{SR\_013} Human Intervention for Conflicts;
+\textbf{SR\_034} Insufficient Evidence Identification;
+\textbf{SR\_035} Human Review Decision Association;
+\textbf{SR\_036} Approved Information Boundary;
+\textbf{SR\_039} Processing History Traceability.}
+{\statuspartial{Teilweise implementiert}; Review Requests und Decision Binding
+existieren, die fachliche Promotion ist noch offen.}
+{Immutable Human Review Decisions mit Target- und Fingerprint-Bindung,
+Publication Gates, \texttt{review\_requested}-Events sowie prominente
+Navigation zu reviewpflichtigen Ergebnissen.}
+{Approved Input Promotion und spätere modellbezogene Review- und
+Freigabeschritte bis zur autoritativen Architektur.}
+\pagebreak
+\featureprofile
+{SF\_008}
+{Derive and Structure Architecture Information}
+{Die Funktion bildet die Brücke von geprüfter Engineering-Information zu
+strukturierten Architekturmodellen. Sie ordnet Inhalte dem Zielmodell zu und
+formt daraus modulare, wiederverwendbare Architektureinheiten.}
+{\textbf{SR\_006} Architecture Information Derivation;
+\textbf{SR\_007} Structural Pattern Conformance;
+\textbf{SR\_008} Model Reusability;
+\textbf{SR\_009} Modular Model Growth;
+\textbf{SR\_010} Non Destructive Submodel Integration;
+\textbf{SR\_022} Architectural Constraint Conformance;
+\textbf{SR\_024} Interface Definition Consistency;
+\textbf{SR\_025} Reusable Architectural Pattern Application;
+\textbf{SR\_036} Approved Information Boundary.}
+{\statusopen{Architektur definiert}; vorbereitende Grundlagen sind vorhanden,
+die zentrale Runtime-Funktion jedoch noch nicht.}
+{Versioniertes RFLP-Framework, stabile Mapping Targets,
+Framework-Assignment-Candidates und Preliminary-Support-Bewertung.}
+{Architecture Candidate Layer, modulare Model Units, Constraint- und
+Pattern-Anwendung, Interface-Antizipation und eigentliche
+Architekturableitung.}
+
+\featureprofile
+{SF\_009}
+{Validate and Integrate Architecture Content}
+{Die Funktion prüft, ob abgeleiteter Architekturinhalt strukturell konsistent
+ist und ohne unerwünschte Veränderungen in einen größeren Modellkontext
+integriert werden kann.}
+{\textbf{SR\_007} Structural Pattern Conformance;
+\textbf{SR\_010} Non Destructive Submodel Integration;
+\textbf{SR\_015} Model Content Validation;
+\textbf{SR\_020} Integrated Model Consistency;
+\textbf{SR\_021} Larger Context Compatibility;
+\textbf{SR\_022} Architectural Constraint Conformance;
+\textbf{SR\_024} Interface Definition Consistency;
+\textbf{SR\_025} Reusable Architectural Pattern Application.}
+{\statusopen{Architektur definiert}; noch keine modellbezogene
+Runtime-Implementierung.}
+{Normative Anforderungen, Logical Architecture und wiederverwendbare
+Artefakt- und Validierungsmechanismen als Grundlage.}
+{Konsistenzprüfung erzeugter Architektur, Larger-Context Compatibility,
+non-destruktive Integration sowie Constraint-, Pattern- und
+Interface-Konfliktvalidierung.}
+
+\featureprofile
+{SF\_010}
+{Generate and Validate SysML v2 Architecture Artifacts}
+{Die Funktion stellt das Ergebnis als maschinenverarbeitbare
+Architecture-as-Code-Artefakte bereit. Sie erzeugt SysML-v2-Text und prüft,
+ob Notation und Artefaktstruktur dem gewählten Zielprofil entsprechen.}
+{\textbf{SR\_007} Structural Pattern Conformance;
+\textbf{SR\_014} Explanation of Generated Engineering Results;
+\textbf{SR\_015} Model Content Validation;
+\textbf{SR\_019} Source Traceability;
+\textbf{SR\_027} Architecture as Code Provision;
+\textbf{SR\_028} SysML v2 Target Representation;
+\textbf{SR\_036} Approved Information Boundary.}
+{\statusopen{Architektur definiert}; die Runtime-Erzeugung ist noch offen.}
+{Versionierte Target-Notation- und Target-Structure-Annahmen sowie manuelle
+CATIA-/SysML-v2-Modellierung als Design Evidence.}
+{Automatisierte SysML-v2-Codegenerierung, Notationsprüfung, Export,
+Validierung in der Zielumgebung und CATIA-Synchronisation.}
+
+\featureprofile
+{SF\_011}
+{Maintain Processing Evidence and Traceability}
+{Die Funktion sorgt dafür, dass jederzeit nachvollzogen werden kann, aus
+welcher Quelle ein Ergebnis stammt, wie es verarbeitet wurde und welche
+Entscheidungen oder Artefakte daraus entstanden sind.}
+{\textbf{SR\_017} Semantic Equivalence Handling;
+\textbf{SR\_019} Source Traceability;
+\textbf{SR\_026} Legacy Data Completion;
+\textbf{SR\_030} Project Information Isolation;
+\textbf{SR\_031} Processing State Transparency;
+\textbf{SR\_032} Review Need Transparency;
+\textbf{SR\_033} Engineering Information Coverage;
+\textbf{SR\_035} Human Review Decision Association;
+\textbf{SR\_037} Non-Textual Engineering Information;
+\textbf{SR\_039} Processing History Traceability.}
+{\statusdone{Implementiert und verifiziert}.}
+{Immutable Source-, Run-, Event-, Decision- und Artifact Records,
+SHA-256-Integrität, Provenienz, Event Chains, Source-/Project-Aggregation,
+Evidence Navigation und Rekonstruktion der Verarbeitungshistorie.}
+{Erweiterung der Traceability über Approved Input und generierte
+Modellartefakte bis zur finalen CATIA-Synchronisation.}
+\pagebreak
+\featureprofile
+{SF\_012}
+{Present Processing Status and History}
+{Die Funktion übersetzt den technischen Systemzustand in eine für Nutzer
+verständliche Übersicht. Sie zeigt Fortschritt, offene Reviews,
+Attention Conditions, Evidenz und Historie.}
+{\textbf{SR\_012} Expert Review of Generated Interpretations;
+\textbf{SR\_014} Explanation of Generated Engineering Results;
+\textbf{SR\_031} Processing State Transparency;
+\textbf{SR\_032} Review Need Transparency;
+\textbf{SR\_039} Processing History Traceability.}
+{\statusdone{Implementiert und verifiziert}.}
+{Project Dashboard mit Overview, Sources \& Processing, Coverage \& Support,
+Attention \& Review und Traceability Views; Status, Stage, Review-Bedarf,
+Historie und Evidence Preview.}
+{Verfeinerte Aktionen für nicht-primäre Evidenz sowie Bedienoberflächen für
+Retry, Recovery und Successor Runs.}
+
+\subsection{Gesamtbewertung der Funktionsabdeckung}
+
+Alle 39 Stakeholder Requirements werden durch mindestens eine der zwölf
+Systemfunktionen abgedeckt. Diese vollständige modellseitige Abdeckung bedeutet
+jedoch nicht, dass alle Funktionen bereits vollständig implementiert sind.
+
+\begin{table}[htbp]
+\centering
+\caption{Zusammenfassung des aktuellen Funktionsstatus}
+\label{tab:function_status_summary}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Status} & \textbf{Anzahl Funktionen} & \textbf{Systemfunktionen} \\
+\midrule
+Implementiert und verifiziert & 3 & SF\_006, SF\_011, SF\_012 \\
+Teilweise implementiert & 6 & SF\_001--SF\_005, SF\_007 \\
+Architektur definiert & 3 & SF\_008--SF\_010 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Der aktuelle Prototyp besitzt damit eine belastbare Basis für
+Projekt- und Quellenverwaltung, textuelle Informationsverarbeitung,
+agentische Kandidatenerzeugung, Processing Runs, Coverage, Evidenz,
+Traceability und Statusdarstellung. Der noch offene Zielabschnitt beginnt beim
+Übergang von geprüfter Engineering-Information zu autoritativen
+Architekturkandidaten und reicht bis zur validierten SysML-v2-Erzeugung.
+
+\begin{tcolorbox}[
+  enhanced,
+  breakable,
+  colback=gray!4,
+  colframe=TuringSlate,
+  title={Hinweis für die finale Fassung der Masterarbeit},
+  fonttitle=\bfseries,
+  arc=2mm
+]
+Nach Abschluss des Systems sollte insbesondere der Status von SF\_007 bis
+SF\_010 aktualisiert werden. Zusätzlich sollten die finalen Evaluationsergebnisse
+zur Qualität der Architekturableitung, zur Modellvalidität, zur Modularität und
+zur syntaktischen sowie semantischen Konformität der erzeugten
+SysML-v2-Artefakte ergänzt werden.
+\end{tcolorbox}

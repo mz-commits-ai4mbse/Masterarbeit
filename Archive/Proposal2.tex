@@ -1,0 +1,92 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{geometry}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage[left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{tcolorbox}
+\usepackage{booktabs}
+\usepackage{csquotes} % Für korrekte Anführungszeichen
+
+% Seitenränder
+\geometry{a4paper, left=2cm, right=2cm, top=2cm, bottom=2cm}
+
+% Titelformatierung
+\title{\textbf{Masterarbeit Proposal} \\ \vspace{0.5cm} \large \textit{Generative 'Architecture is Code': KI-basierte Synthese modularer SysML v2 Modelle aus heterogenen Bestandsdaten}}
+\author{\textbf{Moritz Diez}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Motivation: Das 'Schuhschachtel-Dilemma' und der technologische Enabler}
+
+Im Bereich des Brownfield-Engineering werden Unternehmen oft vor die Herausforderung gestellt, komplexe Bestandsysteme in modellbasierte Umgebungen (MBSE) zu überführen. Die Ausgangslage kann als 'Schuhschachtel' charakterisiert werden: Informationen liegen unstrukturiert, fragmentiert und in diversen Formaten vor (beispielsweise CAD-Zeichnungen, Excel-Stücklisten oder PDF-Spezifikationen).
+
+Der bisherige Ansatz der manuellen Modellierung mit klassischen Sprachen wie SysML v1 führte dabei oft zu Problemen. Da SysML v1 primär diagrammzentriert ist und die Dateispeicherung oft in proprietären oder komplexen Formaten erfolgt, war eine automatisierte Verarbeitung oder Generierung von Modellen nur unter enormem Aufwand möglich.
+
+\textbf{Der Paradigmenwechsel durch SysML v2:}
+Die Realisierbarkeit des hier vorgeschlagenen 'Architecture is Code'-Ansatzes wird erst durch die Einführung von SysML v2 fundamental ermöglicht. Im Gegensatz zur Vorgängerversion wird bei SysML v2 eine standardisierte, menschen- und maschinenlesbare textuelle Notation bereitgestellt. Diese Eigenschaft, kombiniert mit einer präzisen Semantik (KerML) und einer offenen API, erlaubt erstmals die effiziente Verarbeitung von Systemarchitekturen durch Large Language Models (LLM). Während Versuche einer KI-basierten Generierung unter SysML v1 oft an der Komplexität der grafischen Repräsentation scheiterten, wird durch die Textbasierung von SysML v2 eine direkte Synthese validen Architekturcodes durch generative KI realisierbar.
+
+Die manuelle Überführung führt hingegen weiterhin zu zwei Kernproblemen:
+\begin{itemize}
+    \item \textbf{Mangelnde Modularität (Silo-Problem):} In der industriellen Praxis werden Modelle aus wirtschaftlichen Erwägungen häufig bewusst zunächst als isolierte Teilmodelle realisiert. Bei einer späteren Erweiterung dieser Strukturen werden oft Informationen benötigt, die im initialen, fokussierten Entwurf nicht berücksichtigt wurden. Da die ursprüngliche Architektur starr auf den ersten Anwendungsfall zugeschnitten ist, muss diese bei der Integration neuer Umfänge nachträglich aufwendig refaktoriert werden, um Konsistenz zu gewährleisten.
+    \item \textbf{Verlust impliziten Wissens:} Während ein erfahrener Ingenieur um die Notwendigkeit einer Energieversorgung für einen Motor weiß, fehlt einer rein datengetriebenen Übersetzung dieses Kontextwissen. Dies resultiert in unvollständigen Modellen.
+\end{itemize}
+
+\section{Forschungsleitende Fragestellungen}
+
+Das Ziel der Arbeit ist die Auflösung dieses Dilemmas durch einen KI-gestützten 'Architecture is Code' (AiC) Ansatz unter expliziter Nutzung von SysML v2. Im Zentrum steht dabei nicht die bloße Übersetzung, sondern die intelligente Architektur-Synthese, die durch die textuelle Natur von SysML v2 begünstigt wird.
+
+\textbf{Hauptforschungsfrage (HF):}
+Wie lässt sich eine KI-gestützte Methodik gestalten, die aus heterogenen, unstrukturierten Bestandsdaten valide und modular erweiterbare SysML v2 Systemarchitekturen generiert?
+
+Zur Beantwortung der HF werden folgende Teilforschungsfragen (TF) adressiert:
+
+\textbf{TF 1 (Antizipation \& Erwartungshaltung):}
+Inwieweit können durch trainierte Architektur-Muster (Patterns) notwendige Strukturelemente (insbesondere Ports und Interfaces) antizipiert werden, die in den Quelldaten noch nicht explizit enthalten sind? Dies dient der Vermeidung von 'Dead-End'-Architekturen durch KI-Implikation.
+
+\textbf{TF 2 (Modularität \& Puzzle-Piece-Design):}
+Welche Anforderungen muss der generierte SysML v2 Code erfüllen, um eine nachträgliche, non-destruktive Integration isoliert generierter Teilmodelle zu gewährleisten? Hierbei steht die Sicherstellung der 'Plug \& Play'-Fähigkeit durch Nutzung spezifischer Sprachmittel der SysML v2 (z.B. Namespaces, Usages) im Fokus.
+
+\section{Methodischer Ansatz}
+
+Das Lösungskonzept 'AiC-Generator' basiert auf einem dreistufigen Prozess, der die Vorteile der textuellen Definition von SysML v2 operativ nutzt.
+
+\subsection*{Phase A: Feature Ingestion (Die Schuhschachtel)}
+Das System wird so konzipiert, dass beliebige Datenfragmente als 'Features' akzeptiert werden. Ein typisches Szenario umfasst Input-Daten wie eine Bestellliste, in der Komponenten aufgeführt, deren Beziehungen jedoch oft nicht definiert sind.
+
+\subsection*{Phase B: Generative Pattern Matching (Die Intelligenz)}
+In dieser Phase wird TF 1 adressiert. Anstelle starrer Regelwerke werden generalisierte Erwartungshaltungen durch den Einsatz von LLMs genutzt.
+\begin{itemize}
+    \item \textbf{Erwartung:} Eine Komponente in einem physischen System benötigt typischerweise definierte Ein- und Ausgänge sowie eine Energieversorgung.
+    \item \textbf{Aktion:} Diese Schnittstellen werden von der KI als 'Pending Interfaces' generiert. Die textuelle Flexibilität von SysML v2 erlaubt hierbei das Einfügen von Platzhaltern, ohne die Validität des Gesamtmodells zu gefährden.
+\end{itemize}
+
+\subsection*{Phase C: Modular Code Synthesis (Der Output)}
+In dieser Phase wird TF 2 bearbeitet. Der generierte SysML v2 Code wird so strukturiert, dass er wie ein Puzzleteil fungiert. Durch Konzepte wie Namespaces oder Part Definitions wird ein 'Stand-Alone'-Modell erzeugt. Dieses ist syntaktisch korrekt gemäß der SysML v2 Grammatik, hält jedoch offene Schnittstellen für spätere Erweiterungen bereit.
+
+\section{Geplante Validierung (Proof of Concept)}
+
+Die Methodik wird anhand eines gestuften Szenarios validiert, welches die inkrementelle Entstehung komplexer Systeme simuliert:
+\begin{enumerate}
+    \item \textbf{Initialisierung (Teilmodell A):} Aus einem ersten Datensatz (z. B. mechanische Komponentenliste) wird ein SysML v2 Modell generiert. Hierbei wird geprüft, ob die KI durch "Pattern Matching" bereits Schnittstellen (Ports) antizipiert, die für spätere Erweiterungen notwendig sind (Validierung TF 1).
+    \item \textbf{Inkrementelle Erweiterung (Teilmodell B):} Ein zweiter, thematisch getrennter Datensatz (z. B. elektronische Spezifikationen) wird in ein separates SysML v2 Modell überführt. Dieser Schritt erfolgt isoliert, ohne dass der Generator Zugriff auf Teilmodell A erhält.
+    \item \textbf{Puzzle-Integrationstest:} Abschließend wird untersucht, ob sich Teilmodell B in den Kontext von Teilmodell A integrieren lässt (z. B. durch Import-Mechanismen oder Namespace-Referenzierung), ohne dass der Quellcode von Teilmodell A refaktoriert werden muss. Dies dient als Nachweis für die erreichte Modularität und die "Plug \& Play"-Fähigkeit der Architektur (Validierung TF 2).
+\end{enumerate}
+
+\section{Erwarteter Erkenntnisgewinn}
+
+Durch die Arbeit soll aufgezeigt werden, dass der Einsatz von KI im Systems Engineering durch den Wechsel auf SysML v2 über die reine Assistenz hinausgehen kann. Es wird demonstriert, dass die textuelle Repräsentation von SysML v2 als entscheidender Enabler fungiert, um KI als aktiven Architektur-Generator einzusetzen.
+
+\end{document}

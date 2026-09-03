@@ -1,0 +1,68 @@
+\section{Literatur Such Report (LSR): Architecture as Code}
+
+In diesem Bericht werden die Resultate der systematischen Literaturrecherche dokumentiert. Die Bewertung der identifizierten Quellen erfolgt gemäß der im Literatur Search Plan (LSP) definierten Methodik.
+
+\subsection{Ergebnisse des Level 1 Screenings}
+
+Die initiale Filterung der Suchergebnisse wurde durch eine Sichtung von Titel sowie Abstract durchgeführt. Dabei wurden insgesamt 28 Publikationen auf ihre Relevanz geprüft. Die vollständige Dokumentation des Screenings wird in Tabelle \ref{tab:screening_full} präsentiert.
+
+\subsection{State of the Art (SotA) Statement}
+
+Basierend auf der Synthese der eingeschlossenen Fachpublikationen wird der Stand der Technik wie folgt definiert:
+
+Die automatisierte Synthese sowie die Transformation technischer Systemmodelle wird aktuell durch die Kopplung von modellgetriebener Architektur sowie Large Language Models vorangetrieben \cite{Pan.2025, Cibrian.2025}. Als zentrale technologische Basis dient hierbei die Nutzung von formalen Grammatiken sowie standardisierten Austauschformaten um die syntaktische Korrektheit der generierten Modelle sicherzustellen \cite{Li.2022, Cafe.2013}.
+
+Ein wesentlicher methodischer Schwerpunkt liegt in der Validierung gegen eine explizite Meta Ebene \cite{Kapos.2014, Cibrian.2025b}. Diese wird vorzugsweise durch das SysML v2 Metamodel als formale Spezifikation definiert \cite{Cibrian.2025b}. Durch den Abgleich der generierten Strukturen gegen diese Meta Ebene werden strukturelle sowie semantische Inkonsistenzen bereits zur Entwurfszeit detektiert \cite{Kapos.2014, Cibrian.2025b}. Ergänzend dienen formale Ontologien als Wissensrepräsentation um eine semantische Normalisierung heterogener Bestandsdaten zu ermöglichen \cite{Meng.2025, Abonyi.2024}.
+
+Die Einbindung des Experten erfolgt innerhalb eines Human im Loop Workflows wobei agentenbasierte Frameworks sowie Retrieval Augmented Generation Ansätze genutzt werden \cite{Cibrian.2025, Chis.2025}. Diese Systeme greifen auf kuratierte Repositories zu um die Qualität der generierten Architektur zu erhöhen. Die Modularität sowie die Plug und Play Fähigkeit der resultierenden Modelle werden dabei durch die konsequente Einhaltung ontologischer Regeln sowie durch metamodellgesteuerte Validierungsprozesse gewährleistet \cite{Ferko.2026, Ahlbrecht.2024}. Eine explizite semantische Adaption wird durch domänenspezifische Sprachen unterstützt um die Interoperabilität zwischen heterogenen Modellen sicherzustellen \cite{Meyers.2013}.
+
+\newpage
+\subsection{Anhang: Vollständige Ergebnisse des Level 1 Screenings}
+
+\begin{xltabular}{\textwidth}{|l|X|l|l|}
+\caption{Vollständige Ergebnisse des Level 1 Screenings (ID 1 bis 28)} \label{tab:screening_full} \\
+\hline
+\textbf{ID} & \textbf{Titel der Publikation} & \textbf{Status} & \textbf{Code} \\ \hline
+\endfirsthead
+
+\multicolumn{4}{c}%
+{{\bfseries Tabelle \thetable\ \dots\ Fortsetzung von der vorherigen Seite}} \\
+\hline
+\textbf{ID} & \textbf{Titel der Publikation} & \textbf{Status} & \textbf{Code} \\ \hline
+\endhead
+
+\hline \multicolumn{4}{|r|}{{Fortsetzung auf der nächsten Seite}} \\ \hline
+\endfoot
+
+\hline
+\endlastfoot
+
+1 & A virtual supply chain system for improved information sharing and decision making & Einschluss & INC 3 \\ \hline
+2 & The Research on a Collaborative Management Model for Multi Source Heterogeneous Data Based on OPC Communication & Einschluss & INC 3 \\ \hline
+3 & RITE: An IDE for Assurance and Certification of Software and Systems & Einschluss & INC 3 \\ \hline
+4 & Context knowledge representation and reasoning in the context interchange system & Einschluss & INC 3 \\ \hline
+5 & RKBExplorer.com: A knowledge driven infrastructure for linked data providers & Einschluss & INC 3 \\ \hline
+6 & Ontology Based Development of Industry 4.0 and 5.0 Solutions for Smart Manufacturing and Production & Einschluss & INC 3 \\ \hline
+7 & Industry 4.0 Implementation Framework for the Composite Manufacturing Industry & Ausschluss & EXC 1 \\ \hline
+8 & Security of Cryptocurrencies: A View on the State of the Art Research and Current Developments & Ausschluss & EXC 2 \\ \hline
+9 & Role of digital twin and blockchain for personal security & Einschluss & INC 4 \\ \hline
+10 & Secure and Efficient Integration of Blockchain, Digital Twins, and Metaverse for Real Time Asset Management & Einschluss & INC 4 \\ \hline
+11 & The Confluence of Digital Twin and Blockchain Technologies in Industry 5.0: Transforming Supply Chain Management for Innovation and Sustainability & Einschluss & INC 4 \\ \hline
+12 & Model based system engineering using SysML: Deriving executable simulation models with QVT & Einschluss & INC 1 \\ \hline
+13 & Reconciling TGGs with QVT & Einschluss & INC 1 \\ \hline
+14 & XMI Based SysML Model Transformation & Einschluss & INC 3 \\ \hline
+15 & LLM enabled Instance Model Generation & Einschluss & INC 1 \\ \hline
+16 & A DSL for explicit semantic adaptation & Einschluss & INC 5 \\ \hline
+17 & Multi paradigm semantics for simulating SysML models using SystemC AMS & Einschluss & INC 1 \\ \hline
+18 & From engineering models to digital twins: Generating AAS from SysML v2 models & Einschluss & INC 1 \\ \hline
+19 & An agent based approach for the automatic generation of valid SysMLv2 Models in industrial contexts & Einschluss & INC 1 \\ \hline
+20 & A Hybrid Retrieval Augmented Generation Approach for Heterogeneous Knowledge Bases & Einschluss & INC 2 \\ \hline
+21 & Reasoning over Heterogeneous Geospatial Schemas: Aligning Authoritative Taxonomies and Collaborative Folksonomies Through Large Language Models & Einschluss & INC 2 \\ \hline
+22 & Ensuring Semantic Consistency in SysML v2 Models Through Metamodel Driven Validation & Einschluss & INC 1 \\ \hline
+23 & GenoPPML a framework for genomic privacy preserving machine learning & Ausschluss & EXC 2 \\ \hline
+24 & Privacy Preserving Machine Learning Models & Ausschluss & EXC 2 \\ \hline
+25 & FedMPS: A Robust Differential Privacy Federated Learning Based on Local Model Partition and Sparsification for Heterogeneous IIoT Data & Ausschluss & EXC 2 \\ \hline
+26 & A SysML centric integration framework for helicopter fuel system development & Einschluss & INC 1 \\ \hline
+27 & QVT based SysML v2 Model Version Difference Transformation & Einschluss & INC 1 \\ \hline
+28 & Exploring SysML v2 for Model Based Engineering of Safety Critical Avionics Systems & Einschluss & INC 1 \\ \hline
+\end{xltabular}

@@ -1,0 +1,44 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{geometry}
+\usepackage{helvet}
+\usepackage{parskip}
+
+% Seitenränder anpassen
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+
+% Schriftartwechsel auf Sans-Serif
+\renewcommand{\familydefault}{\sfdefault}
+
+\begin{document}
+
+\section*{One-Pager / Kurzzusammenfassung}
+\textbf{Arbeitstitel:} Generative 'Architecture is Code': KI-basierte Synthese modularer SysML v2 Modelle aus heterogenen Bestandsdaten
+
+\textbf{Bearbeiter:} Moritz Diez \quad | \quad \textbf{Datum:} \today
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\textbf{Problemstellung:} \\
+Im industriellen Umfeld liegen Informationen zu Bestandsystemen häufig unstrukturiert und verteilt vor ('Schuhschachtel-Dilemma'). Die manuelle Überführung dieser Daten in modellbasierte Umgebungen (MBSE) unter Verwendung klassischer Sprachen wie SysML v1 erwies sich als ineffizient und fehleranfällig. Es entstehen monolithische Modelle, die schwer wartbar sind und implizites Ingenieurwissen vermissen lassen. Eine automatisierte Verarbeitung wurde durch die grafische Natur und proprietäre Speicherformate früherer Standards behindert.
+
+\vspace{0.5cm}
+
+\textbf{Lösungsansatz:} \\
+Durch die Einführung von SysML v2 steht nun eine standardisierte, textuelle Notation zur Verfügung, die als technologischer Enabler für generative KI fungiert. In der Arbeit wird ein 'Architecture is Code' (AiC) Generator konzipiert und prototypisch umgesetzt. Dieser folgt einem dreistufigen Prozess:
+\begin{enumerate}
+    \item \textbf{Feature Ingestion:} Heterogene Datenquellen (Excel, PDF) werden eingelesen.
+    \item \textbf{Generative Pattern Matching:} Mittels Large Language Models (LLM) werden fehlende Schnittstellen und implizites Wissen antizipiert ('Pending Interfaces').
+    \item \textbf{Modular Code Synthesis:} Valider SysML v2 Code wird generiert, der spezifisch auf Modularität und Erweiterbarkeit ausgelegt ist.
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\textbf{Geplante Validierung:} \\
+Der Ansatz wird durch eine Fallstudie verifiziert, in der zwei Systemkomponenten (z.B. Mechanik und Elektronik) isoliert voneinander aus unterschiedlichen Quelldaten generiert werden. Der Erfolg wird daran gemessen, ob sich diese Teilmodelle anschließend ohne Code-Anpassung in ein Gesamtmodell integrieren lassen ('Plug \& Play'). Damit wird aufgezeigt, dass KI im Systems Engineering nicht nur assistieren, sondern aktiv Architektur synthetisieren kann.
+
+\end{document}

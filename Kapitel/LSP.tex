@@ -1,0 +1,185 @@
+%\section{Literatur Such Plan (LSP): Architecture as Code}
+
+In diesem Kapitel wird die methodische Planung der Literatursuche dargelegt. Die Struktur orientiert sich an etablierten Standards für die Erstellung systematischer Übersichtsarbeiten im Systems Engineering.
+
+\subsection{Meta Daten}
+
+Die grundlegenden Informationen zur Planung werden in der folgenden Tabelle zusammengefasst.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Kategorie} & \textbf{Inhalt} \\ \hline
+%Momentum ID & REC AIC 2026 \\ \hline
+Projekt & Turing \\ \hline
+Status & v1 \\ \hline
+Ersteller & Moritz Diez \\ \hline
+Datum & 03. März 2026 \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Zweck}
+
+Die systematische Identifikation sowie die Sammlung relevanter Daten zur Beschreibung des Stands der Technik (State of the Art) wird durch diese Literatursuche angestrebt. Der Fokus wird auf die KI gestützte Synthese modularer SysML Modelle aus heterogenen Bestandsdaten im Bereich des Brownfield Engineering gelegt. Die Ergebnisse dienen als wissenschaftliche Grundlage für die methodische Entwicklung des AaC Generators.
+
+\subsection{Datenbanken}
+
+Die Suche wird in den folgenden Datenbanken in absteigender Priorität durchgeführt:
+\begin{enumerate}
+    \item Scopus
+    \item ScienceDirect
+    \item IEEExplore
+    \item ACM Digital Library
+\end{enumerate}
+
+\subsection{Suchbegriffe (PICOC Framework)}
+
+Zur Strukturierung der Forschungsfragen wird das PICOC Framework angewendet \cite{Wohlin.2012}.
+\subsubsection{PICOC Framework}
+
+Zur systematischen Definition der Forschungsziele sowie zur Herleitung präziser Suchparameter wird das PICOC Framework angewendet. Durch diese Methodik wird eine strukturierte Zerlegung der Problemstellung in fünf Dimensionen ermöglicht. Die Population beschreibt hierbei die betrachteten technischen Systeme sowie die Domäne des Brownfield Engineering. Als Intervention wird die Anwendung von Large Language Models zur Synthese von SysML v2 Code definiert. Der Vergleich dient der Gegenüberstellung mit manuellen Modellierungsprozessen sowie klassischen MBSE Ansätzen. Durch die Komponente des Ergebnisses werden die angestrebten Ziele wie Modularität sowie Codevalidität spezifiziert. Der Kontext umfasst die Rahmenbedingungen der Transformation heterogener Bestandsdaten im industriellen Umfeld. Durch die Anwendung dieses Modells wird eine hohe Präzision bei der anschließenden Identifikation relevanter Publikationen in den gewählten Datenbanken sichergestellt.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|p{10cm}|}
+\hline
+\textbf{Element} & \textbf{Definition für die Suche} \\ \hline
+Population & Komplexe technische Systeme, Systemarchitekturen, Brownfield Engineering \\ \hline
+Intervention & KI gestützte Synthese, Large Language Models (LLM), Generative KI, SysML v2, SysML v1 \\ \hline
+Comparison & Manuelle Modellierung, grafenzentriertes MBSE, klassisches Systems Engineering \\ \hline
+Outcome & Modularität, Modellvalidität, Reduktion von Wissensverlust, Plug and Play Fähigkeit \\ \hline
+Context & Everything as Code, Architecture is Code, heterogene Bestandsdaten (Schuhschachtel) \\ \hline
+\end{tabular}
+\caption{Beschreibung der PICOC Kriterien} % Dieser Text erscheint im Verzeichnis
+\label{tab:picoc_kriterien} % Erlaubt referenzen im Text via \ref{tab:picoc_kriterien}
+\end{table}
+
+\subsubsection{Suchbegriff Cluster}
+
+Die Begriffe werden zur Formulierung der Suchanfragen in vier Cluster unterteilt:
+\begin{itemize}
+    \item \textbf{Cluster A (Sprachen):} "SysML v2", "SysML 2.0", "SysML v1", "KerML", "Kernel Modeling Language"
+    \item \textbf{Cluster B (Technologie):} "Large Language Models", "LLM", "Generative AI", "GPT", "Transformer Architecture", "Automated Code Synthesis"
+    \item \textbf{Cluster C (Methodik):} "Everything as Code", "Architecture is Code", "Architecture as Code", "Model Based Systems Engineering", "MBSE"
+    \item \textbf{Cluster D (Problemstellung):} "Legacy Data Transformation", "Brownfield Engineering", "Heterogeneous Data", "Ontology Mapping"
+\end{itemize}
+
+\subsection{Suchstrategie}
+
+\subsubsection{Zeitliche Eingrenzung}
+
+Die Implementierung der Suche erfolgt durch eine Aufsplittung der Zeiträume \cite{Higgins.2019}:
+\begin{itemize}
+    \item Methodische Grundlagen (Cluster C sowie Cluster D): 2005 bis 2026
+    \item Technologische Enabler (Cluster A sowie Cluster B): 2017 bis 2026
+\end{itemize}
+
+\subsubsection{Avalanche Methode (Snowballing)}
+
+Die Avalanche Methode wird zur Identifikation weiterführender Literatur angewendet. Die Lawine wird unterbrochen, wenn eine der folgenden Metriken erfüllt ist:
+\begin{itemize}
+    \item Eine Zitationsgeneration weist weniger als drei neue relevante Treffer auf.
+    \item Eine maximale Tiefe von drei Generationen wird erreicht.
+    \item Eine Altersgrenze von 2017 wird bei technologischen Quellen unterschritten.
+\end{itemize}
+
+\subsubsection{Sprachen und Filter}
+
+Die Suche wird in deutscher sowie in englischer Sprache durchgeführt. Die Filter werden wie folgt gesetzt \cite{Higgins.2019}:
+\begin{itemize}
+    \item Dokumententyp: Journals, Konferenzbeiträge, Dissertationen
+    \item Graue Literatur: Technische Reports sowie Standards werden separat kategorisiert sowie gesammelt
+\end{itemize}
+
+\subsection{Suchstrings}
+
+Die Verknüpfung der Begriffe erfolgt durch Boolesche Operatoren wie AND sowie OR unter Verwendung von Platzhaltern \cite{Jha.2022}.
+
+\paragraph{Scopus (Priorität 1):}
+TITLE ABS KEY ( ( "SysML v1" OR "SysML v2" OR "SysML 2.0" OR "KerML" ) AND ( "Large Language Models" OR "LLM" OR "Generative AI" ) AND ( "Legacy Data" OR "Brownfield" OR "Ontology Mapping" ) )
+
+\paragraph{ScienceDirect (Priorität 2):}
+( "SysML v1" OR "SysML v2" OR "MBSE" ) AND ( "LLM" OR "Generative AI" ) AND ( "Legacy Data" OR "Brownfield" )
+
+\paragraph{IEEExplore (Priorität 3):}
+( "Document Title":"SysML" OR "Document Title":"MBSE" ) AND ( "Abstract":"LLM" OR "Abstract":"Generative AI" )
+
+\paragraph{ACM Digital Library (Priorität 4):}
+content.all:( "SysML" OR "MBSE" ) AND content.all:( "LLM" OR "Generative AI" )
+
+
+\subsection{Ergänzende Suche mittels Scopus AI}
+
+Zur Erweiterung der Suchstrategie wird eine explorative Recherche unter Verwendung von Scopus AI durchgeführt. Im Gegensatz zur klassischen keywordbasierten Suche ermöglicht dieser Ansatz die Identifikation relevanter Literatur durch die Verarbeitung natürlicher Sprache sowie semantischer Zusammenhänge.
+
+\subsubsection{Forschungsfragen als Suchparameter}
+
+Die Forschungsfragen dienen als direkte Eingabeaufforderungen für den KI Agenten. Dabei werden die folgenden Fragestellungen adressiert:
+
+\begin{itemize}
+    \item \textbf{Hauptforschungsfrage (HF):} Wie muss eine Informationsverarbeitungsarchitektur gestaltet sein, um heterogene Bestandsdaten durch ein systematisches Bewertungs und Synthese Framework sicher in valide SysML v2 Strukturen zu überführen?
+    \item \textbf{Teilforschungsfrage 1 (Input Assessment):} Welche Anforderungen müssen an die Eingangsdaten gestellt werden, damit ein KI Agent zuverlässig arbeiten kann? Hierbei wird ein Bewertungsrahmen erarbeitet, welcher die Schuhschachtel Inhalte nach Automatisierbarkeit klassifiziert.
+    \item \textbf{Teilforschungsfrage 2 (Human in the Loop):} Wie wird der Ingenieur als Kontrollorgan in die Architektur eingebunden, um bei detektierten Mehrdeutigkeiten effektiv einzugreifen und den Agenten gezielt zur Ergänzung fehlender Informationen anzuleiten?
+    \item \textbf{Teilforschungsfrage 3 (Leitplanken Design):} Wie müssen die ontologischen Regeln gestaltet sein, gegen welche die Eingangsdaten geprüft werden, um die Plug und Play Fähigkeit sowie die Modularität der resultierenden SysML v2 Modelle zu gewährleisten?
+\end{itemize}
+
+\subsubsection{Dublettenvermeidung und Integration}
+
+Um die wissenschaftliche Effizienz zu steigern sowie Redundanzen zu vermeiden, wird ein systematischer Abgleich der Ergebnisse durchgeführt. Die durch Scopus AI identifizierten Publikationen werden mit den Resultaten der regulären Suche aus Abschnitt 5.4 verglichen. Identische Treffer werden vor dem Einleiten des Level 1 Screenings bereinigt. Nur zusätzliche sowie relevante Quellen werden in den weiteren Auswahlprozess gemäß den PRISMA Richtlinien \cite{Page.2021} überführt.
+
+\subsection{Dokumentation und Screening}
+Die Dokumentation der Ergebnisse erfolgt gemäß den PRISMA Richtlinien \cite{Page.2021}. Das Screening wird in zwei Stufen unterteilt:
+\begin{itemize}
+    \item \textbf{Level 1:} Sichtung von Titel sowie Abstract basierend auf Einschlusskriterien \cite{Higgins.2019b}
+    \item \textbf{Level 2:} Umfassende Volltextprüfung zur finalen Auswahl der Literatur \cite{Higgins.2019b}
+\end{itemize}
+\subsection{Bewertung der Daten (Appraisal)}
+
+Die ausgewählten Quellen werden anhand eines Punktesystems bewertet \cite{Balshem.2011,Guyatt.2008}:
+\begin{itemize}
+    \item \textbf{Eignung (Suitability):} Fokus auf SysML, LLM Bezug sowie Brownfield Relevanz
+    \item \textbf{Datenbeitrag (Contribution):} Methodische Strenge sowie Validierung der Ergebnisse
+\end{itemize}
+
+\subsection{Detaillierte Screening Kriterien (Level 1)}
+
+Die initiale Filterung der Suchergebnisse erfolgt durch eine Sichtung von Titel sowie Abstract \cite{Higgins.2019b}. Dabei wird die Relevanz der Publikationen anhand der nachfolgend definierten Kriterien bewertet\cite{Balshem.2011}.
+
+\subsubsection{Einschlusskriterien (Inclusion Criteria)}
+
+Eine Publikation wird für die Volltextprüfung ausgewählt, wenn mindestens eines der folgenden Kriterien erfüllt ist \cite{Higgins.2019b}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|p{10cm}|}
+\hline
+\textbf{Code} & \textbf{Einschlusskriterium} \\ \hline
+INC 1 & Die Publikation adressiert die automatisierte Synthese oder Generierung von SysML Modellen unter Nutzung von KI Ansätzen. \\ \hline
+INC 2 & Der Einsatz von Large Language Models (LLM) oder generativer KI im Kontext des Systems Engineering wird thematisiert. \\ \hline
+INC 3 & Es werden Strategien zur Transformation heterogener Bestandsdaten in formale Systemmodelle (Brownfield Engineering) vorgestellt. \\ \hline
+INC 4 & Konzepte des Architecture as Code oder Everything as Code Ansatzes für den Entwurf technischer Systeme werden behandelt. \\ \hline
+INC 5 & Methodiken zur Sicherstellung der Modularität sowie der Plug and Play Fähigkeit in generierten Architekturmodellen werden diskutiert. \\ \hline
+\end{tabular}
+\caption{Einschlusskriterien für das Level 1 Screening}
+\label{tab:inc_criteria}
+\end{table}
+\newpage
+\subsubsection{Ausschlusskriterien (Exclusion Criteria)}
+
+Publikationen werden von der weiteren Betrachtung ausgeschlossen, wenn eine der folgenden Bedingungen zutrifft \cite{Petticrew.2012}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|p{10cm}|}
+\hline
+\textbf{Code} & \textbf{Ausschlusskriterium} \\ \hline
+EXC 1 & Die Publikation fokussiert ausschließlich auf manuelle Modellierungsprozesse ohne Automatisierung oder KI Unterstützung. \\ \hline
+EXC 2 & Der inhaltliche Schwerpunkt liegt rein auf Software Engineering ohne Relevanz für komplexe physische oder technische Systemarchitekturen. \\ \hline
+EXC 3 & Die beschriebenen Methoden sind ausschließlich für Greenfield Projekte ohne Berücksichtigung von Bestandsdatenintegration anwendbar. \\ \hline
+EXC 4 & Das Dokument liegt weder in deutscher noch in englischer Sprache vor. \\ \hline
+EXC 5 & Es handelt sich um kurze redaktionelle Beiträge oder Zusammenfassungen ohne wissenschaftliche Methodik. \\ \hline
+\end{tabular}
+\caption{Ausschlusskriterien für das Level 1 Screening}
+\label{tab:exc_criteria}
+\end{table}
