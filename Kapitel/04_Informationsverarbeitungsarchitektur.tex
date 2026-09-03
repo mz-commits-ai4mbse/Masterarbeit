@@ -1,0 +1,1678 @@
+% =============================================================================
+% Kapitel 4: Konzeption der Informationsverarbeitungsarchitektur
+% ARBEITSGERUEST / REVIEW CANDIDATE
+% Stand: 03.09.2026
+%
+% Dieses Dokument enthaelt bewusst NOCH KEINEN ausformulierten Thesis-Text.
+% Es bildet die Argumentationsstruktur fuer das spaetere Kapitel 4 ab.
+%
+% Zielstruktur:
+% Kapitel 3 = WIE das Konzept entwickelt und untersucht wurde
+% Kapitel 4 = WAS als Architekturkonzept resultiert
+% Kapitel 5 = WIE das Konzept prototypisch realisiert wurde
+% Kapitel 6 = WIE es verifiziert und validiert wurde
+% Kapitel 7 = WAS beobachtet wurde
+% Kapitel 8 = WAS die Ergebnisse bedeuten
+%
+% Dieses Kapitel konsolidiert spaeter die bisherigen Platzhalter:
+% - Kapitel/04_StakeholderAnalyse.tex
+% - Kapitel/05_Architekturkonzeption.tex
+%
+% Quellenstatus:
+% [REPO-BIB]  Quelle ist im Thesis-Repository und in literatur.bib vorhanden.
+% [REPO-FILE] Quelle ist als Datei vorhanden, aber bibliographisch oder
+%             claimweise noch zu pruefen.
+% [ADD]       Quelle muss vor Verwendung beschafft, archiviert und geprueft werden.
+% [MODEL]     Aussage stammt aus dem akzeptierten CATIA SysML-v2-Modell.
+% [PROJECT]   Aussage stammt aus akzeptierten ADRs, Checkpoints oder Contracts.
+%
+% Schreibregel:
+% Projektspezifische Architekturentscheidungen duerfen durch MODEL/PROJECT
+% getragen werden. Allgemeine wissenschaftliche Aussagen benoetigen Literatur.
+% =============================================================================
+
+\section{Konzeption der Informationsverarbeitungsarchitektur}
+\label{sec:architekturkonzept}
+
+% -----------------------------------------------------------------------------
+% FUNKTION DES KAPITELS
+% -----------------------------------------------------------------------------
+%
+% Zweck:
+% Dieses Kapitel beschreibt das Ergebnis der in Kapitel 3 dargestellten
+% Konzeptionsmethodik.
+%
+% Der Leser soll nach diesem Kapitel verstanden haben:
+%
+% 1. Welches System betrachtet wird und welche Akteure ausserhalb liegen.
+% 2. Welche Anforderungen die Architektur treiben.
+% 3. Welche wesentlichen Funktionen das System erfuellen muss.
+% 4. Warum die finale Architektur in neun fachliche Subsysteme zerlegt ist.
+% 5. Wie Engineering Information durch das System fliesst.
+% 6. Wo LLMs eingesetzt werden und wo ihre Authority endet.
+% 7. Wo Human Engineering Authority und Model Authority liegen.
+% 8. Wie Provenance und Traceability ueber die Verarbeitung erhalten werden.
+% 9. Wie mehrere Quellen ohne versteckte Source-Prioritaet zusammengefuehrt
+%    bzw. gegeneinander bewertet werden.
+% 10. Warum Model Assembly, SysML-v2-Generierung, Validierung und Publikation
+%     getrennte Verantwortlichkeiten sind.
+%
+% ZENTRALE ARCHITEKTURERZAEHLUNG:
+%
+% Project / Source Context
+% -> source-local Engineering Information Processing
+% -> source-local Human Engineering Review
+% -> Approved Engineering Information
+% -> exact Project Fit / Project Admission
+% -> one Project-level Model Candidate Set
+% -> Human Model Candidate / Placement authority
+% -> deterministic Internal Engineering Model assembly
+% -> deterministic SysML v2 generation
+% -> separate generated-artifact validation
+% -> Final Human Model Review
+% -> publication gate / immutable publication
+%
+% WICHTIGE ABGRENZUNG:
+% - Keine Python-Modul-Dokumentation.
+% - Keine vollstaendige Wiedergabe aller 153 Subsystem Requirements.
+% - Keine vollstaendige Wiedergabe aller 44 Subsystem Functions.
+% - Keine vollstaendige Wiedergabe aller 31 Logical Components.
+% - Keine Auflistung aller 35 Cross-SBS Interfaces und 56 Item Flows.
+% - Vollstaendige Detailstruktur verbleibt im eingereichten CATIA-Modell.
+%
+% Die Thesis muss dennoch ohne Oeffnen des .mdzip verstaendlich bleiben.
+
+
+% =============================================================================
+\subsection{Systemkontext und architekturtreibende Anforderungen}
+\label{sec:architektur_systemkontext}
+% =============================================================================
+
+\subsubsection{System of Interest und externe Akteure}
+\label{sec:system_of_interest}
+
+% KERNAUSSAGEN:
+%
+% 1. System of Interest ist der Turing Generator.
+%
+% 2. Der Turing Generator verarbeitet heterogene Engineering-
+%    Bestandsinformationen zu traceablen SysML-v2-Architekturartefakten
+%    unter expliziter menschlicher Review- und Freigabeautoritaet.
+%
+% 3. Engineering Sources liegen ausserhalb der Systemgrenze.
+%
+% 4. Vier menschliche Rollen bilden den fachlichen Stakeholder-Kontext:
+%
+%    ACT_01 System Modeler
+%    - kuratiert, strukturiert und integriert Systemmodelle
+%    - prueft modellierungsbezogene Ergebnisse
+%
+%    ACT_02 Domain Expert
+%    - klaert domaenenspezifische Mehrdeutigkeiten
+%    - validiert Annahmen und fachliche Interpretation
+%
+%    ACT_03 System Architect
+%    - verantwortet Architekturconstraints und Strukturqualitaet
+%    - prueft und autorisiert Architektur- bzw. Modellinhalte
+%
+%    ACT_04 Information Manager
+%    - verantwortet Informationsqualitaet, Source Reliability,
+%      semantische Konsistenz und Informationsgovernance
+%
+% [MODEL]
+% collaboration/CATIAMSOSA_TextualNotation.txt
+% - Stakeholder Context CTX_001
+% - Engineering Source
+% - Turing Generator System
+% - ACT_01 bis ACT_04
+%
+% [REPO-FILE]
+% ISO/IEC/IEEE 42010:2022
+% Literatur/ISO-IEC-IEEE 42010_2022-11-00_EN_3400447.pdf
+% Relevanz:
+% - Entity of Interest
+% - Environment
+% - Stakeholder
+% - Concerns
+% - Architecture Description
+% TODO: korrekten BibTeX-Eintrag fuer Version 2022 anlegen bzw. pruefen.
+%
+% [REPO-BIB]
+% \cite{SysMLv2}
+% Relevanz:
+% - SysML v2 als Sprache fuer die modellierte Architektur.
+%
+% ABBILDUNGSKANDIDAT 4.1:
+% CATIA Stakeholder Context View.
+% Turing Generator in der Mitte, Engineering Sources sowie vier Human Roles
+% ausserhalb.
+%
+% Diese Abbildung gehoert in den Haupttext, weil sie die Systemgrenze definiert.
+
+
+\subsubsection{Architekturtreibende Bedarfskategorien}
+\label{sec:architekturtreibende_bedarfe}
+
+% Zweck:
+% Nicht jede User Need und jedes Requirement wiedergeben.
+% Stattdessen Requirement-Cluster zeigen, aus denen die Architekturstruktur
+% nachvollziehbar wird.
+%
+% KERNAUSSAGEN:
+%
+% A. Verarbeitung heterogener Engineering Information
+%    - Data Suitability
+%    - Completeness
+%    - Consistency
+%    - Reliability
+%    - Relevance
+%    - controlled completion
+%
+% B. Mehrere Projekte und mehrere Sources
+%    - Multiple Project Support
+%    - Multiple Source Support
+%    - Project Information Isolation
+%    - Processing State Transparency
+%
+% C. Semantische Konsistenz
+%    - Technical Vocabulary
+%    - Semantic Conflict Detection
+%    - Ontology / semantic governance
+%
+% D. Human Review und Authority
+%    - Review Need Transparency
+%    - Human Review Decision Association
+%    - Approved Information Boundary
+%    - fachliche Modellvalidierung
+%
+% E. Architektur- und Modellqualitaet
+%    - Structural Pattern Conformance
+%    - Model Reusability
+%    - Modular Model Growth
+%    - Non Destructive Submodel Integration
+%    - Interface Definition Consistency
+%    - Larger Context Compatibility
+%
+% F. Architecture as Code und SysML v2
+%    - Architecture Information Derivation
+%    - Architecture as Code Provision
+%    - SysML v2 Target Representation
+%
+% G. Traceability und Erklaerbarkeit
+%    - Source Traceability
+%    - Explanation of Generated Engineering Results
+%    - Processing History
+%
+% [MODEL]
+% collaboration/CATIAMSOSA_TextualNotation.txt
+%
+% BESONDERS GUT ALS REPRASENTATIVE REQUIREMENTS:
+% SR_001 Input Data Suitability Assessment
+% SR_004 Source Reliability Classification
+% SR_005 Source Relevance Classification
+% SR_006 Architecture Information Derivation
+% SR_019 Source Traceability
+% SR_027 Architecture as Code Provision
+% SR_028 SysML v2 Target Representation
+% SR_030 Project Information Isolation
+% SR_038 Multiple Source Support
+%
+% Fuer Assurance Requirements genaue IDs/Namen vor Verwendung aus dem
+% finalen CATIA Snapshot ziehen.
+%
+% [ADD]
+% ISO/IEC/IEEE 29148:2018
+% Relevanz:
+% - Requirements Engineering
+% - Herkunft und Traceability von Anforderungen
+%
+% TABELLEKANDIDAT 4.1:
+% Architekturtreibende Requirement-Cluster
+%
+% Spalten:
+% Bedarfskategorie | Representative Requirements | Architekturwirkung
+%
+% Vollstaendige Requirement-Bevoelkerung NICHT in den Haupttext.
+
+
+\subsubsection{Use Cases als fachliche Interaktionssicht}
+\label{sec:use_cases_architektur}
+
+% KERNAUSSAGEN:
+%
+% 1. Die Use Cases beschreiben stakeholder-sichtbare Interaktionen.
+%
+% 2. Sie definieren nicht direkt System Functions oder Subsystemgrenzen.
+%
+% 3. Fuer die Architekturerzaehlung besonders relevant:
+%    - Engineering Information Processing
+%    - Human Review
+%    - Generated Model Validation
+%    - Project Source Admissibility
+%    - Final Model Review and Authorization
+%
+% 4. UC_007 zeigt die Multi-Source-Grenze:
+%    Source-local reviewed information
+%    -> Project Fit
+%    -> nur admitted Contributions koennen zur project-level synthesis.
+%
+% 5. UC_008 trennt automatisierte Validierung von finaler Human Model Authority.
+%
+% [MODEL]
+% CATIAMSOSA_TextualNotation.txt
+% UC_007 AssessProjectSourceAdmissibility
+% UC_008 ReviewAndAuthorizeFinalModel
+%
+% ABGRENZUNG:
+% Keine vollstaendige Use-Case-Dokumentation.
+
+
+% =============================================================================
+\subsection{Architekturprinzipien und finale Auspraegung}
+\label{sec:architekturprinzipien_resultat}
+% =============================================================================
+
+% Kapitel 3 hat die methodische Begruendung der Prinzipien geliefert.
+% Hier wird gezeigt, welche Prinzipien die finale Architektur strukturieren.
+
+
+\subsubsection{Verantwortungsbasierte statt implementierungsbasierte Zerlegung}
+\label{sec:responsibility_based_architecture}
+
+% KERNAUSSAGEN:
+%
+% 1. Die Architektur ist nach Engineering-Verantwortlichkeiten zerlegt.
+%
+% 2. Python-Packages, Module, Klassen und Funktionen bilden keine eigene
+%    Architekturhierarchie.
+%
+% 3. Ein Implementation Module kann mehrere Logical Components unterstuetzen.
+%
+% 4. Ein Logical Component kann mehrere Implementation Modules referenzieren.
+%
+% 5. Die Architektur beantwortet "wer ist fachlich wofuer verantwortlich?"
+%    und nicht "wo liegt welcher Python-Code?".
+%
+% [MODEL/PROJECT]
+% 2026-09-02 CATIA Modeling Complete SSOT.
+%
+% [REPO-FILE]
+% ISO/IEC/IEEE 42010:2022
+% Nur fuer allgemeine Architekturbegriffe, nicht als Quelle dieser konkreten
+% Turing-Zerlegung.
+
+
+\subsubsection{Source-lokale Verarbeitung vor project-level Integration}
+\label{sec:source_local_first}
+
+% KERNAUSSAGEN:
+%
+% 1. Eine registrierte Source wird zunaechst in ihrem eigenen Source- und
+%    Processing-Kontext verarbeitet.
+%
+% 2. Source-derived Evidence und Interpretationen werden nicht fruehzeitig
+%    ueber mehrere Sources verschmolzen.
+%
+% 3. Erst nach source-lokaler Review und Project Fit erfolgt project-level
+%    Reconciliation.
+%
+% 4. Dieses Prinzip erhaelt Source Provenance und verhindert eine implizite
+%    Primaerquelle.
+%
+% [PROJECT]
+% ADR-012
+% ADR-032
+%
+% [REPO-BIB]
+% \cite{Tian.2025}
+% Multi-source heterogeneous data als technisches Problemfeld.
+%
+% [REPO-BIB]
+% \cite{Chis.2025}
+% Heterogeneous Knowledge Bases / RAG.
+%
+% VORSICHT:
+% Die konkrete Source-local-first-Loesung ist eine Turing-Architekturentscheidung.
+
+
+\subsubsection{Evidence vor Interpretation}
+\label{sec:evidence_before_interpretation}
+
+% KERNAUSSAGEN:
+%
+% 1. Zuerst wird festgelegt, welche source-grounded Evidence betrachtet wird.
+%
+% 2. Erst danach interpretieren Personas denselben Evidence-Gegenstand.
+%
+% 3. Dadurch bleibt erkennbar, ob Varianz aus unterschiedlicher Interpretation
+%    statt aus unterschiedlichen Ausgangsinformationen entsteht.
+%
+% 4. Evidence Identity und Interpretation bleiben getrennte Artefakte.
+%
+% [PROJECT]
+% ADR-026
+% ADR-027
+%
+% [REPO-BIB]
+% \cite{Chis.2025}
+% Als moegliche Literatur fuer grounding / external knowledge context.
+%
+% [REPO-FILE]
+% Interpretable Context Methodology
+% Nur nach Volltextpruefung.
+
+
+\subsubsection{LLM-Inferenz ohne Engineering Approval Authority}
+\label{sec:llm_no_authority}
+
+% KERNAUSSAGEN:
+%
+% 1. LLM-basierte Schritte erzeugen Vorschlaege, Interpretationen,
+%    Vergleiche, Varianz und Review Evidence.
+%
+% 2. Weder LLM confidence noch Persona consensus, source count, source age
+%    oder source order begruenden Engineering Authority.
+%
+% 3. Die Architektur kennt deshalb explizite Human Authority Boundaries.
+%
+% 4. Das gleiche Prinzip gilt fuer Model Placement.
+%    Persona Agreement ist advisory evidence, keine Model Authority.
+%
+% [PROJECT]
+% ADR-029
+% ADR-032
+%
+% [ADD]
+% Lazaros et al. 2026, HITL systematic review.
+% Zhu et al. 2026, meaningful human oversight.
+%
+% [ADD]
+% Multi-Agent-Literatur aus Kapitel 3:
+% Wang et al. 2023
+% Liang et al. 2024
+% Du et al. 2024
+% Cui et al. 2026
+% Kostka & Chudziak 2026
+
+
+\subsubsection{Deterministische Downstream-Verarbeitung nach Human Authority}
+\label{sec:deterministic_downstream}
+
+% KERNAUSSAGEN:
+%
+% 1. Nach einer Human-authorisierten Modellierungsentscheidung wird das
+%    Ergebnis nicht erneut durch ein LLM semantisch uminterpretiert.
+%
+% 2. Internal Engineering Model Assembly ist deterministisch.
+%
+% 3. SysML-v2-Generierung ist deterministisch.
+%
+% 4. Validierung beobachtet den erzeugten Artefaktstand und repariert ihn
+%    nicht stillschweigend.
+%
+% 5. Kann eine Stufe nicht ohne neue fachliche Entscheidung fortfahren,
+%    muss sie fail closed reagieren und die Resolution an die zustaendige
+%    Authority Boundary zurueckgeben.
+%
+% [PROJECT]
+% ADR-019
+% ADR-021
+% ADR-022
+%
+% [REPO-BIB]
+% \cite{Cibrian.2025b}
+% Metamodel-driven Validation.
+%
+% VORSICHT:
+% "deterministisch" ist kein Synonym fuer "fachlich korrekt".
+
+
+% =============================================================================
+\subsection{Funktionale Architektur und Engineering Information Flow}
+\label{sec:functional_architecture}
+% =============================================================================
+
+\subsubsection{Funktionale Kernverantwortungen}
+\label{sec:functional_responsibilities}
+
+% KERNAUSSAGEN:
+%
+% Die urspruenglich lineare Prozesskette hat sich zu funktionalen
+% Verantwortungsgruppen entwickelt:
+%
+% 1. Project- und Source-Kontext verwalten
+% 2. Engineering Sources vorbereiten und Informationen extrahieren
+% 3. Informationsqualitaet, Coverage und Semantik bewerten
+% 4. source-grounded Evidence und Engineering Subjects bilden
+% 5. Persona Interpretationen erzeugen und vergleichen
+% 6. Human Engineering Review durchfuehren
+% 7. Project Fit und Multi-Source-Beziehungen bewerten
+% 8. Model Candidates und Placement-Vorschlaege erzeugen
+% 9. Human Model Placement / Model Quality Entscheidungen erfassen
+% 10. Internal Engineering Model deterministisch assemblieren
+% 11. SysML-v2-Artefakte deterministisch erzeugen
+% 12. Generated Artifacts intern und extern validieren
+% 13. Final Human Model Review und Publication Gate durchfuehren
+%
+% [MODEL]
+% CATIA System Functions und Subsystem Functions.
+%
+% [PROJECT]
+% finaler Lifecycle aus 2026-09-02 SSOT.
+%
+% Die Liste ist eine Thesis-Synthese und muss nicht 1:1 den Namen aller
+% 44 Subsystem Functions entsprechen.
+
+
+\subsubsection{Durchgaengiger Informationsverarbeitungsfluss}
+\label{sec:engineering_information_flow}
+
+% DAS IST DIE ZENTRALE ABBILDUNG DES ARCHITEKTURKAPITELS.
+%
+% KERNAUSSAGE:
+% Der rote Faden der Architektur ist nicht Agent -> Code, sondern die
+% kontrollierte Veraenderung des Authority-Status von Engineering Information.
+%
+% DARSTELLUNG:
+%
+% Heterogeneous Engineering Sources
+%        |
+%        v
+% Project / Source Context
+%        |
+%        v
+% source-local Preparation
+%        |
+%        v
+% source-grounded Evidence
+%        |
+%        v
+% Engineering Subjects
+%        |
+%        v
+% Persona Interpretation / Consensus / Variance
+%        |
+%        v
+% Human Engineering Review
+%        |
+%        v
+% Approved Engineering Information
+%        |
+%        v
+% Project Fit / Admission
+%        |
+%        v
+% Project-level Reconciliation
+%        |
+%        v
+% Model Candidate / Placement
+%        |
+%        v
+% Human Model Placement Authority
+%        |
+%        v
+% Internal Engineering Model
+%        |
+%        v
+% deterministic SysML v2 Artifact Set
+%        |
+%        v
+% internal + external Validation
+%        |
+%        v
+% Final Human Model Review
+%        |
+%        v
+% immutable Published Output
+%
+% Parallel dazu:
+% Evidence / Provenance / Traceability Backbone
+%
+% [MODEL]
+% SFB_004 Engineering Data Transformation Flow
+% SFB_005 Engineering Information Processing Flow
+% Cross-SBS Logical Architecture
+%
+% [PROJECT]
+% 2026-09-02 final authority lifecycle
+%
+% ABBILDUNGSKANDIDAT 4.2:
+% Haupt-Red-Thread-Diagramm.
+%
+% Dieses Diagramm sollte spaeter in Kapitel 5 und 6 konzeptionell
+% wiederverwendet werden.
+
+
+\subsubsection{Einordnung des urspruenglichen Drei-Schichten-Modells}
+\label{sec:three_layer_final_mapping}
+
+% KERNAUSSAGEN:
+%
+% 1. Das initiale Data / Process / Knowledge Modell bleibt als
+%    konzeptionelle Sicht nutzbar.
+%
+% 2. Es ist jedoch NICHT die finale technische Zerlegung.
+%
+% 3. Data Layer:
+%    - Project / Source Context
+%    - Source Preparation
+%    - Evidence / Information Units
+%    - Provenance
+%
+% 4. Process Layer:
+%    - Orchestration
+%    - State Control
+%    - Human Review Progression
+%    - Model Assembly
+%    - Generation / Validation Workflow
+%
+% 5. Knowledge Layer:
+%    - semantic governance
+%    - persona interpretation
+%    - architecture / placement rules
+%    - Human decisions
+%    - approved engineering meaning
+%
+% 6. Die finale Architektur zeigt, dass insbesondere Knowledge- und
+%    Governance-Funktionen querschnittlich sind.
+%
+% [PROJECT]
+% Kick-off Systemabgleich.
+% CATIA Three-Layer Architecture Mapping.
+%
+% [REPO-BIB]
+% \cite{Abonyi.2024}
+%
+% Doppelung zu Kapitel 3 vermeiden:
+% Kapitel 3 erklaert die ENTSTEHUNG.
+% Kapitel 4 erklaert die EINORDNUNG in die finale Architektur.
+
+
+% =============================================================================
+\subsection{Logische Architektur und Subsystemdekomposition}
+\label{sec:logical_subsystems}
+% =============================================================================
+
+\subsubsection{Logische Zerlegung des Systems}
+\label{sec:logical_decomposition}
+
+% KERNAUSSAGEN:
+%
+% Die finale Architektur umfasst genau neun thesis-relevante Subsysteme:
+%
+% SBS_01 User Interaction and Guided Workflow
+% SBS_02 Project and Source Context Management
+% SBS_03 Processing Orchestration and State Control
+% SBS_04 Engineering Information Processing
+% SBS_05 Human Review and Engineering Authority
+% SBS_06 Evidence Coverage and Traceability
+% SBS_07 Architecture Derivation and Model Assembly
+% SBS_08 SysML v2 Artifact Generation
+% SBS_09 Generated Artifact Validation and Publication
+%
+% [MODEL/PROJECT]
+% 2026-09-02 CATIA Modeling Complete SSOT.
+%
+% Finaler Modellumfang:
+% 153 Subsystem Requirements
+% 44 Subsystem Functions
+% 31 Subsystem Logical Components
+%
+% Die Zahlen dienen als Umfangsnachweis.
+% Sie sind NICHT die Argumentation des Abschnitts.
+%
+% ABBILDUNGSKANDIDAT 4.3:
+% High-Level Logical Architecture mit neun Subsystemen.
+
+
+\subsubsection{Verantwortlichkeiten der neun Subsysteme}
+\label{sec:subsystem_responsibilities}
+
+% TABELLEKANDIDAT 4.2:
+% Verantwortlichkeiten der finalen Subsysteme
+%
+% Spalten:
+% ID | Subsystem | zentrale Verantwortung | wichtigste Abgrenzung
+%
+% SBS_01 User Interaction and Guided Workflow
+% - Human-facing Boundary
+% - Guided Workflow
+% - Status- und Evidence-Projektion
+% - sammelt keine eigene Engineering Authority
+%
+% [PROJECT] ADR-017, ADR-024
+%
+% SBS_02 Project and Source Context Management
+% - Projects und Sources registrieren / verwalten
+% - Project Isolation
+% - Source Selection / Source Roles / Context
+% - entscheidet nicht ueber Engineering Meaning
+%
+% [PROJECT] ADR-005, ADR-012, ADR-032
+%
+% SBS_03 Processing Orchestration and State Control
+% - Workflow Progression
+% - Processing Run / Stage Control
+% - kontrolliert nachfolgende Stufen
+% - besitzt den finalen Publication Gate
+% - erzeugt nicht selbst Engineering Meaning
+%
+% [PROJECT] finaler ownership boundary im 2026-09-02 SSOT
+%
+% SBS_04 Engineering Information Processing
+% - Source Preparation
+% - Evidence / Subjects / Semantic Processing
+% - Project Fit Assessment
+% - LLM-assisted interpretation where applicable
+% - erzeugt Processing Evidence, nicht Engineering Approval
+%
+% [PROJECT] ADR-009, ADR-011, ADR-026, ADR-027, ADR-032
+%
+% SBS_05 Human Review and Engineering Authority
+% - source-local Human Engineering Review
+% - Approved Input / Approved Engineering Information
+% - project-level Human Authority where required
+% - Model Placement / Model Review Authority
+% - Final Human Model Review
+% - besitzt NICHT den technischen Publication Gate
+%
+% [PROJECT] ADR-016, ADR-023, ADR-029, ADR-032
+%
+% SBS_06 Evidence Coverage and Traceability
+% - Evidence
+% - Coverage
+% - Provenance
+% - Processing History
+% - Traceability zwischen Source, Processing, Review, Model und Artifact
+% - besitzt keine Engineering Decision Authority
+%
+% [PROJECT] ADR-012, ADR-027, ADR-032
+%
+% SBS_07 Architecture Derivation and Model Assembly
+% - Project-level Model Candidate Set
+% - Model Placement Integration
+% - architecture derivation
+% - deterministic Internal Engineering Model assembly
+% - veraendert keine bereits autorisierte Engineering Semantics
+%
+% [PROJECT] ADR-018, ADR-019, ADR-028, ADR-029
+%
+% SBS_08 SysML v2 Artifact Generation
+% - representation-neutral IEM in kontrollierte SysML-v2-Notation ueberfuehren
+% - deterministic generation
+% - exact profile-bound mappings
+% - keine semantische Reinterpretation
+%
+% [PROJECT] ADR-021
+%
+% SBS_09 Generated Artifact Validation and Publication
+% - generated-artifact validation
+% - internal deterministic checks
+% - external SYSIDE compatibility validation
+% - blocking validation status
+% - Name enthaelt "Publication", aber:
+%   SBS_09 besitzt NICHT die Publication Authority.
+%   Der finale Workflow-/Publication Gate liegt bei SBS_03,
+%   Human Release Authority bei SBS_05.
+%
+% [PROJECT] ADR-022, ADR-023, 2026-09-02 SSOT
+%
+% KRITISCH:
+% Diesen Punkt im finalen Text sauber erklaeren.
+
+
+\subsubsection{Cross-Subsystem-Interaktionen}
+\label{sec:cross_sbs_interactions}
+
+% KERNAUSSAGEN:
+%
+% 1. Die neun Subsysteme sind nicht als isolierte Pipeline-Bloecke zu verstehen.
+%
+% 2. Die finale Cross-SBS Architecture umfasst:
+%    35 Logical Interfaces
+%    56 typed Item Flows
+%
+% 3. Fuer die Thesis in drei Gruppen zusammenfassen:
+%
+% A. Control
+%    - Orchestration steuert Processing, Review, Architecture, Generation
+%      und Publication Progression.
+%
+% B. Engineering Information
+%    - Source Context
+%      -> Processing
+%      -> Human Review
+%      -> Approved Information
+%      -> Architecture
+%      -> SysML v2
+%
+% C. Evidence / Status
+%    - wesentliche Stufen liefern Evidence und State
+%      an SBS_06 bzw. SBS_01.
+%
+% 4. Vier Direction Gaps wurden vor Model Freeze korrigiert:
+%    - Project / Source Context -> Evidence / Traceability
+%    - Processing Evidence -> Human Review
+%    - Coverage Assessment -> Architecture Derivation
+%    - Processing State -> User Interaction / Status Presentation
+%
+% 5. Project Fit uebergibt sowohl:
+%    ProjectFitAssessment
+%    als auch ApprovedEngineeringInformation.
+%
+% [MODEL/PROJECT]
+% 2026-09-02 CATIA closeout checkpoint.
+%
+% Keine Tabelle mit 35 Interfaces im Haupttext.
+
+
+% =============================================================================
+\subsection{Informationsobjekte, Evidence und Traceability}
+\label{sec:information_objects_traceability}
+% =============================================================================
+
+\subsubsection{Zentrale Informationsobjekte entlang des Lifecycles}
+\label{sec:information_objects}
+
+% KERNAUSSAGEN:
+%
+% Die Architektur verwendet verschiedene Informationsobjekte fuer
+% unterschiedliche Authority-Stufen.
+%
+% REPRASENTATIVE OBJEKTKETTE:
+%
+% Registered Source
+% -> Source Projection / Analysis Units
+% -> Source-grounded Evidence
+% -> Engineering Subject
+% -> Persona Interpretation
+% -> Consensus / Variance Evidence
+% -> Human Review Decision
+% -> Approved Input / Approved Engineering Information
+% -> Project Fit Assessment
+% -> Project Engineering Authority State
+% -> Model Candidate / Placement Proposal
+% -> Human Placement Decision
+% -> Internal Engineering Model
+% -> Generated SysML Artifact Set
+% -> SysML Validation Result
+% -> Final Model Review Decision
+% -> Published Output Package
+%
+% KERNAUSSAGE:
+% Die Objekte markieren unterschiedliche fachliche Rollen und Authority-Zustaende.
+%
+% [PROJECT]
+% ADR-012, ADR-016, ADR-018, ADR-019, ADR-021, ADR-022, ADR-023,
+% ADR-026, ADR-027, ADR-029, ADR-032.
+%
+% Keine JSON-Schemas oder Dataclass-Felder in Kapitel 4.
+
+
+\subsubsection{Provenance als Architektur-Backbone}
+\label{sec:provenance_backbone}
+
+% KERNAUSSAGEN:
+%
+% 1. Jeder relevante Verarbeitungsschritt soll auf Ursprung und
+%    Verarbeitungskontext zurueckgefuehrt werden koennen.
+%
+% 2. Provenance umfasst in Turing mindestens:
+%    - Project
+%    - Source
+%    - Processing Run
+%    - Processing Attempt
+%    - Artifact
+%    - Human Decision
+%    - downstream Model / Generated Artifact
+%
+% 3. Provenance dient nicht nur spaeterer Dokumentation.
+%    Sie wird an Project-Fit-, Review-, Assembly-, Validation- und
+%    Publication-Grenzen aktiv zur Integritaetspruefung genutzt.
+%
+% 4. Ein Downstream Artifact darf nicht ohne nachvollziehbare Herkunft
+%    Authority erlangen.
+%
+% [ADD]
+% W3C PROV-DM / PROV Primer, 2013.
+% Relevanz:
+% - Provenance beschreibt Entities, Activities und Agents bei der
+%   Entstehung von Information.
+% - Herkunft kann fuer Reproduktion, Beurteilung und Prozessnachweis
+%   verwendet werden.
+%
+% [ADD / OPTIONAL]
+% Simmhan, Plale, Gannon (2005):
+% A Survey of Data Provenance in e-Science.
+%
+% [PROJECT]
+% SBS_06 und zugehoerige Provenance-/Traceability-Contracts.
+%
+% NICHT behaupten:
+% Dass Turing das W3C-PROV-Datenmodell implementiert.
+
+
+\subsubsection{Identitaet und Immutable State}
+\label{sec:identity_immutability}
+
+% KERNAUSSAGEN:
+%
+% 1. Technische Identitaet und fachlicher Display Name sind getrennt.
+%
+% 2. Immutable Artefakte und explizite Successor States verhindern,
+%    dass historische Engineering Evidence stillschweigend ueberschrieben wird.
+%
+% 3. Fingerprints binden Entscheidungen und Downstream-Artefakte an einen
+%    exakten Inputzustand.
+%
+% 4. Bei Multi-Source-Aggregation ist lokale Artifact Identity nicht
+%    global eindeutig.
+%
+% 5. Effective project-wide identity:
+%    (processing_run_id, artifact_type, artifact_id)
+%
+% 6. Eine neue Human Decision oder geaenderte Engineering Information erzeugt
+%    einen neuen autoritativen Zustand, nicht die Mutation des historischen
+%    Ausgangszustands.
+%
+% [PROJECT]
+% ADR-012, ADR-016, ADR-019, ADR-021, ADR-022, ADR-023, ADR-032
+%
+% VORSICHT:
+% Hash/Fingerprint ist kein Beweis fachlicher Wahrheit.
+
+
+\subsubsection{End-to-End-Traceability}
+\label{sec:end_to_end_traceability}
+
+% KERNAUSSAGEN:
+%
+% Vereinfachte Traceability-Kette:
+%
+% Generated location
+% -> generated traceability entry
+% -> Internal Engineering Model
+% -> Model Candidate
+% -> Approved Engineering Information
+% -> Human Review Decision
+% -> source-grounded Evidence
+% -> originating Engineering Source
+%
+% 1. Traceability schliesst Engineering Content und Human Decisions ein.
+%
+% 2. Technical Validation Findings werden an exakt den validierten
+%    Generated Artifact gebunden.
+%
+% 3. Final Release Decisions beziehen sich auf exakt die Artefakt- und
+%    Validation-Fingerprints, die geprueft wurden.
+%
+% [PROJECT]
+% ADR-021, ADR-022, ADR-023
+%
+% [ADD]
+% W3C PROV
+%
+% [ADD]
+% ISO/IEC/IEEE 29148 fuer Requirements Traceability.
+%
+% ABBILDUNGSKANDIDAT 4.4:
+% Vereinfachte Traceability Chain.
+% Ggf. mit Authority-Abbildung kombinieren.
+
+
+% =============================================================================
+\subsection{Human Authority und Governance}
+\label{sec:authority_architecture}
+% =============================================================================
+
+\subsubsection{Engineering Authority, Model Authority und Publication Gate}
+\label{sec:authority_types}
+
+% KERNAUSSAGEN:
+%
+% A. Engineering Authority
+%    Frage:
+%    Welche Engineering Information gilt fachlich als akzeptiert?
+%
+%    Boundary:
+%    Human Engineering Review
+%    -> Approved Input / Approved Engineering Information
+%
+% B. Model Authority
+%    Frage:
+%    Wie wird akzeptierte Engineering Information im Modell klassifiziert,
+%    platziert und als Modellzustand autorisiert?
+%
+%    Boundaries:
+%    Human Model Placement Review
+%    Human Model Quality / Final Model Review
+%
+% C. Publication Gate
+%    Frage:
+%    Darf ein exakt validierter und Human-approved Artefaktstand als
+%    finaler Output veroeffentlicht werden?
+%
+%    Workflow / Publication Gate:
+%    SBS_03
+%
+%    Human Release Authority:
+%    SBS_05
+%
+%    Validation / Blocking Status:
+%    SBS_09
+%
+% 1. Diese Verantwortlichkeiten sind absichtlich getrennt.
+%
+% 2. Ein technischer Validation PASS ist keine Engineering Approval.
+%
+% 3. Eine Human Engineering Decision ist noch keine technische
+%    Publication Eligibility.
+%
+% [PROJECT]
+% ADR-016, ADR-023, ADR-029, 2026-09-02 ownership boundaries
+%
+% [ADD]
+% Zhu et al. 2026, meaningful human oversight.
+% Lazaros et al. 2026, HITL systematic review.
+%
+% ABBILDUNGSKANDIDAT 4.5:
+% Authority Boundaries im Turing Generator.
+
+
+\subsubsection{Review an mehreren Stellen statt eines einzelnen End-Gates}
+\label{sec:multiple_review_boundaries}
+
+% KERNAUSSAGEN:
+%
+% 1. Human Review ist keine einzelne Phase kurz vor der Ausgabe.
+%
+% 2. Unterschiedliche Reviews beantworten unterschiedliche Fragen:
+%
+% Source-local Engineering Review:
+% Ist diese interpretierte Engineering Information fachlich akzeptabel?
+%
+% Project-level Reconciliation:
+% Wie verhaelt sich bereits reviewte Information aus mehreren Sources zueinander?
+%
+% Model Placement Review:
+% Wo gehoert die accepted Engineering Information in das Zielmodell?
+%
+% Final Model Review:
+% Ist der vollstaendige erzeugte Modellstand als Engineering Output akzeptabel?
+%
+% 3. Jede Entscheidung ist an ihren exakten Review-Gegenstand gebunden.
+%
+% [PROJECT]
+% ADR-016, ADR-029, ADR-032, ADR-023
+%
+% [ADD]
+% Human Oversight Literatur aus Kapitel 3.
+%
+% In Kapitel 8 spaeter Risiken wie Cognitive Load, Automation Bias und
+% Skalierungsgrenzen diskutieren.
+
+
+\subsubsection{Varianz als Review Evidence}
+\label{sec:variance_review_evidence}
+
+% KERNAUSSAGEN:
+%
+% 1. Persona Agreement und Persona Variance werden als Review Evidence erhalten.
+%
+% 2. Kein Mehrheitsentscheid erzeugt Authority.
+%
+% 3. Varianz kann eine Needs-Attention-Situation sichtbar machen.
+%
+% 4. Wiederholte Runs erhoehen nicht das Stimmengewicht.
+%    Sie koennen Stabilitaetsevidenz liefern.
+%
+% [PROJECT]
+% ADR-026, ADR-027, ADR-029
+%
+% [ADD]
+% Kostka & Chudziak 2026
+% Cui et al. 2026
+% Liang et al. 2024
+% Du et al. 2024
+% Wang et al. 2023
+%
+% Die empirische Guete von Varianz als Unsicherheitssignal gehoert spaeter
+% in Ergebnisse und Diskussion.
+
+
+% =============================================================================
+\subsection{Multi-Source-Architektur}
+\label{sec:multisource_architecture}
+% =============================================================================
+
+\subsubsection{Source-bound Processing und Project Fit}
+\label{sec:project_fit_architecture}
+
+% KERNAUSSAGEN:
+%
+% 1. Mehrere Sources eines Projekts werden zunaechst unabhaengig verarbeitet.
+%
+% 2. Eine Source nimmt nicht automatisch an project-level Reconciliation teil,
+%    nur weil sie in einem Project registriert wurde.
+%
+% 3. Project Fit beantwortet:
+%    Passt diese Source plausibel zu dem durch das Project beschriebenen
+%    Produkt bzw. System?
+%
+% 4. Machine-generated Project Fit States:
+%    plausible_in_scope
+%    uncertain
+%    likely_out_of_scope
+%
+% 5. uncertain und likely_out_of_scope blockieren project-level Engineering
+%    Reconciliation bis zu einer Human Processing Decision.
+%
+% 6. Context-only Sources koennen zur Kontextbildung beitragen,
+%    erlangen dadurch aber keine Engineering Authority.
+%
+% [PROJECT]
+% ADR-032
+% UC_007 im CATIA-Modell.
+%
+% [REPO-BIB]
+% \cite{Tian.2025}
+%
+% VORSICHT:
+% Die Project-Fit-Zustandsmaschine ist eigene Architektur.
+
+
+\subsubsection{Cross-Source Semantic Reconciliation}
+\label{sec:cross_source_reconciliation}
+
+% KERNAUSSAGEN:
+%
+% 1. Erst admitted Sources nehmen an Cross-Source Semantic Reconciliation teil.
+%
+% 2. Die Reconciliation beantwortet nicht Modellplatzierung,
+%    sondern semantische Beziehungen zwischen Source-Beitraegen.
+%
+% 3. Unterstuetzte Relationstypen:
+%    equivalent
+%    complementary
+%    potential_conflict
+%    distinct
+%    uncertain
+%
+% 4. Equivalent erlaubt gemeinsame Betrachtung, Source Evidence bleibt erhalten.
+%
+% 5. Complementary darf nicht automatisch zu einem synthetischen
+%    Mischstatement kollabieren.
+%
+% 6. Potential conflict beschreibt Varianz, waehlt aber keinen Gewinner.
+%
+% 7. Uncertain bleibt offen fuer Human Reasoning.
+%
+% [PROJECT]
+% ADR-032
+%
+% [REPO-BIB]
+% \cite{Chis.2025}
+% \cite{Abonyi.2024}
+%
+% [REPO-FILE]
+% Ontologie-Literatur:
+% Drobnjakovic et al.
+% Orellana & Mandrick
+% Lu et al.
+% Liu et al.
+% Dong et al.
+%
+% Die konkreten fuenf Turing-Relationen sind Designresultat.
+
+
+\subsubsection{Project-Level Engineering Authority}
+\label{sec:project_authority_multisource}
+
+% KERNAUSSAGEN:
+%
+% 1. Source-local Approved Engineering Information bleibt unveraendert
+%    nachvollziehbar.
+%
+% 2. Cross-source Evidence schreibt Source-Artefakte nicht um.
+%
+% 3. Eine project-level Human Authority Decision kann festlegen:
+%    remain independent
+%    coexist
+%    supersede
+%    remain unresolved
+%
+% 4. Neue Sources haben nicht automatisch hoehere Authority als bereits
+%    reviewte Engineering Information.
+%
+% 5. Source Age, Source Type, Source Order und Source Count sind keine
+%    automatische Truth Arbitration.
+%
+% 6. Muss eine neue Engineering-Aussage synthetisiert werden, darf die
+%    Reconciliation Layer sie nicht automatisch authorisieren.
+%    Sie muss erneut durch Human Engineering Review laufen.
+%
+% [PROJECT]
+% ADR-032.
+%
+% ARCHITEKTURBEITRAG:
+% Trennung von Semantic Relationship Evidence, Engineering Authority und
+% Model Change.
+
+
+\subsubsection{Model Impact nach Engineering Authority}
+\label{sec:model_impact_reconciliation}
+
+% KERNAUSSAGEN:
+%
+% 1. Das bestehende Engineering Model ist nicht die primaere Wahrheit fuer
+%    neu eingehende Source Information.
+%
+% 2. Zuerst wird Engineering Authority geklaert.
+%
+% 3. Erst danach wird der Einfluss neuer accepted Engineering Information
+%    auf das bestehende Modell untersucht.
+%
+% 4. Model Impact Reconciliation kann vorschlagen:
+%    retain
+%    extend
+%    modify
+%    new
+%    supersede
+%    unresolved
+%
+% 5. Model Impact ist advisory evidence und mutiert nicht direkt das Modell.
+%
+% 6. Human Model Review bleibt fuer Modellveraenderungen autoritativ.
+%
+% [PROJECT]
+% ADR-032.
+%
+% Diese Trennung ist spaeter wichtig fuer TF3 und Diskussion.
+
+
+% =============================================================================
+\subsection{Modellderivation, Assembly und Zielrepraesentation}
+\label{sec:model_derivation_generation}
+% =============================================================================
+
+\subsubsection{Model Placement vor Assembly}
+\label{sec:model_placement}
+
+% KERNAUSSAGEN:
+%
+% Placement beantwortet:
+% Wo gehoert diese accepted Engineering Information in das Modellframework?
+%
+% Assembly beantwortet:
+% Wie bilden die bereits platzierten Engineering Building Blocks
+% ein koharentes Modell?
+%
+% 1. LLM-assisted Placement kann mehrere Modellierungs-Personas verwenden.
+%
+% 2. Alle Personas erhalten dieselbe Approved Engineering Information und
+%    dieselben pinned Placement Options.
+%
+% 3. Agreement ist advisory evidence.
+%
+% 4. Human Model Placement Review entscheidet die authoritative Placement.
+%
+% 5. Erst ein vollstaendig Human-resolved Placement Set darf in Assembly gehen.
+%
+% [PROJECT]
+% ADR-029.
+%
+% [REPO-BIB]
+% \cite{SysMLv2}
+
+
+\subsubsection{Representation-neutrales Internal Engineering Model}
+\label{sec:iem_architecture}
+
+% KERNAUSSAGEN:
+%
+% 1. Das Internal Engineering Model wird aus Human-authorisierten Model
+%    Candidates deterministisch assemblert.
+%
+% 2. Es ist eine immutable, reproduzierbare Snapshot-Grenze.
+%
+% 3. Engineering Element / Relationship Identity bleibt getrennt von
+%    Candidate Identity und Display Name.
+%
+% 4. Accepted Relationship Semantics werden unveraendert erhalten.
+%
+% 5. Die Framework-Struktur darf materialisiert werden, weil sie pinned
+%    Configuration ist.
+%
+% 6. Zusaetzliche Engineering Hierarchy darf nicht aus Namen,
+%    Reihenfolge oder struktureller Bequemlichkeit erfunden werden.
+%
+% 7. Das IEM enthaelt noch keine konkrete SysML-v2-Textsyntax.
+%
+% [PROJECT]
+% ADR-019.
+%
+% ARCHITEKTURBEITRAG:
+% Trennung von Engineering Model Semantics und textual representation.
+
+
+\subsubsection{Deterministische SysML-v2-Generierung}
+\label{sec:sysml_generation_architecture}
+
+% KERNAUSSAGEN:
+%
+% 1. Generation ist ein Serializer / Compiler von accepted internal semantics
+%    in eine kontrollierte Zielnotation.
+%
+% 2. Die Generation darf nicht:
+%    - Engineering Meaning neu interpretieren
+%    - Beziehungen erfinden
+%    - Hierarchien erfinden
+%    - unsupported semantics stillschweigend ersetzen
+%
+% 3. Generation Policy ist getrennt in:
+%    - Target Notation Profile
+%    - Generation Profile
+%    - Artifact Structure Profile
+%
+% 4. Unsupported Semantics fail closed.
+%
+% 5. Syntaxauthority:
+%    SysML v2 specification / release repository
+%    -> SYSIDE validation
+%    -> local validated syntax experiments
+%    -> non-normative examples
+%
+% 6. CATIA-Modell des Turing Generators ist nicht Syntaxauthority fuer
+%    beliebige erzeugte Zielmodelle.
+%
+% [PROJECT]
+% ADR-021.
+%
+% [REPO-BIB]
+% \cite{SysMLv2}
+% \cite{Cibrian.2025}
+% \cite{Pan.2025}
+%
+% Literatur hier nur gezielt, nicht als Wiederholung von Kapitel 2.
+
+
+\subsubsection{Unabhaengige Generated-Artifact-Validierung}
+\label{sec:generated_validation_architecture}
+
+% KERNAUSSAGEN:
+%
+% 1. Generated Artifact Validation ist von Generation getrennt.
+%
+% 2. Validation Subject ist ein exaktes immutable GeneratedSysMLArtifactSet.
+%
+% 3. Validation repariert nicht.
+%
+% 4. Zwei Ebenen:
+%
+% Internal deterministic validation:
+% - Turing-specific invariants
+% - profile references
+% - traceability
+% - endpoint / relationship consistency
+% - artifact integrity
+%
+% External compatibility validation:
+% - SYSIDE Modeler CLI
+% - complete generated artifact
+%
+% 5. External SYSIDE Validation ersetzt interne Turing-Contract-Pruefungen nicht.
+%
+% 6. Normative statuses:
+%    valid
+%    invalid
+%    incomplete
+%
+% 7. Nur valid + publication gate passed kann downstream publication eligible sein.
+%
+% [PROJECT]
+% ADR-022.
+%
+% [REPO-BIB]
+% \cite{Cibrian.2025b}
+% \cite{SysMLv2}
+%
+% ARCHITEKTURBEITRAG:
+% Tool-valid wird bewusst von fachlich korrekt / Human-approved getrennt.
+
+
+\subsubsection{Final Human Model Review und Publication}
+\label{sec:final_review_publication}
+
+% KERNAUSSAGEN:
+%
+% 1. Automated Validation alleine ist keine finale Engineering Release Authority.
+%
+% 2. Human Review betrachtet den vollstaendigen erzeugten Modellstand
+%    inklusive Generated SysML v2, Modellprojektion, Findings und Traceability.
+%
+% 3. Generated but not approved Artifacts sind Review Evidence,
+%    keine Published Outputs.
+%
+% 4. Final Human Approval ist an genau einen reviewed Artifact- und
+%    Validation-State gebunden.
+%
+% 5. Jede materiale Aenderung erfordert:
+%    neue Generation
+%    -> neue Validation
+%    -> neue Final Model Review Revision
+%
+% 6. Publication erzeugt einen immutable versioned Output.
+%
+% [PROJECT]
+% ADR-023.
+%
+% [ADD]
+% Human Oversight Literatur aus Kapitel 3.
+%
+% WICHTIGE ABGRENZUNG:
+% SBS_09 liefert Validation / blocking status.
+% SBS_05 liefert Human Release Authority.
+% SBS_03 kontrolliert den finalen Publication Gate.
+
+
+% =============================================================================
+\subsection{Architekturgrenzen und bewusst nicht modellierte Aspekte}
+\label{sec:architecture_scope_boundaries}
+% =============================================================================
+
+\subsubsection{Physical und Deployment ausserhalb des Thesis Scopes}
+\label{sec:physical_out_of_scope}
+
+% KERNAUSSAGEN:
+%
+% 1. RFLP ist methodische Referenz.
+%
+% 2. Die Thesis elaboriert Requirements, Functional und Logical Architecture.
+%
+% 3. Physical / Deployment wird fuer die softwarezentrierte Forschungsfrage
+%    nicht ausgearbeitet.
+%
+% 4. Dies bedeutet nicht, dass Software keine Physical / Deployment Concerns
+%    besitzt.
+%
+% 5. Compute Infrastructure, Deployment Topology, Network Deployment und
+%    Runtime Hosting sind ausserhalb der selected research scope.
+%
+% [MODEL/PROJECT]
+% 2026-09-02 CATIA freeze checkpoint.
+%
+% [ADD]
+% Li et al. 2020 RFLP-Methodik.
+
+
+\subsubsection{Target Architecture und implementierter PoC}
+\label{sec:target_vs_mvp}
+
+% KERNAUSSAGEN:
+%
+% 1. Nicht jede modellierte Zielanforderung muss im MVP vollstaendig
+%    implementiert sein.
+%
+% 2. Das CATIA-Modell bildet die thesis-relevante Engineering Architecture,
+%    nicht ausschliesslich eine 1:1 Beschreibung des aktuellen Codes.
+%
+% 3. Implementation Mapping wurde dort aufgenommen, wo es fuer
+%    Thesis-Traceability relevant ist.
+%
+% 4. Einzelne Target-Scope Elemente duerfen ohne MVP Implementation Anchor
+%    bestehen, wenn dies explizit modelliert und akzeptiert ist.
+%
+% 5. Die Thesis muss unterscheiden:
+%    - target architecture
+%    - implemented PoC subset
+%    - empirically validated subset
+%
+% [PROJECT]
+% 2026-09-02 closeout.
+%
+% Dieser Punkt ist spaeter zentral fuer Kapitel 5 bis 8.
+
+
+\subsubsection{Keine automatische Produktionsreife}
+\label{sec:no_production_readiness_claim}
+
+% KERNAUSSAGEN:
+%
+% 1. Das Architekturkonzept beschreibt einen kontrollierten PoC-Pfad.
+%
+% 2. Aus dem Architekturmodell allein folgt keine Production Readiness.
+%
+% 3. Nicht Teil des Architekturclaims:
+%    - produktive Skalierung
+%    - Security Hardening
+%    - Performance-Garantien
+%    - vollstaendige Medien-/CAD-Verarbeitung
+%    - beliebige SysML-v2-Construct-Coverage
+%    - universelle Domain Generalization
+%
+% 4. Diese Grenzen werden spaeter gegen die empirische Evidenz in Kapitel 8
+%    diskutiert.
+%
+% Keine externe Quelle erforderlich, solange dies als Begrenzung des eigenen
+% Claims formuliert wird.
+
+
+% =============================================================================
+\subsection{Zwischenfazit des Architekturkonzepts}
+\label{sec:architecture_interim_summary}
+% =============================================================================
+
+% Spaeter nur kurzer Absatz:
+%
+% - aus der initialen Schichten-/Workflow-Hypothese wurde eine
+%   responsibility-based R/F/L Architecture
+% - neun Subsysteme bilden getrennte fachliche Verantwortungen
+% - Engineering Information veraendert kontrolliert ihren Authority-Status
+% - LLMs liefern Evidence / Proposals, nicht Approval
+% - Human Authority liegt an expliziten Engineering- und Model-Grenzen
+% - Provenance / Traceability verbindet die Stufen
+% - Multi-Source wird source-neutral und provenance-preserving behandelt
+% - Assembly, SysML-v2-Generation, Validation und Publication sind getrennt
+%
+% UEBERGANG ZU KAPITEL 5:
+% Kapitel 5 zeigt, wie diese Architekturverantwortlichkeiten
+% im Turing Generator prototypisch realisiert wurden.
+
+
+% =============================================================================
+% EMPFOHLENE HAUPTTEXT-ABBILDUNGEN UND TABELLEN
+% =============================================================================
+%
+% PRIORITAET 1
+% Abb. 4.1  System Context
+%            Turing Generator + Engineering Sources + ACT_01 bis ACT_04
+%
+% PRIORITAET 1
+% Tab. 4.1  Architekturtreibende Requirement-Cluster
+%
+% PRIORITAET 1
+% Abb. 4.2  End-to-End Engineering Information / Authority Flow
+%            zentrale Red-Thread-Abbildung der Thesis
+%
+% PRIORITAET 1
+% Abb. 4.3  High-Level Logical Architecture der neun Subsysteme
+%
+% PRIORITAET 1
+% Tab. 4.2  Neun Subsysteme mit Verantwortung und Boundary
+%
+% PRIORITAET 2
+% Abb. 4.4  Authority / Traceability Boundary View
+%
+% PRIORITAET 2
+% Abb. 4.5  Multi-Source Project Fit + Reconciliation
+%            nur wenn Abb. 4.2 diesen Aspekt nicht ausreichend transportiert
+%
+% NICHT IN DEN HAUPTTEXT:
+% - vollstaendige 153 Subsystem Requirements
+% - vollstaendige 44 Subsystem Functions
+% - vollstaendige 31 Logical Components
+% - alle 35 Interfaces
+% - alle 56 Item Flows
+% - vollstaendige Implementation Mapping Population
+%
+% Details bleiben im CATIA .mdzip bzw. bei Bedarf im Anhang.
+
+
+% =============================================================================
+% LITERATURMATRIX FUER KAPITEL 4
+% =============================================================================
+%
+% ARCHITEKTURBESCHREIBUNG / SYSTEMKONTEXT
+% [REPO-FILE] ISO/IEC/IEEE 42010:2022
+% [REPO-BIB]  SysML v2
+%
+% REQUIREMENTS / TRACEABILITY
+% [ADD] ISO/IEC/IEEE 29148:2018
+%
+% RFLP / ARCHITEKTURABLEITUNG
+% [ADD] Li, Verhagen & Curran 2020
+%
+% SEMANTISCHE / ONTOLOGISCHE GOVERNANCE
+% [REPO-BIB]  Abonyi 2024
+% [REPO-BIB]  Chis 2025
+% [REPO-FILE] ISO/IEC 21838-2
+% [REPO-FILE] Drobnjakovic et al.
+% [REPO-FILE] Orellana & Mandrick
+% [REPO-FILE] Lu et al.
+% [REPO-FILE] Liu et al.
+% [REPO-FILE] Dong et al.
+%
+% MULTI-SOURCE / HETEROGENE INFORMATION
+% [REPO-BIB] Tian 2025
+% [REPO-BIB] Chis 2025
+%
+% PROVENANCE
+% [ADD] W3C PROV-DM / PROV Primer
+% [ADD/OPTIONAL] Simmhan et al. 2005
+%
+% HUMAN AUTHORITY
+% [ADD] Lazaros et al. 2026
+% [ADD] Zhu et al. 2026
+%
+% MULTI-PERSONA / VARIANZ
+% [ADD] Wang et al. 2023
+% [ADD] Liang et al. 2024
+% [ADD] Du et al. 2024
+% [ADD] Cui et al. 2026
+% [ADD] Kostka & Chudziak 2026
+%
+% SYSML-v2-GENERATION / VALIDIERUNG
+% [REPO-BIB] SysMLv2
+% [REPO-BIB] Cibrian 2025
+% [REPO-BIB] Cibrian 2025b
+% [REPO-BIB] Pan 2025
+%
+% Literatur stuetzt die Designprinzipien.
+% Das eigentliche Ergebnis ist die Turing-Architektur.
+
+
+% =============================================================================
+% PROJEKTEVIDENZ-MATRIX FUER KAPITEL 4
+% =============================================================================
+%
+% FINALER MODEL FREEZE
+% [MODEL/PROJECT]
+% collaboration/checkpoints/
+% 2026-09-02_catia_modeling_complete_thesis_writing_transition_ssot.md
+%
+% FINALER CATIA SNAPSHOT
+% [MODEL]
+% collaboration/CATIAMSOSA_TextualNotation.txt
+%
+% EARLY -> FINAL ARCHITECTURE EVOLUTION
+% [PROJECT]
+% RequirementReview/Turing_Kickoff_Systemabgleich_Content.tex
+%
+% SOURCE / PROCESSING BOUNDARY
+% [PROJECT] ADR-009
+% [PROJECT] ADR-011
+% [PROJECT] ADR-012
+%
+% HUMAN ENGINEERING AUTHORITY
+% [PROJECT] ADR-016
+%
+% MODEL CANDIDATES
+% [PROJECT] ADR-018
+%
+% IEM ASSEMBLY
+% [PROJECT] ADR-019
+%
+% SYSML GENERATION
+% [PROJECT] ADR-021
+%
+% GENERATED ARTIFACT VALIDATION
+% [PROJECT] ADR-022
+%
+% FINAL MODEL REVIEW / PUBLICATION
+% [PROJECT] ADR-023
+%
+% GUIDED WORKFLOW
+% [PROJECT] ADR-024
+%
+% MULTI-PERSONA / SOURCE GROUNDING
+% [PROJECT] ADR-026
+% [PROJECT] ADR-027
+%
+% MODEL DERIVATION / ESCALATION
+% [PROJECT] ADR-028
+%
+% HUMAN MODEL PLACEMENT
+% [PROJECT] ADR-029
+%
+% MULTI-SOURCE
+% [PROJECT] ADR-032
+% [PROJECT] ADR-033
+% [PROJECT] ADR-034
+%
+% Vor finaler Verwendung ADR-033/034 gegen die accepted source-local
+% authority chain pruefen.
+
+
+% =============================================================================
+% OFFENE QUELLENARBEIT VOR AUSFORMULIERUNG
+% =============================================================================
+%
+% PRIORITAET A
+% [ ] ISO/IEC/IEEE 42010:2022 claimweise lesen + BibTeX.
+% [ ] ISO/IEC/IEEE 29148:2018 beschaffen.
+% [ ] W3C PROV-DM / PROV Primer ins Repo aufnehmen + BibTeX.
+% [ ] Li, Verhagen & Curran 2020 beschaffen.
+%
+% PRIORITAET B
+% [ ] Human Oversight Quellen aus Kapitel 3 beschaffen.
+% [ ] Multi-Agent / Variance Quellen aus Kapitel 3 beschaffen.
+%
+% PRIORITAET C
+% [ ] Ontologie PDFs claimweise pruefen und BibTeX vervollstaendigen.
+% [ ] Cibrian 2025 / 2025b fuer konkrete Claims Volltext pruefen.
+% [ ] Chis 2025 / Tian 2025 nur dort verwenden, wo sie den Claim tragen.
+
+
+% =============================================================================
+% CLAIM-CHECK VOR DEM SCHREIBEN
+% =============================================================================
+%
+% [ ] Ist klar, ob die Aussage Projektergebnis oder allgemeiner Claim ist?
+% [ ] Ist jede allgemeine Aussage durch gepruefte Literatur gedeckt?
+% [ ] Stimmen Subsystemnamen und Authority Boundaries exakt mit CATIA ueberein?
+% [ ] Wird SBS_09 nicht faelschlich als alleinige Publication Authority dargestellt?
+% [ ] Wird LLM Consensus nie als Engineering Approval beschrieben?
+% [ ] Wird Technical Validation klar von Engineering Correctness getrennt?
+% [ ] Wird Source Provenance bei Multi-Source erhalten?
+% [ ] Wird keine automatische Source-Hierarchie behauptet?
+% [ ] Wird das Three-Layer Model als Sicht, nicht als finale technische
+%     Zerlegung beschrieben?
+% [ ] Wird Physical / Deployment als Scope-Grenze dargestellt?
+% [ ] Keine 1:1 Python-Package-Architektur.
+% [ ] Keine vollstaendigen Requirement-/Function-/LC-Listen im Haupttext.
+% [ ] Jede Tabelle / Abbildung wird im finalen Fliesstext referenziert.
+% [ ] Tabellenueberschrift oben, Abbildungsunterschrift unten.
+% [ ] Keine Gedankenstriche als Satzzeichen im finalen Fliesstext.
+% [ ] Keine Formulierungen mit unpersoenlichem "man".
+%
+% =============================================================================

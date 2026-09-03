@@ -1,0 +1,1108 @@
+% =============================================================================
+% Kapitel 5: Prototypische Realisierung
+% ARBEITSGERUEST / REVIEW CANDIDATE
+% Stand: 03.09.2026
+%
+% Dieses Dokument enthaelt bewusst NOCH KEINEN ausformulierten Thesis-Text.
+%
+% Kapitel 4 = WAS die Architektur ist
+% Kapitel 5 = WIE die Architektur im PoC realisiert wurde
+% Kapitel 6 = WIE die Realisierung verifiziert und validiert wurde
+% Kapitel 7 = WAS dabei beobachtet wurde
+%
+% ZENTRALE REGEL:
+% Dieses Kapitel folgt dem real implementierten Engineering-Information-Flow.
+% Es ist KEINE Paket-, Klassen- oder Modul-Dokumentation.
+%
+% ZEITLICHE DARSTELLUNGSREGEL:
+% Kapitel 5 beschreibt den stabilisierten, thesis-relevanten Endzustand des PoC.
+% Es erzaehlt NICHT chronologisch:
+% Test -> Bug -> Patch -> Test -> naechster Patch.
+%
+% Diese Entwicklungshistorie wird methodisch in Kapitel 3 und evidenzseitig
+% in Kapitel 6 behandelt.
+%
+% ADR-REGEL:
+% ADRs dienen in Kapitel 5 als Realisierungs- und Design-Rationale-Provenienz.
+% Sie helfen nachzuweisen, warum eine finale Implementierungsgrenze so
+% realisiert wurde. Die ADR-Historie bildet aber NICHT die Kapitelstruktur.
+%
+% Quellenstatus:
+% [PROJECT]   akzeptierte Repository-/ADR-/Contract-/Checkpoint-Evidenz
+% [CODE]      konkrete Implementierung als Realisierungsnachweis
+% [REPO-BIB]  wissenschaftliche Quelle im Thesis-Repository
+% [ADD]       noch zu beschaffende Literatur
+%
+% Wissenschaftliche Literatur wird hier nur fuer allgemeine Aussagen oder
+% Technologieeinordnung benoetigt. Die konkrete Realisierung ist primaer
+% Projektevidenz.
+% =============================================================================
+
+\section{Prototypische Realisierung}
+\label{sec:prototype_implementation}
+
+% -----------------------------------------------------------------------------
+% FUNKTION DES KAPITELS
+% -----------------------------------------------------------------------------
+%
+% Ziel:
+% Nachvollziehbar zeigen, wie die in Kapitel 4 beschriebene
+% Informationsverarbeitungsarchitektur in einen lauffaehigen Forschungsprototyp
+% ueberfuehrt wurde.
+%
+% Der Leser soll verstehen:
+%
+% 1. welche Teile der Target Architecture tatsaechlich implementiert wurden;
+% 2. wie Project / Source Context technisch gebunden wird;
+% 3. wie Source Information in Evidence und Engineering Subjects uebergeht;
+% 4. wo LLM-Aufrufe stattfinden;
+% 5. wie Multi-Persona-Ergebnisse, Varianz und Stabilitaet gespeichert werden;
+% 6. wie Human Decisions gebunden und promoted werden;
+% 7. wie Multi-Source-Verarbeitung realisiert wurde;
+% 8. wie Model Candidates, IEM und SysML-v2-Ausgabe entstehen;
+% 9. wie Validation und Final Human Release technisch getrennt bleiben;
+% 10. wie Provenance, IDs, Manifeste und Fingerprints den gesamten Ablauf
+%     zusammenhalten.
+%
+% NICHT HIER:
+% - Begruendung der Architekturprinzipien -> Kapitel 3 / 4
+% - chronologische Finding-/ADR-/Patch-Historie -> Kapitel 3 / 6
+% - Testresultate und Regressionsergebnisse -> Kapitel 6 / 7
+% - Bewertung der Wirksamkeit -> Kapitel 8
+% - Reflexion des KI-gestuetzten Coding-Prozesses -> Kapitel 8
+
+
+% =============================================================================
+\subsection{Realisierungsumfang und technische Basis}
+\label{sec:prototype_scope_stack}
+% =============================================================================
+
+\subsubsection{Darstellungslogik der Implementierung}
+\label{sec:implementation_presentation_logic}
+
+% KERNAUSSAGEN:
+%
+% 1. Beschrieben wird der nach der formativen Entwicklung akzeptierte
+%    Realisierungsstand.
+%
+% 2. Die Darstellung folgt den Architekturverantwortlichkeiten und
+%    Informationsobjekten aus Kapitel 4.
+%
+% 3. Fuer jede wesentliche Realisierungsstufe werden spaeter knapp gezeigt:
+%    - Zweck / Architecture Responsibility
+%    - representative Module oder Services
+%    - zentrale Artifacts / Contracts
+%    - AI versus Human Authority
+%    - Provenance-/Identity-Verhalten
+%
+% 4. ADRs koennen als Design-Rationale-Referenz genannt werden, wenn sie
+%    eine fuer den finalen Zustand wesentliche Responsibility Boundary
+%    dokumentieren.
+%
+% 5. Testskripte werden nicht als Implementierungsbestandteil beschrieben.
+%    Sie bilden Verification Evidence und gehoeren primaer in Kapitel 6.
+%
+% 6. Dadurch bleibt die Implementierungsdarstellung stabil, obwohl einzelne
+%    Verantwortlichkeiten waehrend der formativen Entwicklung korrigiert wurden.
+%
+% [PROJECT]
+% 2026-09-02 final implementation / CATIA baseline
+% accepted ADR chain
+% repository modules and contracts
+%
+% ABGRENZUNG:
+% Kapitel 5 muss ohne Kenntnis der zeitlichen Reihenfolge aller ADRs
+% oder Work Packages verstaendlich sein.
+
+
+\subsubsection{Abgrenzung zwischen Target Architecture und PoC}
+\label{sec:prototype_scope}
+
+% KERNAUSSAGEN:
+%
+% 1. Der PoC realisiert die thesis-kritische End-to-End-Kette der Architektur.
+%
+% 2. Er ist keine vollstaendige Produktimplementierung aller modellierten
+%    Target-Scope-Faehigkeiten.
+%
+% 3. Fuer jede spaetere Aussage muss zwischen:
+%    - modellierter Target Architecture
+%    - implementiertem PoC
+%    - empirisch validiertem Verhalten
+%    unterschieden werden.
+%
+% [PROJECT]
+% 2026-09-02 CATIA Modeling Complete SSOT
+% 2026-08-29 Thesis Structure / Completion SSOT
+%
+% Der Repository-README beschreibt den Prototyp explizit als
+% Streamlit-basierten Forschungsprototyp fuer traceable, Human-governed
+% Transformation heterogener Engineering Sources zu validiertem SysML v2.
+%
+% [PROJECT]
+% README.md
+%
+% ABGRENZUNG:
+% Keine Production-Readiness-Behauptung.
+
+
+\subsubsection{Technologiestack und Ausfuehrungsumgebung}
+\label{sec:technology_stack}
+
+% KERNAUSSAGEN:
+%
+% Beschreiben, aber nicht ueberfrachten:
+%
+% - Python als Implementierungssprache
+% - Streamlit als Human-facing Prototype UI
+% - dateibasierte / strukturierte Projektartefakte und Manifeste
+% - LLM Provider / API fuer probabilistische Verarbeitungsschritte
+% - pytest-basierte automatisierte Verifikation
+% - SYSIDE Modeler CLI als externe SysML-v2-Validierung
+% - Git als Versions- und Entwicklungsbasis
+%
+% [PROJECT/CODE]
+% app/turing_generator_app.py
+% tests/
+% modules/
+% README.md
+%
+% [OFFICIAL / OPTIONAL]
+% Produkt-/Tooldokumentation nur dort zitieren, wo eine konkrete
+% Funktionsbeschreibung erforderlich ist.
+%
+% WICHTIG:
+% Keine lange Toolliste.
+% Nur Technologien nennen, die fuer die Architekturrealisation relevant sind.
+
+
+\subsubsection{Projektorientierte Persistenz und Artifact Organization}
+\label{sec:artifact_organization}
+
+% KERNAUSSAGEN:
+%
+% 1. Verarbeitung erfolgt projektorientiert.
+%
+% 2. Sources, Processing Runs, Attempts, Decisions und Downstream Artifacts
+%    werden nicht als lose Dateien behandelt, sondern in expliziten
+%    Verarbeitungskontexten gebunden.
+%
+% 3. Immutable bzw. append-oriented Artefakte und Manifeste erhalten
+%    historische Zustandsnachvollziehbarkeit.
+%
+% 4. IDs und Fingerprints dienen als stabile technische Bindung zwischen
+%    Processing, Review, Model und Output.
+%
+% [PROJECT]
+% ADR-005
+% ADR-012
+% working_rules.md
+%
+% [CODE]
+% modules/framework/
+% processing / manifest / identifier implementations
+%
+% WICHTIG:
+% Keine vollstaendige Dateibaum-Dokumentation.
+% Eine kleine schematische Darstellung der Persistenzstruktur kann reichen.
+
+
+% =============================================================================
+\subsection{Project und Source Context}
+\label{sec:implementation_context}
+% =============================================================================
+
+\subsubsection{Projektregistrierung und Source-Bindung}
+\label{sec:project_source_registration}
+
+% KERNAUSSAGEN:
+%
+% 1. Ein Processing Run ist immer an einen expliziten Project-Kontext gebunden.
+%
+% 2. Sources werden registriert und erhalten stabile Identitaet.
+%
+% 3. Source Information wird nicht ohne Project/Source-Kontext in spaetere
+%    Engineering-Verarbeitung eingespeist.
+%
+% 4. Multi-Project-Isolation verhindert unbeabsichtigtes Vermischen
+%    verschiedener Engineering-Kontexte.
+%
+% [PROJECT]
+% ADR-005
+% ADR-012
+%
+% [CODE]
+% Project-/Source-Context-Module
+% Repository / Workspace services
+%
+% ABBILDUNGSKANDIDAT:
+% Kleine technische Projektsicht:
+% Project
+% -> Sources
+% -> Processing Runs
+% -> Artifacts
+
+
+\subsubsection{Processing Run, Attempt und Artifact Identity}
+\label{sec:processing_identity}
+
+% KERNAUSSAGEN:
+%
+% 1. Processing Runs bilden reproduzierbare Verarbeitungskontexte.
+%
+% 2. Wiederholte Processing Attempts sind unterscheidbar.
+%
+% 3. Artifact Identity wird nicht aus Dateiname oder Display Name abgeleitet.
+%
+% 4. Fuer project-wide Multi-Source gilt:
+%    (processing_run_id, artifact_type, artifact_id)
+%
+% 5. Diese Bindung wurde spaeter notwendig, um Source-uebergreifende
+%    Artifact-Kollisionen auszuschliessen.
+%
+% [PROJECT]
+% ADR-012
+% BLK-002 closeout
+% ADR-032 / ADR-033 / ADR-034, genaue Rollen vor finaler Formulierung pruefen.
+%
+% [CODE]
+% identifier / manifest / provenance modules
+%
+% TESTERGEBNISSE NICHT HIER.
+% Nur Realisierung erklaeren.
+
+
+% =============================================================================
+\subsection{Source Preparation und Evidence Detection}
+\label{sec:implementation_evidence}
+% =============================================================================
+
+\subsubsection{Deterministische Source Preparation}
+\label{sec:source_preparation}
+
+% KERNAUSSAGEN:
+%
+% 1. Source Preparation ist von semantischer LLM-Interpretation getrennt.
+%
+% 2. Quellen werden zunaechst in analysierbare Einheiten bzw. Source
+%    Projections ueberfuehrt.
+%
+% 3. Deterministische Vorverarbeitung soll den Inputgegenstand stabilisieren,
+%    bevor probabilistische Interpretation beginnt.
+%
+% [PROJECT]
+% ADR-009
+% ADR-012
+%
+% [CODE]
+% modules/extraction/
+% Source Projection / preparation implementations
+%
+% VORSICHT:
+% Exakte Inputformate und Parser nur nennen, wenn fuer die Thesis relevant.
+% Kein Parser-Katalog.
+
+
+\subsubsection{Source-grounded Evidence Detection}
+\label{sec:evidence_detection_impl}
+
+% KERNAUSSAGEN:
+%
+% 1. Evidence Detection ist als eigene Verarbeitungsstufe implementiert.
+%
+% 2. Evidence verweist auf konkrete Source-/Projection-Kontexte.
+%
+% 3. Personas interpretieren spaeter dieselbe Evidence.
+%
+% 4. Damit ist Evidence Identity nicht Bestandteil einer Persona-Antwort.
+%
+% [PROJECT]
+% ADR-027
+%
+% [CODE]
+% modules/evidence_detection/
+%
+% [REPO-BIB]
+% Grounding-Literatur aus Kapitel 2/3 nur fuer allgemeine Begruendung,
+% nicht fuer die konkrete Implementierungsbeschreibung.
+
+
+\subsubsection{Engineering Subject Construction}
+\label{sec:engineering_subjects_impl}
+
+% KERNAUSSAGEN:
+%
+% 1. Source-grounded Evidence wird in reviewbare Engineering Subjects
+%    organisiert.
+%
+% 2. Ein Engineering Subject repraesentiert den fachlichen Gegenstand,
+%    ueber den unterschiedliche Interpretationen verglichen werden.
+%
+% 3. Personas und wiederholte Runs duerfen Engineering Subjects nicht
+%    kuenstlich vervielfachen.
+%
+% [PROJECT]
+% current_state.md
+% ADR-027
+%
+% [CODE]
+% modules/engineering_subjects/
+%
+% WICHTIG:
+% Hier den Unterschied zwischen Evidence und Engineering Subject
+% mit einem kleinen Beispiel erklaeren.
+
+
+% =============================================================================
+\subsection{Persona Interpretation und semantische Verarbeitung}
+\label{sec:persona_processing_impl}
+% =============================================================================
+
+\subsubsection{Konfigurierbare Persona-Aufrufe}
+\label{sec:persona_calls}
+
+% KERNAUSSAGEN:
+%
+% 1. Personas sind explizit konfigurierte Interpretationsperspektiven.
+%
+% 2. Persona Definitionen liegen als kontrollierte Prompt-/Role-Artefakte vor.
+%
+% 3. Mehrere Personas erhalten denselben Evidence-Gegenstand.
+%
+% 4. Die Persona-Antwort wird strukturiert gespeichert und mit
+%    Run-/Evidence-Provenance gebunden.
+%
+% [CODE]
+% agents/personas/
+% modules/evidence_interpretation/
+% modules/agents/
+%
+% REPRASENTATIVE PERSONAS:
+% - literal interpreter
+% - skeptical ambiguity interpreter
+% - systems engineering interpreter
+%
+% Modellierungsphase spaeter:
+% - conservative modeling reviewer
+% - weitere modeling personas
+%
+% KEINE vollstaendigen Prompttexte in den Haupttext.
+% Ggf. ein gekuerztes Prompt-Schema im Anhang.
+
+
+\subsubsection{Consensus, Variance und Stabilitaet}
+\label{sec:consensus_variance_impl}
+
+% KERNAUSSAGEN:
+%
+% 1. Persona-Ergebnisse werden verglichen.
+%
+% 2. Consensus bzw. Agreement wird als Evidence gespeichert.
+%
+% 3. Divergenz / Variance bleibt sichtbar.
+%
+% 4. Wiederholte Runs werden getrennt behandelt:
+%    sie liefern Stability Evidence, nicht zusaetzliche Stimmen.
+%
+% 5. Das Ergebnis dieser Stufe besitzt keine Engineering Approval Authority.
+%
+% [PROJECT]
+% ADR-026
+% ADR-027
+%
+% [CODE]
+% modules/consensus/
+%
+% [ADD / REPO-BIB SPAETER]
+% Multi-Agent / uncertainty Literatur aus Kapitel 2/3.
+%
+% IMPLEMENTIERUNGSDETAIL:
+% Nur die fuer die Architektur relevante Aggregationslogik darstellen,
+% keine Hilfsfunktionen.
+
+
+\subsubsection{Semantische Governance und Terminologie}
+\label{sec:semantic_governance_impl}
+
+% KERNAUSSAGEN:
+%
+% 1. Begriffe und erkannte Terminologiekonflikte werden explizit behandelt.
+%
+% 2. Eine Project Glossary bzw. semantische Governance kann accepted meanings
+%    bereitstellen.
+%
+% 3. Neue Source Usage darf einen bestehenden accepted meaning nicht
+%    stillschweigend ueberschreiben.
+%
+% 4. Konflikte werden als sichtbare Engineering Evidence weitergegeben.
+%
+% [PROJECT]
+% ADR-011
+%
+% [CODE]
+% semantic / ontology / classification alignment modules
+%
+% ABGRENZUNG:
+% Keine Behauptung, der PoC implementiere eine vollstaendige formale Ontologie,
+% wenn tatsaechlich nur Teilmechanismen realisiert sind.
+
+
+% =============================================================================
+\subsection{Human Engineering Review und Approved Engineering Information}
+\label{sec:human_review_impl}
+% =============================================================================
+
+\subsubsection{Subject-centered Human Review}
+\label{sec:subject_review}
+
+% KERNAUSSAGEN:
+%
+% 1. Human Review arbeitet auf reviewbaren Engineering Subjects.
+%
+% 2. Der Review Context enthaelt die zugrunde liegende Evidence,
+%    Persona Interpretations, Agreement / Variance und relevante Provenance.
+%
+% 3. Human Decision ist ein eigenstaendiges, persistiertes Artefakt.
+%
+% 4. Review kann accept, reject, clarification / rework oder vergleichbare
+%    projektdefinierte Entscheidungen ausloesen.
+%
+% [PROJECT]
+% ADR-016
+% r4c_subject_centric_human_review_contract.md
+%
+% [CODE]
+% human review modules / Streamlit workspace
+%
+% ABBILDUNGSKANDIDAT:
+% Screenshot der Human Review UI nur, wenn er die Authority Boundary
+% wirklich illustriert. Keine reine UI-Dokumentation.
+
+
+\subsubsection{Promotion zu Approved Engineering Information}
+\label{sec:approved_engineering_impl}
+
+% KERNAUSSAGEN:
+%
+% 1. LLM Output wird nicht direkt zu Approved Engineering Information.
+%
+% 2. Promotion ist an eine gueltige Human Decision und exakte Inputzustande
+%    gebunden.
+%
+% 3. Stale oder unvollstaendige Decisions blockieren Promotion.
+%
+% 4. Approved Engineering Information ist immutable und downstream-faehig.
+%
+% [PROJECT]
+% ADR-016
+% r4c_finalization_and_approved_engineering_information_contract.md
+%
+% [CODE]
+% modules/approved_input/
+% modules/approved_engineering_information/
+%
+% KRITISCHE BOUNDARY:
+% Human Review Decision
+% -> Approved Engineering Information
+
+
+% =============================================================================
+\subsection{Project-level Multi-Source-Verarbeitung}
+\label{sec:multisource_impl}
+% =============================================================================
+
+\subsubsection{Project Fit}
+\label{sec:project_fit_impl}
+
+% KERNAUSSAGEN:
+%
+% 1. Source-local Approved Engineering Information wird vor project-level
+%    Integration auf Project Fit geprueft.
+%
+% 2. Project Fit ist ein eigenes Artifact / Assessment.
+%
+% 3. Maschinenbewertung kann plausible_in_scope, uncertain oder
+%    likely_out_of_scope liefern.
+%
+% 4. Unklare bzw. nicht plausible Faelle blockieren Reconciliation,
+%    bis Human Resolution vorliegt.
+%
+% [PROJECT]
+% ADR-032
+% UC_007
+%
+% [CODE]
+% project-fit / multi-source modules
+%
+% KEINE RESULTATE HIER.
+
+
+\subsubsection{Cross-Source Semantic Reconciliation}
+\label{sec:cross_source_impl}
+
+% KERNAUSSAGEN:
+%
+% 1. Nur admitted Sources werden project-level verglichen.
+%
+% 2. Source Evidence bleibt erhalten.
+%
+% 3. Implementierte semantische Relationstypen:
+%    equivalent
+%    complementary
+%    potential_conflict
+%    distinct
+%    uncertain
+%
+% 4. Vergleich erzeugt Evidence, nicht automatische Truth Arbitration.
+%
+% 5. Kein synthetisches merged AEI wird ohne Human Authority erzeugt.
+%
+% [PROJECT]
+% ADR-032
+% BLK-002 resolution
+%
+% [CODE]
+% semantic_consolidation/
+% multi-source reconciliation modules
+%
+% BESONDERS WICHTIG:
+% Der Multi-Source-Pfad wurde nach dem Single-Source Gate-3 realisiert,
+% ohne den akzeptierten Source-local Pfad umzuschreiben.
+
+
+\subsubsection{Project-level Human Authority}
+\label{sec:project_level_authority_impl}
+
+% KERNAUSSAGEN:
+%
+% 1. Project-level Decisions sind von Source-local Decisions getrennt.
+%
+% 2. Entscheidungen koennen Contributions unabhaengig lassen,
+%    Koexistenz erlauben, Supersession festlegen oder unresolved bleiben.
+%
+% 3. Die Source-local History wird nicht destruktiv ueberschrieben.
+%
+% [PROJECT]
+% ADR-032
+%
+% [CODE]
+% project authority / reconciliation decision implementations
+
+
+% =============================================================================
+\subsection{Model Candidate Derivation und Human Model Placement}
+\label{sec:model_candidate_impl}
+% =============================================================================
+
+\subsubsection{Ableitung eines Project-level Model Candidate Set}
+\label{sec:model_candidate_set}
+
+% KERNAUSSAGEN:
+%
+% 1. Downstream wird genau ein Project-level Model Candidate Set erzeugt.
+%
+% 2. Inputs sind nur zugelassene und Human-authorisierte Engineering Information.
+%
+% 3. Model Candidates bewahren Provenance auf ihre Engineering Inputs.
+%
+% 4. Candidate Derivation darf nicht stillschweigend Engineering Authority
+%    neu vergeben.
+%
+% [PROJECT]
+% ADR-018
+% ADR-028
+%
+% [CODE]
+% modules/model_candidates/
+% approved_engineering_deriver.py
+%
+% WICHTIG:
+% Keine Source-pro-Candidate-Parallelmodelle als finale Projektarchitektur.
+
+
+\subsubsection{Multi-Persona Model Placement}
+\label{sec:model_placement_impl}
+
+% KERNAUSSAGEN:
+%
+% 1. Modellierungs-Personas koennen alternative Placements fuer dieselbe
+%    Approved Engineering Information vorschlagen.
+%
+% 2. Placement Options sind pinned und fuer alle Personas gleich.
+%
+% 3. Agreement / Variance wird als advisory evidence gebunden.
+%
+% 4. Human Model Placement Review entscheidet die authoritative Placement.
+%
+% [PROJECT]
+% ADR-029
+% model_placement_review_contract.md
+%
+% [CODE]
+% modeling personas
+% framework_assignment / model placement modules
+%
+% KRITISCHE BOUNDARY:
+% Proposed Placement
+% -> Human Placement Decision
+% -> Assembly Eligibility
+
+
+% =============================================================================
+\subsection{Internal Engineering Model und deterministische Assembly}
+\label{sec:iem_impl}
+% =============================================================================
+
+\subsubsection{Assembly des Internal Engineering Model}
+\label{sec:iem_assembly}
+
+% KERNAUSSAGEN:
+%
+% 1. Das IEM wird ausschliesslich aus Human-resolved Candidates assemblert.
+%
+% 2. Assembly ist deterministisch.
+%
+% 3. Candidate Identity und Engineering Element Identity bleiben getrennt.
+%
+% 4. Accepted Relationships werden erhalten.
+%
+% 5. Pinned Framework Structure darf materialisiert werden.
+%
+% 6. Nicht autorisierte zusaetzliche Hierarchie wird nicht erfunden.
+%
+% [PROJECT]
+% ADR-019
+%
+% [CODE]
+% internal_model_* modules
+%
+% ABBILDUNGSKANDIDAT:
+% kleines Schema:
+% Approved Candidates
+% -> Assembly
+% -> IEM Snapshot
+%
+% Kein grosses Klassendiagramm.
+
+
+\subsubsection{Immutable Snapshot und Repository}
+\label{sec:iem_repository}
+
+% KERNAUSSAGEN:
+%
+% 1. Das IEM ist ein reproduzierbarer Snapshot des autorisierten Modellstands.
+%
+% 2. Fingerprints binden Snapshot und Downstream Generation.
+%
+% 3. Repository / Read Services erlauben kontrollierten Zugriff,
+%    ohne die Modellbedeutung erneut zu interpretieren.
+%
+% [PROJECT]
+% ADR-019
+%
+% [CODE]
+% internal model repository / read service
+
+
+% =============================================================================
+\subsection{SysML-v2-Generierung}
+\label{sec:sysml_generation_impl}
+% =============================================================================
+
+\subsubsection{Generation Profiles und kontrollierte Zielnotation}
+\label{sec:generation_profiles}
+
+% KERNAUSSAGEN:
+%
+% 1. Die Ausgabe wird durch explizite Profiles / Policy konfiguriert.
+%
+% 2. Relevante Trennung:
+%    - Target Notation Profile
+%    - Generation Profile
+%    - Artifact Structure Profile
+%
+% 3. Nur unterstuetzte Mapping-Regeln werden serialisiert.
+%
+% 4. Unsupported Semantics blockieren die Generation bzw. werden explizit
+%    als unsupported behandelt.
+%
+% [PROJECT]
+% ADR-021
+%
+% [CODE]
+% SysML generation modules / generation profiles
+%
+% [REPO-BIB]
+% \cite{SysMLv2}
+% normative Zielsprache.
+
+
+\subsubsection{Deterministische Serialisierung}
+\label{sec:deterministic_serialization}
+
+% KERNAUSSAGEN:
+%
+% 1. Das IEM wird deterministisch in SysML-v2-Text ueberfuehrt.
+%
+% 2. Der Generator ist an dieser Stelle kein LLM-basierter Autor.
+%
+% 3. Beziehungen und Hierarchie stammen aus dem IEM bzw. pinned profiles.
+%
+% 4. Generation erzeugt zusaetzliche machine-readable Traceability.
+%
+% [PROJECT]
+% ADR-021
+%
+% [CODE]
+% generation modules
+%
+% [REPO-BIB]
+% \cite{SysMLv2}
+%
+% WICHTIG:
+% Im Text eine kurze representative SysML-v2-Ausgabe zeigen,
+% aber keine seitenlangen Codeblocks.
+
+
+% =============================================================================
+\subsection{Generated Artifact Validation und Final Human Release}
+\label{sec:validation_release_impl}
+% =============================================================================
+
+\subsubsection{Interne deterministische Validierung}
+\label{sec:internal_validation_impl}
+
+% KERNAUSSAGEN:
+%
+% 1. Validation konsumiert ein immutable Generated Artifact Set.
+%
+% 2. Interne Validatoren pruefen Turing-spezifische Invarianten.
+%
+% 3. Validation repariert nicht automatisch.
+%
+% 4. Findings werden an den exakten Artifact Fingerprint gebunden.
+%
+% [PROJECT]
+% ADR-022
+%
+% [CODE]
+% validation modules
+
+
+\subsubsection{Externe SYSIDE-Validierung}
+\label{sec:syside_validation_impl}
+
+% KERNAUSSAGEN:
+%
+% 1. Der komplette generierte Artefaktstand wird extern mit SYSIDE validiert.
+%
+% 2. Externe Toolvalidierung ist bewusst von internen Turing-Pruefungen getrennt.
+%
+% 3. SYSIDE bestaetigt Tool-/Sprachkompatibilitaet, nicht fachliche
+%    Engineering Correctness.
+%
+% [PROJECT]
+% ADR-022
+% Gate-3 / WP-12 Checkpoints
+%
+% [REPO-BIB]
+% \cite{SysMLv2}
+%
+% Testergebnisse erst Kapitel 6/7.
+
+
+\subsubsection{Final Model Review und Publication}
+\label{sec:final_release_impl}
+
+% KERNAUSSAGEN:
+%
+% 1. Nach technischer Validation folgt ein eigener Final Human Model Review.
+%
+% 2. Der Reviewer sieht den erzeugten Modellstand, Findings und Traceability.
+%
+% 3. Human Approval ist an den exakten Artifact- und Validation-State gebunden.
+%
+% 4. Erst nach expliziter Human Release Approval darf ein Published Output
+%    Package entstehen.
+%
+% 5. Published Output wird versioniert und immutable gespeichert.
+%
+% 6. Der Repository-README definiert finalen Output ausschliesslich unter:
+%    data/output/<project_id>/<output_package_id>/
+%
+% [PROJECT]
+% ADR-023
+% README.md
+%
+% [CODE]
+% modules/final_model_review/
+% publication modules
+
+
+% =============================================================================
+\subsection{Human-facing Workflow und technische Transparenz}
+\label{sec:ui_impl}
+% =============================================================================
+
+\subsubsection{Guided Engineering Workflow}
+\label{sec:guided_workflow_impl}
+
+% KERNAUSSAGEN:
+%
+% 1. Der Hauptprototyp wird ueber eine gemeinsame Streamlit-Anwendung bedient.
+%
+% 2. Human-facing Bereiche:
+%    - Engineering Workspace
+%    - Project Dashboard
+%    - Processing
+%    - Human Review & Approval
+%    - Model Proposal
+%    - Final Model Review
+%    - Published Output
+%
+% 3. UI ist Projektion auf Engineering State.
+%    Sie ist nicht selbst Authority.
+%
+% 4. Technical Details koennen progressiv eingeblendet werden.
+%
+% [PROJECT]
+% README.md
+% ADR-017
+% ADR-024
+%
+% [CODE]
+% app/turing_generator_app.py
+%
+% ABBILDUNGSKANDIDAT:
+% EIN representative Screenshot des Guided Workflow.
+% Kein UI-Handbuch.
+
+
+\subsubsection{Decision-centered Interaction}
+\label{sec:decision_centered_ui}
+
+% KERNAUSSAGEN:
+%
+% 1. Die UI soll menschliche Entscheidungen und notwendige Evidence
+%    in den Vordergrund stellen.
+%
+% 2. Technische Artifact-Metadaten bleiben verfuegbar, dominieren aber
+%    nicht den Standardworkflow.
+%
+% 3. Diese UX-Struktur entstand aus formativer Nutzung des Prototyps.
+%
+% [PROJECT]
+% ADR-017
+% ADR-024
+% collaboration/ux/usability_findings.md
+%
+% WICHTIG:
+% Das formative Ergebnis selbst spaeter in Kapitel 7 ausweisen.
+% Hier nur den final implementierten Zustand beschreiben.
+
+
+% =============================================================================
+\subsection{Architektur-zu-Implementierung-Mapping}
+\label{sec:architecture_implementation_mapping}
+% =============================================================================
+
+% Dieser Abschnitt ist wichtig, damit Kapitel 4 und 5 nicht nebeneinander stehen.
+%
+% KERNAUSSAGEN:
+%
+% 1. Logical Components werden nicht 1:1 durch Python Modules realisiert.
+%
+% 2. Mehrere Module koennen gemeinsam eine Logical Responsibility realisieren.
+%
+% 3. Ein Modul kann technische Dienste fuer mehrere Architekturverantwortungen
+%    bereitstellen.
+%
+% 4. Fuer die Thesis werden deshalb nur representative Mappings gezeigt.
+%
+% TABELLEKANDIDAT 5.1:
+%
+% Architekturverantwortung
+% | representative Implementierung
+% | zentrale Artifacts / Contracts
+% | representative Design Rationale / ADR (optional)
+%
+% Beispielzeilen:
+%
+% Engineering Information Processing
+% | extraction, evidence_detection, engineering_subjects,
+%   evidence_interpretation, consensus
+% | Evidence / Subject / Interpretation Artifacts
+%
+% Human Review and Engineering Authority
+% | human-review + approved_input + approved_engineering_information
+% | Review Decision / AEI
+%
+% Architecture Derivation and Model Assembly
+% | model_candidates, framework_assignment, internal_model
+% | Candidate Set / Placement / IEM
+%
+% SysML v2 Artifact Generation
+% | generation modules
+% | GeneratedSysMLArtifactSet
+%
+% Validation and Final Release
+% | validation, final_model_review, publication
+% | Validation Result / Release Decision / Output Package
+%
+% [MODEL/PROJECT]
+% CATIA implementation mappings
+% 2026-09-02 model freeze
+%
+% [CODE]
+% repository modules
+%
+% KEINE vollstaendige 30+-Module-Tabelle.
+
+
+% =============================================================================
+\subsection{Zwischenfazit der prototypischen Realisierung}
+\label{sec:implementation_summary}
+% =============================================================================
+
+% Spaeter kurzer Absatz:
+%
+% - die thesis-kritische Authority Chain ist end-to-end implementiert;
+% - probabilistische Interpretation bleibt auf begrenzte Stufen konzentriert;
+% - Human Decisions erzeugen explizite Authority Boundaries;
+% - Downstream Assembly, Generation und Validation sind kontrolliert;
+% - Provenance / fingerprints binden die Artefakte;
+% - Multi-Source wurde project-level ergaenzt, ohne source-local Evidence
+%   destruktiv zu verschmelzen;
+% - Kapitel 6 untersucht nun, ob diese Realisierung die geforderten
+%   Eigenschaften tatsaechlich erfuellt.
+
+
+% =============================================================================
+% EMPFOHLENE ABBILDUNGEN / TABELLEN
+% =============================================================================
+%
+% PRIORITAET 1
+% Abb. 5.1
+% "Implementierter Engineering Information Flow"
+% gleiche Grundlogik wie Abb. 4.2, jetzt mit representative technical artifacts
+%
+% PRIORITAET 1
+% Tab. 5.1
+% Architekturverantwortung -> representative Implementierung -> Artifact/Contract
+%
+% PRIORITAET 2
+% Abb. 5.2
+% Project / Source / Run / Artifact Identity
+%
+% PRIORITAET 2
+% Abb. 5.3
+% Human Review / AEI Promotion Boundary
+%
+% PRIORITAET 2
+% Abb. 5.4
+% Candidate -> Placement -> IEM -> SysML v2 -> Validation -> Release
+%
+% OPTIONAL
+% Ein Streamlit Screenshot
+%
+% NICHT:
+% - Modulbaum als Hauptabbildung
+% - Klassenhierarchie des gesamten Repos
+% - mehrere Seiten Python-Code
+% - komplette Promptbibliothek
+
+
+% =============================================================================
+% PROJEKTEVIDENZ FUER KAPITEL 5
+% =============================================================================
+%
+% OVERALL
+% [PROJECT] README.md
+% [PROJECT] collaboration/current_state.md
+% [PROJECT] 2026-08-29 thesis structure SSOT
+%
+% CONTEXT / STATE / ARTIFACTS
+% [PROJECT] ADR-005
+% [PROJECT] ADR-012
+%
+% SOURCE PREPARATION / SEMANTICS
+% [PROJECT] ADR-009
+% [PROJECT] ADR-011
+% [PROJECT] ADR-026
+% [PROJECT] ADR-027
+%
+% HUMAN REVIEW
+% [PROJECT] ADR-016
+% [PROJECT] r4c subject-centered review contract
+% [PROJECT] r4c finalization / AEI contract
+%
+% MODEL CANDIDATES / PLACEMENT / ASSEMBLY
+% [PROJECT] ADR-018
+% [PROJECT] ADR-019
+% [PROJECT] ADR-028
+% [PROJECT] ADR-029
+%
+% GENERATION / VALIDATION / RELEASE
+% [PROJECT] ADR-021
+% [PROJECT] ADR-022
+% [PROJECT] ADR-023
+%
+% UX
+% [PROJECT] ADR-017
+% [PROJECT] ADR-024
+%
+% MULTI-SOURCE
+% [PROJECT] ADR-032
+% [PROJECT] ADR-033
+% [PROJECT] ADR-034
+% [PROJECT] BLK-002 completion / staging / genuine Multi-Source checkpoints
+%
+% WICHTIG:
+% ADR-033/034 genaue Accepted Scope vor finaler Zitation noch einmal lesen.
+
+
+% =============================================================================
+% LITERATUR FUER KAPITEL 5
+% =============================================================================
+%
+% Kapitel 5 benoetigt DEUTLICH weniger wissenschaftliche Literatur als 2/3/8.
+% Hauptbeleg ist der implementierte Prototyp.
+%
+% SYSML V2
+% [REPO-BIB / UPDATE] OMG SysML v2 Version 2.0
+%
+% MULTI-AGENT / HITL / PROVENANCE
+% nur dort kurz referenzieren, wo ein allgemeines Konzept benannt wird.
+% Die theoretische Begruendung steht bereits in Kapitel 2/3.
+%
+% STREAMLIT / PYTHON / PYTEST
+% keine wissenschaftliche Literatur erforderlich, wenn lediglich der
+% verwendete Technologiestack beschrieben wird.
+%
+% Keine Quellenwiederholung um ihrer selbst willen.
+
+
+% =============================================================================
+% CLAIM-CHECK VOR AUSFORMULIERUNG
+% =============================================================================
+%
+% [ ] Folgt der Text dem Informationsfluss statt der Repository-Struktur?
+% [ ] Beschreibt Kapitel 5 den stabilisierten Endzustand statt der Entwicklungschronologie?
+% [ ] Werden ADRs nur dort genannt, wo sie die finale Design Rationale erklaeren?
+% [ ] Bleiben Testskripte und Regressionsergebnisse primaer Kapitel 6 vorbehalten?
+% [ ] Ist bei jedem LLM-Schritt klar, welche Authority er NICHT besitzt?
+% [ ] Ist bei jeder Human Decision klar, woran sie gebunden wird?
+% [ ] Wird Source-local und Project-level Multi-Source sauber getrennt?
+% [ ] Wird kein synthetic merged AEI behauptet?
+% [ ] Ist Placement von Assembly getrennt?
+% [ ] Ist IEM von SysML-v2-Text getrennt?
+% [ ] Ist Generation von Validation getrennt?
+% [ ] Ist Validation von Human Release getrennt?
+% [ ] Sind Fingerprints/IDs als Integritaets-/Identitaetsmechanismus
+%     beschrieben, nicht als Beweis fachlicher Wahrheit?
+% [ ] Keine Testresultate in Kapitel 5 vorweggenommen?
+% [ ] Keine 1:1 Modul-/Klassen-Dokumentation?
+% [ ] Keine Gedankenstriche als Satzzeichen im finalen Fliesstext.
+% [ ] Kein unpersoenliches "man".
+%
+% =============================================================================

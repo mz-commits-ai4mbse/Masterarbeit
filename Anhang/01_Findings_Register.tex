@@ -1,0 +1,564 @@
+% =============================================================================
+% Anhang: Vollständiges Findings-Register
+% Arbeitsstand: 03.09.2026
+%
+% Zweck:
+% Vollständige und transparente Dokumentation der formativen WP-12 Findings.
+% Der Haupttext, insbesondere Kapitel 7, verwendet nur eine verdichtete Auswahl.
+%
+% Statuslogik:
+% - Historische Zustände werden NICHT überschrieben.
+% - Ein späterer Retest wird als finaler / späterer Zustand separat dokumentiert.
+% - "Open" bedeutet nicht automatisch thesis-kritisch.
+% - OBS-Findings sind überwiegend UX-/Integrationsbeobachtungen und keine
+%   wissenschaftlichen Kernergebnisse der Arbeit.
+%
+% Primäre Projektevidenz:
+% collaboration/audits/wp12_findings.md
+% collaboration/audits/wp12_formative_self_test_report.md
+% collaboration/audits/post_golden_finding_triage.md
+% collaboration/roadmap.md
+% relevante accepted checkpoints / ADRs
+%
+% WICHTIG:
+% Dieses Register ist thesisgerecht verdichtet. Die technischen Primärartefakte
+% und vollständigen Detailtexte verbleiben im Repository.
+% =============================================================================
+
+\section{Vollständiges Findings-Register}
+\label{app:findings_register}
+
+\subsection{Leselogik und Statusführung}
+
+Die formative Verifikation des Prototyps erzeugte technische Blocker, semantische
+Findings, UX- und Integrationsbeobachtungen sowie positive Verifikationsergebnisse.
+Die vollständige Auflistung wird im Anhang erhalten, damit auch behobene oder für
+den Haupttext nachrangige Befunde transparent nachvollziehbar bleiben. Historische
+Fehlerzustände werden dabei nicht durch spätere erfolgreiche Retests ersetzt.
+Stattdessen werden Erstbeobachtung und finaler Status gemeinsam dokumentiert.
+
+Die verwendeten Präfixe haben folgende Bedeutung:
+
+\begin{itemize}
+    \item \texttt{BLK}: blockierendes Finding in einem verifizierten Workflow- oder Gate-Pfad,
+    \item \texttt{SEM}: semantisches oder modellierungsbezogenes Finding,
+    \item \texttt{OBS}: formative UX-, Workflow- oder Integrationsbeobachtung,
+    \item \texttt{PASS}: positive oder bestätigende Projektevidenz.
+\end{itemize}
+
+\subsection{Blockierende Findings}
+
+\paragraph{BLK-001: Derivation Producer Contract zu permissiv}
+
+\textbf{Erstbeobachtung:}
+Der Output-Contract des Derivation-Assessors ließ formal plausible, aber für den
+strikt validierenden Downstream-Adapter nicht zuverlässig adaptierbare Outputs zu.
+
+\textbf{Reaktion:}
+Härtung des Producer Contracts. Semantische Unsicherheit wurde von
+Identitäts-, Provenance- und strukturellen Integritätsfehlern getrennt.
+
+\textbf{Finaler Status:}
+\texttt{CORRECTED / focused validation passed}.
+
+\textbf{Thesis-Verwendung:}
+Unterstützende formative Evidenz für Contract- und Fail-Closed-Grenzen, kein
+eigenständiges Kernergebnis in Kapitel 7.
+
+
+\paragraph{BLK-002: Cross-Source Processing Artifact Identity Collision}
+
+\textbf{Historische Erstbeobachtung:}
+Der formale Multi-Source-Pfad konnte Processing-Artifacts projektweit nicht
+ausreichend eindeutig an Source-, Run- und Artifact-Kontext binden.
+Der Stage-A-Test wurde deshalb als \texttt{FAILED WITH BLOCKER} klassifiziert.
+
+\textbf{Korrektur:}
+Kontextuelle Processing-Artifact-Identität, exakter Project Fit,
+\texttt{ProjectFitPhaseHHandoff}, source-scoped Phase-H Subject Identity,
+getrennte source-lokale AEI-Sets und ein gemeinsamer Model-Candidate-Pfad.
+
+\textbf{Retest:}
+Project \texttt{308131} durchlief den Genuine-Multi-Source-Pfad erfolgreich.
+
+\textbf{Finaler Status:}
+\texttt{RESOLVED / LIVE RETESTED}. Kein WP-12-Blocker verbleibt aus BLK-002.
+
+\textbf{Verbleibende Scope-Grenze:}
+Automatische projektweite semantische Reconciliation und Change Control bleiben
+Ausblick. Concern-centric S3A/S3B/S4/S5 bleiben Prototype Evidence.
+
+\textbf{Thesis-Verwendung:}
+Kernergebnis für Multi-Source Identity, Provenance und Project Fit.
+
+
+\paragraph{BLK-003: Semantic Effectiveness / Engineering-Subject Quality}
+
+\textbf{Historische Erstbeobachtung:}
+Die frühere Persona-first-Architektur erzeugte Engineering Subjects zu spät und
+zu stark aus agentengenerierten Namen, Typen und Relationship-Formulierungen.
+Processing- und Orchestration-Kontext konnte zusätzlich die semantische Population
+verunreinigen.
+
+\textbf{Architekturkorrektur:}
+R4c mit source-grounded Evidence Detection, gemeinsamer Subject Discovery,
+Canonical Subjects vor Persona Interpretation und expliziter Human Authority.
+
+\textbf{Retest:}
+Der Single-Source-Live-Pfad auf Project \texttt{120412} erreichte den
+source-grounded Human-Review- und später den vollständigen Golden-E2E-Pfad.
+
+\textbf{Finaler Status:}
+\texttt{RESOLVED / single-source E2E validated}.
+
+\textbf{Thesis-Verwendung:}
+Kernergebnis für Source Grounding und Subject Identity vor Persona Interpretation.
+
+
+\paragraph{BLK-004: Approved Input Promotion fails for R4c semantic classification}
+
+\textbf{Erstbeobachtung:}
+Die R4c-Klassifikation war als Tupel aus \texttt{information_type},
+\texttt{modality} und \texttt{epistemic_status} modelliert, während der
+Legacy-Promotion-Pfad einen einzelnen skalaren Klassifikationswert erwartete.
+
+\textbf{Retest Project 120412:}
+17 Approved Inputs wurden erzeugt, sieben Open Questions bewusst übersprungen.
+Human Overrides blieben erhalten.
+
+\textbf{Finaler Status:}
+\texttt{CORRECTED / LIVE VALIDATED}.
+
+\textbf{Thesis-Verwendung:}
+Unterstützende Contract-Evidenz, kein eigenständiges Kernergebnis.
+
+
+\paragraph{BLK-005: Approved Engineering Information not authoritative Phase-H input}
+
+\textbf{Erstbeobachtung:}
+Der Phase-H-Handoff verwendete zunächst Approved Inputs, aber nicht die vollständige
+human-autorisierte Engineering Information einschließlich akzeptierter semantischer
+Relationships.
+
+\textbf{Korrektur:}
+Der Phase-H-Request bindet Approved Subjects und Accepted Semantic Relationships
+als autoritative AEI-Population. Relationships werden nicht künstlich in
+Legacy-Approved-Input-Formate umgedeutet.
+
+\textbf{Retest Project 120412:}
+17 Approved Subjects und 21 akzeptierte semantische Relationships wurden
+gebunden. Sechs Relationships zu nicht model-promotierbaren Open Questions wurden
+explizit als \texttt{intentionally\_not\_projected} geführt.
+
+\textbf{Finaler Status:}
+\texttt{CORRECTED / LIVE VALIDATED}.
+
+\textbf{Thesis-Verwendung:}
+Kernergebnis zur Vollständigkeit des autoritativen Engineering-Information-Handoffs.
+
+
+\paragraph{BLK-006: LLM-assisted Model Proposal generation fails in live E2E}
+
+\textbf{Historische Erstbeobachtung:}
+Der erste echte LLM-assisted Model-Proposal-Pfad des R4c-Live-E2E blockierte den
+Downstream-Modellpfad. \texttt{IEM-000001} enthielt 13 Elemente und drei
+Relationships; der Generation-Preflight meldete vier nicht unterstützte Mappings.
+Die Dependency-Relationship war unterstützt.
+
+\textbf{Architekturkorrektur:}
+Die Verantwortung zwischen Engineering Meaning, Target-Model Representation,
+Target-Model Formulation und deterministischer Serialization wurde expliziter
+getrennt. Der Golden-E2E-Pfad wurde anschließend mit der korrigierten Architektur
+durchlaufen.
+
+\textbf{Finaler Status:}
+\texttt{RESOLVED BY ARCHITECTURAL CORRECTION / Golden E2E retest PASS}.
+
+\textbf{Thesis-Verwendung:}
+Kernergebnis für die Trennung von Meaning, Representation, Formulation und
+Serialization.
+
+
+\paragraph{BLK-007: Model Assembly invoked Model Placement personas for Relationship representation}
+
+\textbf{Erstbeobachtung:}
+Model Assembly delegierte Relationship-Repräsentation an die Placement-Personas
+und überschritt damit die akzeptierte Verantwortungsgrenze.
+
+\textbf{Korrektur:}
+Model Assembly wurde auf deterministische Materialisierung autorisierter Semantik
+begrenzt. Nicht exakt abbildbare Semantik bleibt unresolved und wird nicht durch
+eine erneute LLM-Interpretation während der Assembly ersetzt.
+
+\textbf{Retest Project 120412:}
+Assembly Draft mit 13 Elementen und drei Relationships, ohne Relationship-Variance;
+drei Zielrepräsentationen blieben explizit unresolved/unmapped.
+
+\textbf{Finaler Status:}
+\texttt{CORRECTED / LIVE RETEST PASS}.
+
+\textbf{Thesis-Verwendung:}
+Kernergebnis zur deterministischen Assembly-Grenze.
+
+
+\paragraph{WP12-BLK-SEM015-L-001: Final Review Handoff}
+
+\textbf{Erstbeobachtung:}
+Der finale Authority-Handoff zwischen akzeptierter Final-Review-Revision,
+Human Release und Published Output musste als geschlossene Kette verifiziert werden.
+
+\textbf{Retest / Ergebnis:}
+\texttt{FRV-000002 -> FRD-000001 -> OUT-000001}.
+
+\textbf{Finaler Status:}
+\texttt{RESOLVED}.
+
+\textbf{Thesis-Verwendung:}
+Unterstützende Evidenz für die Trennung technischer Validation, Human Review und
+Publication.
+
+
+\subsection{Semantische und modellierungsbezogene Findings}
+
+\paragraph{SEM-001: Source Purity Regression}
+
+\textbf{Beobachtung:}
+Orchestrierungs-, Task- und Prozessinformationen wurden teilweise als positive
+Engineering Information interpretiert.
+
+\textbf{Korrektur:}
+Positive Engineering Information wird an source-grounded Content gebunden.
+
+\textbf{Status:}
+\texttt{CORRECTED IN R4c / LIVE SINGLE-SOURCE VALIDATED}. Eine separate,
+dedizierte Revalidierung genau dieses Findings im Multi-Source-Test ist nicht
+als eigener Finding-Retest dokumentiert.
+
+\textbf{Thesis-Verwendung:}
+Kernergebnis Source Boundary / Source Purity.
+
+
+\paragraph{SEM-002: Model Relevance Regression}
+
+\textbf{Beobachtung:}
+Semantisch plausible Extraktion führte nicht automatisch zu einer für die
+Modellableitung geeigneten Repräsentation.
+
+\textbf{Recovery:}
+Subject-level Recovery wurde live validiert. Der Downstream-Modellpfad wurde
+später im Golden E2E validiert; allgemeine Construct-Coverage bleibt über
+SEM-011 begrenzt.
+
+\textbf{Thesis-Verwendung:}
+Kernergebnis zur Trennung von Engineering Meaning und Zielmodell-Repräsentation.
+
+
+\paragraph{SEM-003: Persona-driven Subject Multiplication}
+
+\textbf{Beobachtung:}
+Personas erzeugten weitgehend unabhängige Proposal-Populationen. Engineering
+Subject Identity entstand dadurch zu spät.
+
+\textbf{Korrektur:}
+Gemeinsame Evidence- und Subject Identity wird vor Persona Interpretation
+etabliert.
+
+\textbf{Status:}
+\texttt{CORRECTED ARCHITECTURALLY / LIVE VALIDATED}.
+
+\textbf{Thesis-Verwendung:}
+Kernergebnis.
+
+
+\paragraph{SEM-004: Cross-Unit Consolidation empirisch ineffektiv}
+
+\textbf{Beobachtung:}
+Im Run \texttt{877791 / RUN-000001} lagen nach D3 109 Subjects und nach D4
+weiterhin 109 synthetisierte Subjects vor.
+
+\textbf{Status:}
+\texttt{SUPERSEDED BY R4c ARCHITECTURE / HISTORICAL FINDING}.
+
+\textbf{Thesis-Verwendung:}
+Historische quantitative Evidenz für Kapitel 7. Die Interpretation der
+nachgelagerten Konsolidierung gehört in Kapitel 8.
+
+
+\paragraph{SEM-005: Review-Item Count ist kein Optimierungsziel}
+
+\textbf{Beobachtung:}
+Die reine Zahl der Review Items ließ keine belastbare Aussage über
+Source Purity, Grounding, Relevance oder tatsächliche Persona-Varianz zu.
+
+\textbf{Status:}
+\texttt{ACCEPTED INTERPRETATION OF TEST RESULT}.
+
+\textbf{Thesis-Verwendung:}
+Unterstützung für die Diskussion von Qualitäts- und Effizienzmetriken.
+
+
+\paragraph{SEM-006: Human Review Cards zu textlastig}
+
+\textbf{Beobachtung:}
+Review Cards erforderten zu viel Rationale- und Detaillektüre, bevor die
+eigentliche Engineering-Aussage sichtbar wurde.
+
+\textbf{Status:}
+\texttt{OPEN / UX + ENGINEERING PRESENTATION} beziehungsweise ohne dokumentierten
+abschließenden Revalidation-Status.
+
+\textbf{Thesis-Verwendung:}
+Anhang / UX-Limitation.
+
+
+\paragraph{SEM-007: Source-wide Completeness Request skaliert schlecht}
+
+\textbf{Beobachtung:}
+Project \texttt{691616} erzeugte bei drei Personas und zwei Runs 198 erfolgreiche
+Stage-01..03-LLM-Responses. Die globale Completeness-Anfrage wurde praktisch zu groß.
+
+\textbf{Status:}
+\texttt{HISTORICAL / PRODUCTIVE R4c PATH SUPERSEDES SOURCE-WIDE COMPLETENESS}.
+
+\textbf{Thesis-Verwendung:}
+Unterstützende Evidenz für Laufzeit, Call-Volumen und bounded work units in
+Kapitel 8.
+
+
+\paragraph{SEM-008: Legitimate uncertainty funktioniert als Human-Review-Fall}
+
+\textbf{Beobachtung:}
+Im Run \texttt{877791} entstand eine legitime Open Question zur Klassifikation
+von \texttt{microscope workstation}.
+
+\textbf{Status:}
+\texttt{POSITIVE FINDING}.
+
+\textbf{Thesis-Verwendung:}
+Kernergebnis für Unsicherheit und Human Authority.
+
+
+\paragraph{SEM-009: Predicate-variant Relationship Consolidation unvollständig}
+
+\textbf{Beobachtung:}
+Semantisch nahe oder äquivalente Relationship-Hypothesen können bei
+unterschiedlichen Prädikaten getrennt bleiben.
+
+\textbf{Status:}
+\texttt{OPEN / NON-BLOCKING SEMANTIC QUALITY}.
+
+\textbf{Thesis-Verwendung:}
+PoC-Grenze / Anhang, gegebenenfalls Kapitel 7.7.
+
+
+\paragraph{SEM-010: Relationship lifecycle nicht automatisch an rejected Subject ausgerichtet}
+
+\textbf{Beobachtung:}
+Eine akzeptierte Relationship zu einem später abgelehnten Subject blieb zunächst
+accepted und blockierte die Finalization, bis sie explizit reopened und abgelehnt
+wurde.
+
+\textbf{Status:}
+\texttt{OPEN / NON-BLOCKING GOVERNANCE + SEMANTIC LIFECYCLE}.
+
+\textbf{Thesis-Verwendung:}
+PoC-Grenze und unterstützende Human-Authority-Evidenz.
+
+
+\paragraph{SEM-011: Incomplete SysML element-type coverage}
+
+\textbf{Beobachtung:}
+Die aktuelle Taxonomie und der Target-Pfad decken nicht alle relevanten
+SysML-v2-Constructs ab, unter anderem spezifische Ports, Interfaces, Parts,
+Actions/Functions, States oder Occurrences.
+
+\textbf{Status:}
+\texttt{OPEN / ACCEPTED MVP LIMITATION / NON-BLOCKING}.
+
+\textbf{Thesis-Verwendung:}
+Zentrale Claim Boundary des PoC.
+
+
+\paragraph{SEM-012: Engineering Information Type und Target Model Representation nicht ausreichend getrennt}
+
+\textbf{Beobachtung:}
+Engineering Classification beschreibt Bedeutung, schreibt aber nicht eindeutig
+den Zielmodell-Construct vor. Im Live-Pfad konnte beispielsweise Engineering
+Information vom Typ Constraint als Stakeholder Requirement repräsentiert werden.
+
+\textbf{Finaler Status:}
+\texttt{IMPLEMENTED IN CURRENT SINGLE-SOURCE PATH} für den validierten Scope.
+
+\textbf{Thesis-Verwendung:}
+Kernergebnis.
+
+
+\paragraph{SEM-013: Shared Placement Ambiguity wird mit Persona Variance vermischt}
+
+\textbf{Beobachtung:}
+Wenn alle Placement-Personas dieselbe Menge mehrerer Alternativen liefern, liegt
+gemeinsame Ambiguität und nicht zwingend Inter-Persona-Varianz vor.
+
+\textbf{Status:}
+\texttt{ACCEPTED FINDING / OPEN}.
+
+\textbf{Thesis-Verwendung:}
+Kernergebnis für TF2, zusammen mit Human-Interaction-Limitationen.
+
+
+\paragraph{SEM-014: Unresolved Target Relationship Representation benötigt explizite Human Selection}
+
+\textbf{Beobachtung:}
+Ein unresolved Relationship-Fall darf nicht über einen inhaltlichen UI-Default
+implizit Engineering Authority erhalten.
+
+\textbf{Status:}
+\texttt{ACCEPTED FINDING / OPEN}.
+
+\textbf{Thesis-Verwendung:}
+Kernergebnis Human Authority / Target Representation.
+
+
+\paragraph{SEM-015: Target-Model Formulation als explizite Processing Stage}
+
+\textbf{Historische Beobachtung:}
+Der Pfad ging zu direkt von approved Engineering Meaning und Placement in Richtung
+deterministischer SysML-v2-Serialization.
+
+\textbf{Korrektur:}
+Explizite Trennung von Engineering Meaning, Target-Model Representation,
+Target-Model Formulation und Serialization.
+
+\textbf{Finaler Status:}
+Architektur implementiert, Golden-E2E-Scope validiert, allgemeine
+Target-Type-Formulation weiterhin \texttt{PARTIAL / OPEN}. Die Generalisierung ist
+an SEM-011 gekoppelt.
+
+\textbf{Thesis-Verwendung:}
+Kernergebnis.
+
+
+\paragraph{SEM-015-F01: Dependency-aware in-review regeneration}
+
+\textbf{Beobachtung:}
+Eine geänderte Klassifikation erfordert im aktuellen PoC einen neuen fokussierten
+Refinement-Run statt selektiver automatischer Invalidierung und Regeneration.
+
+\textbf{Status:}
+\texttt{DEFERRED / NOT REQUIRED FOR CURRENT PoC}.
+
+\textbf{Thesis-Verwendung:}
+Ausblick / Performance- und Workflowoptimierung.
+
+
+\subsection{Formative UX- und Integrationsbeobachtungen}
+
+% Die OBS-Liste wird vollständig erhalten, aber nicht als wissenschaftliche
+% Hauptergebnisstruktur verwendet.
+
+\begin{description}
+    \item[OBS-001] Project selection lost on toggle. Status: offen beziehungsweise nicht abschließend revalidiert.
+    \item[OBS-002] Add-first-source route / discoverability. Status: offen beziehungsweise nicht abschließend revalidiert.
+    \item[OBS-003] Duplicate Create Project interaction. Status: offen beziehungsweise nicht abschließend revalidiert.
+    \item[OBS-004] Multi-file add affordance. Status: offen beziehungsweise nicht abschließend revalidiert.
+    \item[OBS-005] Drag-and-drop first-click behavior. Status: offen beziehungsweise nicht abschließend revalidiert.
+    \item[OBS-006] Row-action selection scalability. Status: offen beziehungsweise nicht abschließend revalidiert.
+    \item[OBS-007] Long Processing feedback. Status: offen beziehungsweise nicht abschließend revalidiert.
+    \item[OBS-008] Processing cancellation architecture. Status: deferred / hoher Lifecycle-Aufwand.
+    \item[OBS-009] Optional tips / guidance. Status: niedrige UX-Priorität.
+    \item[OBS-010] Agent scope label clarity. Status: offen beziehungsweise nicht abschließend revalidiert.
+    \item[OBS-011] Live state inconsistent after source change. Status: offen beziehungsweise nicht abschließend revalidiert.
+    \item[OBS-012] Processing coupled to active Streamlit page run. Status: offene Integrations-/Lifecycle-Grenze.
+    \item[OBS-013] Review Queue zeigt vor Workspace-Materialisierung potenziell irreführend null Items. Status: offen.
+    \item[OBS-014] Reviewer identity confirmation. Status: offene Governance-/UX-Beobachtung.
+    \item[OBS-015] Kein expliziter Reprocessing-/Supersession-Flow für bereits processierte Sources. Status: deferred / offen.
+    \item[OBS-016] Persona configuration presentation. Status: offen beziehungsweise nicht abschließend revalidiert.
+    \item[OBS-017] Long-running Processing feedback / performance. Status: offene praktische Limitation.
+    \item[OBS-018] Global Project Selector session-state conflict. Status: offen beziehungsweise nicht abschließend revalidiert.
+    \item[OBS-019] Subject Discovery over-generation / insufficient abstention. Status: \texttt{OPEN / NON-BLOCKING QUALITY}.
+    \item[OBS-020] Editing Human Review decision änderte Action Semantics zunächst nicht. Status: \texttt{CORRECTED / FOCUSED + LIVE VALIDATED}.
+    \item[OBS-021] Plain Accept wurde zunächst als \texttt{accepted\_with\_modification} persistiert. Status: \texttt{CORRECTED FOR NEW DECISIONS / FOCUSED + LIVE VALIDATED}.
+    \item[OBS-022] Review Queue crash bei null verbleibenden Decisions. Status: \texttt{CORRECTED / RETESTED}.
+    \item[OBS-023] Relationship Review zu versteckt / Blocker-Navigation unklar. Status: \texttt{OPEN / UX}.
+    \item[OBS-024] Relationship Review zu ID-zentriert. Status: \texttt{OPEN / UX}.
+    \item[OBS-025] Accepted Subject Decisions konnten zunächst nicht reopened werden. Status: \texttt{CORRECTED / LIVE VALIDATED}.
+    \item[OBS-026] Decision Controls blieben nach Relationship Decision aktiv. Status: \texttt{CORRECTED / LIVE VALIDATED}.
+    \item[OBS-027] Kein expliziter deterministischer Export des Finalized Review Reports. Status: \texttt{OPEN / SHOULD}.
+    \item[OBS-028] Cross-layer identity transition zwischen \texttt{SUBJ-*} und \texttt{RIT-*} unzureichend erklärt. Status: \texttt{OPEN / UX + TRACEABILITY EXPLANATION}.
+    \item[OBS-029] Post-promotion same-render status teilweise stale. Status: \texttt{OPEN / LOW UX}.
+    \item[OBS-030] Kein sichtbarer Processing State während Model Proposal Generation. Status: \texttt{OPEN / SHOULD}.
+    \item[OBS-031] Human Model Placement Review erfordert zu viel Interaktion. Status: \texttt{ACCEPTED FINDING / OPEN}.
+    \item[OBS-032] Review-gate naming ambiguity. Status: offener Backlog nach Gate 3.
+    \item[OBS-DASH-001] Dashboard authority-state representation. Status: offener Backlog nach Gate 3.
+    \item[OBS-033] Im Roadmap-Closeout als \texttt{PASS / closed for validated v0.3.0 scope after successful live retest and publication} geführt. Der verfügbare Closeout-Auszug enthält keinen separaten Finding-Titel; deshalb wird hier bewusst kein Titel rekonstruiert.
+\end{description}
+
+\subsection{Positive und bestätigende Findings}
+
+\paragraph{PASS-001: Project Setup und Source Registration grundsätzlich funktionsfähig}
+Projektanlage und separate Source-Registrierung funktionierten. Der historische
+BLK-002-Vorbehalt für den Multi-Source-Pfad wurde später durch den erfolgreichen
+Project-308131-Retest abgelöst.
+
+\paragraph{PASS-002: D4 zu Human Review Routing technisch funktionsfähig}
+Der historische Run \texttt{877791} erreichte den Review Workspace. Dieses Finding
+bezieht sich auf die frühere Processing-Architektur und bleibt als historische
+Integrationsevidenz erhalten.
+
+\paragraph{PASS-003: Human-in-the-Loop Authority Boundary bleibt erhalten}
+Agent Agreement oder Consensus erzeugt keine automatische Engineering Approval.
+
+\paragraph{PASS-004: Semantische Unsicherheit kann reviewbar bleiben}
+Nicht eindeutig lösbare Klassifikationen oder Relationship-Endpunkte können als
+Open Question erhalten bleiben, statt erfunden oder pauschal als Processing Failure
+behandelt zu werden.
+
+\paragraph{PASS-005: Source-bounded LLM-Grundaufgabe qualitativ machbar}
+Ein qualitativer Benchmark zeigte für die verwendete Demo-Source, dass ein
+allgemeines LLM source-grounded Engineering Information identifizieren konnte.
+Dieses Finding ist keine allgemeine Modell-Performance-Aussage.
+
+\paragraph{PASS-006: R4c source-grounded semantic recovery live-demonstrable}
+Project \texttt{120412} erreichte mit realem LLM einen subject-centric Human Review
+mit 24 Canonical Subjects.
+
+\paragraph{PASS-007: Subject/Relationship Review und Finalization authority-preserving}
+24 Subject Decisions und 30 outgoing Relationship Decisions wurden explizit
+getroffen. Finalization blieb fail-closed, bis eine inkonsistente accepted
+Relationship korrigiert wurde. Finalisierte Revision: \texttt{RVR-000062}.
+
+\paragraph{PASS-008: Approved Input Promotion funktioniert}
+17 model-promotierbare accepted Subjects wurden zu aktiven Approved Inputs
+materialisiert; Open Questions wurden nicht erzwungen promoted.
+
+\paragraph{PASS-009: Approved Engineering Information wird an Phase H übergeben}
+17 Approved Subjects und 21 accepted semantic Relationships wurden gebunden.
+
+\paragraph{PASS-010: Phase-H Readiness trennt Subject- und Relationship-Populationen}
+Die Authority-Populationen werden getrennt geführt; sechs accepted Relationships
+zu nicht model-promotierbaren Open Questions wurden als \texttt{Not projected}
+beziehungsweise \texttt{intentionally\_not\_projected} behandelt.
+
+\subsection{Finale Acceptance-Evidenz}
+
+\paragraph{FINAL-G3: Project 000116}
+Gate-3 Single-Source E2E: \texttt{PASS}. Reale externe SYSIDE-Validierung:
+\texttt{PASS}. Human Publication Approval: \texttt{PASS}. Immutable Published
+Output: \texttt{PASS}.
+
+\paragraph{FINAL-MS: Project 308131}
+Genuine-Multi-Source-Retest: \texttt{PASS}. BLK-002 final
+\texttt{RESOLVED / LIVE RETESTED}.
+
+\paragraph{FINAL-REG: finaler Integrationsstand}
+Complete Repository Regression: \texttt{6335 passed, 12 skipped}. Diese Zahl
+beschreibt die Breite der technischen Regressionsevidenz und ist kein
+wissenschaftlicher Qualitäts- oder Korrektheitsscore.
+
+\subsection{Verwendung des Registers im Haupttext}
+
+Kapitel 7 verwendet nur thesis-relevante Beobachtungen aus diesem Register und
+verweist bei Bedarf auf die zugehörigen Finding-IDs. Die Interpretation ihrer
+Bedeutung erfolgt erst in Kapitel 8. UX- und Integrationsbeobachtungen werden nur
+dort in den Haupttext übernommen, wo sie eine Forschungsfrage oder eine explizite
+Systemgrenze unmittelbar stützen.

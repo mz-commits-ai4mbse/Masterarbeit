@@ -1,0 +1,1119 @@
+% =============================================================================
+% Kapitel 6: Verifikation und Validierung
+% ARBEITSGERUEST / REVIEW CANDIDATE
+% Stand: 03.09.2026
+%
+% Dieses Dokument enthaelt bewusst NOCH KEINEN ausformulierten Thesis-Text.
+%
+% Kapitel 3 = Methodik der Verifikation und Validierung
+% Kapitel 4 = zu pruefendes Architekturkonzept
+% Kapitel 5 = implementierter PoC
+% Kapitel 6 = WIE und WOMIT der PoC verifiziert / validiert wurde
+% Kapitel 7 = WELCHE Ergebnisse dabei beobachtet wurden
+% Kapitel 8 = WIE diese Ergebnisse zu interpretieren sind
+%
+% ZENTRALE REGEL:
+% Kapitel 6 beschreibt Testdesign, Evidenzklassen, Versuchsanordnungen,
+% Akzeptanzlogik und representative Findings als Teil des V&V-Prozesses.
+%
+% Konkrete Ergebniszahlen werden nur dort genannt, wo sie den
+% Verifikationsstand bzw. die Evidenzbasis beschreiben.
+% Die eigentliche Ergebniszusammenfassung folgt in Kapitel 7.
+%
+% Quellenstatus:
+% [PROJECT]  akzeptierte Testprotokolle, Findings, Checkpoints, ADRs
+% [TEST]     automatisierte Tests / Testskripte / Regression
+% [MODEL]    CATIA-Modell bzw. modellierte Requirements / Boundaries
+% [REPO-BIB] wissenschaftliche Literatur im Thesis-Repo
+% [ADD]      noch zu beschaffende Literatur
+%
+% WICHTIGE TERMINOLOGIE:
+%
+% Verification:
+% Wurde das System / Artefakt entsprechend seinen spezifizierten
+% Anforderungen, Contracts und Architekturregeln realisiert?
+%
+% Validation:
+% Ist das resultierende Artefakt fuer den vorgesehenen Engineering-Zweck
+% fachlich plausibel / akzeptabel?
+%
+% In dieser Thesis werden technische Verification, externe Syntax-/Tool-
+% Validation und Human Engineering Validation bewusst getrennt.
+% Vor finaler Formulierung Terminologie mit gewaehlter Literatur / Norm
+% claimweise abstimmen.
+% =============================================================================
+
+\section{Verifikation und Validierung}
+\label{sec:verification_validation}
+
+% -----------------------------------------------------------------------------
+% FUNKTION DES KAPITELS
+% -----------------------------------------------------------------------------
+%
+% Ziel:
+% Die Evidenzstrategie fuer den Turing Generator so darstellen, dass
+% unterschiedliche Testarten nicht miteinander vermischt werden.
+%
+% ZENTRALE EVIDENZHIERARCHIE:
+%
+% Unit / Contract Verification
+%        |
+%        v
+% Module Verification
+%        |
+%        v
+% Integration / Workflow Verification
+%        |
+%        v
+% Focused Regression
+%        |
+%        v
+% Complete Repository Regression
+%        |
+%        v
+% Controlled End-to-End Verification
+%        |
+%        v
+% Genuine Multi-Source Verification
+%        |
+%        v
+% External SYSIDE Validation
+%        |
+%        v
+% Human Engineering / Model Validation
+%        |
+%        v
+% External Practitioner Demonstration
+%
+% KEINE der Ebenen ersetzt automatisch eine andere.
+%
+% Beispiel:
+% 6000+ bestandene automatisierte Tests
+% != fachlich korrektes Engineering Model.
+%
+% Gleichzeitig:
+% eine fachlich plausible Human-Demo
+% != technische Regressionssicherheit.
+
+
+% =============================================================================
+\subsection{Zielsetzung und Evidenzstrategie}
+\label{sec:vv_objective}
+% =============================================================================
+
+\subsubsection{Pruefgegenstaende}
+\label{sec:verification_subjects}
+
+% KERNAUSSAGEN:
+%
+% Die V&V adressiert mehrere getrennte Pruefgegenstaende:
+%
+% 1. technische Contracts und Datenstrukturen
+% 2. Source-/Project-Isolation und Artifact Identity
+% 3. semantische Processing-Kette
+% 4. Human Authority Boundaries
+% 5. Multi-Source-Verarbeitung
+% 6. Model Candidate / Placement / Assembly
+% 7. deterministische SysML-v2-Generierung
+% 8. Generated Artifact Validation
+% 9. Final Human Review / Publication
+% 10. Nachvollziehbarkeit des Gesamtworkflows fuer externe Praktiker
+%
+% [MODEL]
+% Die Pruefgegenstaende werden aus den finalen System-/Subsystem-Requirements
+% und Authority Boundaries des CATIA-Modells abgeleitet.
+%
+% [PROJECT]
+% 2026-09-02 CATIA Modeling Complete SSOT
+% collaboration/current_state.md
+
+
+\subsubsection{Trennung technischer und fachlicher Evidenz}
+\label{sec:technical_vs_engineering_evidence}
+
+% KERNAUSSAGEN:
+%
+% A. Technische Evidenz:
+%    - Contract Tests
+%    - Unit / Module Tests
+%    - Integration
+%    - Regression
+%    - Fingerprint / Provenance Integrity
+%    - deterministische Validatoren
+%    - SYSIDE Tool Compatibility
+%
+% B. Fachliche Evidenz:
+%    - Human Engineering Review
+%    - Human Model Placement / Quality Review
+%    - Final Human Model Review
+%    - strukturierte Practitioner Rueckmeldung
+%
+% 1. Technischer PASS darf nicht als fachliche Engineering-Freigabe
+%    interpretiert werden.
+%
+% 2. Human Approval darf technische Integritaetspruefungen nicht ersetzen.
+%
+% 3. Beide Evidenzarten sind fuer den PoC notwendig.
+%
+% [PROJECT]
+% ADR-016
+% ADR-022
+% ADR-023
+% ADR-029
+%
+% [ADD]
+% Wieringa 2014
+% Wohlin et al. 2012
+%
+% [REPO-BIB]
+% \cite{Wohlin.2012}
+
+
+\subsubsection{Claim Boundaries der V&V}
+\label{sec:vv_claim_boundaries}
+
+% KERNAUSSAGEN:
+%
+% Die V&V kann im untersuchten Scope zeigen:
+%
+% - technische Realisierbarkeit der Architektur
+% - Einhaltung zentraler Contracts / Authority Boundaries
+% - reproduzierbare Verarbeitung im getesteten Scope
+% - funktionierenden source-local und Multi-Source-Pfad
+% - erfolgreiche SysML-v2-Erzeugung im unterstuetzten Target Scope
+% - externe Toolvalidierung des erzeugten Artefakts
+% - Human Review und kontrollierte Publication
+%
+% Sie kann NICHT allein zeigen:
+%
+% - universelle Engineering Correctness
+% - universelle Domain Generalization
+% - vollstaendige SysML-v2-Abdeckung
+% - Production Readiness
+% - statistische Usability
+% - unbegrenzte Skalierbarkeit
+%
+% Diese Grenzen spaeter in Kapitel 8 diskutieren.
+
+
+% =============================================================================
+\subsection{Automatisierte Testhierarchie}
+\label{sec:test_hierarchy}
+% =============================================================================
+
+\subsubsection{Unit- und Contract-Verifikation}
+\label{sec:unit_contract_tests}
+
+% KERNAUSSAGEN:
+%
+% 1. Kleine Tests pruefen isolierte Regeln, Typen, Identifier,
+%    Manifeste, Fingerprints und Contracts.
+%
+% 2. Besonders wichtig sind fail-closed Bedingungen:
+%    ungueltige oder unvollstaendige Artefakte duerfen nicht stillschweigend
+%    downstream akzeptiert werden.
+%
+% 3. Contract Tests bilden eine maschinenlesbare Spezifikation zentraler
+%    Architekturgrenzen.
+%
+% REPRESENTATIVE TESTFAMILIEN:
+%
+% - identifiers / immutable IDs
+% - processing manifests
+% - Human Decision bindings
+% - Approved Input / AEI contracts
+% - Candidate / Placement contracts
+% - Internal Engineering Model
+% - Generation Profiles
+% - Validation / Publication contracts
+%
+% [TEST]
+% tests/
+%
+% WICHTIG:
+% Im Haupttext maximal 3 bis 5 representative Testfamilien erlaeutern.
+% Keine Dateiliste aller Tests.
+
+
+\subsubsection{Modul- und Integrationsverifikation}
+\label{sec:module_integration_tests}
+
+% KERNAUSSAGEN:
+%
+% 1. Modulverifikation prueft das Zusammenspiel mehrerer interner
+%    Verarbeitungskomponenten.
+%
+% 2. Integrationstests pruefen insbesondere Handoffs zwischen
+%    Architekturverantwortungen.
+%
+% 3. Thesis-kritische Handoffs:
+%
+%    Processing -> Human Review
+%    Human Review -> Approved Engineering Information
+%    AEI -> Model Candidates
+%    Candidate Review -> Internal Engineering Model
+%    IEM -> SysML v2 Generation
+%    Generation -> Validation
+%    Validation -> Final Model Review
+%    Final Review -> Publication
+%
+% 4. Ein lokaler PASS ist nur Evidenz fuer den geprueften Handoff,
+%    nicht fuer die gesamte End-to-End-Kette.
+%
+% [TEST]
+% focused integration suites
+%
+% [PROJECT]
+% relevante Phase-/Gate-Checkpoints
+
+
+\subsubsection{Focused Regression}
+\label{sec:focused_regression}
+
+% KERNAUSSAGEN:
+%
+% 1. Nach einer Korrektur wurden zunaechst die direkt betroffenen
+%    Testfamilien ausgefuehrt.
+%
+% 2. Ziel:
+%    schnellen Nachweis liefern, dass der konkrete Defekt bzw. Contractbruch
+%    korrigiert wurde.
+%
+% 3. Focused Regression ersetzt nicht die vollstaendige Regression.
+%
+% [PROJECT]
+% roadmap.md
+% change_log.md
+% einzelne Blocker-Checkpoints
+%
+% Beispielhafte historische Evidenz:
+% Phase-L Focused Regression:
+% 147 passed, 1 skipped
+%
+% Diese Zahl nur verwenden, wenn fuer die Argumentation sinnvoll.
+
+
+\subsubsection{Complete Repository Regression}
+\label{sec:complete_regression}
+
+% KERNAUSSAGEN:
+%
+% 1. Nach akzeptierten Korrekturen wurde eine vollstaendige Repository-
+%    Regression ausgefuehrt.
+%
+% 2. Zweck:
+%    pruefen, ob neue Architektur- oder Implementierungsaenderungen
+%    bereits akzeptierte Eigenschaften unbeabsichtigt verletzen.
+%
+% 3. Die Zahl bestandener Tests ist ein Umfangsindikator fuer die
+%    technische Regressionsevidenz.
+%
+% 4. Sie ist KEIN direkter Qualitaetsscore und kein Beweis fachlicher
+%    Modellkorrektheit.
+%
+% FINALER AKZEPTIERTER INTEGRATIONSSTAND:
+%
+% complete regression:
+% 6335 passed
+% 12 skipped
+%
+% [PROJECT]
+% collaboration/checkpoints/
+% 2026-09-02_catia_modeling_complete_thesis_writing_transition_ssot.md
+%
+% FRUEHERER GATE-3-STAND:
+% 6100 passed
+%
+% [PROJECT]
+% current_state.md / Gate-3 checkpoint
+%
+% TABELLEKANDIDAT:
+% Testebene | Zweck | representative Evidenz | Claim Boundary
+
+
+% =============================================================================
+\subsection{Formative Verifikation waehrend der Entwicklung}
+\label{sec:formative_verification}
+% =============================================================================
+
+\subsubsection{Finding- und Blocker-Semantik}
+\label{sec:finding_semantics}
+
+% KERNAUSSAGEN:
+%
+% 1. Findings wurden nicht nur informell notiert, sondern in kontrollierten
+%    Audit-/Finding-Artefakten dokumentiert.
+%
+% 2. Fuer WP-12 wurde folgende Ergebnislogik verwendet:
+%
+%    PASS
+%    PASS WITH FINDINGS
+%    FAILED WITH BLOCKER
+%    BLOCKER RESOLVED -> RETEST -> PASS / PASS WITH FINDINGS
+%
+% 3. Ein FAILED WITH BLOCKER fuehrte nicht dazu, den betroffenen
+%    Projektzustand zu verwerfen oder neu zu starten.
+%
+% 4. Project, Run und Defektevidenz blieben erhalten.
+%
+% 5. Nach Korrektur wurde der betroffene Gate-Zustand retestet.
+%
+% [PROJECT]
+% collaboration/audits/wp12_multi_document_dry_run_test_protocol.md
+% collaboration/audits/wp12_findings.md
+%
+% ARCHITEKTURBEDEUTUNG:
+% Historische Fehlerzustande bleiben Teil der empirischen Evidenz.
+
+
+\subsubsection{Ursachenanalyse und Korrekturpfade}
+\label{sec:root_cause_correction}
+
+% KERNAUSSAGEN:
+%
+% Findings wurden danach unterschieden, ob sie primaer auf:
+%
+% - lokalen Codefehler
+% - zu permissiven Contract
+% - fehlerhafte Artifact Identity
+% - unklare Responsibility Boundary
+% - fehlende Processing Stage
+% - falsche Authority Allocation
+% - UX-/Workflow-Problem
+%
+% zurueckzufuehren waren.
+%
+% Architekturkritische Findings konnten zu ADRs bzw. neuen Contracts fuehren.
+%
+% VORGESCHLAGENE HAUPTTEXT-TABELLE 6.1:
+%
+% Finding
+% | Beobachtung
+% | Root Cause
+% | Reaktion
+% | Design Rationale / ADR
+% | Retest Status
+%
+% REPRESENTATIVE KANDIDATEN:
+%
+% BLK-001
+% Producer Contract zu permissiv
+% -> Contract-Haertung
+%
+% BLK-002
+% Cross-Source Processing Artifact Identity Collision
+% -> project-wide Artifact Identity / Multi-Source-Korrektur
+%
+% BLK-006
+% Model Proposal / Target-Model-Handoff blockiert
+% -> Architekturkorrektur / explizitere Target-Model Formulation
+%
+% BLK-007
+% Assembly uebernahm unzulaessig Model-Placement-Reasoning
+% -> klare Trennung Placement vs deterministic Assembly
+%
+% SEM-015
+% Target-Model Formulation als explizite Processing Stage erforderlich
+% -> bounded Formulation Architecture
+%
+% ADR-027-bezogener Befund
+% Evidence und Persona Interpretation muessen getrennt werden
+% -> source-grounded Evidence Detection vor Persona Interpretation
+%
+% WICHTIG:
+% Vor finaler Tabelle die exakte Finding->ADR-Zuordnung gegen
+% Findings Register / ADRs verifizieren.
+% Keine Rueckprojektion aus Erinnerung.
+
+
+\subsubsection{WP-12 als formative Systemverifikation}
+\label{sec:wp12_formative}
+
+% KERNAUSSAGEN:
+%
+% 1. WP-12 wurde als kontrollierter Multi-Document End-to-End Dry Run
+%    mit synthetischen Sources angelegt.
+%
+% 2. Ziel:
+%    den gesamten Workflow unter realistischen, aber kontrollierbaren
+%    Multi-Document-Bedingungen zu pruefen.
+%
+% 3. Der Test kombinierte:
+%    - manuell gefuehrten Streamlit Workflow
+%    - automatisierte Regression
+%    - explizite Human Review
+%    - Finding Register
+%    - Gate-basierte Fortsetzung
+%
+% 4. Der Dry Run war bewusst so gestaltet, dass Blocker sichtbar bleiben.
+%
+% 5. WP-12 entwickelte sich dadurch von einem reinen End-to-End-Test
+%    zu einer formativen Systemverifikation, die mehrere
+%    architekturrelevante Defekte sichtbar machte.
+%
+% [PROJECT]
+% wp12_multi_document_dry_run_test_protocol.md
+% wp12_findings.md
+% wp12_formative_self_test_report.md
+%
+% TESTBASELINE DES FORMALEN DRY RUN:
+% 5577 passed, 1 skipped
+% git diff --check PASS
+%
+% Diese historische Zahl nur als Baseline des damaligen Testzustands verwenden,
+% nicht mit dem finalen Integrationsstand verwechseln.
+
+
+% =============================================================================
+\subsection{Abschliessende Single-Source-End-to-End-Verifikation}
+\label{sec:single_source_e2e}
+% =============================================================================
+
+\subsubsection{Golden End-to-End und Recovery-Pfad}
+\label{sec:golden_e2e}
+
+% KERNAUSSAGEN:
+%
+% 1. Nach Aufloesung der formativen Blocker wurde ein stabilisierter
+%    Single-Source-Golden-E2E-Pfad etabliert.
+%
+% 2. Dieser Pfad pruefte die vollstaendige Authority Chain ueber:
+%
+% Source
+% -> Processing
+% -> Human Engineering Review
+% -> Approved Engineering Information
+% -> Model Candidate / Placement
+% -> Internal Engineering Model
+% -> SysML-v2-Generierung
+% -> Validation
+% -> Final Model Review
+% -> Publication
+%
+% 3. Der Golden E2E bildet die technische Vorstufe fuer die spaetere
+%    Gate-3-Akzeptanz.
+%
+% [PROJECT]
+% wp12_findings.md
+% Golden-E2E Checkpoints
+%
+% WICHTIG:
+% Historische Recovery-Schritte und finalen akzeptierten Zustand trennen.
+
+
+\subsubsection{Gate-3 Project 000116}
+\label{sec:gate3_000116}
+
+% KERNAUSSAGEN:
+%
+% Project 000116 ist die immutable akzeptierte Single-Source-Gate-3-Evidenz.
+%
+% Akzeptierter Stand:
+%
+% Project 000116 Lead-Source Gate 3: PASS
+% Real SYSIDE validation:              PASS
+% Human publication approval:          PASS
+% Immutable Published Output:          PASS
+% Complete repository regression:      6100 passed
+%
+% 1. Der Test verwendet einen realen vollstaendigen governed E2E-Pfad.
+%
+% 2. Die Evidenz bleibt immutable und wird fuer spaetere Multi-Source-Arbeit
+%    nicht neu generiert oder ueberschrieben.
+%
+% [PROJECT]
+% collaboration/current_state.md
+% Gate-3 closeout checkpoint
+% presentation_demo_multisource_handover_ssot.md
+%
+% CLAIM:
+% Gate-3 belegt den akzeptierten Single-Source-End-to-End-Pfad
+% innerhalb des implementierten PoC-Scope.
+%
+% NICHT:
+% Multi-Source-Faehigkeit.
+
+
+% =============================================================================
+\subsection{Genuine Multi-Source-Verifikation}
+\label{sec:multisource_verification}
+% =============================================================================
+
+\subsubsection{BLK-002 als thesis-kritischer Multi-Source-Blocker}
+\label{sec:blk002}
+
+% KERNAUSSAGEN:
+%
+% 1. Der erste formale Multi-Source-Test deckte eine Cross-Source
+%    Processing Artifact Identity Collision auf.
+%
+% 2. Solange Artifact-Herkunft nicht project-wide eindeutig auf
+%    Source / Run / Attempt / Artifact zurueckgefuehrt werden konnte,
+%    war Multi-Source formal nicht akzeptabel.
+%
+% 3. BLK-002 wurde deshalb als THESIS-CRITICAL und DEMO-CRITICAL behandelt.
+%
+% 4. Die Akzeptanzbedingungen verlangten unter anderem:
+%    - keine a-priori Source-Hierarchie
+%    - exakte Provenance
+%    - Erhalt source-unique Information
+%    - explizite Konfliktbehandlung
+%    - Human Authority
+%    - Fortsetzung durch den bestehenden Downstream-Pfad
+%
+% [PROJECT]
+% wp12_findings.md
+% BLK-002 completion SSOT
+% ADR-032 / ADR-033 / ADR-034
+
+
+\subsubsection{Project 308131 als genuine Multi-Source-Evidenz}
+\label{sec:project_308131}
+
+% KERNAUSSAGEN:
+%
+% 1. Project 308131 wurde nach Korrektur von BLK-002 live retestet.
+%
+% 2. Der Project-Pfad demonstriert, dass mehrere heterogeneous Sources
+%    innerhalb eines Project-Kontexts gemeinsam verarbeitet werden koennen.
+%
+% 3. Source Provenance bleibt erhalten.
+%
+% 4. Source-unique Information bleibt erhalten.
+%
+% 5. Konflikt / Varianz wird nicht durch Source Order oder automatische
+%    Truth Arbitration aufgeloest.
+%
+% 6. Human Authority bleibt Teil des Multi-Source-Pfads.
+%
+% 7. Der akzeptierte Abschlussstatus:
+%    Project 308131 Multi-Source retest: PASS.
+%
+% [PROJECT]
+% 2026-09-02 CATIA Modeling Complete SSOT
+% BLK-002 completion checkpoint
+% wp12_findings.md
+%
+% WICHTIGE CLAIM-GRENZE:
+% Concern-centric S3A/S3B/S4/S5 bleibt prototype evidence.
+% Nicht ueber den tatsaechlich implementierten / akzeptierten Scope hinausgehen.
+%
+% Vor finaler Formulierung finalen BLK-002 Closeout gegen ADR-032/033/034 lesen.
+
+
+\subsubsection{Source-Neutralitaet und Provenance-Preservation als Pruefkriterien}
+\label{sec:multisource_acceptance_criteria}
+
+% KERNAUSSAGEN:
+%
+% Multi-Source-PASS ist nicht einfach:
+% "zwei Dateien wurden verarbeitet".
+%
+% Akzeptanz bezieht sich auf:
+%
+% - mehrere Sources in einem Project
+% - keine implizite Source Priority
+% - eindeutige Project-wide Artifact Identity
+% - exact Source / Run / Attempt / Artifact Provenance
+% - source-unique Information survives
+% - semantische Equivalence kann erkannt werden
+% - Konflikte / Material Variance bleiben sichtbar
+% - Human Authority bleibt erhalten
+% - downstream model / SysML / validation path bleibt kompatibel
+%
+% Diese Kriterien direkt mit TF1 / HF verknuepfen.
+
+
+% =============================================================================
+\subsection{SysML-v2-Validierung}
+\label{sec:sysml_validation}
+% =============================================================================
+
+\subsubsection{Interne deterministische Generated-Artifact-Pruefung}
+\label{sec:internal_generated_validation}
+
+% KERNAUSSAGEN:
+%
+% 1. Intern werden Turing-spezifische Invarianten geprueft.
+%
+% 2. Dazu koennen gehoeren:
+%    - Generation Profile Binding
+%    - Artifact Integrity
+%    - Traceability Entries
+%    - Relationship Endpoints
+%    - unterstuetzte Mappings
+%    - Fingerprint Binding
+%
+% 3. Interne Validierung darf nicht automatisch reparieren.
+%
+% 4. invalid oder incomplete blockiert Publication.
+%
+% [PROJECT]
+% ADR-022
+%
+% [TEST]
+% generated artifact validation suites
+
+
+\subsubsection{Externe SYSIDE-Validierung}
+\label{sec:external_syside_validation}
+
+% KERNAUSSAGEN:
+%
+% 1. Der vollstaendige Generated Artifact Set wird mit einer von Turing
+%    getrennten SysML-v2-Toolchain validiert.
+%
+% 2. Verwendet wird SYSIDE Modeler CLI.
+%
+% 3. Dadurch wird nicht nur Turing-interne Selbstkonsistenz geprueft,
+%    sondern externe Tool-/Notation-Kompatibilitaet.
+%
+% 4. SYSIDE PASS bestaetigt keine fachliche Engineering Correctness.
+%
+% [PROJECT]
+% ADR-022
+% Gate-3 / Project 000116
+% WP-12 / Project 308131 downstream evidence, soweit vorhanden
+%
+% [REPO-BIB]
+% \cite{SysMLv2}
+%
+% [REPO-BIB]
+% \cite{Cibrian.2025b}
+% nach Claim-Pruefung fuer Metamodel-/Model Validation.
+
+
+% =============================================================================
+\subsection{Human Engineering Validation und Publication}
+\label{sec:human_validation_release}
+% =============================================================================
+
+\subsubsection{Human Engineering Review}
+\label{sec:human_engineering_validation}
+
+% KERNAUSSAGEN:
+%
+% 1. Semantische LLM-Ausgaben werden vor Promotion menschlich bewertet.
+%
+% 2. Human Review betrachtet Evidence, Persona Interpretation,
+%    Varianz / Agreement und Provenance.
+%
+% 3. Human Decisions bestimmen, welche Information Engineering Authority erhaelt.
+%
+% 4. Technische Tests koennen diese Entscheidung nicht ersetzen.
+%
+% [PROJECT]
+% ADR-016
+% Human Review Contracts
+% WP-12 / Gate-3 Human Decisions
+%
+% [ADD]
+% Lazaros et al. 2026
+% Zhu et al. 2026
+
+
+\subsubsection{Human Model Placement und Final Model Review}
+\label{sec:human_model_validation}
+
+% KERNAUSSAGEN:
+%
+% 1. Accepted Engineering Information und Model Placement sind
+%    unterschiedliche Review-Gegenstaende.
+%
+% 2. Human Model Placement entscheidet die authoritative Modellposition.
+%
+% 3. Nach Generation und technischer Validation folgt ein eigener
+%    Final Human Model Review.
+%
+% 4. Der finale Human Review bezieht sich auf exakt den Artifact- und
+%    Validation-State, der geprueft wurde.
+%
+% [PROJECT]
+% ADR-029
+% ADR-023
+%
+% CLAIM:
+% Human Authority wird an mehreren unterschiedlichen Gates realisiert,
+% nicht nur an einem finalen Approve-Button.
+
+
+\subsubsection{Publication als getrennte Abschlussbedingung}
+\label{sec:publication_verification}
+
+% KERNAUSSAGEN:
+%
+% 1. Generated ist nicht Published.
+%
+% 2. Validated ist nicht Published.
+%
+% 3. Human-reviewed ist noch nicht automatisch Published.
+%
+% 4. Publication Eligibility erfordert:
+%    - akzeptierten Generated Artifact State
+%    - gueltige Validation
+%    - Human Release Approval
+%    - passenden Workflow Gate
+%
+% 5. Published Outputs sind immutable und versioniert.
+%
+% [PROJECT]
+% ADR-023
+% README.md
+% Gate-3 Project 000116
+
+
+% =============================================================================
+\subsection{Externe Safe Demo bei Ruecker und Schindele}
+\label{sec:safe_demo_verification}
+% =============================================================================
+
+% STATUS BEI ERSTELLUNG DIESES GERUESTS:
+% GEPLANT / NOCH NICHT AUSGEFUEHRT.
+%
+% DIESER ABSCHNITT WIRD NACH DER DEMO MIT DER REALEN EVIDENZ BEFUELLT.
+
+
+\subsubsection{Ziel und Einordnung}
+\label{sec:safe_demo_goal}
+
+% KERNAUSSAGEN:
+%
+% 1. Die Safe Demo dient als externe strukturierte Practitioner Demonstration.
+%
+% 2. Sie soll zusaetzliche fachliche Plausibilisierung liefern.
+%
+% 3. Sie ist kein kontrolliertes Experiment und kein statistischer Usability-Test.
+%
+% 4. Der Ablauf und die Beobachtungskriterien werden VOR der Demo definiert.
+%
+% [PROJECT TO CREATE]
+% collaboration/audits/safe_demo_ruecker_schindele_protocol.md
+
+
+\subsubsection{Systembaseline und Demonstrationsszenario}
+\label{sec:safe_demo_baseline}
+
+% VOR DER DEMO FESTHALTEN:
+%
+% - Datum / Ort
+% - Rolle / fachlicher Hintergrund der Teilnehmer
+% - Git Commit SHA
+% - CATIA Architecture Baseline
+% - verwendeter LLM Provider / Model, sofern fuer Reproduzierbarkeit relevant
+% - Project ID
+% - Sources
+% - vorbereiteter Startzustand
+% - Demoablauf
+%
+% DEMO-ABLAUF:
+%
+% Source Registration
+% -> Processing
+% -> Evidence / Persona Interpretation
+% -> Human Review
+% -> Approved Engineering Information
+% -> Multi-Source / Project-Level Handling
+% -> Model Candidate / Placement
+% -> IEM
+% -> SysML v2
+% -> SYSIDE Validation
+% -> Final Human Review / Release
+%
+% WICHTIG:
+% Kein ad-hoc geaenderter Ablauf nach Beginn, ausser Abweichung wird dokumentiert.
+
+
+\subsubsection{Beobachtungskriterien und Feedback}
+\label{sec:safe_demo_criteria}
+
+% VOR DER DEMO FESTLEGEN:
+%
+% K1 Workflow nachvollziehbar?
+% K2 AI Proposal und Human Authority unterscheidbar?
+% K3 Traceability / Provenance nachvollziehbar?
+% K4 Multi-Source-Verarbeitung fachlich nachvollziehbar?
+% K5 Human Review an den vorgesehenen Stellen plausibel?
+% K6 SysML-v2-Output fuer den Fall fachlich plausibel?
+% K7 erkannte Risiken / fehlende Informationen?
+%
+% FEEDBACKFRAGEN:
+%
+% wenige offene Fragen, z.B.:
+% - Welche Stelle des Workflows wirkt fachlich am wenigsten belastbar?
+% - Wo waere aus Ihrer Sicht zwingend menschliche Entscheidung notwendig?
+% - Welche Information wuerden Sie fuer eine reale Engineering-Freigabe
+%   zusaetzlich benoetigen?
+% - Ist die Herkunft einer erzeugten Modellaussage ausreichend nachvollziehbar?
+%
+% Keine suggestiven Fragen.
+% Keine nachtraegliche Auswahl nur positiver Rueckmeldungen.
+
+
+\subsubsection{Dokumentation und Claim Boundary}
+\label{sec:safe_demo_claim_boundary}
+
+% NACH DER DEMO DOKUMENTIEREN:
+%
+% - geplanter vs. realer Ablauf
+% - Abweichungen
+% - technische Findings
+% - fachliche Rueckmeldungen
+% - positive wie negative Beobachtungen
+% - Ergebnisstatus
+%
+% CLAIM:
+% Die Demo kann zeigen, dass externe fachkundige Praktiker den
+% Demonstrationsworkflow nachvollziehen und konkrete fachliche Rueckmeldung
+% zu Authority, Traceability und Engineering-Plausibilitaet geben koennen.
+%
+% NICHT:
+% - statistische Generalisierbarkeit
+% - Production Readiness
+% - universelle Usability
+% - formaler Nachweis aller Forschungsfragen
+%
+% WICHTIG:
+% Ergebnisse erst nach Ausfuehrung eintragen.
+
+
+% =============================================================================
+\subsection{Zuordnung der V\&V-Evidenz zu den Forschungsfragen}
+\label{sec:vv_rq_mapping}
+% =============================================================================
+
+% ZWECK:
+% Noch NICHT die Forschungsfragen beantworten.
+% Nur zeigen, welche Evidenz spaeter zu welcher Frage beitraegt.
+%
+% TABELLEKANDIDAT 6.2:
+%
+% Forschungsfrage
+% | relevante V&V-Evidenz
+% | was damit untersucht wird
+% | Claim Boundary
+%
+% HF:
+% - End-to-End Architecture Chain
+% - Gate-3
+% - WP-12
+% - Genuine Multi-Source
+% - SYSIDE
+% - Human Release
+%
+% TF1 Input Assessment & Constraints:
+% - Source Registration
+% - Input / Suitability / Preparation Tests
+% - Project Fit
+% - Multi-Source Findings
+% - Fail-closed Input / Artifact Contracts
+%
+% TF2 Assurance & Effective Intervention:
+% - Human Review Contracts
+% - Blocking / Escalation
+% - Persona Variance
+% - Human Placement Review
+% - Final Human Review
+% - Safe Demo Feedback
+%
+% TF3 Leitplanken-Design:
+% - Semantic Governance
+% - Project Fit
+% - Contract / Profile Validation
+% - deterministic Assembly
+% - SysML Generation / Validation
+% - Findings, die zeigten, dass Ontologie allein nicht ausreicht
+%
+% WICHTIG:
+% Beantwortung erfolgt erst Kapitel 8.
+
+
+% =============================================================================
+\subsection{Zusammenfassung der V\&V-Basis}
+\label{sec:vv_summary}
+% =============================================================================
+
+% Spaeter kurzer Absatz:
+%
+% - breite automatisierte technische Verifikation
+% - formative Findings als Architekturlernprozess
+% - stabilisierter Single-Source E2E
+% - genuine Multi-Source E2E
+% - externe SysML-v2-Validation
+% - Human Engineering / Model Authority
+% - externe Practitioner Demonstration als zusaetzliche Plausibilisierung
+%
+% UEBERGANG:
+% Kapitel 7 stellt die daraus resultierenden Beobachtungen und Ergebnisse
+% strukturiert dar.
+
+
+% =============================================================================
+% EMPFOHLENE ABBILDUNGEN / TABELLEN
+% =============================================================================
+%
+% PRIORITAET 1
+% Abb. 6.1 V&V-Evidenzhierarchie
+%
+% Unit / Contract
+% -> Module / Integration
+% -> Regression
+% -> E2E
+% -> Multi-Source
+% -> SYSIDE
+% -> Human Review
+% -> Practitioner Demo
+%
+% PRIORITAET 1
+% Tab. 6.1 Representative formative Findings
+%
+% Finding | Problem | Root Cause | Correction | ADR | Retest
+%
+% PRIORITAET 1
+% Tab. 6.2 V&V Evidence -> Research Questions
+%
+% PRIORITAET 2
+% Abb. 6.2 WP-12 Gate / Recovery Logic
+%
+% FAILED WITH BLOCKER
+% -> Finding retained
+% -> Correction
+% -> Retest
+% -> PASS / PASS WITH FINDINGS
+%
+% OPTIONAL
+% Safe-Demo-Ablauf als kompakte Abbildung nach Durchfuehrung.
+%
+% NICHT:
+% - Liste aller 6335 Tests
+% - Screenshotwand von pytest
+% - jeder Blocker als eigene Untersektion
+% - jede historische Regressionzahl
+%
+% Komplette Evidenz bleibt in Repository / Audit-Artefakten.
+
+
+% =============================================================================
+% PROJEKTEVIDENZ-MATRIX
+% =============================================================================
+%
+% TESTMETHODIK / WP-12
+% [PROJECT] collaboration/audits/wp12_multi_document_dry_run_test_protocol.md
+% [PROJECT] collaboration/audits/wp12_findings.md
+% [PROJECT] collaboration/audits/wp12_formative_self_test_report.md
+%
+% SINGLE-SOURCE
+% [PROJECT] Golden E2E closeout
+% [PROJECT] Gate-3 Project 000116
+% [PROJECT] current_state.md
+%
+% MULTI-SOURCE
+% [PROJECT] BLK-002 completion
+% [PROJECT] Project 308131
+% [PROJECT] ADR-032 / ADR-033 / ADR-034
+%
+% SYSML / VALIDATION
+% [PROJECT] ADR-021
+% [PROJECT] ADR-022
+% [PROJECT] SYSIDE checkpoints
+%
+% HUMAN REVIEW / RELEASE
+% [PROJECT] ADR-016
+% [PROJECT] ADR-023
+% [PROJECT] ADR-029
+%
+% REGRESSION
+% [PROJECT] 2026-09-02 CATIA Modeling Complete SSOT
+%            6335 passed, 12 skipped
+%
+% SAFE DEMO
+% [TO CREATE] safe_demo_ruecker_schindele_protocol.md
+% [TO CREATE] safe_demo_ruecker_schindele_results.md oder entsprechender
+%             Ergebnisabschnitt nach Durchfuehrung
+
+
+% =============================================================================
+% LITERATUR FUER KAPITEL 6
+% =============================================================================
+%
+% METHODISCHE EVALUATION
+% [REPO-BIB] Wohlin et al. 2012
+% [ADD] Wieringa 2014
+%
+% ARCHITEKTUREVALUATION
+% [REPO-BIB] ISO42030
+% Nur fuer Claims verwenden, die tatsaechlich zur Norm passen.
+% Nicht die gesamte V&V-Struktur kuenstlich unter ISO 42030 subsumieren.
+%
+% SYSML / VALIDATION
+% [REPO-BIB] SysMLv2, auf finale Version aktualisieren
+% [REPO-BIB] Cibrian 2025b
+%
+% HUMAN OVERSIGHT
+% [ADD] Lazaros et al. 2026
+% [ADD] Zhu et al. 2026
+%
+% EXTERNE PRACTITIONER DEMONSTRATION
+% [ADD / PRUEFEN]
+% Wieringa 2014 kann fuer Artefakt-Demonstration / Evaluation relevant sein.
+% Falls die Demo staerker als Expert Evaluation eingeordnet wird:
+% passende explizite Quelle ergaenzen.
+%
+% WICHTIG:
+% Kapitel 6 ist primaer empirisch / projektspezifisch.
+% Literatur begruendet die Evaluationslogik,
+% nicht die konkreten PASS-/FAIL-Ergebnisse.
+
+
+% =============================================================================
+% OFFENE ARBEIT VOR AUSFORMULIERUNG
+% =============================================================================
+%
+% PRIORITAET A
+%
+% [ ] Safe-Demo-Protokoll vor Ruecker-&-Schindele-Termin einfrieren.
+%
+% [ ] Exakte finale Finding->ADR-Matrix aus wp12_findings.md und ADRs ziehen.
+%
+% [ ] Gate-3 Project 000116 Evidence References final fixieren.
+%
+% [ ] BLK-002 / Project 308131 Final Closeout References final fixieren.
+%
+% [ ] 6335 passed / 12 skipped als finalen Integrationsstand verifizieren
+%     und nicht mit historischen 5577 / 6100 / anderen Zwischenstaenden mischen.
+%
+% PRIORITAET B
+%
+% [ ] Wieringa 2014 beschaffen.
+% [ ] Human Oversight Literatur beschaffen.
+%
+% PRIORITAET C
+%
+% [ ] Pruefen, ob ISO 42030 fuer einen Teil der Architektur-Evaluation
+%     wirklich sinnvoll verwendet werden kann.
+%
+% [ ] Safe-Demo-Ergebnisse nach Termin unveraendert dokumentieren.
+
+
+% =============================================================================
+% CLAIM-CHECK VOR DEM SCHREIBEN
+% =============================================================================
+%
+% [ ] Sind Verification und Validation begrifflich sauber getrennt?
+% [ ] Wird Testanzahl nicht als Qualitaetsscore verwendet?
+% [ ] Werden historische und finale Regressionstaende nicht vermischt?
+% [ ] Bleiben fehlgeschlagene formative Tests als Evidenz sichtbar?
+% [ ] Ist Finding -> Root Cause -> Correction -> Retest nachvollziehbar?
+% [ ] Werden ADRs nur bei architekturrelevanten Korrekturen genannt?
+% [ ] Ist Gate-3 klar Single-Source?
+% [ ] Ist Project 308131 klar Genuine Multi-Source?
+% [ ] Wird SYSIDE PASS nicht mit fachlicher Korrektheit gleichgesetzt?
+% [ ] Wird Human Approval nicht mit technischer Validation gleichgesetzt?
+% [ ] Wird die Safe Demo nicht als kontrolliertes Experiment dargestellt?
+% [ ] Werden Safe-Demo-Ergebnisse erst nach realer Durchfuehrung eingetragen?
+% [ ] Werden Forschungfragen hier noch nicht final beantwortet?
+% [ ] Keine vollstaendige Testskriptliste im Haupttext?
+% [ ] Keine Gedankenstriche als Satzzeichen im finalen Fliesstext.
+% [ ] Kein unpersoenliches "man".
+% [ ] Tabellenueberschrift oben, Abbildungsunterschrift unten.
+%
+% =============================================================================

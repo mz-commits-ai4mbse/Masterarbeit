@@ -1,30 +1,1689 @@
+% =============================================================================
+% Kapitel 3: Methodisches Vorgehen
+% ARBEITSGERUEST / REVIEW CANDIDATE
+% Stand: 03.09.2026
+%
+% Dieses Dokument enthaelt bewusst NOCH KEINEN ausformulierten Thesis-Text.
+% Die Kommentare bilden die Argumentationsstruktur, Kernaussagen, Quellenbasis,
+% Projektevidenz, Abgrenzungen sowie offene Quellenluecken ab.
+%
+% Quellenstatus:
+% [REPO-BIB]  Quelle ist im Thesis-Repository und in literatur.bib vorhanden.
+%             Der konkrete Claim muss vor finaler Verwendung im Volltext
+%             nochmals geprueft werden.
+% [REPO-FILE] Quelle ist als Datei im Repository vorhanden, aber noch nicht
+%             verlaesslich in literatur.bib eingebunden und/oder claimweise
+%             geprueft.
+% [ADD]       Empfohlene Quelle ist noch nicht im Repository und muss vor
+%             Verwendung beschafft, gespeichert, gelesen und in literatur.bib
+%             aufgenommen werden.
+% [PROJECT]   Projektevidenz. Belegt den tatsaechlichen Projektverlauf,
+%             ersetzt aber keine wissenschaftliche Literatur fuer allgemeine
+%             Aussagen.
+% [PRACTICE]  Praxisimpuls ohne empirischen Auswertungsanspruch.
+%
+% Arbeitsregel:
+% Erst nach Pruefung der hier zugeordneten Quellen wird der jeweilige Abschnitt
+% in Fliesstext ueberfuehrt.
+% =============================================================================
+
 \section{Methodisches Vorgehen}
+\label{sec:methodik}
 
-\subsection{Überblick über das Forschungsdesign}
+% -----------------------------------------------------------------------------
+% FUNKTION DES KAPITELS
+% -----------------------------------------------------------------------------
+% Zweck:
+% Dieses Kapitel erklaert, WIE das Architekturkonzept entwickelt, begruendet,
+% konkretisiert und untersucht wurde.
+%
+% Das Kapitel beschreibt NICHT die finale Architektur im Detail.
+% Die resultierende Architektur folgt in Kapitel 4.
+%
+% Der methodische rote Faden:
+%
+% wissenschaftliche Ausgangsbasis
+% -> literaturbasierte Ausgangshypothese
+% -> Forschungsfragen und Engineering-Anforderungen
+% -> modellbasierte Architekturentwicklung
+% -> Gestaltungsprinzipien fuer KI-gestuetzte Informationsverarbeitung
+% -> iterative Architekturentscheidungen
+% -> prototypische Realisierung als Untersuchungsmittel
+% -> Verifikation und Validierung
+%
+% Kernaussage des gesamten Kapitels:
+% Die finale Informationsverarbeitungsarchitektur entstand nicht aus einer
+% einmaligen Implementierungsentscheidung. Sie wurde aus Literatur, fachlichen
+% Anforderungen und einer fruehen Architekturhypothese abgeleitet, modellbasiert
+% konkretisiert und durch prototypische Untersuchungen iterativ weiterentwickelt.
+%
+% NICHT HIER:
+% - vollstaendige Beschreibung der neun finalen Subsysteme
+% - detaillierte Implementierungsbeschreibung einzelner Python-Module
+% - konkrete Versuchsergebnisse
+% - Interpretation der Versuchsergebnisse
+% - Reflexion der KI als Coding-Werkzeug
+%
+% Diese Inhalte gehoeren in Kapitel 4, 5, 7 bzw. 8.
 
-\subsection{Literaturrecherche und Stand der Technik}
-\subsubsection{Suchstrategie}
+
+% =============================================================================
+\subsection{Forschungsdesign und Vorgehensmodell}
+\label{sec:forschungsdesign}
+% =============================================================================
+
+% Zweck:
+% Einordnung der Arbeit als gestaltungsorientierte, empirisch rueckgekoppelte
+% Architekturuntersuchung. Der Untersuchungsgegenstand ist das
+% Architekturkonzept. Der Prototyp dient seiner Konkretisierung und Untersuchung.
+%
+% Zentrale Frage des Abschnitts:
+% Welche Forschungslogik verbindet Literatur, Architekturentwicklung,
+% prototypische Realisierung und Evaluation?
+
+
+\subsubsection{Forschungsgegenstand und Untersuchungslogik}
+\label{sec:untersuchungslogik}
+
+% KERNAUSSAGEN:
+%
+% 1. Primaerer Forschungsgegenstand ist die Konzeption einer
+%    Informationsverarbeitungsarchitektur zur kontrollierten Ueberfuehrung
+%    heterogener Engineering-Bestandsinformationen in SysML v2.
+%
+% 2. Die Softwareimplementierung ist kein eigenstaendiges Produktziel der
+%    Masterarbeit. Sie dient als Proof of Concept zur Konkretisierung und
+%    Untersuchung des Architekturartefakts.
+%
+% 3. Die Untersuchung verbindet zwei Aktivitaeten:
+%    a) Entwurf und Weiterentwicklung eines Artefakts
+%    b) empirische Untersuchung seines Verhaltens im definierten Kontext.
+%
+% 4. Erkenntnisse aus der Untersuchung duerfen in die Gestaltung des Artefakts
+%    zurueckfliessen. Das Vorgehen ist deshalb iterativ und nicht als einmalige
+%    Sequenz "Entwurf -> Implementierung -> Abschlusstest" zu verstehen.
+%
+% 5. Die mit dem Professor abgestimmten Forschungsfragen bleiben waehrend
+%    dieses Prozesses unveraendert. Die Architektur und ihre Evaluation werden
+%    auf ihre Beantwortung ausgerichtet.
+%
+% LITERATUR:
+%
+% [ADD] Wieringa, R. J. (2014):
+%       Design Science Methodology for Information Systems and Software Engineering.
+%       Springer. DOI: 10.1007/978-3-662-43839-8
+%       Relevanz:
+%       - Design Science speziell fuer Information Systems und Software Engineering
+%       - Wechsel zwischen Artefaktgestaltung und empirischer Untersuchung
+%       - Design Cycle, Requirements Specification, Treatment Validation,
+%         Empirical Cycle
+%       Vor Verwendung pruefen:
+%       Passt der tatsaechliche Projektablauf ausreichend gut, um die Arbeit
+%       explizit als Design-Science-Studie zu bezeichnen?
+%
+% [OPTIONAL ADD] Peffers et al. (2007):
+%       A Design Science Research Methodology for Information Systems Research.
+%       Journal of Management Information Systems, 24(3), 45-77.
+%       DOI: 10.2753/MIS0742-1222240302
+%       Nur aufnehmen, wenn der sechsstufige DSR-Prozess fuer die Einordnung
+%       einen echten Mehrwert liefert.
+%
+% [REPO-BIB] \cite{Wohlin.2012}
+%       Experimentation in Software Engineering.
+%       Relevanz:
+%       - systematische empirische Evaluation von Methoden, Techniken und
+%         Werkzeugen im Software Engineering
+%       - spaeter besonders fuer die Untersuchungs- und V&V-Logik
+%
+% PROJEKTEVIDENZ:
+%
+% [PROJECT] Thesis_Writing_and_Evidence_Rules.md
+%           Trennt Methodik, Architekturkonzept, Prototype, Ergebnisse und
+%           Diskussion explizit.
+%
+% [PROJECT] KickOff_MasterArbeit_MZ_18032026
+%           Forschungsfragen und erster methodischer Generator-Entwurf waren
+%           bereits zum Projektstart dokumentiert.
+%
+% [PROJECT] collaboration/decisions/*.md im SysMLv2-Generator
+%           Dokumentieren die iterative Weiterentwicklung des Artefakts.
+%
+% ABGRENZUNG:
+% - Noch keine Beschreibung der konkreten finalen Architektur.
+% - Noch keine Bewertung einzelner Architekturentscheidungen.
+% - "Design Science" erst verwenden, wenn Wieringa gelesen und die Passung
+%   gegen den realen Projektverlauf geprueft wurde.
+
+
+\subsubsection{Literaturbasierte Ausgangshypothese der Architektur}
+\label{sec:ausgangshypothese}
+
+% KERNAUSSAGEN:
+%
+% 1. Die initiale Literaturrecherche diente nicht nur der Bestimmung des
+%    State of the Art und der Forschungsluecke. Aus ihr wurde bereits ein
+%    erster konzeptioneller Loesungsrahmen synthetisiert.
+%
+% 2. Zum Kick-off am 18.03.2026 bestand eine erste dreischichtige
+%    Architekturhypothese:
+%    - Data Layer
+%    - Process Layer
+%    - Knowledge Layer
+%
+% 3. Die damalige Funktion der Schichten:
+%    Data Layer:
+%    Erfassung, Normalisierung und Annotation heterogener Informationen.
+%
+%    Process Layer:
+%    Steuerung der Datenfluesse und modellgetriebene Transformation.
+%
+%    Knowledge Layer:
+%    semantische Harmonisierung, Konfliktbehandlung, Validierung und
+%    wissensgestuetzte Steuerung der Synthese.
+%
+% 4. Aus derselben Literaturbasis wurde eine erste sechsstufige Prozesskette
+%    synthetisiert:
+%    Feature Ingestion
+%    -> Sortier Agent
+%    -> Ontologie Anpassung
+%    -> Muster Antizipation
+%    -> Human in the Loop
+%    -> Synthese
+%
+% 5. Diese Struktur wird in der Thesis ausdruecklich als
+%    "literaturbasierte Ausgangshypothese" eingeordnet.
+%    Sie ist NICHT die finale Architektur.
+%
+% 6. Die spaetere Architekturentwicklung untersucht damit unter anderem,
+%    welche Verantwortlichkeiten dieser Grobstruktur erhalten bleiben,
+%    welche getrennt werden muessen und welche zusaetzlichen Governance-,
+%    Evidence- und Validierungsfunktionen erforderlich werden.
+%
+% LITERATURBASIS DER INITIALEN SYNTHESE:
+%
+% [REPO-BIB] \cite{Pan.2025,Cibrian.2025}
+%       Historische Zuordnung aus dem LSR:
+%       LLM-gestuetzte bzw. agentenbasierte Modellgenerierung.
+%       Zu pruefen fuer:
+%       - Muster Antizipation
+%       - agentische Synthese
+%
+% [REPO-BIB] \cite{Li.2022,Cafe.2013}
+%       Historische Zuordnung aus dem LSR:
+%       formale Sprachen, Austauschformate und modellgetriebene Verarbeitung.
+%       Zu pruefen fuer:
+%       - Process Layer
+%       - formalisierte Transformation
+%
+% [REPO-BIB] \cite{Kapos.2014,Cibrian.2025b}
+%       Historische Zuordnung aus dem LSR:
+%       Metaebenen- bzw. metamodelgetriebene Validierung.
+%       Zu pruefen fuer:
+%       - Knowledge Layer / Validation
+%       - Trennung von Generierung und formaler Validierung
+%
+% [REPO-BIB] \cite{Meng.2025,Abonyi.2024}
+%       Historische Zuordnung aus dem LSR:
+%       Ontologien und semantische Normalisierung heterogener Informationen.
+%       Zu pruefen fuer:
+%       - Data Layer / Normalisierung
+%       - Knowledge Layer / semantische Leitplanken
+%
+% [REPO-BIB] \cite{Cibrian.2025,Chis.2025}
+%       Historische Zuordnung aus dem LSR:
+%       agentische Verarbeitung, Retrieval und menschliche Einbindung.
+%       Zu pruefen fuer:
+%       - Human in the Loop
+%       - wissensgestuetzte Verarbeitung
+%
+% [REPO-BIB] \cite{Ferko.2026,Ahlbrecht.2024,Meyers.2013}
+%       Historische Zuordnung aus dem LSR:
+%       Modularitaet, SysML v2 Integration und semantische Adaption.
+%
+% WICHTIGE QUELLENREGEL:
+% Die obigen Zuordnungen stammen aus dem damaligen LSR.
+% Vor finaler Formulierung muss jede konkrete Aussage nochmals im Volltext
+% der genannten Publikation geprueft werden.
+%
+% PROJEKTEVIDENZ:
+%
+% [PROJECT] KickOff_MasterArbeit_MZ_18032026
+%           Folien zum Stand der Technik, Drei-Schichten-Modell und
+%           sechsstufigem Prozess.
+%
+% [PROJECT] Kapitel/LSR.tex
+%           Dokumentiert die damalige Literatur-Synthese und deren
+%           Quellenzuordnung.
+%
+% [PROJECT] RequirementReview/Turing_Kickoff_Systemabgleich_Content.tex
+%           Dokumentiert spaeter den Uebergang von der linearen Kick-off-
+%           Struktur zur detaillierteren, rueckgekoppelten und governten
+%           Systemarchitektur.
+%
+% ABBILDUNGSKANDIDAT:
+% "Entwicklung der Architekturhypothese"
+%
+% Initiale Literatur
+% -> Drei-Schichten-Modell
+% -> sechsstufiger Workflow
+% -> Requirements und RFL-Analyse
+% -> detaillierte Informationsverarbeitungsarchitektur
+% -> Prototype
+% -> formative Untersuchung
+% -> finale Architektur
+%
+% Diese Abbildung waere im Methodikkapitel argumentativ sinnvoll, weil sie den
+% Forschungsprozess erklaert und nicht nur einen Nachweis liefert.
+
+
+\subsubsection{Weitere Einfluesse auf die Konzeptentwicklung}
+\label{sec:konzepteinfluesse}
+
+% KERNAUSSAGEN:
+%
+% 1. Die literaturbasierte Ausgangshypothese wurde nicht direkt implementiert,
+%    sondern zunaechst durch Forschungsfragen und Engineering-Anforderungen
+%    konkretisiert.
+%
+% 2. Stakeholder-Beduerfnisse und Anforderungen dienten als fachliche
+%    Randbedingungen fuer die Architekturentwicklung.
+%
+% 3. Die MESCONF 2026 lieferte zusaetzliche Praxisimpulse zu:
+%    - Ontologien im MBSE
+%    - Halluzinationsrisiken bei KI-gestuetzter Modellierung
+%    - Guardrails
+%    - Human in the Loop
+%    - menschlicher fachlicher Verantwortung
+%
+% 4. Die informellen Gespraeche auf der MESCONF wurden nicht systematisch
+%    erhoben. Sie werden deshalb nicht als empirische Daten oder als
+%    repraesentativer Konsens behandelt.
+%
+% 5. Praxisimpulse dienten zur Priorisierung und Schaerfung von Fragen,
+%    wissenschaftliche Aussagen werden weiterhin mit Literatur belegt.
+%
+% PROJEKTEVIDENZ:
+%
+% [PROJECT] RequirementReview/Anforderungsanalyse.tex
+%           Fruehe Stakeholder- und Systemanforderungen einschliesslich
+%           Human Decision Gate, Variance Reporting, Traceability Logging,
+%           Multi-Agent Persona Ensemble und Grammar Validation.
+%
+% [PRACTICE] MESCONF_2026_Gedaechtnisprotokoll
+%            Vom Autor als Praxisimpuls dokumentiert, datiert auf den 11.05.2026.
+%            Keine empirische Erhebung.
+%
+% [PROJECT] Forschungsfragen aus Proposal und Kick-off.
+%
+% LITERATUR:
+% Wissenschaftliche Begruendungen fuer Ontologien, HITL, Multi-Agent und
+% Traceability werden in den entsprechenden spaeteren Methodikabschnitten
+% claimweise zugeordnet. Die MESCONF ersetzt diese Quellen nicht.
+%
+% NICHT HIER:
+% - detaillierte Wiedergabe des MESCONF-Programms
+% - Behauptung eines "Industriekonsenses"
+% - Ergebnisse der Architektur
+
+
+\subsubsection{Iterative Konkretisierung und formative Untersuchung}
+\label{sec:iterative_konkretisierung}
+
+% KERNAUSSAGEN:
+%
+% 1. Die Architektur wurde schrittweise konkretisiert.
+%
+% 2. Einzelne Architekturannahmen wurden durch kontrollierte
+%    Implementierungsslices und Tests untersucht.
+%
+% 3. Beobachtete Fehler oder unklare Verantwortungsgrenzen wurden nicht
+%    ausschliesslich als Implementierungsfehler behandelt.
+%    Falls die Ursache auf der konzeptionellen Ebene lag, wurde die
+%    Architekturentscheidung ueberarbeitet.
+%
+% 4. Methodischer Zyklus:
+%    Architekturannahme
+%    -> kontrollierte Umsetzung
+%    -> Test / Beobachtung
+%    -> Ursachenanalyse
+%    -> Architekturentscheidung
+%    -> erneute Umsetzung
+%    -> Regression / Akzeptanz
+%
+% 5. Formative Untersuchungen dienen der Verbesserung des Artefakts waehrend
+%    seiner Entwicklung.
+%
+% 6. Die spaetere abschliessende Evaluation hat eine andere Funktion:
+%    Sie bewertet den stabilisierten PoC gegen die definierten
+%    Untersuchungsziele und Forschungsfragen.
+%
+% LITERATUR:
+%
+% [ADD] Wieringa 2014
+%       Fuer Design Cycle, Treatment Validation und empirische Rueckkopplung.
+%
+% [REPO-BIB] \cite{Wohlin.2012}
+%       Fuer systematische empirische Evaluation im Software Engineering.
+%
+% [ADD / PRUEFEN] Eine spezifische Quelle fuer die Terminologie
+%       "formative Evaluation" im Kontext von Design Science kann ergaenzt
+%       werden, falls Wieringa die benoetigte Aussage nicht ausreichend traegt.
+%
+% PROJEKTEVIDENZ:
+%
+% [PROJECT] ADR-027:
+%           Trennung von source-grounded Evidence Detection und Persona
+%           Interpretation als exemplarische Architekturkorrektur aus
+%           formativen Untersuchungen.
+%
+% [PROJECT] RequirementReview/Turing_Kickoff_Systemabgleich_Content.tex
+%           Zeigt die Weiterentwicklung der urspruenglich linearen
+%           sechs Schritte in explizite Verantwortlichkeiten und
+%           Rueckkopplungen.
+%
+% NICHT HIER:
+% - Vollstaendige Chronologie aller Arbeitspakete.
+% - Vollstaendige Liste aller ADRs.
+% - Konkrete Testergebnisse. Diese folgen in Kapitel 6 und 7.
+
+
+% =============================================================================
+\subsection{Literaturrecherche und Ableitung des Forschungsbedarfs}
+\label{sec:literaturmethodik}
+% =============================================================================
+
+% Zweck:
+% Kompakte und reproduzierbare Beschreibung der Literaturmethodik.
+% Die detaillierten Suchstrings, Screeningtabellen und Zwischenstaende werden
+% in den Anhang verschoben.
+%
+% WICHTIG:
+% Kapitel 2 enthaelt die INHALTLICHE Synthese des State of the Art.
+% Kapitel 3.2 beschreibt die METHODE der Recherche.
+
+
+\subsubsection{Ziel und Abgrenzung der Recherche}
+\label{sec:literatur_ziel}
+
+% KERNAUSSAGEN:
+%
+% 1. Ziel der Recherche war die systematische Erfassung von Literatur zu:
+%    - SysML / SysML v2 und modellgetriebener Transformation
+%    - LLM und generativer KI im Systems Engineering
+%    - heterogenen Bestandsdaten / Brownfield Engineering
+%    - semantischer Normalisierung und Ontologien
+%    - Modularitaet und Modellvaliditaet
+%
+% 2. Die Recherche sollte sowohl den State of the Art als auch eine
+%    wissenschaftliche Ausgangsbasis fuer die Architekturkonzeption liefern.
+%
+% 3. Die Forschungsfragen wurden genutzt, um Suchraum und Suchbegriffe
+%    zu strukturieren.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] Kapitel/LSP.tex
+%           Zweck, Scope und Suchcluster.
+%
+% LITERATUR:
+%
+% [ADD, EMPFOHLEN] Kitchenham, B.; Charters, S. (2007):
+%       Guidelines for performing Systematic Literature Reviews in
+%       Software Engineering. EBSE Technical Report EBSE-2007-01.
+%       Relevanz:
+%       - Software-Engineering-spezifische Grundlage fuer systematische
+%         Literaturreviews
+%       - besser passend als medizinische Review-Handbuecher als
+%         primaere Methodikquelle
+%
+% [REPO-BIB] \cite{Page.2021}
+%       PRISMA 2020 fuer transparente Dokumentation des Review-Prozesses.
+%
+% HINWEIS:
+% PRISMA ist eine Reporting-Guideline und sollte nicht als alleinige
+% Suchmethodik dargestellt werden.
+
+
+\subsubsection{Suchstrategie und Datenbanken}
+\label{sec:suchstrategie}
+
+% KERNAUSSAGEN:
+%
+% 1. Genutzte Datenbanken:
+%    - Scopus
+%    - ScienceDirect
+%    - IEEE Xplore
+%    - ACM Digital Library
+%
+% 2. Die Suchbegriffe wurden in Themencluster gegliedert:
+%    - Modellierungssprachen
+%    - KI / LLM
+%    - Methodik / Architecture as Code / MBSE
+%    - Brownfield / heterogene Daten / Ontologien
+%
+% 3. Boolesche Operatoren und datenbankspezifische Suchstrings kombinierten
+%    die Themencluster.
+%
+% 4. Die keywordbasierte Suche wurde durch explorative Scopus-AI-Suchen
+%    ergaenzt. Diese Treffer wurden vor dem Screening mit den regulaeren
+%    Treffern abgeglichen und dedupliziert.
+%
+% 5. Snowballing wurde als ergaenzende Suchstrategie vorgesehen.
+%
+% LITERATUR:
+%
+% [REPO-BIB] \cite{Jha.2022}
+%       Strukturierte Suchlogik und Boolesche Suchoperatoren.
+%       Achtung: medizinischer Kontext. Nur fuer allgemein uebertragbare
+%       Suchprinzipien einsetzen.
+%
+% [REPO-BIB] \cite{Wohlin2014}
+%       Snowballing in systematischen Literaturstudien.
+%
+% [ADD] Kitchenham & Charters 2007
+%       Primaere Software-Engineering-spezifische Review-Methodik.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] Kapitel/LSP.tex
+%           Enthaelt Datenbanken, Cluster, Zeitfenster und Suchstrings.
+%
+% ANHANG:
+% - vollstaendige Suchstrings
+% - Datenbankparameter
+% - Suchzeitpunkte
+% - Snowballing-Protokoll, soweit tatsaechlich durchgefuehrt
+
+
 \subsubsection{Screening und Quellenauswahl}
-\subsubsection{Synthese der Literaturergebnisse}
+\label{sec:screening}
 
-\subsection{Ableitung des Forschungsbedarfs}
+% KERNAUSSAGEN:
+%
+% 1. Zweistufiges Screening:
+%    Level 1: Titel und Abstract
+%    Level 2: Volltextpruefung
+%
+% 2. Einschluss- und Ausschlusskriterien wurden vor dem Screening definiert.
+%
+% 3. Dubletten wurden vor der weiteren Bewertung entfernt.
+%
+% 4. Der initial dokumentierte Suchlauf umfasste 28 gescreente Publikationen.
+%    22 Publikationen wurden als fuer die Forschungsfragen relevant bewertet.
+%
+% 5. Die Auswahlentscheidung und der Suchprozess sollen im Anhang so
+%    dokumentiert werden, dass die Ableitung des Literaturkorpus
+%    nachvollziehbar bleibt.
+%
+% LITERATUR:
+%
+% [REPO-BIB] \cite{Page.2021}
+%       Transparente Dokumentation von Identifikation, Screening und Auswahl.
+%
+% [ADD] Kitchenham & Charters 2007
+%       Screening und Selection im Software Engineering.
+%
+% [REPO-BIB] \cite{Petticrew.2012}
+%       Kann fuer allgemeine Review-Systematik ergaenzend genutzt werden.
+%
+% KRITISCHE QUELLENPRUEFUNG:
+%
+% [REPO-BIB] \cite{Higgins.2019,Higgins.2019b}
+% [REPO-BIB] \cite{Balshem.2011,Guyatt.2008}
+%
+% Diese Quellen stammen primaer aus Medizin / Evidence-Based Medicine.
+% Sie wurden im urspruenglichen LSP verwendet.
+%
+% Vor finaler Methodik entscheiden:
+% - Welche ihrer Aussagen sind tatsaechlich fachuebergreifend uebertragbar?
+% - Kann die Primaerbegruendung durch Kitchenham/Charters und Wohlin ersetzt
+%   werden?
+% - GRADE nicht als Software-Engineering-Qualitaetsstandard darstellen,
+%   sofern keine belastbare Uebertragungsbegruedung vorliegt.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] Kapitel/LSP.tex
+% [PROJECT] Kapitel/LSR.tex
+%
+% ANHANG:
+% - vollstaendige Screening-Matrix
+% - Ein- und Ausschlusscodes
+% - PRISMA-Darstellung
 
-\subsection{Modellbasierte Architekturkonzeption}
-\subsubsection{Begründung des MBSE Ansatzes}
-\subsubsection{RFLP Strukturierung}
-\subsubsection{ZigZag Vorgehen zur Ableitung der Modellelemente}
 
-\subsection{Anforderungsanalyse auf Stakeholder Ebene}
-\subsubsection{Stakeholder Rollen}
-\subsubsection{User Needs}
-\subsubsection{Stakeholder Requirements}
-\subsubsection{Use Cases und Traceability}
+\subsubsection{Synthese und Ableitung des Forschungsbedarfs}
+\label{sec:forschungsbedarf}
 
-\subsection{Konzeptentwicklung der Informationsverarbeitungsarchitektur}
-\subsubsection{Schichtenmodell}
-\subsubsection{Human in the Loop Assurance Pattern}
-\subsubsection{Multi Agenten Prinzip und Ergebnisvarianz}
+% KERNAUSSAGEN:
+%
+% 1. Die eingeschlossenen Quellen wurden nicht nur einzeln zusammengefasst,
+%    sondern entlang der fuer die Forschungsfragen relevanten Loesungsbausteine
+%    synthetisiert.
+%
+% 2. Die Synthese identifizierte unter anderem:
+%    - modellgetriebene Transformation
+%    - LLM- bzw. agentenbasierte Modellgenerierung
+%    - metamodelgetriebene Validierung
+%    - Ontologien und semantische Normalisierung
+%    - Human in the Loop
+%    - Modularitaet und Interoperabilitaet
+%
+% 3. Aus dieser Synthese wurden sowohl die Forschungsluecke als auch die
+%    literaturbasierte Ausgangshypothese aus Abschnitt
+%    \ref{sec:ausgangshypothese} abgeleitet.
+%
+% LITERATUR:
+% Die konkrete inhaltliche Literatur folgt aus Kapitel 2 und dem LSR.
+% Keine neue Methodikquelle erforderlich, sofern die Synthesemethode durch
+% Kitchenham/Charters bzw. die gewaehlte Review-Methodik gedeckt ist.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] Kapitel/LSR.tex
+%           Enthaelt den damaligen State-of-the-Art-Abschnitt und die
+%           Quellenzuordnung.
+%
+% NICHT HIER:
+% - erneute ausfuehrliche Wiedergabe des State of the Art
+% - Diskussion der finalen Forschungsergebnisse
 
-\subsection{Prototypische Umsetzung als Proof of Concept}
 
-\subsection{Bewertungslogik und Bezug zu den Forschungsfragen}
+% =============================================================================
+\subsection{Methodik der modellbasierten Architekturentwicklung}
+\label{sec:architekturmethodik}
+% =============================================================================
+
+% Zweck:
+% Erklaeren, wie aus Forschungsbedarf, Stakeholder-Beduerfnissen und
+% Architekturhypothese ein konsistentes Architekturmodell abgeleitet wurde.
+
+
+\subsubsection{Systemgrenze und Betrachtungsumfang}
+\label{sec:systemgrenze_methodik}
+
+% KERNAUSSAGEN:
+%
+% 1. Die Untersuchung betrachtet die Informationsverarbeitungsarchitektur des
+%    Generators als System of Interest.
+%
+% 2. Die Architektur wird ueber Anforderungen, Funktionen und logische
+%    Verantwortlichkeiten beschrieben.
+%
+% 3. RFLP bleibt methodische Referenz.
+%
+% 4. Fuer die softwarezentrierte Thesis werden Requirements, Functional und
+%    Logical Architecture ausgearbeitet.
+%
+% 5. Physical bzw. Deployment Architecture ist ausdruecklich ausserhalb des
+%    festgelegten Untersuchungsumfangs.
+%
+% LITERATUR:
+%
+% [REPO-FILE] ISO/IEC/IEEE 42010:2022
+%       Literatur/ISO-IEC-IEEE 42010_2022-11-00_EN_3400447.pdf
+%       Vor Verwendung klaeren:
+%       - Definition von Architecture / Architecture Description
+%       - Stakeholder, Concerns, Viewpoints und Views
+%       - saubere Einordnung von Systemgrenze und Architekturbetrachtung
+%       TODO: korrekten BibTeX-Eintrag fuer Version 2022 pruefen.
+%
+% [ADD] Li, R.; Verhagen, W.J.C.; Curran, R. (2020):
+%       A systematic methodology for Prognostic and Health Management
+%       system architecture definition.
+%       Reliability Engineering & System Safety, 193, 106598.
+%       DOI: 10.1016/j.ress.2019.106598
+%       Relevanz:
+%       - explizites RFLP-basiertes Architekturvorgehen
+%       - Requirements -> Functional -> Logical -> Physical
+%       - SysML und V&V
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] finaler CATIA-Modellierungsabschluss
+% [PROJECT] collaboration/current_state.md
+% [PROJECT] collaboration/change_log.md
+%           RFLP als methodische Referenz, R/F/L im Thesis-Modell,
+%           Physical/Deployment out of scope.
+%
+% NICHT HIER:
+% - finale Anzahl der Subsysteme, Requirements, Functions und Components
+%   im Detail. Das ist Ergebnis des Architekturkapitels.
+
+
+\subsubsection{RFL beziehungsweise RFLP als Strukturierungsrahmen}
+\label{sec:rflp_methodik}
+
+% KERNAUSSAGEN:
+%
+% 1. Die Architekturentwicklung startet nicht bei Softwaremodulen.
+%
+% 2. Ausgangspunkt bilden fachliche Anforderungen.
+%
+% 3. Aus Anforderungen werden benoetigte Systemfunktionen abgeleitet.
+%
+% 4. Funktionen werden anschliessend logischen Verantwortlichkeiten bzw.
+%    Komponenten zugeordnet.
+%
+% 5. Die Ableitung dient dazu, Problem, Funktion und Realisierungsebene
+%    nachvollziehbar voneinander zu trennen.
+%
+% 6. Die Zuordnung wird iterativ geprueft. Rueckwirkungen zwischen Ebenen
+%    koennen zu Anpassungen bereits modellierter Elemente fuehren.
+%
+% LITERATUR:
+%
+% [ADD] Li et al. 2020, siehe Abschnitt \ref{sec:systemgrenze_methodik}.
+%
+% [REPO-BIB] \cite{SysMLv2}
+%       Fuer die verwendeten SysML-v2-Modellierungskonstrukte.
+%       Vor finaler Zitation pruefen, welche OMG-Version tatsaechlich
+%       verwendet wurde und ob der bestehende BibTeX-Eintrag korrekt ist.
+%
+% [REPO-FILE] ISO/IEC/IEEE 42010:2022
+%       Fuer Architekturbetrachtung und Views, nicht als RFLP-Quelle.
+%
+% QUELLENLUECKE:
+% Falls der Begriff "ZigZag" als etablierte Methode verwendet werden soll,
+% muss eine Quelle gefunden werden, die genau dieses Vorgehen definiert.
+% Andernfalls neutral als "iterative Ableitung und Rueckkopplung zwischen
+% Abstraktionsebenen" beschreiben.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] CATIA R/F/L Modell
+% [PROJECT] RequirementReview-Matrizen
+% [PROJECT] finales Subsystemmodell
+
+
+\subsubsection{Anforderungsableitung und Traceability}
+\label{sec:requirements_traceability}
+
+% KERNAUSSAGEN:
+%
+% 1. Stakeholder-Beduerfnisse und Forschungsziele werden in pruefbare
+%    Anforderungen ueberfuehrt.
+%
+% 2. Die Anforderungen werden mit nachgelagerten Funktionen und logischen
+%    Verantwortlichkeiten verknuepft.
+%
+% 3. Traceability wird nicht erst am Ende des Projekts erzeugt.
+%    Sie ist Teil der Architektur- und Entwicklungsmethodik.
+%
+% 4. Die Nachvollziehbarkeit soll spaeter auch zwischen Source Information,
+%    Verarbeitung, Entscheidungen, Approved Engineering Information und
+%    erzeugtem Modellelement erhalten bleiben.
+%
+% LITERATUR:
+%
+% [ADD] ISO/IEC/IEEE 29148:2018
+%       Systems and software engineering - Life cycle processes -
+%       Requirements engineering.
+%       Relevanz:
+%       - Requirements Engineering
+%       - Traceability zwischen Ursprung, abgeleiteten Anforderungen und
+%         nachgelagerten Ebenen
+%       Vor Verwendung genaue Clauses pruefen.
+%
+% [REPO-FILE] ISO/IEC/IEEE 42010:2022
+%       Ergaenzend fuer Stakeholder und Concerns.
+%
+% [REPO-BIB] \cite{SysMLv2}
+%       Fuer Traceability-/Relationship-Mechanismen in SysML v2,
+%       soweit durch Spezifikation gedeckt.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] RequirementReview/Anforderungsanalyse.tex
+% [PROJECT] Turing_StakeholderRequirements_Requirementstabelle_Content.tex
+% [PROJECT] Turing_Systemfunktionen_Featureabdeckung_Content.tex
+% [PROJECT] finales CATIA-Modell
+%
+% NICHT HIER:
+% - technische Implementierung der Provenance-IDs.
+%   Diese gehoert spaeter in Kapitel 5.
+
+
+\subsubsection{Iterative Ableitung zwischen den Architekturebenen}
+\label{sec:iterative_rfl}
+
+% KERNAUSSAGEN:
+%
+% 1. Die R/F/L-Ableitung wurde nicht als starre Einbahnstrasse behandelt.
+%
+% 2. Erkenntnisse auf funktionaler oder logischer Ebene konnten zeigen,
+%    dass Anforderungen zu grob, redundant oder unvollstaendig formuliert
+%    waren.
+%
+% 3. Rueckkopplungen wurden deshalb zur Schaerfung der jeweils vorgelagerten
+%    Ebene genutzt.
+%
+% 4. Ziel ist Konsistenz zwischen Problemstellung, geforderter Faehigkeit
+%    und logischer Verantwortung.
+%
+% LITERATUR:
+% [ADD] Li et al. 2020 auf genaue Unterstuetzung pruefen.
+% [ADD / OPTIONAL] weitere RFLP-/MBSE-Methodenquelle, falls fuer die
+%                  iterative Rueckkopplung erforderlich.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] CATIA-Modell und Entwicklungsverlauf der R/F/L-Elemente.
+%
+% ABGRENZUNG:
+% Keine Auflistung der finalen Elemente, sondern Beschreibung der
+% Ableitungslogik.
+
+
+% =============================================================================
+\subsection{Gestaltungsprinzipien der KI-gestuetzten Informationsverarbeitung}
+\label{sec:ki_gestaltungsprinzipien}
+% =============================================================================
+
+% Zweck:
+% Die theoretischen und methodischen Prinzipien beschreiben, anhand welcher
+% Kriterien die Informationsverarbeitungsarchitektur gestaltet wurde.
+%
+% WICHTIGE GRENZE:
+% Hier steht, WARUM ein Prinzip verwendet wird.
+% Kapitel 4 zeigt, WIE dieses Prinzip in der finalen Architektur umgesetzt ist.
+
+
+\subsubsection{Trennung deterministischer und probabilistischer Verarbeitung}
+\label{sec:det_prob}
+
+% KERNAUSSAGEN:
+%
+% 1. Nicht jeder Verarbeitungsschritt benoetigt ein LLM.
+%
+% 2. Semantisch offene Aufgaben koennen probabilistische Interpretation
+%    erfordern.
+%
+% 3. Aufgaben mit eindeutig definierbaren Regeln, Identitaeten, Contracts
+%    oder Syntaxpruefungen sollen soweit moeglich deterministisch umgesetzt
+%    werden.
+%
+% 4. LLM-Ausgaben erhalten nicht automatisch Engineering Authority.
+%
+% 5. Die Architektur trennt deshalb Generierung bzw. Interpretation von
+%    Validierung, Entscheidung und deterministischer Weiterverarbeitung.
+%
+% LITERATUR:
+%
+% [REPO-BIB] \cite{Cibrian.2025b}
+%       Metamodel-driven Validation von SysML-v2-Modellen.
+%       Claimweise pruefen fuer:
+%       - getrennte Validierung generierter Inhalte
+%       - formale Konsistenzpruefung
+%
+% [REPO-FILE] 2605.18747v1.pdf
+%       Ning et al. (2026), Code as Agent Harness.
+%       Relevanz:
+%       - Code als kontrollierbares Ausfuehrungs- und Verifikationssubstrat
+%       - Trennung von generativen Agentenaktionen und mechanischer Pruefung
+%       - Multi-Agent-Koordination und Verification
+%       Status: arXiv / Preprint. Nicht als alleinige starke Evidenz verwenden.
+%       TODO BibTeX.
+%
+% [ADD / PRUEFEN] Literatur zu Nichtdeterminismus von LLM-Ausgaben und
+%       deterministischen Guardrails, falls eine allgemeine Aussage zur
+%       Zuverlaessigkeit gemacht wird.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] Architekturtrenngrenzen im finalen System
+% [PROJECT] ADRs zur deterministischen Assembly, Generation und Validation
+%
+% VORSICHT:
+% Nicht behaupten, deterministische Verarbeitung sei generell "korrekt".
+% Sie ist reproduzierbar und regelgebunden, kann aber falsche Regeln
+% deterministisch ausfuehren.
+
+
+\subsubsection{Source Grounding und Trennung von Evidence und Interpretation}
+\label{sec:source_grounding}
+
+% KERNAUSSAGEN:
+%
+% 1. Semantische Interpretation benoetigt einen eindeutig gebundenen
+%    Ausgangsgegenstand.
+%
+% 2. Deshalb wird zuerst source-grounded Evidence identifiziert und
+%    erst danach durch unterschiedliche Personas interpretiert.
+%
+% 3. Mehrere Personas sollen dieselbe Evidence interpretieren.
+%    Andernfalls ist beobachtete Differenz nicht eindeutig auf unterschiedliche
+%    Interpretation zurueckzufuehren.
+%
+% 4. Source Provenance wird nicht nur als nachtraeglicher Audit-Trail
+%    behandelt. Sie beeinflusst, welche Informationen in welchem Projekt-
+%    und Verarbeitungskontext zulaessig sind.
+%
+% LITERATUR:
+%
+% [REPO-BIB] \cite{Chis.2025}
+%       Heterogeneous Knowledge Bases und Retrieval-Augmented Generation.
+%       Claimweise pruefen fuer:
+%       - grounding in externen Wissensquellen
+%       - Umgang mit heterogenen Wissensbasen
+%
+% [REPO-BIB] \cite{Bressan.2000}
+%       Kontextrepraesentation und Reasoning.
+%       Nur verwenden, falls der konkrete Claim nach Volltextpruefung passt.
+%
+% [REPO-FILE] Jake Van Clief's Interpretable Context Methodology_260703_235902.pdf
+%       Relevanz:
+%       - explizite Context Boundaries
+%       - stufenweise Informationsweitergabe
+%       Status: Preprint / methodische Sekundaerevidenz.
+%       TODO BibTeX und genaue Claim-Pruefung.
+%
+% [ADD] geeignete Primaerliteratur zu Data/Information Provenance im
+%       Engineering oder zu provenance-aware AI, falls fuer allgemeine
+%       Aussagen ueber Provenance erforderlich.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] ADR-026
+% [PROJECT] ADR-027
+% [PROJECT] source-local authority chain
+% [PROJECT] project-wide Artifact Identity und Project Fit
+%
+% NICHT HIER:
+% - konkrete Klassen, Manifeste und Fingerprints.
+%   Diese folgen in Kapitel 5.
+
+
+\subsubsection{Multi-Persona-Interpretation, Varianz und Stabilitaet}
+\label{sec:multipersona}
+
+% KERNAUSSAGEN:
+%
+% 1. Mehrere LLM-Instanzen bzw. Personas koennen unterschiedliche
+%    Interpretationspfade oder fachliche Perspektiven erzeugen.
+%
+% 2. Unterschiedliche Ergebnisse sind nicht automatisch ein Fehler.
+%    Varianz kann relevante Unsicherheit oder Interpretationsspielraum
+%    sichtbar machen.
+%
+% 3. Uebereinstimmung ist ebenfalls kein Wahrheitsbeweis.
+%    Korrelation oder Konformitaet kann zu gemeinsam falschen Ergebnissen
+%    fuehren.
+%
+% 4. Das Turing-Konzept verwendet deshalb KEIN demokratisches
+%    Mehrheitsprinzip als Engineering Authority.
+%
+% 5. Consensus und Variance sind Informationen fuer die nachfolgende
+%    Bewertung.
+%
+% 6. Wiederholte Aufrufe derselben Perspektive werden als
+%    Stabilitaetsevidenz interpretiert und nicht als zusaetzliche Stimmen.
+%
+% 7. Die konkrete Nutzung von Varianz als Aufmerksamkeits- bzw.
+%    Escalation-Signal ist als Designentscheidung der Arbeit zu kennzeichnen,
+%    sofern keine Literatur eine allgemeinere Aussage traegt.
+%
+% LITERATUR:
+%
+% [ADD] Wang et al. (2023):
+%       Self-Consistency Improves Chain of Thought Reasoning in Language Models.
+%       ICLR 2023.
+%       Relevanz:
+%       - diverse reasoning paths
+%       - Konsistenz ueber mehrere Samples
+%       WICHTIG:
+%       Das Verfahren waehlt selbst die konsistenteste Antwort.
+%       Turing uebernimmt diesen Entscheidungsmechanismus NICHT ungeprueft.
+%
+% [ADD] Liang et al. (2024):
+%       Encouraging Divergent Thinking in Large Language Models through
+%       Multi-Agent Debate.
+%       EMNLP 2024. DOI: 10.18653/v1/2024.emnlp-main.992
+%       Relevanz:
+%       - unterschiedliche Agenten koennen Divergenz erzeugen
+%       - Selbstreflexion kann in bestehenden Denkpfaden degenerieren
+%
+% [ADD] Du et al. (2024):
+%       Improving Factuality and Reasoning in Language Models through
+%       Multiagent Debate.
+%       ICML 2024, PMLR 235.
+%       Relevanz:
+%       - mehrere Modellinstanzen fuer gegenseitige Pruefung
+%       - empirische Verbesserungen auf untersuchten Benchmarks
+%
+% [ADD] Cui et al. (2026):
+%       Free-MAD: Consensus-Free Multi-Agent Debate.
+%       Findings of ACL 2026.
+%       DOI: 10.18653/v1/2026.findings-acl.1600
+%       Relevanz:
+%       - Grenzen von Konsens und Majority Voting
+%       - Konformitaet und Fehlerfortpflanzung
+%       - sehr passend zur Turing-Entscheidung "variance, not votes"
+%
+% [ADD] Kostka & Chudziak (2026):
+%       Controlling Uncertainty and Hallucination Risk in Multi-Agent
+%       Fact Verification.
+%       UAI 2026, PMLR 337.
+%       Relevanz:
+%       - Konsens kann bei korrelierten Fehlern falsche Sicherheit erzeugen
+%       - steigende Disagreement/Deviation wird als Unsicherheitssignal genutzt
+%       - besonders passend fuer Varianz als Attention Signal
+%
+% [REPO-FILE] 2605.14163v1.pdf
+%       Agentic Systems as Boosting Weak Reasoning Models.
+%       Moegliche Zusatzquelle fuer Committee-/Verifier-Logik.
+%       Status: Preprint. TODO BibTeX und Claim-Pruefung.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] ADR-026
+% [PROJECT] ADR-027
+% [PROJECT] Multi-Persona-Manifeste und Stability/Variance-Verarbeitung
+%
+% VORSICHT:
+% - Nicht behaupten, Multi-Persona liefere "die Wahrheit".
+% - Nicht behaupten, Mehrheit sei automatisch besser.
+% - Literaturergebnisse auf Benchmarks nicht ohne Begrenzung auf
+%   Engineering-Modellierung uebertragen.
+
+
+\subsubsection{Human Authority und Effective Intervention}
+\label{sec:human_authority}
+
+% KERNAUSSAGEN:
+%
+% 1. Human in the Loop wird in dieser Arbeit nicht als beliebige
+%    Benutzerinteraktion verstanden.
+%
+% 2. Der Mensch erhaelt Engineering Authority an definierten
+%    Entscheidungs- und Promotionsgrenzen.
+%
+% 3. Ziel ist nicht die manuelle Kontrolle jedes Verarbeitungsschritts.
+%    Menschliche Aufmerksamkeit soll an Stellen eingesetzt werden, an denen
+%    fachliche Mehrdeutigkeit, Konflikte oder Authority-Uebergaenge bestehen.
+%
+% 4. Fuer wirksame Entscheidungen muss der Review-Kontext ausreichend
+%    Informationen enthalten, beispielsweise:
+%    - zugrunde liegende Evidence
+%    - Provenance
+%    - Alternativen
+%    - Varianz bzw. Unsicherheit
+%    - bisherige Entscheidungen
+%
+% 5. Automatisierte technische Validierung und menschliche fachliche
+%    Freigabe sind unterschiedliche Funktionen.
+%
+% 6. Human Approval darf durch einen bestandenen technischen Check nicht
+%    stillschweigend ersetzt werden.
+%
+% LITERATUR:
+%
+% [ADD] Lazaros, K.; Vrahatis, A. G.; Kotsiantis, S. (2026):
+%       Human-in-the-Loop Artificial Intelligence:
+%       A Systematic Review of Concepts, Methods, and Applications.
+%       Entropy 28(4), 377.
+%       DOI: 10.3390/e28040377
+%       Relevanz:
+%       - Human Oversight, Feedback und Decision-Making an unterschiedlichen
+%         Stellen einer AI Pipeline
+%       - Taxonomie von HITL-Ansaetzen
+%       - Herausforderungen von Oversight
+%
+% [ADD] Zhu, L.; Lu, Q.; Ding, M. et al. (2026):
+%       Designing meaningful human oversight in AI.
+%       AI and Ethics 6, 286.
+%       DOI: 10.1007/s43681-026-01147-7
+%       Relevanz:
+%       - Unterschied zwischen operativer AI Agency und evaluativer
+%         menschlicher Agency
+%       - Risiko von Rubber-Stamp Oversight
+%       - explizite Handover Points, Provenance, Escalation und Override
+%       - sehr hohe konzeptionelle Naehe zu Human Authority im Turing Generator
+%
+% [REPO-BIB] \cite{Cibrian.2025}
+%       Claimweise pruefen, in welchem Umfang Human Review / Expert Validation
+%       im agentenbasierten SysML-v2-Ansatz enthalten ist.
+%
+% [PRACTICE] MESCONF 2026
+%       Praxisimpuls zu Human Control und Guardrails.
+%       Nicht als wissenschaftlicher Wirksamkeitsnachweis verwenden.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] TF2
+% [PROJECT] SR_4 / fruehes Expert Validation Requirement
+% [PROJECT] Human Review Gates und Decision Binding
+% [PROJECT] ADR-023 final model review/publication
+%
+% BEGRIFF:
+% "Effective Intervention" kann als Zielbegriff aus der Forschungsfrage und
+% dem Projekt verwendet werden. Fuer allgemeine Aussagen ueber wirksame
+% Human Oversight sollten Lazaros und Zhu herangezogen werden.
+
+
+\subsubsection{Semantische und ontologische Leitplanken}
+\label{sec:ontologische_leitplanken}
+
+% KERNAUSSAGEN:
+%
+% 1. Ontologien und explizite semantische Modelle koennen Begriffe,
+%    Relationen und zulaessige Bedeutungsstrukturen formal bzw. kontrolliert
+%    beschreiben.
+%
+% 2. Fuer heterogene Engineering-Informationen ist dies als moeglicher
+%    Mechanismus fuer semantische Harmonisierung und Interoperabilitaet
+%    relevant.
+%
+% 3. Die urspruengliche Forschungsannahme betrachtete Ontologien als zentrale
+%    Leitplanke fuer die KI-gestuetzte Transformation.
+%
+% 4. Die spaetere Architektur untersucht Ontologien nicht isoliert, sondern
+%    im Zusammenspiel mit:
+%    - Source Provenance
+%    - expliziten Contracts
+%    - Human Authority
+%    - deterministischer Assembly
+%    - unabhaengiger Output-Validierung
+%
+% 5. Eine Ontologie alleine wird NICHT als Garantie gegen Halluzinationen
+%    dargestellt.
+%
+% 6. Wenn die Untersuchung zeigt, dass TF3 urspruenglich zu eng auf
+%    Ontologien fokussiert war, wird dies spaeter als Forschungsergebnis
+%    diskutiert und nicht durch nachtraegliches Umschreiben von TF3 geloest.
+%
+% LITERATUR:
+%
+% [REPO-BIB] \cite{Abonyi.2024}
+%       Semantische Technologien, Ontologien und Knowledge Graphs fuer
+%       industrielle Datenintegration und Wiederverwendbarkeit.
+%
+% [REPO-FILE] ISO/IEC 21838-2:2021, Basic Formal Ontology.
+%       Fuer Definition und formale Rolle einer Top-Level-Ontologie.
+%       TODO BibTeX und genaue Clauses.
+%
+% [REPO-FILE] Drobnjakovic et al. (2022):
+%       The Industrial Ontologies Foundry Core Ontology.
+%       Relevanz fuer industrielle semantische Standardisierung.
+%
+% [REPO-FILE] Orellana & Mandrick (2019):
+%       The Ontology of Systems Engineering.
+%       Relevanz fuer SE-spezifische Semantik.
+%
+% [REPO-FILE] Lu et al. (2022):
+%       Design Ontology Supporting Model-Based Systems Engineering Formalisms.
+%
+% [REPO-FILE] Liu et al. (2025):
+%       SysDO.
+%
+% [REPO-FILE] Dong et al. (2026):
+%       Insights into ontology-based MBSE.
+%
+% FUER ALLE REPO-FILE-QUELLEN:
+% - BibTeX ergaenzen
+% - konkrete Claims im Volltext pruefen
+%
+% [QUELLENLUECKE]
+% Fuer eine allgemeine Aussage "Ontologien reduzieren Halluzinationen"
+% ist noch eine spezifische, belastbare Quelle erforderlich.
+% Bis dahin nur als Designhypothese bzw. Praxisimpuls formulieren.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] TF3
+% [PROJECT] initialer Knowledge Layer
+% [PROJECT] Semantic Governance / Vocabulary / Terminology Decisions
+% [PRACTICE] MESCONF 2026
+
+
+% =============================================================================
+\subsection{Iterative Architekturentscheidungen und formative Verifikation}
+\label{sec:adr_methodik}
+% =============================================================================
+
+% Zweck:
+% Erklaeren, wie Architekturentwicklung, Implementierung und Verifikation
+% waehrend der Entwicklung miteinander gekoppelt waren.
+%
+% ZENTRALE METHODISCHE AUSSAGE:
+%
+% Architekturannahme
+% -> kontrollierter Umsetzungsslice
+% -> fokussierte Verifikation
+% -> Finding / Beobachtung
+% -> Ursachenanalyse
+% -> Architektur- oder Implementierungsentscheidung
+% -> Korrektur
+% -> Retest
+% -> Regression
+% -> Akzeptanz / naechster Slice
+%
+% Einzelne Testbefunde machten nicht nur Implementierungsfehler, sondern
+% unzureichende Verantwortungsgrenzen, Contracts oder Identitaetsgrenzen sichtbar.
+%
+% NICHT:
+% Alle ADRs chronologisch nacherzaehlen.
+% Alle Testskripte einzeln dokumentieren.
+
+
+\subsubsection{Architekturannahme und kontrollierter Umsetzungsslice}
+\label{sec:controlled_slice}
+
+% KERNAUSSAGEN:
+%
+% 1. Neue Faehigkeiten wurden nicht als grosse, offene Implementierungspakete
+%    umgesetzt.
+%
+% 2. Ausgangspunkt war jeweils eine begrenzte Architekturannahme bzw.
+%    ein akzeptierter Contract.
+%
+% 3. Daraus wurde ein kontrollierter Implementierungsslice mit definiertem
+%    Scope und pruefbaren Akzeptanzbedingungen abgeleitet.
+%
+% 4. Der Slice sollte klein genug sein, damit Ursache und Wirkung eines
+%    Testbefunds auf die veraenderte Verantwortung zurueckgefuehrt werden konnten.
+%
+% 5. Known-Good-Baselines und Regression schuetzten bereits akzeptierte
+%    Eigenschaften waehrend der Weiterentwicklung.
+%
+% LITERATUR:
+% [ADD] Wieringa 2014 fuer iterativen Design-/Evaluation-Cycle.
+% [REPO-BIB] \cite{Wohlin.2012} fuer systematische Software-Evaluation.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] collaboration/working_rules.md
+% [PROJECT] collaboration/roadmap.md
+% [PROJECT] ADR-/Slice-Historie
+% [PROJECT] SSOT Checkpoints
+
+
+\subsubsection{Testbasierte Findings und Ursachenanalyse}
+\label{sec:test_findings_root_cause}
+
+% KERNAUSSAGEN:
+%
+% 1. Tests dienten nicht nur als Nachweis technischer Funktionsfaehigkeit.
+%
+% 2. Fehlgeschlagene oder auffaellige Tests wurden als Findings dokumentiert.
+%
+% 3. Vor einer Korrektur wurde zwischen mindestens zwei Ursachenarten
+%    unterschieden:
+%    a) lokaler Implementierungsfehler
+%    b) unzureichende Architekturverantwortung, Contract- oder Identitaetsgrenze
+%
+% 4. Ein Blocker wurde nicht durch Neustart oder Loeschen des betroffenen
+%    Testzustands aus der Evidenz entfernt.
+%
+% 5. Die Fehlerhistorie blieb Teil der Untersuchung und wurde nach einer
+%    Korrektur durch Retest fortgeschrieben.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] collaboration/audits/wp12_multi_document_dry_run_test_protocol.md
+%           Resultatlogik:
+%           FAILED WITH BLOCKER
+%           -> Blocker Resolution
+%           -> RETEST
+%           -> PASS / PASS WITH FINDINGS
+%
+% [PROJECT] collaboration/audits/wp12_findings.md
+% [PROJECT] Gate-/WP-12 Checkpoints
+%
+% KAPITEL-6-TABELLE:
+% Finding | Problem | Root Cause | Reaktion | ADR | Retest
+
+
+\subsubsection{ADR-basierte Architekturkorrektur und Design Rationale}
+\label{sec:adr_correction}
+
+% KERNAUSSAGEN:
+%
+% 1. Architekturentscheidungen wurden fuer relevante konzeptionelle
+%    Weichenstellungen explizit dokumentiert.
+%
+% 2. ADRs dienen als Design Rationale und Projektevidenz.
+%    Sie sind keine wissenschaftlichen Literaturquellen.
+%
+% 3. Nicht jedes Finding erzeugte einen ADR.
+%    ADRs wurden insbesondere relevant bei:
+%    - veraenderter Responsibility Boundary
+%    - neuem oder geaendertem Contract
+%    - verschobener / explizit getrennter Authority
+%    - Formalisierung eines bisher impliziten Architekturprinzips
+%
+% 4. Typischer Architekturkorrekturpfad:
+%    Finding
+%    -> Root Cause auf Architekturebene
+%    -> Designoptionen
+%    -> Entscheidung / ADR
+%    -> bounded implementation correction
+%
+% 5. Dadurch bleibt unterscheidbar:
+%    urspruengliche Annahme
+%    -> empirischer Befund
+%    -> Architekturkorrektur
+%    -> finales Design
+%
+% LITERATUR:
+% [ADD / OPTIONAL] Quelle zu ADRs / Design Rationale nur bei allgemeinen Claims.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] collaboration/decisions/
+% [PROJECT] collaboration/change_log.md
+% [PROJECT] collaboration/working_rules.md
+
+
+\subsubsection{Retest, fokussierte Verifikation und Regression}
+\label{sec:retest_regression}
+
+% KERNAUSSAGEN:
+%
+% 1. Eine Korrektur wurde nicht allein durch erfolgreichen lokalen Test akzeptiert.
+%
+% 2. Nach Korrekturen wurden typischerweise:
+%    - fokussierte Tests
+%    - betroffene Integrationspfade
+%    - vollstaendige Repository Regression
+%      ausgefuehrt.
+%
+% 3. Retests prueften, ob der konkrete Blocker behoben war.
+%
+% 4. Regression pruefte, ob zuvor akzeptierte Eigenschaften unbeabsichtigt
+%    verletzt wurden.
+%
+% 5. Die hohe Zahl automatisierter Tests ist als Breite technischer
+%    Regressionsevidenz zu verstehen, nicht als direkter Nachweis fachlicher
+%    Engineering Correctness.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] finaler Integrationsstand: 6335 passed, 12 skipped
+% [PROJECT] Focused-/Complete-Regression Checkpoints
+%
+% [REPO-BIB] \cite{Wohlin.2012}
+%
+% WICHTIG FUER KAPITEL 6:
+% Testanzahl nicht als Qualitaetsscore darstellen.
+
+
+\subsubsection{Uebergang von formativer zu abschliessender Verifikation}
+\label{sec:formative_to_summative}
+
+% KERNAUSSAGEN:
+%
+% 1. Formative Verifikation durfte den untersuchten Artefaktstand noch veraendern.
+%
+% 2. Nach Stabilisierung der thesis-kritischen Architektur wechselte die Funktion:
+%
+%    formative Phase:
+%    Befund kann Architektur / Implementierung korrigieren
+%
+%    abschliessende Phase:
+%    stabilisierter PoC wird gegen festgelegte Anforderungen,
+%    Authority Boundaries und Forschungsfragen geprueft
+%
+% 3. Gate-3, WP-12 Closeout, Genuine Multi-Source, komplette Regression,
+%    SYSIDE Validation und Human Release bilden unterschiedliche Teile
+%    der abschliessenden Evidenz.
+%
+% 4. Dadurch werden entwicklungswirksame Tests nicht nachtraeglich als
+%    unabhaengige Endvalidierung dargestellt.
+%
+% LITERATUR:
+% [ADD] Wieringa 2014
+% [REPO-BIB] \cite{Wohlin.2012}
+%
+% ABGRENZUNG:
+% Konkrete Testergebnisse folgen in Kapitel 6 und 7.
+
+
+% =============================================================================
+\subsection{Prototypische Untersuchung des Architekturkonzepts}
+\label{sec:poc_methodik}
+% =============================================================================
+
+% Zweck:
+% Begruenden, warum ein Prototype gebaut wurde, was er nachweisen kann und
+% welche Grenzen seine Aussagen haben.
+
+
+\subsubsection{Zweck und Grenzen des Proof of Concept}
+\label{sec:poc_zweck}
+
+% KERNAUSSAGEN:
+%
+% 1. Der PoC operationalisiert das Architekturkonzept.
+%
+% 2. Dadurch koennen Informationsfluesse, Authority Boundaries,
+%    Traceability, Multi-Source-Verarbeitung und SysML-v2-Erzeugung
+%    tatsaechlich untersucht werden.
+%
+% 3. Der PoC dient insbesondere zur Pruefung von technischer Realisierbarkeit
+%    und beobachtbarem Verhalten der Architektur.
+%
+% 4. Der PoC beweist keine universelle Wirksamkeit fuer beliebige Unternehmen,
+%    Domaenen, Datentypen oder LLMs.
+%
+% 5. Aussagen ueber Uebertragbarkeit werden spaeter in Kapitel 8 als
+%    Diskussion gekennzeichnet.
+%
+% LITERATUR:
+% [ADD] Wieringa 2014
+%       Artefakt-Implementation und Evaluation im Kontext.
+%
+% [REPO-BIB] \cite{Wohlin.2012}
+%       Empirische Evaluation von Software-Engineering-Artefakten.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] Gate-3 Project 000116
+% [PROJECT] WP-12
+% [PROJECT] Genuine Multi-Source Project 308131
+
+
+\subsubsection{Implementierungsstrategie}
+\label{sec:implementierungsstrategie_methodik}
+
+% KERNAUSSAGEN:
+%
+% 1. Die Implementierung erfolgte schrittweise entlang klar abgegrenzter
+%    Verantwortlichkeiten und Contracts.
+%
+% 2. Neue Architekturfaehigkeiten wurden in kleinen, pruefbaren Slices
+%    umgesetzt.
+%
+% 3. Tests wurden nicht erst nach Fertigstellung des Gesamtsystems
+%    hinzugefuegt, sondern dienten zur Absicherung der jeweiligen
+%    Entwicklungsschritte.
+%
+% 4. Deterministische Contracts, IDs, Manifeste und Fingerprints dienten
+%    dazu, die Verarbeitung und deren Evidenz reproduzierbar zu binden.
+%
+% 5. Diese Implementierungsstrategie ist Mittel der Untersuchung und nicht
+%    der wissenschaftliche Hauptbeitrag.
+%
+% LITERATUR:
+%
+% [REPO-BIB] \cite{Wohlin.2012}
+%       Fuer kontrollierte Software-Evaluation.
+%
+% [REPO-FILE] Code as Agent Harness, 2605.18747v1.pdf
+%       Kann nach Claim-Pruefung fuer kontrollierte Agentenausfuehrung,
+%       Verifikation und Shared State herangezogen werden.
+%       Preprint-Status transparent machen.
+%
+% [OPTIONAL ADD]
+% Falls "Vertical Slice" als methodisches Konzept wissenschaftlich
+% begruendet werden soll, geeignete Software-Engineering-Quelle suchen.
+% Andernfalls nur als projektinternen Entwicklungsbegriff verwenden.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] working_rules.md
+% [PROJECT] ADR-/Slice-Historie
+% [PROJECT] automatisierte Testhierarchie
+
+
+\subsubsection{Verifikations- und Validierungsstrategie}
+\label{sec:vv_methodik}
+
+% KERNAUSSAGEN:
+%
+% 1. Die Untersuchung verwendet mehrere Evidenzebenen statt eines einzelnen
+%    End-to-End-Erfolgskriteriums.
+%
+% 2. Vorgesehene bzw. real verwendete Ebenen:
+%    - Unit Tests
+%    - Integrationstests
+%    - Regressionstests
+%    - formative End-to-End-Untersuchungen
+%    - Gate-3-Akzeptanz
+%    - WP-12 Multi-Source-Untersuchung
+%    - genuine Multi-Source Test
+%    - externe SysML-v2-/SYSIDE-Validierung
+%    - Human Review und Publication Gate
+%    - externe Safe Demo / strukturierte Practitioner Rueckmeldung
+%
+% 3. Unterschiedliche Pruefarten beantworten unterschiedliche Fragen.
+%
+% 4. Automatisierte Tests koennen technische Eigenschaften pruefen,
+%    ersetzen aber keine fachliche Engineering-Freigabe.
+%
+% 5. SysML-v2-Syntax bzw. Notationsvaliditaet und fachliche Korrektheit
+%    werden getrennt behandelt.
+%
+% 6. Regressionstests stellen sicher, dass neue Architekturkorrekturen
+%    zuvor akzeptierte Eigenschaften nicht unbemerkt verletzen.
+%
+% LITERATUR:
+%
+% [REPO-BIB] \cite{Wohlin.2012}
+%       Empirische und experimentelle Software-Evaluation.
+%
+% [REPO-BIB] \cite{Cibrian.2025b}
+%       Metamodel-driven SysML-v2-Validation.
+%
+% [REPO-BIB] \cite{SysMLv2}
+%       Formale Zielnotation / Sprachspezifikation.
+%
+% [REPO-BIB] \cite{ISO42030}
+%       NUR dort einsetzen, wo die tatsaechliche Evaluation mit dem
+%       Architecture Evaluation Framework der Norm uebereinstimmt.
+%       Nicht die gesamte spaetere Teststrategie rueckwirkend unter
+%       ISO 42030 subsumieren.
+%
+% [REPO-FILE] ISO/IEC/IEEE 42010:2022
+%       Fuer Architecture Description, nicht mit 42030 verwechseln.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] Gate-3 Checkpoints
+% [PROJECT] WP-12 Protocol / Findings
+% [PROJECT] Multi-Source Project 308131
+% [PROJECT] SYSIDE Validation
+% [PROJECT] Human Publication Approval
+%
+% NICHT HIER:
+% - konkrete Anzahl bestandener Tests
+% - konkrete PASS/FAIL-Ergebnisse
+% Diese Werte gehoeren in Kapitel 6 und 7.
+
+
+\subsubsection{Externe Demonstration und strukturierte fachliche Rueckmeldung}
+\label{sec:safe_demo_methodik}
+
+% ZWECK:
+% Die geplante Safe Demo bei Ruecker und Schindele wird als zusaetzliche
+% externe fachliche Plausibilisierung des stabilisierten PoC genutzt.
+%
+% METHODISCHE EINORDNUNG:
+%
+% 1. Die Demonstration ist KEIN kontrolliertes Experiment zur statistischen
+%    Wirksamkeit des Turing Generators.
+%
+% 2. Sie ist eine strukturierte Practitioner Demonstration mit
+%    vorab definiertem Ablauf und Beobachtungskriterien.
+%
+% 3. Ziel ist zu pruefen, ob externe Systems-Engineering-Praktiker den
+%    Workflow, Human Authority Boundaries, Traceability, Multi-Source-
+%    Verarbeitung und den erzeugten SysML-v2-Output nachvollziehen koennen.
+%
+% 4. Das Protokoll wird VOR der Demonstration eingefroren.
+%
+% MINDESTINHALT DES SAFE-DEMO-PROTOKOLLS:
+% - Datum / Ort / organisatorischer Kontext
+% - SUT Commit SHA
+% - CATIA / Architecture Baseline
+% - verwendetes Testprojekt und Sources
+% - vorbereiteter Demoablauf
+% - definierte Beobachtungskriterien
+% - definierte Feedbackfragen
+% - Abweichungen / Findings
+% - Ergebnisstatus
+%
+% VORGESCHLAGENE BEOBACHTUNGSKRITERIEN:
+% - Workflow nachvollziehbar?
+% - Unterschied AI Proposal / Human Authority erkennbar?
+% - Traceability / Provenance nachvollziehbar?
+% - Multi-Source-Reconciliation fachlich nachvollziehbar?
+% - Human Review an den vorgesehenen Stellen sinnvoll?
+% - erzeugter SysML-v2-Output fuer den Demonstrationsfall plausibel?
+%
+% FEEDBACK:
+% Wenige vorab definierte offene Fragen.
+% Keine nachtraegliche Auswahl nur positiver Rueckmeldungen.
+%
+% DOKUMENTATION:
+% Bevorzugt Rollen / fachlicher Hintergrund statt persoenlicher Namen,
+% sofern Namen fuer die Evidenz nicht erforderlich sind.
+%
+% CLAIM BOUNDARY:
+% Die Safe Demo kann externe fachliche Plausibilitaet und strukturierte
+% Practitioner-Rueckmeldung liefern.
+%
+% Sie belegt NICHT:
+% - statistische Generalisierbarkeit
+% - Production Readiness
+% - universelle Usability
+% - universelle fachliche Korrektheit
+%
+% PROJEKTEVIDENZ:
+% [TO CREATE] collaboration/audits/safe_demo_ruecker_schindele_protocol.md
+%
+% LITERATUR:
+% [ADD / PRUEFEN] Wieringa 2014 fuer Demonstration / Evaluation eines Artefakts.
+% Falls als Expert Evaluation bezeichnet, dafuer explizite Evaluationsquelle
+% beschaffen.
+
+
+\subsubsection{Bezug der Untersuchung zu den Forschungsfragen}
+\label{sec:rq_evidence_mapping}
+
+% KERNAUSSAGEN:
+%
+% 1. Die Evaluation wird nicht nur nach technischen Testarten strukturiert.
+%    Sie muss zeigen, welche Evidenz zur Beantwortung welcher Forschungsfrage
+%    beitraegt.
+%
+% 2. HF:
+%    Evidenz zur Gesamtgestaltung der Informationsverarbeitungsarchitektur,
+%    zu Informationsfluesse, Authority Boundaries, Traceability und
+%    validierbarer SysML-v2-Erzeugung.
+%
+% 3. TF1:
+%    Evidenz zu Eingangsdaten, Source Context, Verarbeitbarkeit,
+%    Sufficiency, Multi-Source-Situationen und erforderlichen Constraints.
+%
+% 4. TF2:
+%    Evidenz zu Human Review, Escalation, Decision Binding,
+%    Effective Intervention und Trennung von technischer Validierung und
+%    fachlicher Authority.
+%
+% 5. TF3:
+%    Evidenz zu semantischen Leitplanken, Ontologien, Project Fit,
+%    Modellierungsregeln, Modularitaet und den Grenzen einer rein
+%    ontologischen Absicherung.
+%
+% 6. Die Forschungsfragen werden nicht nachtraeglich an die Resultate
+%    angepasst.
+%
+% 7. Falls die Untersuchung zeigt, dass eine Frage urspruenglich zu eng war,
+%    wird dies in Kapitel 8 als Ergebnis bzw. Praezisierung diskutiert.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] Proposal / Kick-off Forschungsfragen
+% [PROJECT] Thesis_Writing_and_Evidence_Rules.md
+%
+% LITERATUR:
+% Keine zusaetzliche allgemeine Literatur erforderlich, sofern hier die
+% eigene Untersuchungslogik beschrieben wird.
+
+
+\subsubsection{Claim- und Evidence-Strategie}
+\label{sec:claim_evidence}
+
+% KERNAUSSAGEN:
+%
+% 1. Fuer die schriftliche Auswertung werden unterschiedliche Evidenzarten
+%    getrennt:
+%    - wissenschaftlicher Literaturbeleg
+%    - Architekturevidenz
+%    - Implementierungsevidenz
+%    - empirisches Ergebnis
+%    - eigene Interpretation
+%
+% 2. Projektartefakte koennen belegen, was im Turing Generator entschieden,
+%    implementiert oder beobachtet wurde.
+%
+% 3. Projektartefakte ersetzen keinen Literaturbeleg fuer allgemeine
+%    wissenschaftliche Aussagen.
+%
+% 4. Ein beobachtetes PoC-Ergebnis darf ohne externen Literaturbeleg
+%    dokumentiert werden, sofern es explizit auf den untersuchten Fall
+%    begrenzt bleibt.
+%
+% 5. Verallgemeinerungen werden nur vorgenommen, wenn sie durch Literatur
+%    getragen werden oder klar als begrenzte Interpretation markiert sind.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] Thesis_Writing_and_Evidence_Rules.md
+%
+% FUNKTION:
+% Dieser kurze Abschluss macht transparent, wie die spaeteren Kapitel
+% Ergebnisse und Diskussion wissenschaftlich voneinander trennen.
+
+
+% =============================================================================
+% OFFENE METHODIK-EVIDENZ VOR DER AUSFORMULIERUNG
+%
+% [ ] Safe-Demo-Protokoll VOR der externen Demonstration einfrieren.
+% [ ] Exact SUT / CATIA Baseline und Beobachtungskriterien festlegen.
+% [ ] Nach der Demo Resultate und Feedback unveraendert dokumentieren.
+%
+% QUELLENLUECKEN VOR DER AUSFORMULIERUNG VON KAPITEL 3
+% =============================================================================
+%
+% PRIORITAET A: fuer die Methodik sehr wichtig
+%
+% [ ] Wieringa 2014 beschaffen, ins Repo aufnehmen, lesen, BibTeX ergaenzen.
+%     Danach entscheiden, ob die Arbeit explizit als Design Science Research
+%     bezeichnet wird.
+%
+% [ ] Kitchenham & Charters 2007 ins Repo aufnehmen und als primaere
+%     Software-Engineering-Quelle fuer die Literaturmethodik verwenden.
+%
+% [ ] ISO/IEC/IEEE 29148:2018 fuer Requirements Engineering und Traceability
+%     beschaffen bzw. Zugriffsmoeglichkeit klaeren.
+%
+% [ ] Li, Verhagen & Curran 2020 fuer RFLP-basierte
+%     Architekturentwicklung beschaffen und claimweise pruefen.
+%
+% PRIORITAET B: fuer zentrale KI-Gestaltungsprinzipien
+%
+% [ ] Wang et al. 2023, Self-Consistency.
+% [ ] Liang et al. 2024, Multi-Agent Debate / Divergent Thinking.
+% [ ] Du et al. 2024, Multiagent Debate.
+% [ ] Cui et al. 2026, Free-MAD.
+% [ ] Kostka & Chudziak 2026, uncertainty / disagreement.
+% [ ] Lazaros et al. 2026, HITL systematic review.
+% [ ] Zhu et al. 2026, meaningful human oversight.
+%
+% PRIORITAET C: bereits als PDF vorhanden, aber bibliographisch/claimweise
+%               nacharbeiten
+%
+% [ ] ISO/IEC/IEEE 42010:2022
+% [ ] ISO/IEC 21838-2:2021
+% [ ] Drobnjakovic et al. 2022
+% [ ] Orellana & Mandrick 2019
+% [ ] Lu et al. 2022
+% [ ] Liu et al. 2025
+% [ ] Dong et al. 2026
+% [ ] Van Clief / Interpretable Context Methodology
+% [ ] Code as Agent Harness
+% [ ] Agentic Systems as Boosting Weak Reasoning Models
+%
+%
+% =============================================================================
+% CLAIM-CHECK VOR DEM SCHREIBEN
+% =============================================================================
+%
+% Fuer jeden Unterabschnitt vor Ausformulierung:
+%
+% [ ] Welche 2 bis 5 Kernaussagen soll der Leser danach verstanden haben?
+% [ ] Ist jede allgemeine Aussage durch eine gepruefte Quelle gedeckt?
+% [ ] Ist klar, welche Aussage aus Projektevidenz stammt?
+% [ ] Werden historische Architekturannahmen als solche gekennzeichnet?
+% [ ] Werden finale Architekturentscheidungen nicht vorweggenommen?
+% [ ] Werden Ergebnisse nicht bereits interpretiert?
+% [ ] Sind formative und abschliessende Verifikation klar getrennt?
+% [ ] Werden ADRs als Design Rationale und nicht als Literatur behandelt?
+% [ ] Wird die Safe Demo nicht als statistischer Wirksamkeitsnachweis dargestellt?
+% [ ] Keine Gedankenstriche als Satzzeichen im finalen Fliesstext.
+% [ ] Keine Formulierungen mit unpersoenlichem "man".
+% [ ] Jede Abbildung und Tabelle hat eine argumentative Funktion.
+% [ ] Tabellenueberschrift oberhalb, Abbildungsunterschrift unterhalb.
+% [ ] Jede Tabelle und Abbildung wird im Fliesstext referenziert.
+%
+% =============================================================================

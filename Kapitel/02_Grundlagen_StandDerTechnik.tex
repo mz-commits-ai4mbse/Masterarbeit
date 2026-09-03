@@ -1,8 +1,1417 @@
-\section{Grundlagen und Stand der Technik}
-\subsection{Model Based Systems Engineering und SysML v2}
+% =============================================================================
+% Kapitel 2: Theoretischer Hintergrund und Stand der Technik
+% ARBEITSGERUEST / REVIEW CANDIDATE
+% Stand: 03.09.2026
+%
+% Dieses Dokument enthaelt bewusst NOCH KEINEN ausformulierten Thesis-Text.
+% Es bildet Struktur, Kernaussagen, Literaturbasis, Quellenluecken und
+% Abgrenzungen fuer Kapitel 2 ab.
+%
+% FUNKTION VON KAPITEL 2:
+% - notwendige theoretische Grundlagen bereitstellen;
+% - den wissenschaftlichen Stand der Technik synthetisieren;
+% - die fuer die Arbeit relevanten Loesungsbausteine herausarbeiten;
+% - am Ende die Forschungsluecke herleiten.
+%
+% NICHT FUNKTION VON KAPITEL 2:
+% - eigene Architektur des Turing Generators beschreiben;
+% - eigene Methodik erklaeren;
+% - Ergebnisse des PoC vorwegnehmen;
+% - MESCONF-Gespraeche als wissenschaftliche Evidenz verwenden.
+%
+% Quellenstatus:
+% [REPO-BIB]  Quelle ist in Masterarbeit/literatur.bib vorhanden.
+% [REPO-FILE] Quelle liegt als Datei im Literaturordner, ist aber noch nicht
+%             verlaesslich bibliographisch eingebunden und/oder claimweise
+%             geprueft.
+% [ADD]       Quelle sollte beschafft, archiviert, gelesen und in
+%             literatur.bib aufgenommen werden.
+% [OFFICIAL]  Normative/authoritative Web- oder Standardsquelle.
+%
+% WICHTIGE REGEL:
+% Kein Claim wird nur aufgrund eines Titels oder Abstracts final zitiert.
+% Vor Ausformulierung muss die jeweilige Passage im Volltext geprueft werden.
+% =============================================================================
+
+\section{Theoretischer Hintergrund und Stand der Technik}
+\label{sec:grundlagen_sota}
+
+% ZENTRALER ROTER FADEN:
+%
+% Systems Engineering / MBSE
+% -> SysML v2 als formale und maschinenverarbeitbare Modellierungssprache
+% -> Architecture as Code / Everything as Code als text- und pipelineorientierte
+%    Weiterentwicklungsidee
+% -> Brownfield / heterogene Legacy Engineering Information als Ausgangsproblem
+% -> LLMs / agentische Verfahren als neue Transformationsmoeglichkeit
+% -> Risiken von Variabilitaet, Halluzination und fehlender Authority
+% -> Human-in-the-Loop / Human Oversight
+% -> Ontologien / semantische Normalisierung
+% -> Traceability / Provenance
+% -> Modell- und Metamodellvalidierung
+% -> Forschungsluecke: kein hinreichend integrierter Architekturansatz fuer
+%    sichere, nachvollziehbare und Human-governed Ueberfuehrung heterogener
+%    Bestandsinformation nach SysML v2.
+%
+% Kapitel 2 soll ca. 12 bis 15 Seiten tragen.
+% Prioritaet liegt auf Synthese, nicht auf Lexikoncharakter.
+
+
+% =============================================================================
+\subsection{Systems Engineering und Model-Based Systems Engineering}
+\label{sec:mbse_foundations}
+% =============================================================================
+
+\subsubsection{Systems Engineering als integrativer Entwicklungsansatz}
+\label{sec:systems_engineering_foundation}
+
+% KERNAUSSAGEN:
+%
+% 1. Systems Engineering adressiert die ganzheitliche Entwicklung komplexer
+%    Systeme ueber mehrere Disziplinen und Lebenszyklusphasen hinweg.
+%
+% 2. Zentrale Aufgaben umfassen die Erfassung von Stakeholder-Beduerfnissen,
+%    Requirements Engineering, Architekturentwicklung, Integration,
+%    Verifikation und Validierung.
+%
+% 3. Fuer die Thesis ist insbesondere die Verbindung zwischen
+%    Stakeholder Intent, Requirements, Architecture und Verification relevant.
+%
+% [ADD]
+% INCOSE Systems Engineering Handbook, 5th Edition.
+% Relevanz:
+% - etablierte Systems-Engineering-Grundlage
+% - MBSE
+% - Traceability
+% - Architecture Frameworks
+% - Brownfield / Legacy Systems
+%
+% [OFFICIAL]
+% INCOSE Definition of Systems Engineering.
+% Nur als ergaenzende offizielle Definition, nicht als Ersatz fuer
+% wissenschaftliche / Handbuchliteratur.
+%
+% ABGRENZUNG:
+% Keine umfassende Einfuehrung in den gesamten SE-Lifecycle.
+% Nur Grundlagen, die fuer die Forschungsfrage spaeter benoetigt werden.
+
+
+\subsubsection{Model-Based Systems Engineering}
+\label{sec:mbse_definition}
+
+% KERNAUSSAGEN:
+%
+% 1. MBSE ersetzt dokumentzentrierte Engineering-Arbeit nicht einfach durch
+%    Diagramme, sondern verschiebt systembezogene Engineering-Information
+%    in formalere, miteinander verknuepfte Modelle.
+%
+% 2. Modelle unterstuetzen Requirements, Design, Analysis, Verification und
+%    Validation ueber den Entwicklungsprozess.
+%
+% 3. Wesentliche Motivation:
+%    - explizite Beziehungen zwischen Engineering-Artefakten
+%    - Konsistenz und Nachvollziehbarkeit
+%    - Wiederverwendung
+%    - maschinelle Verarbeitung
+%
+% 4. MBSE bedeutet nicht automatisch einen einzelnen "Single Source of Truth"
+%    fuer alle Engineering-Disziplinen. Diesen Begriff nur vorsichtig und
+%    quellenbasiert verwenden.
+%
+% [ADD]
+% INCOSE Systems Engineering Handbook, 5th Edition.
+%
+% [OFFICIAL]
+% INCOSE MBSE Initiative:
+% "formalized application of modeling to support system requirements,
+% design, analysis, verification and validation..."
+% Bei finaler Verwendung Originalquelle/Handbuch bevorzugen.
+%
+% [REPO-BIB]
+% \cite{Zhao.2023}
+% SysML-centric Integration Framework.
+% Moeglicher industrieller / technischer MBSE-Anwendungsbezug.
+%
+% [REPO-BIB]
+% \cite{Kapos.2014}
+% Modellbasierte Systementwicklung und QVT-basierte Ableitung.
+%
+% QUELLENLUECKE:
+% Eine starke allgemeine MBSE-Quelle sollte noch ins Repo aufgenommen werden,
+% idealerweise INCOSE Handbook oder eine etablierte MBSE-Monographie.
+
+
+\subsubsection{Architektur, Architekturbeschreibung und Sichten}
+\label{sec:architecture_description_foundation}
+
+% KERNAUSSAGEN:
+%
+% 1. Die Architektur eines Systems und ihre konkrete Architekturbeschreibung
+%    sind begrifflich zu unterscheiden.
+%
+% 2. Eine Architekturbeschreibung adressiert Stakeholder Concerns ueber
+%    geeignete Views und Viewpoints.
+%
+% 3. Fuer diese Thesis ist diese Trennung wichtig:
+%    das CATIA-Modell ist das Engineering-Artefakt der Architekturbeschreibung,
+%    waehrend Kapitel 4 ausgewaehlte Sichten daraus fuer die wissenschaftliche
+%    Argumentation nutzt.
+%
+% [REPO-FILE]
+% ISO/IEC/IEEE 42010:2022
+% Literatur/ISO-IEC-IEEE 42010_2022-11-00_EN_3400447.pdf
+%
+% TODO:
+% - korrekten BibTeX-Eintrag anlegen;
+% - Definitionen und relevante Clauses im Volltext markieren;
+% - keine wortwoertlichen Definitionen ohne korrekte Zitierung uebernehmen.
+%
+% ABGRENZUNG:
+% Die konkrete Anwendung von Views in CATIA kommt erst Kapitel 3 und 4.
+
+
+% =============================================================================
+\subsection{SysML v2 als Modellierungssprache}
+\label{sec:sysml_v2_foundation}
+% =============================================================================
+
+\subsubsection{Einordnung und Zielsetzung von SysML v2}
+\label{sec:sysml_v2_scope}
+
+% KERNAUSSAGEN:
+%
+% 1. SysML ist eine allgemeine Systems-Modeling-Language fuer komplexe Systeme.
+%
+% 2. SysML v2 wurde als naechste Generation von SysML mit dem Ziel entwickelt,
+%    Praezision, Ausdrucksfaehigkeit, Nutzbarkeit, Interoperabilitaet und
+%    Erweiterbarkeit gegenueber SysML v1 zu verbessern.
+%
+% 3. Die formale SysML-v2-Spezifikation ist inzwischen final angenommen.
+%
+% 4. SysML v2 basiert auf KerML als semantischer und syntaktischer Grundlage.
+%
+% [REPO-BIB]
+% \cite{SysMLv2}
+%
+% WICHTIGER BIBTEX-FIX:
+% Der aktuelle Eintrag nennt 2024.
+% Die finale SysML-v2-Spezifikation wurde 2025 formal adoptiert und liegt
+% inzwischen als formale OMG-Spezifikation Version 2.0 vor.
+% Vor finaler Thesis muss der BibTeX-Eintrag auf die tatsaechlich zitierte
+% Spezifikationsversion aktualisiert werden.
+%
+% [OFFICIAL / ADD]
+% OMG SysML v2 Specification, Version 2.0.
+% Aktuellen offiziellen PDF-Stand archivieren.
+%
+% [REPO-BIB]
+% \cite{Ahlbrecht.2024}
+% Fruehe praktische Erkundung von SysML v2 im Safety-Critical-Avionics-Kontext.
+%
+% VORSICHT:
+% Zeitlich sauber darstellen:
+% einige Forschungspublikationen nutzten Draft-/Pre-Final-Staende,
+% waehrend die Thesis mit einer finaleren Tool-/Spezifikationsgeneration arbeitet.
+
+
+\subsubsection{Formale Semantik, Struktur und Traceability}
+\label{sec:sysml_v2_semantics}
+
+% KERNAUSSAGEN:
+%
+% 1. SysML v2 unterstuetzt die Beschreibung von Requirements, Struktur,
+%    Verhalten, Analyse und Verification innerhalb eines integrierten
+%    Modellierungsansatzes.
+%
+% 2. Beziehungen zwischen Modellelementen koennen explizit modelliert werden.
+%
+% 3. Fuer die Thesis relevant sind insbesondere:
+%    - Requirements
+%    - Actions / Functions
+%    - Parts / Logical Components
+%    - Use Cases
+%    - Dependencies / Allocations / Satisfaction / weitere Beziehungen
+%    - Packages / Modellstruktur
+%
+% 4. Nicht jedes theoretisch moegliche SysML-v2-Konstrukt wird vom
+%    Turing-Generator-PoC unterstuetzt.
+%
+% [REPO-BIB]
+% \cite{SysMLv2}
+%
+% [REPO-BIB]
+% \cite{Ahlbrecht.2024}
+% Fuer praktische SysML-v2-Anwendung, nach Claim-Pruefung.
+%
+% ABGRENZUNG:
+% Keine Beschreibung der konkreten Turing Target Notation.
+% Die kommt in Kapitel 4/5.
+
+
+\subsubsection{Textuelle Notation und maschinelle Verarbeitung}
+\label{sec:sysml_v2_textual}
+
+% KERNAUSSAGEN:
+%
+% 1. SysML v2 stellt neben grafischen Darstellungen eine standardisierte
+%    textuelle Syntax bereit.
+%
+% 2. Textuelle Modellreprasentation ist fuer diese Thesis relevant, weil sie
+%    maschinell erzeugt, versioniert, verglichen und automatisiert validiert
+%    werden kann.
+%
+% 3. SysML v2 verfuegt zudem ueber eine standardisierte Systems Modeling API,
+%    wodurch Modellzugriff und Tool-Interoperabilitaet explizit adressiert werden.
+%
+% 4. Textuelle Notation bedeutet nicht, dass grafische Sichten entbehrlich sind.
+%    Beides sind unterschiedliche Repraesentationen / Interaktionsformen.
+%
+% [OFFICIAL]
+% OMG SysML v2 / Systems Modeling API and Services.
+%
+% [REPO-BIB]
+% \cite{Li.2022}
+% XMI-Based SysML Model Transformation.
+% Historische / transformationstechnische Perspektive, nicht als
+% SysML-v2-Textsyntax-Primarquelle verwenden.
+%
+% [REPO-BIB]
+% \cite{Zhou.2024}
+% QVT-Based SysML v2 Model Version Difference Transformation.
+%
+% VERBINDUNG ZU 2.3:
+% Diese Eigenschaften schaffen einen direkten Anschluss an
+% Architecture-as-Code-Prinzipien.
+
+
+\subsubsection{Doppelte Rolle von SysML v2 in dieser Arbeit}
+\label{sec:sysml_double_role_foundation}
+
+% Dieser kurze Abschnitt verhindert spaetere Verwechslungen.
+%
+% KERNAUSSAGEN:
+%
+% SysML v2 hat in der Arbeit zwei getrennte Rollen:
+%
+% A. Modellierungssprache fuer den Turing Generator selbst
+%    - CATIA-Modell
+%    - Stakeholder / Requirements / Functions / Logical Architecture
+%
+% B. Zielnotation des Turing Generators
+%    - generierte SysML-v2-Zielmodelle aus Legacy Engineering Information
+%
+% Kapitel 2 erklaert nur die sprachliche Grundlage.
+%
+% Kapitel 3 erklaert die methodische Nutzung von SysML v2 und CATIA.
+%
+% Kapitel 4 zeigt das resultierende CATIA-Architekturmodell.
+%
+% Kapitel 5 zeigt die technische Generierung von SysML v2.
+%
+% Diese Aussage beschreibt den Scope der Thesis und braucht keinen
+% externen Literaturbeleg.
+
+
+% =============================================================================
 \subsection{Architecture as Code und Everything as Code}
-\subsection{Brownfield Engineering und heterogene Bestandsdaten}
-\subsection{Large Language Models und agentenbasierte Ansätze im MBSE}
-\subsection{Ontologien, semantische Normalisierung und Leitplanken}
-\subsection{Metamodellbasierte Validierung und SysML v2 Tooling}
-\subsection{Zusammenfassung des Stands der Technik}
+\label{sec:architecture_as_code}
+% =============================================================================
+
+\subsubsection{Everything as Code als Entwicklungsparadigma}
+\label{sec:everything_as_code}
+
+% KERNAUSSAGEN:
+%
+% 1. Everything as Code uebertraegt Eigenschaften codezentrierter
+%    Entwicklungspraktiken auf weitere Entwicklungsartefakte und Concerns.
+%
+% 2. Relevante Eigenschaften:
+%    - textuelle / maschinenlesbare Repraesentation
+%    - Versionsverwaltung
+%    - automatisierte Verarbeitung
+%    - Quality Gates
+%    - Integration in Entwicklungsworkflows
+%
+% 3. "as Code" bedeutet nicht, dass der jeweilige Gegenstand klassische
+%    Programmiersprache sein muss.
+%
+% [ADD]
+% Stirbu et al. (2022):
+% Toward Multiconcern Software Development With Everything as Code.
+% IEEE Software 39(4), 27-33.
+% DOI: 10.1109/MS.2022.3167481
+%
+% Diese Quelle ist peer-reviewed und sollte fuer das EaC-Grundkonzept
+% ins Repo aufgenommen werden.
+
+
+\subsubsection{Architecture as Code}
+\label{sec:aac_foundation}
+
+% KERNAUSSAGEN:
+%
+% 1. Architecture as Code uebertraegt Code-centricity, Versionierbarkeit,
+%    Automatisierbarkeit und Wiederholbarkeit auf Architekturbeschreibungen.
+%
+% 2. Das Konzept ist wissenschaftlich noch relativ jung.
+%
+% 3. Ein zentrales Motiv ist die Verringerung der Luecke zwischen
+%    Architekturbeschreibung und tatsaechlich evolvierendem System.
+%
+% 4. Architecture as Code ist nicht identisch mit Infrastructure as Code.
+%
+% 5. Fuer die Thesis ist besonders relevant:
+%    Architektur als explizites, maschinenverarbeitbares, textuelles Artefakt,
+%    das in automatisierte Engineering-Pipelines eingebunden werden kann.
+%
+% [ADD, PRIORITAET A]
+% Bucaioni, Di Salle, Iovino, Pelliccione, Raimondi:
+% Architecture as Code.
+% ICSA 2025, peer-reviewed.
+%
+% Diese Quelle ist fuer Kapitel 2 vermutlich die beste Primarquelle fuer
+% den Begriff Architecture as Code.
+%
+% [ADD / OPTIONAL]
+% Pontillo et al. (2026):
+% Architecture as Code in Industry: A Multiple-Case Empirical Study.
+% ICSA 2026.
+% Nur aufnehmen, wenn wir die industrielle Einordnung bzw. Reife des
+% Paradigmas diskutieren wollen.
+%
+% [OPTIONAL NON-SCIENTIFIC]
+% Architecture-as-Code Open Source Project / FINOS CALM.
+% Nur als praktisches Beispiel, nicht als zentrale wissenschaftliche Evidenz.
+
+
+\subsubsection{Bezug zwischen Architecture as Code und SysML v2}
+\label{sec:aac_sysml}
+
+% KERNAUSSAGEN:
+%
+% 1. SysML-v2-Textnotation besitzt Eigenschaften, die Architecture-as-Code-
+%    Workflows ermoeglichen koennen:
+%    - maschinenlesbarer Text
+%    - standardisierte Semantik / Syntax
+%    - versionierbare Artefakte
+%    - API / Toolintegration
+%
+% 2. Daraus folgt NICHT automatisch, dass jedes SysML-v2-Modell
+%    "Architecture as Code" ist.
+%
+% 3. Fuer Architecture as Code ist auch der Entwicklungs- und Governance-
+%    Prozess relevant, nicht nur das Dateiformat.
+%
+% 4. Die Thesis untersucht deshalb nicht bloss Textgenerierung, sondern eine
+%    kontrollierte Informationsverarbeitungsarchitektur vor der Generierung.
+%
+% [ADD]
+% Bucaioni et al. 2025
+% Stirbu et al. 2022
+%
+% [REPO-BIB]
+% \cite{SysMLv2}
+%
+% Diese Synthese ist fuer die Motivation der Forschungsfrage zentral.
+
+
+% =============================================================================
+\subsection{Brownfield Engineering und heterogene Bestandsinformationen}
+\label{sec:brownfield}
+% =============================================================================
+
+\subsubsection{Brownfield als Systems-Engineering-Kontext}
+\label{sec:brownfield_context}
+
+% KERNAUSSAGEN:
+%
+% 1. Brownfield Engineering bezieht sich auf die Weiterentwicklung,
+%    Modernisierung oder Migration bestehender Systeme und Engineering-Bestaende.
+%
+% 2. Im Gegensatz zu Greenfield-Situationen existieren bereits:
+%    - historische Designentscheidungen
+%    - Dokumente
+%    - Modelle
+%    - Datenbanken
+%    - bestehende Produktstrukturen
+%    - implizites Expertenwissen
+%
+% 3. Diese Artefakte koennen unvollstaendig, inkonsistent oder nicht auf dem
+%    aktuellen Stand sein.
+%
+% 4. Die Migration zu MBSE ist deshalb nicht nur eine Modellierungsaufgabe,
+%    sondern auch eine Informationserschliessungs- und Governance-Aufgabe.
+%
+% [ADD, PRIORITAET A]
+% INCOSE Systems Engineering Handbook, 5th Edition:
+% Abschnitt Brownfield/Legacy Systems.
+%
+% [ADD / GUTER PRAXISNAHER BELEG]
+% TNO Report:
+% MBSE in the High-Tech Equipment Industry, 2025.
+% Relevanz:
+% - Brownfield Context
+% - Legacy Documentation
+% - implizites Engineering Knowledge
+% - MBSE-Transition in langlebigen Systemen
+%
+% [ADD / OPTIONAL]
+% Brownfield Systems Development Literatur aus INCOSE / Systems Engineering,
+% falls eine staerkere peer-reviewed Grundlage gefunden wird.
+
+
+\subsubsection{Heterogenitaet, Qualitaet und implizites Wissen}
+\label{sec:heterogeneous_legacy_information}
+
+% KERNAUSSAGEN:
+%
+% 1. Engineering-Bestandsinformationen koennen sich unterscheiden in:
+%    - Format
+%    - Strukturierungsgrad
+%    - Terminologie
+%    - Granularitaet
+%    - Abstraktionsebene
+%    - Aktualitaet
+%    - Reliability
+%
+% 2. Mehrere Sources koennen:
+%    - dasselbe beschreiben
+%    - sich ergaenzen
+%    - unterschiedliche Views liefern
+%    - widerspruechliche Aussagen enthalten
+%
+% 3. Informationsheterogenitaet ist damit nicht nur ein Formatproblem,
+%    sondern auch ein semantisches Problem.
+%
+% [REPO-BIB]
+% \cite{Tian.2025}
+% Multi-source heterogeneous data.
+% Achtung: CPS / OPC-Kontext; nur die generelle Multi-Source-Heterogenitaet
+% uebertragen, nicht die konkrete technische Loesung.
+%
+% [REPO-BIB]
+% \cite{Chis.2025}
+% Heterogeneous Knowledge Bases und RAG.
+%
+% [REPO-BIB]
+% \cite{Souza.2026}
+% Reasoning over heterogeneous schemas.
+% Nach Volltextpruefung fuer semantische Schemaheterogenitaet geeignet.
+%
+% [ADD]
+% TNO Brownfield-MBSE Report fuer Legacy Documentation und implizites Wissen.
+%
+% VERBINDUNG ZU TF1:
+% Dieser Abschnitt liefert die theoretische Grundlage fuer die Frage,
+% welche Constraints Eingangsdaten fuer automatisierte Verarbeitung erfuellen
+% muessen.
+
+
+\subsubsection{Transformation bestehender Engineering-Informationen}
+\label{sec:legacy_transformation}
+
+% KERNAUSSAGEN:
+%
+% 1. Bestehende Forschung adressiert Modelltransformation vielfach ueber
+%    modellgetriebene Transformationen, Metamodelle und standardisierte
+%    Austauschformate.
+%
+% 2. Solche Verfahren funktionieren besonders gut, wenn Quell- und Zielstruktur
+%    bereits hinreichend formal bekannt sind.
+%
+% 3. Heterogene dokumentbasierte Legacy-Information stellt eine andere
+%    Problemklasse dar, weil Engineering Meaning zunaechst erschlossen werden muss.
+%
+% [REPO-BIB]
+% \cite{Kapos.2014}
+% SysML -> executable simulation via QVT.
+%
+% [REPO-BIB]
+% \cite{Li.2022}
+% XMI-Based SysML Model Transformation.
+%
+% [REPO-BIB]
+% \cite{Zhou.2024}
+% QVT-Based SysML v2 Model Version Difference Transformation.
+%
+% [REPO-BIB]
+% \cite{Meyers.2013}
+% DSL for explicit semantic adaptation.
+%
+% KERNSYNTHESE:
+% Formal modellierte Quellinformationen und unstrukturierte Legacy-Dokumente
+% duerfen im State of the Art nicht als dasselbe Transformationsproblem
+% behandelt werden.
+
+
+% =============================================================================
+\subsection{Large Language Models und agentenbasierte Ansaetze im Systems Engineering}
+\label{sec:llm_mbse}
+% =============================================================================
+
+\subsubsection{LLMs fuer Engineering-Artefakte und Modellgenerierung}
+\label{sec:llm_model_generation}
+
+% KERNAUSSAGEN:
+%
+% 1. LLMs werden zunehmend fuer die Interpretation natuerlicher Sprache und
+%    die Generierung formaler Engineering-Artefakte untersucht.
+%
+% 2. Relevante Einsatzfelder:
+%    - Requirements / Textanalyse
+%    - Modellelemente ableiten
+%    - Instance Models generieren
+%    - SysML-/SysML-v2-Artefakte erzeugen
+%
+% 3. Die Leistungsfaehigkeit ist stark von Task, Modell, Prompting und
+%    Eingabekontext abhaengig.
+%
+% [REPO-BIB]
+% \cite{Pan.2025}
+% LLM-enabled Instance Model Generation.
+%
+% [REPO-BIB]
+% \cite{Cibrian.2025}
+% Agent-based automatic generation of valid SysML v2 Models.
+%
+% [ADD, PRIORITAET A]
+% Topcu & Husain (2025):
+% Trust at Your Own Peril:
+% LLM generation of Systems Engineering Artifacts and failure modes.
+% Systems Engineering.
+% Relevanz:
+% - SE-spezifische Faehigkeiten UND Fehlerbilder von LLMs.
+%
+% [ADD / AKTUELLER VERGLEICH]
+% Prompt-Strategy-Driven SysML-v2 Artefact Generation Using LLMs, 2026.
+% Relevanz:
+% - SysML-v2-Artefaktgenerierung
+% - Promptstrategie
+% - Variabilitaet
+% - Syntax Validation
+%
+% Vor Aufnahme Qualitaet / Journal und Abgrenzung zur eigenen Arbeit pruefen.
+
+
+\subsubsection{Agentenbasierte und Multi-Agent-Systeme}
+\label{sec:agentic_systems}
+
+% KERNAUSSAGEN:
+%
+% 1. Agentische Ansaetze zerlegen komplexe Aufgaben in Rollen,
+%    Verarbeitungsschritte oder kooperierende Agenten.
+%
+% 2. Im Engineering-Kontext koennen unterschiedliche Agents fuer
+%    Interpretation, Retrieval, Modellgenerierung, Pruefung oder
+%    Koordination eingesetzt werden.
+%
+% 3. Mehrere Agents sind nicht automatisch verlaesslicher als ein einzelner.
+%
+% 4. Agentenanzahl und Agreement duerfen ohne Evidenz nicht mit fachlicher
+%    Korrektheit gleichgesetzt werden.
+%
+% [REPO-BIB]
+% \cite{Cibrian.2025}
+%
+% [REPO-BIB]
+% \cite{Chis.2025}
+%
+% [REPO-FILE]
+% 2605.14163v1.pdf
+% Agentic Systems as Boosting Weak Reasoning Models.
+% Preprint; bibliographisch und claimweise pruefen.
+%
+% [REPO-FILE]
+% 2605.18747v1.pdf
+% Code as Agent Harness.
+% Preprint; eher fuer Kapitel 3/8 als zentrale SotA-Quelle.
+%
+% [ADD]
+% Multi-Agent-Debate Literatur aus Kapitel 3:
+% Wang et al. 2023
+% Du et al. 2024
+% Liang et al. 2024
+% Cui et al. 2026
+% Kostka & Chudziak 2026
+%
+% Kapitel 2 sollte hier nur das Feld darstellen.
+% Die konkrete Multi-Persona-Entscheidung der Thesis folgt spaeter.
+
+
+\subsubsection{Halluzination, Variabilitaet und fehlende Engineering Authority}
+\label{sec:llm_limitations}
+
+% KERNAUSSAGEN:
+%
+% 1. LLM-Ausgaben koennen plausibel formulierte, aber fachlich falsche oder
+%    nicht durch die Quelle gedeckte Inhalte enthalten.
+%
+% 2. Generative Modelle sind probabilistisch und koennen bei gleichen bzw.
+%    aehnlichen Aufgaben unterschiedliche Ergebnisse erzeugen.
+%
+% 3. Im Systems Engineering ist dies besonders relevant, weil ein formal
+%    plausibles Artefakt nicht automatisch fachlich korrekt ist.
+%
+% 4. Syntaxvaliditaet ist deshalb nicht mit Engineering Correctness
+%    gleichzusetzen.
+%
+% 5. Diese Risiken motivieren:
+%    - Grounding
+%    - semantische Leitplanken
+%    - explizite Validation
+%    - Human Oversight
+%    - Provenance / Traceability
+%
+% [ADD, PRIORITAET A]
+% Topcu & Husain 2025.
+%
+% [ADD]
+% aktuelle allgemeine Hallucination Survey nur dann, wenn fuer Definition /
+% Taxonomie wirklich erforderlich.
+%
+% [ADD]
+% Prompt-Strategy-Driven SysML-v2 Artefact Generation 2026
+% fuer Variabilitaet in genau diesem Modellierungskontext.
+%
+% [PRACTICE, NICHT ALS WISSENSCHAFTSBELEG]
+% MESCONF 2026 kann in Kapitel 3 erwaehnt werden.
+% Nicht hier als Evidenz fuer die wissenschaftliche Aussage verwenden.
+
+
+% =============================================================================
+\subsection{Human-in-the-Loop und menschliche Engineering Authority}
+\label{sec:hitl_foundation}
+% =============================================================================
+
+\subsubsection{Human-in-the-Loop in KI-Systemen}
+\label{sec:hitl_definition}
+
+% KERNAUSSAGEN:
+%
+% 1. HITL beschreibt Systeme, in denen menschliches Wissen, Feedback,
+%    Aufsicht oder Entscheidungen explizit in einen KI-Prozess eingebunden sind.
+%
+% 2. Human Involvement kann an unterschiedlichen Stellen des Lifecycles oder
+%    der Inferenzpipeline liegen.
+%
+% 3. Die konkrete Rolle des Menschen muss spezifiziert werden.
+%    Das bloße Vorhandensein eines "Approve"-Buttons definiert noch keine
+%    wirksame menschliche Kontrolle.
+%
+% [ADD, PRIORITAET A]
+% Lazaros, Vrahatis, Kotsiantis (2026):
+% Human-in-the-Loop Artificial Intelligence:
+% A Systematic Review of Concepts, Methods, and Applications.
+% Entropy 28(4), 377.
+%
+% [ADD]
+% Mosqueira-Rey et al. (2023):
+% Human-in-the-loop machine learning: a state of the art.
+% Artificial Intelligence Review 56, 3005-3054.
+% DOI: 10.1007/s10462-022-10246-w
+%
+% Diese beiden Quellen geben einen belastbaren allgemeinen HITL-Hintergrund.
+
+
+\subsubsection{Human Oversight und Authority}
+\label{sec:human_oversight}
+
+% KERNAUSSAGEN:
+%
+% 1. Human Oversight ist nur wirksam, wenn Menschen die notwendige Information,
+%    Entscheidungsmoeglichkeit und reale Eingriffsmacht besitzen.
+%
+% 2. Rein formale Freigabeschritte koennen zu Rubber-Stamp-Verhalten fuehren.
+%
+% 3. Relevante Designaspekte:
+%    - explizite Handover Points
+%    - Escalation
+%    - Override / Reject
+%    - nachvollziehbare Evidence
+%    - ausreichender Review Context
+%
+% 4. In der Thesis wird daraus spaeter der strengere Begriff
+%    "Human Engineering Authority" abgeleitet.
+%
+% [ADD, PRIORITAET A]
+% Zhu et al. (2026):
+% Designing meaningful human oversight in AI.
+% AI and Ethics.
+% DOI: 10.1007/s43681-026-01147-7
+%
+% [ADD]
+% Lazaros et al. 2026.
+%
+% VERBINDUNG ZU TF2:
+% Dieser Abschnitt liefert die theoretische Basis fuer Effective Intervention.
+%
+% WICHTIG:
+% "Human Engineering Authority" ist die konkrete Turing-Ausgestaltung.
+% Der Begriff darf als Designkonzept der Thesis ueber die Literatur hinausgehen.
+
+
+% =============================================================================
+\subsection{Ontologien, semantische Normalisierung und Wissensrepraesentation}
+\label{sec:ontology_foundation}
+% =============================================================================
+
+\subsubsection{Ontologien und explizite Semantik}
+\label{sec:ontology_definition}
+
+% KERNAUSSAGEN:
+%
+% 1. Ontologien stellen explizite Konzepte, Relationen und semantische
+%    Festlegungen fuer eine Domaene bereit.
+%
+% 2. Sie koennen gemeinsam genutzte Begriffe und Bedeutungsbeziehungen
+%    formalisieren.
+%
+% 3. Top-Level-, Domain- und Application-Ontologien haben unterschiedliche
+%    Abstraktions- und Einsatzbereiche.
+%
+% [REPO-FILE]
+% ISO/IEC 21838-2:2021
+% Basic Formal Ontology.
+%
+% [REPO-FILE]
+% Drobnjakovic et al.:
+% Industrial Ontologies Foundry Core Ontology.
+%
+% [REPO-BIB]
+% \cite{Abonyi.2024}
+%
+% TODO:
+% BibTeX fuer ISO 21838-2 und IOF Core Ontology anlegen.
+
+
+\subsubsection{Ontologien im Systems Engineering und MBSE}
+\label{sec:ontology_mbse}
+
+% KERNAUSSAGEN:
+%
+% 1. Ontologien werden im Engineering genutzt, um semantische
+%    Interoperabilitaet und Wissensintegration zu unterstuetzen.
+%
+% 2. Im MBSE koennen Ontologien Modellierungssprachen oder Metamodelle
+%    ergaenzen, indem sie domaenenspezifische Bedeutungsbeziehungen explizieren.
+%
+% 3. Ontologien und SysML sind nicht zwingend konkurrierende Ansaetze:
+%    sie koennen unterschiedliche semantische Ebenen adressieren.
+%
+% [REPO-FILE]
+% Orellana & Mandrick:
+% The Ontology of Systems Engineering.
+%
+% [REPO-FILE]
+% Lu et al.:
+% Design Ontology Supporting Model-Based Systems Engineering Formalisms.
+%
+% [REPO-FILE]
+% Liu et al.:
+% SysDO.
+%
+% [REPO-FILE]
+% Dong et al.:
+% Insights into Ontology-Based MBSE.
+%
+% [REPO-BIB]
+% \cite{Abonyi.2024}
+%
+% ALLE CLAIMS VOR FINALER VERWENDUNG IM VOLLTEXT PRUEFEN.
+
+
+\subsubsection{Semantische Normalisierung heterogener Informationen}
+\label{sec:semantic_normalization}
+
+% KERNAUSSAGEN:
+%
+% 1. Heterogene Quellen koennen unterschiedliche Begriffe fuer gleiche oder
+%    verwandte Engineering-Konzepte verwenden.
+%
+% 2. Semantische Normalisierung zielt darauf, solche Unterschiede auf eine
+%    kontrollierte gemeinsame Begriffs- bzw. Bedeutungsbasis abzubilden.
+%
+% 3. Ontologien, Knowledge Graphs, Terminologielisten und explizite Mapping-
+%    Regeln sind moegliche Mechanismen.
+%
+% [REPO-BIB]
+% \cite{Abonyi.2024}
+%
+% [REPO-BIB]
+% \cite{Chis.2025}
+%
+% [REPO-BIB]
+% \cite{Souza.2026}
+%
+% [REPO-BIB]
+% \cite{Meyers.2013}
+%
+% WICHTIG:
+% Nicht jede semantische Harmonisierung ist automatisch "Ontologie".
+
+
+\subsubsection{Ontologien als Guardrail fuer generative KI}
+\label{sec:ontology_guardrail}
+
+% KERNAUSSAGEN:
+%
+% 1. Explizite semantische Strukturen koennen den zulaessigen Begriffs- und
+%    Relationsraum fuer KI-gestuetzte Verarbeitung eingrenzen.
+%
+% 2. Ontologien koennen als externe Knowledge-/Validation-Basis genutzt werden.
+%
+% 3. Daraus darf NICHT pauschal gefolgert werden:
+%    "Ontologien verhindern Halluzinationen."
+%
+% 4. Fuer eine solche Wirksamkeitsaussage ist spezifische empirische Literatur
+%    erforderlich.
+%
+% 5. Die Thesis untersucht deshalb Ontologien als einen Baustein unter mehreren
+%    Leitplanken, nicht als alleinige Sicherheitsloesung.
+%
+% [REPO-FILE / REPO-BIB]
+% Ontologiequellen oben.
+%
+% [QUELLENLUECKE]
+% Belastbare spezifische Studie zu ontology-grounded LLMs / Hallucination
+% Reduction im Engineering-Kontext suchen, wenn im finalen Text eine
+% Wirksamkeitsaussage benoetigt wird.
+%
+% VERBINDUNG ZU TF3:
+% Dieser Abschnitt ist die theoretische Basis der urspruenglichen
+% Leitplanken-Hypothese.
+
+
+% =============================================================================
+\subsection{Traceability und Provenance}
+\label{sec:traceability_provenance_foundation}
+% =============================================================================
+
+\subsubsection{Traceability im Systems Engineering}
+\label{sec:traceability_foundation}
+
+% KERNAUSSAGEN:
+%
+% 1. Traceability beschreibt nachvollziehbare Beziehungen zwischen
+%    Engineering-Artefakten und deren Herkunft bzw. Ableitung.
+%
+% 2. Im Requirements Engineering ist insbesondere die Verbindung von
+%    Stakeholder Needs, Requirements, Design und Verification relevant.
+%
+% 3. Fuer KI-gestuetzte Transformation entsteht ein zusaetzlicher Bedarf:
+%    Auch Zwischenverarbeitung, Interpretation und menschliche Entscheidungen
+%    muessen nachvollziehbar bleiben.
+%
+% [ADD]
+% ISO/IEC/IEEE 29148:2018
+% Requirements Engineering / Traceability.
+%
+% [ADD]
+% INCOSE Systems Engineering Handbook, 5th Edition.
+%
+% [REPO-FILE]
+% ISO/IEC/IEEE 42010:2022
+% Nur soweit Architecture Description Relations relevant sind.
+%
+% ABGRENZUNG:
+% Die konkrete Turing-End-to-End-Traceability ist Kapitel 4.
+
+
+\subsubsection{Data und Information Provenance}
+\label{sec:provenance_foundation}
+
+% KERNAUSSAGEN:
+%
+% 1. Provenance beschreibt die Herkunft und Entstehungsgeschichte von
+%    Informationen und Artefakten.
+%
+% 2. Typische Fragen:
+%    - Welche Entity war Ausgangspunkt?
+%    - Welche Activity hat sie verarbeitet?
+%    - Welcher Agent war beteiligt?
+%    - Welches Ergebnis entstand daraus?
+%
+% 3. Provenance kann Nachvollziehbarkeit, Reproduktion, Beurteilung und
+%    Auditierbarkeit unterstuetzen.
+%
+% [ADD, PRIORITAET A]
+% W3C PROV-DM / PROV Primer, 2013.
+%
+% [ADD / OPTIONAL]
+% Simmhan, Plale, Gannon (2005):
+% A Survey of Data Provenance in e-Science.
+%
+% WICHTIG:
+% Nicht behaupten, der Turing Generator implementiere W3C PROV.
+% Die Quelle dient der theoretischen Fundierung des Provenance-Konzepts.
+
+
+\subsubsection{Provenance in KI-gestuetzten Engineering-Pipelines}
+\label{sec:ai_provenance}
+
+% KERNAUSSAGEN:
+%
+% 1. Bei einer mehrstufigen KI-gestuetzten Transformation reicht reine
+%    Source-to-Output-Traceability nicht immer aus.
+%
+% 2. Relevant werden zusaetzlich:
+%    - Verarbeitungszustand
+%    - verwendeter Kontext
+%    - Modell-/Agentenlauf
+%    - Interpretation
+%    - Human Decision
+%    - nachgelagerte Modell- und Validierungsartefakte
+%
+% 3. Die Literaturbasis fuer diese konkrete Synthese ist noch zu staerken.
+%
+% [ADD]
+% W3C PROV als Grundmodell.
+%
+% [REPO-FILE]
+% Interpretable Context Methodology.
+% Nur als Sekundaer-/Preprintquelle nach Pruefung.
+%
+% [QUELLENLUECKE]
+% Gute peer-reviewed Quelle zu provenance-aware AI / LLM pipelines oder
+% AI engineering provenance suchen.
+%
+% Diese Quellenluecke ist fuer Kapitel 2 weniger kritisch als fuer
+% allgemeine Claims in Kapitel 4/8, weil Turing selbst einen neuen
+% Architekturbeitrag leisten kann.
+
+
+% =============================================================================
+\subsection{Modelltransformation, Metamodelle und Validierung}
+\label{sec:model_validation}
+% =============================================================================
+
+\subsubsection{Modellgetriebene Transformation}
+\label{sec:model_driven_transformation}
+
+% KERNAUSSAGEN:
+%
+% 1. Model-driven Engineering nutzt explizite Modelle und Metamodelle,
+%    um Transformationen systematisch zu definieren.
+%
+% 2. QVT und vergleichbare Verfahren zeigen, dass Transformationen zwischen
+%    formal bekannten Modellrepraesentationen regelbasiert durchgefuehrt
+%    werden koennen.
+%
+% 3. Diese Ansaetze bilden einen wichtigen Referenzpunkt, adressieren aber
+%    nicht automatisch unstrukturierte Legacy-Information.
+%
+% [REPO-BIB]
+% \cite{Kapos.2014}
+% \cite{Cafe.2013}
+% \cite{Li.2022}
+% \cite{Zhou.2024}
+%
+% Cafe.2013 vor Verwendung im BibTeX/Volltext genau pruefen.
+
+
+\subsubsection{Metamodellbasierte Validierung}
+\label{sec:metamodel_validation}
+
+% KERNAUSSAGEN:
+%
+% 1. Ein Metamodell beschreibt die zulaessige Struktur und Semantik einer
+%    Modellierungssprache bzw. eines Modellraums.
+%
+% 2. Generierte Modelle koennen gegen solche formalen Regeln geprueft werden.
+%
+% 3. Bei generativer KI ist eine nachgelagerte formale Validierung besonders
+%    relevant, weil plausibler Text allein keine Modellkonformitaet garantiert.
+%
+% [REPO-BIB]
+% \cite{Cibrian.2025b}
+% Ensuring Semantic Consistency in SysML v2 Models Through Metamodel Driven Validation.
+%
+% [REPO-BIB]
+% \cite{Kapos.2014}
+%
+% [REPO-BIB]
+% \cite{SysMLv2}
+%
+% WICHTIG:
+% "semantic consistency" in Cibrian genau gegen den dort verwendeten
+% Begriff pruefen, bevor daraus Aussagen ueber fachliche Engineering
+% Correctness abgeleitet werden.
+
+
+\subsubsection{SysML-v2-Tooling und externe Validierung}
+\label{sec:sysml_tooling}
+
+% KERNAUSSAGEN:
+%
+% 1. Die formale Sprache allein garantiert keine identische Toolunterstuetzung
+%    in allen Umgebungen.
+%
+% 2. Tooling ist insbesondere fuer Parsing, Modellverarbeitung,
+%    Visualisierung und Validation relevant.
+%
+% 3. Fuer die Thesis werden CATIA Magic und SYSIDE verwendet, aber:
+%
+%    CATIA Magic
+%    -> Modellierungsumgebung fuer die Architektur des Turing Generators
+%
+%    SYSIDE
+%    -> externe Validierungsumgebung fuer generierte SysML-v2-Artefakte
+%
+% 4. Die konkrete Werkzeugauswahl und Nutzung ist Methodik / Implementation,
+%    nicht allgemeiner Stand der Technik.
+%
+% [REPO-BIB]
+% \cite{SysMLv2}
+%
+% [OFFICIAL / OPTIONAL]
+% OMG Systems Modeling API and Services.
+%
+% [REPO-BIB]
+% \cite{Ahlbrecht.2024}
+% Praktischer SysML-v2-Toolkontext nach Claim-Pruefung.
+%
+% Keine Produktdokumentation von CATIA oder SYSIDE als zentrale
+% wissenschaftliche Literatur verkaufen.
+
+
+% =============================================================================
+\subsection{Synthese des Stands der Technik und Forschungsluecke}
+\label{sec:research_gap}
+% =============================================================================
+
+% Dies ist der wichtigste Abschnitt von Kapitel 2.
+% Er darf nicht nur die vorherigen Abschnitte wiederholen.
+%
+% Ziel:
+% Die Literatur systematisch zu der Frage zusammenfuehren:
+%
+% Welche Bausteine existieren bereits und was fehlt in ihrer Kombination?
+
+
+\subsubsection{Vorhandene Loesungsbausteine}
+\label{sec:existing_solution_blocks}
+
+% KERNAUSSAGEN:
+%
+% Die Literatur zeigt bereits einzelne Loesungsbausteine:
+%
+% A. MBSE / SysML:
+%    formale und traceable Systemmodelle
+%
+% B. SysML v2:
+%    standardisierte semantische Modellierung,
+%    textuelle Notation, API und Maschinenverarbeitung
+%
+% C. Architecture as Code:
+%    versionierbare, automatisierbare Architekturartefakte
+%
+% D. modellgetriebene Transformation:
+%    regelbasierte Ueberfuehrung zwischen bekannten Modellraeumen
+%
+% E. LLMs / Agents:
+%    semantische Interpretation und Generierung aus natuerlicher Sprache
+%
+% F. Ontologien / Knowledge Graphs:
+%    explizite Semantik und Harmonisierung heterogener Informationen
+%
+% G. HITL:
+%    menschliche Einbindung in KI-gestuetzte Prozesse
+%
+% H. Metamodel Validation:
+%    formale Pruefung erzeugter Modellstrukturen
+%
+% I. Traceability / Provenance:
+%    Nachvollziehbarkeit von Herkunft und Verarbeitung
+%
+% Diese Tabelle/Abbildung kann sehr wirksam sein.
+%
+% TABELLEKANDIDAT 2.1:
+% Loesungsbaustein | Beitrag | typische Grenze | relevante Quellen
+
+
+\subsubsection{Identifizierte Integrationsluecke}
+\label{sec:integration_gap}
+
+% VORLAEUFIGE KERNAUSSAGE, NOCH NICHT ALS FINALEN CLAIM UEBERNEHMEN:
+%
+% Die Literatur adressiert die fuer die Thesis relevanten Herausforderungen
+% ueberwiegend als einzelne Teilprobleme.
+%
+% Noch zu pruefen und wissenschaftlich sauber zu belegen:
+%
+% - Keine identifizierte Arbeit integriert durchgaengig:
+%   heterogene Legacy Sources
+%   + source-grounded semantische Interpretation
+%   + Multi-Perspective / uncertainty evidence
+%   + explizite Human Engineering Authority
+%   + Provenance ueber alle Verarbeitungsstufen
+%   + project-level Multi-Source Reconciliation
+%   + model placement / assembly
+%   + deterministische SysML-v2-Generierung
+%   + separate externe Validation
+%   + final Human Release
+%
+% WICHTIG:
+% Dieser Claim ist nur so stark wie die dokumentierte Literaturrecherche.
+% Nicht "es gibt keine..." schreiben, sondern z.B.:
+% "In der durchgefuehrten Literaturrecherche wurde kein Ansatz identifiziert,
+% der ... in einer durchgaengigen Architektur verbindet."
+%
+% [PROJECT BASIS]
+% LSP / LSR.
+%
+% [REPO-BIB]
+% Pan 2025
+% Cibrian 2025
+% Cibrian 2025b
+% Chis 2025
+% Abonyi 2024
+% Ahlbrecht 2024
+% Ferko 2026
+% Meyers 2013
+%
+% Vor Ausformulierung gegen die tatsaechlich eingeschlossenen Studien pruefen.
+
+
+\subsubsection{Forschungsbedarf fuer die vorliegende Arbeit}
+\label{sec:research_need}
+
+% KERNAUSSAGEN:
+%
+% Aus der Integrationsluecke ergibt sich der Bedarf fuer eine
+% Informationsverarbeitungsarchitektur, die:
+%
+% 1. heterogene Bestandsinformation kontrolliert erschliesst;
+% 2. Input Constraints und Informationsqualitaet explizit behandelt;
+% 3. KI-basierte Interpretation von Engineering Authority trennt;
+% 4. menschliche Intervention gezielt und nachvollziehbar integriert;
+% 5. semantische / ontologische Leitplanken einbindet;
+% 6. Provenance und Traceability ueber Transformationen erhaelt;
+% 7. mehrere Quellen ohne implizite Truth Arbitration verarbeiten kann;
+% 8. akzeptierte Engineering Information kontrolliert in ein Modell ueberfuehrt;
+% 9. SysML-v2-Artefakte deterministisch erzeugt und separat validiert.
+%
+% Diese Punkte bereiten die Forschungsfragen vor.
+%
+% WICHTIG:
+% Die Forschungsfragen selbst wurden bereits vor der finalen Implementierung
+% festgelegt und werden nicht aus den spaeteren Ergebnissen rueckwirkend
+% umformuliert.
+%
+% UEBERGANG:
+% Kapitel 3 beschreibt anschliessend, wie aus diesem Forschungsbedarf
+% ein Architekturkonzept entwickelt und prototypisch untersucht wurde.
+
+
+% =============================================================================
+% EMPFOHLENE ABBILDUNGEN / TABELLEN IN KAPITEL 2
+% =============================================================================
+%
+% PRIORITAET 1
+% Tab. 2.1:
+% "Loesungsbausteine des Standes der Technik und verbleibende Grenzen"
+%
+% Moegliche Zeilen:
+% Model Transformation
+% LLM-based Model Generation
+% Ontology / Semantic Harmonization
+% HITL
+% Metamodel Validation
+% Architecture as Code
+% Provenance
+%
+% Diese Tabelle koennte gleichzeitig die Forschungsluecke vorbereiten.
+%
+% PRIORITAET 2
+% Abb. 2.1:
+% Zusammenhang:
+% Document-based / Legacy Information
+% -> MBSE / SysML v2
+% -> Architecture as Code
+%
+% Nur wenn die Abbildung argumentativ mehr leistet als Text.
+%
+% KEINE unnoetige Abbildung:
+% "Was ist ein LLM?"
+% "Was ist eine Ontologie?"
+% generische Stock-Grafiken vermeiden.
+
+
+% =============================================================================
+% LITERATURMATRIX FUER KAPITEL 2
+% =============================================================================
+%
+% SYSTEMS ENGINEERING / MBSE
+% [ADD] INCOSE Systems Engineering Handbook, 5th Edition
+% [OFFICIAL] INCOSE MBSE Initiative
+% [REPO-BIB] Kapos 2014
+% [REPO-BIB] Zhao 2023
+%
+% ARCHITEKTUR
+% [REPO-FILE] ISO/IEC/IEEE 42010:2022
+%
+% SYSML V2
+% [REPO-BIB, UPDATE NEEDED] SysMLv2
+% [OFFICIAL/ADD] OMG SysML v2 Version 2.0 final specification
+% [REPO-BIB] Ahlbrecht 2024
+%
+% ARCHITECTURE AS CODE / EVERYTHING AS CODE
+% [ADD] Bucaioni et al. 2025
+% [ADD] Stirbu et al. 2022
+% [ADD/OPTIONAL] Pontillo et al. 2026
+%
+% BROWNFIELD
+% [ADD] INCOSE Handbook Brownfield/Legacy section
+% [ADD] TNO MBSE in High-Tech Equipment Industry 2025
+%
+% HETEROGENE DATA
+% [REPO-BIB] Tian 2025
+% [REPO-BIB] Chis 2025
+% [REPO-BIB] Souza 2026
+%
+% MODEL TRANSFORMATION
+% [REPO-BIB] Kapos 2014
+% [REPO-BIB] Li 2022
+% [REPO-BIB] Zhou 2024
+% [REPO-BIB] Meyers 2013
+% [REPO-BIB] Cafe 2013
+%
+% LLM / AGENTS / MODEL GENERATION
+% [REPO-BIB] Pan 2025
+% [REPO-BIB] Cibrian 2025
+% [ADD] Topcu & Husain 2025
+% [ADD] Prompt-Strategy-Driven SysML-v2 Artefact Generation 2026
+%
+% MULTI-AGENT / VARIANCE
+% [ADD] Wang et al. 2023
+% [ADD] Du et al. 2024
+% [ADD] Liang et al. 2024
+% [ADD] Cui et al. 2026
+% [ADD] Kostka & Chudziak 2026
+%
+% HUMAN IN THE LOOP
+% [ADD] Lazaros et al. 2026
+% [ADD] Mosqueira-Rey et al. 2023
+% [ADD] Zhu et al. 2026
+%
+% ONTOLOGIES
+% [REPO-BIB] Abonyi 2024
+% [REPO-FILE] ISO/IEC 21838-2
+% [REPO-FILE] Drobnjakovic et al.
+% [REPO-FILE] Orellana & Mandrick
+% [REPO-FILE] Lu et al.
+% [REPO-FILE] Liu et al.
+% [REPO-FILE] Dong et al.
+%
+% TRACEABILITY / PROVENANCE
+% [ADD] ISO/IEC/IEEE 29148
+% [ADD] W3C PROV
+% [ADD/OPTIONAL] Simmhan et al. 2005
+%
+% VALIDATION
+% [REPO-BIB] Cibrian 2025b
+% [REPO-BIB] SysMLv2
+% [REPO-BIB] Kapos 2014
+
+
+% =============================================================================
+% PRIORISIERTE QUELLENLUECKEN VOR AUSFORMULIERUNG
+% =============================================================================
+%
+% PRIORITAET A: wirklich wichtig fuer Kapitel 2
+%
+% [ ] INCOSE Systems Engineering Handbook, 5th Edition
+%     -> SE, MBSE, Brownfield, Traceability
+%
+% [ ] OMG SysML v2 finale Version 2.0
+%     -> aktuellen BibTeX-Eintrag korrigieren
+%
+% [ ] Bucaioni et al. 2025, Architecture as Code
+%     -> zentrale wissenschaftliche AaC-Quelle
+%
+% [ ] Stirbu et al. 2022, Everything as Code
+%     -> zentrale EaC-Quelle
+%
+% [ ] Topcu & Husain 2025
+%     -> LLMs fuer SE-Artefakte und Failure Modes
+%
+% [ ] Lazaros et al. 2026
+%     -> aktuelles HITL Review
+%
+% [ ] Zhu et al. 2026
+%     -> meaningful Human Oversight
+%
+% [ ] W3C PROV
+%     -> Provenance-Grundlage
+%
+% PRIORITAET B:
+%
+% [ ] TNO MBSE High-Tech Equipment 2025
+%     -> sehr passender Brownfield-/Legacy-Kontext
+%
+% [ ] Prompt-Strategy-Driven SysML-v2 Artefact Generation 2026
+%     -> aktueller direkter Vergleich
+%
+% [ ] Multi-Agent / Variance Literatur aus Kapitel 3
+%
+% PRIORITAET C:
+%
+% [ ] alle Ontologie-PDFs in literatur.bib aufnehmen
+% [ ] genaue Claims der bestehenden LSR-Quellen im Volltext pruefen
+% [ ] alte ungeeignete Screening-/Methodikquellen nicht unkritisch in
+%     Kapitel 2 uebernehmen
+
+
+% =============================================================================
+% KRITISCHE KORREKTUREN AM BISHERIGEN LSR VOR DER AUSFORMULIERUNG
+% =============================================================================
+%
+% 1. Der bisherige LSR formuliert teilweise zu starke Synthesen:
+%
+%    "Modularitaet sowie Plug-and-Play werden durch ontologische Regeln
+%     und metamodellgesteuerte Validierung gewaehrleistet"
+%
+%    -> claimweise pruefen.
+%    -> "gewaehrleistet" ist wahrscheinlich zu stark.
+%
+% 2. "SysML v2 Metamodel als formale Spezifikation" genau pruefen.
+%    SysML-v2-Spezifikation / KerML / Abstract Syntax differenziert behandeln.
+%
+% 3. Human-in-the-Loop nicht pauschal aus Cibrian + Chis ableiten,
+%    sondern mit eigener HITL-Literatur fundieren.
+%
+% 4. Ontologien nicht als nachgewiesene Halluzinationsloesung darstellen.
+%
+% 5. Architecture as Code fehlt im bisherigen Literaturkorpus als
+%    eigenstaendiges wissenschaftliches Konzept und muss ergaenzt werden.
+%
+% 6. Brownfield / Legacy Engineering ist im bisherigen LSR zu schwach
+%    wissenschaftlich fundiert und muss ergaenzt werden.
+%
+% 7. Provenance fehlt bisher weitgehend als eigener wissenschaftlicher
+%    Grundlagenstrang, obwohl es spaeter zentraler Architekturbaustein ist.
+
+
+% =============================================================================
+% CLAIM-CHECK VOR DEM SCHREIBEN
+% =============================================================================
+%
+% [ ] Hat jeder Unterabschnitt eine klare Funktion fuer die Forschungsfrage?
+% [ ] Ist die Quelle fuer den konkreten Claim im Volltext geprueft?
+% [ ] Werden Standards als Standards und Paper als wissenschaftliche Literatur
+%     sauber unterschieden?
+% [ ] Wird SysML v2 finaler Spezifikationsstand korrekt datiert?
+% [ ] Wird Architecture as Code wissenschaftlich und nicht nur ueber Blogs erklaert?
+% [ ] Wird Brownfield ausreichend belegt?
+% [ ] Werden LLM-Faehigkeiten und LLM-Grenzen beide dargestellt?
+% [ ] Wird Human Oversight nicht nur als "User klickt Approve" verstanden?
+% [ ] Werden Ontologien nicht als alleinige Halluzinationsloesung verkauft?
+% [ ] Sind Traceability und Provenance sauber unterschieden?
+% [ ] Wird formale Modellvaliditaet nicht mit Engineering Correctness verwechselt?
+% [ ] Ist die Forschungsluecke als Ergebnis der durchgefuehrten Suche formuliert
+%     und nicht als universelle Behauptung?
+% [ ] Keine Gedankenstriche als Satzzeichen im finalen Fliesstext.
+% [ ] Kein unpersoenliches "man" im finalen Fliesstext.
+% [ ] Tabellenueberschrift oben, Abbildungsunterschrift unten.
+%
+% =============================================================================

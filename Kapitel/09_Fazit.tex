@@ -1,4 +1,661 @@
+% =============================================================================
+% Kapitel 9: Fazit und Ausblick
+% ARBEITSGERUEST / REVIEW CANDIDATE
+% Stand: 03.09.2026
+%
+% Dieses Kapitel bleibt bewusst kompakt.
+%
+% Kapitel 8:
+% - interpretiert Ergebnisse
+% - diskutiert Literaturbezug
+% - behandelt Limitationen
+% - beantwortet HF / TF1 / TF2 / TF3
+%
+% Kapitel 9:
+% - zieht die Schlusslinie
+% - benennt den Beitrag der Arbeit
+% - beschreibt belastbar abgegrenzte Weiterentwicklungspfade
+%
+% NICHT:
+% - Forschungsfragen erneut ausfuehrlich beantworten
+% - neue Ergebnisse einfuehren
+% - neue Literaturdiskussion aufmachen
+% - offene technische Backlog-Punkte unstrukturiert aufzaehlen
+%
+% =============================================================================
+
 \section{Fazit und Ausblick}
-\subsection{Zusammenfassung}
+\label{sec:conclusion}
+
+% =============================================================================
+\subsection{Zusammenfassung der Arbeit}
+\label{sec:conclusion_summary}
+% =============================================================================
+
+% ZIEL:
+% Ca. 1 bis 1,5 Seiten.
+%
+% Den roten Faden der Arbeit in stark verdichteter Form zusammenfassen.
+%
+% EMPFOHLENE REIHENFOLGE:
+%
+% 1. Ausgangsproblem:
+%    heterogene Legacy-Engineering-Informationen
+%    -> fehlende direkte, belastbare Ueberfuehrung in SysML v2
+%
+% 2. Ziel:
+%    Konzeption einer Informationsverarbeitungsarchitektur
+%    fuer kontrollierte KI-gestuetzte Bewertung, Synthese und Modellbildung.
+%
+% 3. Vorgehen:
+%    Literatur
+%    -> Architekturkonzeption
+%    -> modellbasierte Beschreibung
+%    -> prototypische Umsetzung
+%    -> formative Verifikation
+%    -> finale E2E-/Multi-Source-/SYSIDE-/Human-Validation
+%
+% 4. finale Architektur:
+%
+% Project / Source Context
+% -> source-grounded Processing
+% -> Human Engineering Review
+% -> Approved Engineering Information
+% -> Project Fit / Multi-Source
+% -> Model Derivation / Placement
+% -> Target-Model Formulation
+% -> deterministic Assembly
+% -> deterministic SysML-v2 Generation
+% -> technical Validation
+% -> Final Human Review
+% -> Publication
+%
+% 5. wichtigste Resultate:
+%
+% - Single-Source E2E erfolgreich
+% - genuine Multi-Source fuer Project 308131 erfolgreich
+% - externe SYSIDE-Validierung erfolgreich
+% - Human Release / immutable Publication erreicht
+% - finale Regression 6335 passed / 12 skipped
+%
+% WICHTIG:
+% Diese Punkte nur knapp nennen.
+% Interpretation bereits in Kapitel 8.
+
+
+% =============================================================================
 \subsection{Beitrag der Arbeit}
+\label{sec:conclusion_contribution}
+% =============================================================================
+
+% Ziel:
+% klar sagen, was die Arbeit ueber die reine Implementierung hinaus leistet.
+%
+% Nicht zehn kleine Beitraege nennen.
+% Besser 3 bis 4 belastbare Hauptbeitraege.
+
+
+\subsubsection{Konzeptioneller Beitrag}
+\label{sec:conclusion_conceptual_contribution}
+
+% KERNGEDANKE:
+%
+% Entwicklung einer responsibility-basierten
+% Informationsverarbeitungsarchitektur fuer die kontrollierte
+% Ueberfuehrung heterogener Engineering-Informationen in SysML v2.
+%
+% Zentrale Prinzipien:
+%
+% - Source Grounding und Provenance
+% - shared Subject Identity vor Persona Interpretation
+% - explizite Human Engineering Authority
+% - Trennung von Engineering Meaning und Target Representation
+% - explizite Model Placement / Target-Model Formulation
+% - deterministic Assembly / Serialization
+% - separate technical Validation und Human Approval
+%
+% NICHT:
+% als universelle Referenzarchitektur bezeichnen.
+%
+% Besser:
+% Architekturkonzept fuer den untersuchten Problemraum.
+
+
+\subsubsection{Methodischer Beitrag}
+\label{sec:conclusion_methodological_contribution}
+
+% KERNGEDANKE:
+%
+% Die Architektur wurde nicht nur entworfen,
+% sondern durch einen iterativen formativen Zyklus weiterentwickelt:
+%
+% Architecture Assumption
+% -> Implementation Slice
+% -> Focused Verification
+% -> Finding
+% -> Root Cause
+% -> Architecture / Contract Correction
+% -> Retest
+% -> Regression
+% -> Acceptance
+%
+% Wert:
+% Findings wurden als Evidenz erhalten,
+% nicht durch Neustart / Glattziehen aus der Historie entfernt.
+%
+% WICHTIG:
+% ADRs = Design Rationale / project evidence.
+% Keine Methodik behaupten, die wissenschaftlich nicht sauber belegt wurde.
+
+
+\subsubsection{Prototypischer und technischer Beitrag}
+\label{sec:conclusion_technical_contribution}
+
+% KERNGEDANKE:
+%
+% Der entwickelte PoC realisiert den thesis-relevanten Informationspfad
+% technisch end-to-end.
+%
+% Belegt durch:
+%
+% - source-local Processing
+% - Human Review
+% - AEI
+% - Project Fit
+% - Model Candidate / Placement
+% - IEM
+% - SysML-v2 Generation
+% - SYSIDE Validation
+% - Final Human Review / Publication
+% - Genuine Multi-Source Retest
+%
+% NICHT:
+% Production Readiness behaupten.
+
+
+\subsubsection{Beitrag zur Human-Authority- und Assurance-Frage}
+\label{sec:conclusion_human_authority_contribution}
+
+% KERNGEDANKE:
+%
+% Die Arbeit operationalisiert Human in the Loop nicht als einen
+% pauschalen Approve-Schritt, sondern als gestufte Engineering Authority.
+%
+% Relevante Entscheidungsebenen:
+%
+% - Engineering Meaning
+% - Ambiguity / Variance
+% - Model Placement
+% - Target-Model Formulation / Quality
+% - Final Model Review
+% - Publication
+%
+% Gleichzeitig:
+% Interaktion soll auf materielle Entscheidungen konzentriert werden.
+%
+% Diese Aussage kurz halten.
+% Die eigentliche Diskussion steht in Kapitel 8.
+
+
+% =============================================================================
 \subsection{Ausblick}
+\label{sec:conclusion_outlook}
+% =============================================================================
+
+% AUSDRUECKLICHE TRENNUNG:
+%
+% - implemented today
+% - conceptually enabled
+% - future work
+%
+% Diese Unterscheidung insbesondere beim Adaptive Learning durchhalten.
+
+
+\subsubsection{Erweiterung auf weitere Engineering-Aufgaben}
+\label{sec:outlook_reuse}
+
+% ZENTRALER AUSBLCKSPUNKT:
+%
+% Die Architektur ist nicht ausschliesslich fuer genau eine einzelne
+% Legacy-to-SysML-v2-Aufgabe interessant.
+%
+% Durch:
+% - modulare Processing Boundaries
+% - task-spezifische LLM Calls
+% - Evidence / Provenance
+% - Human Review
+% - deterministic downstream responsibilities
+%
+% koennen zukuenftig weitere klar abgegrenzte Engineering Tasks
+% ueber dieselbe Governance- und Authority-Infrastruktur laufen.
+%
+% WICHTIG:
+% Nicht behaupten, dass andere Tasks bereits trainiert / validiert wurden.
+%
+% Formulierungslogik:
+%
+% Die Architektur legt eine Wiederverwendung fuer weitere Engineering-Aufgaben nahe.
+% Die konkrete Uebertragbarkeit muss fuer jede Aufgabe separat validiert werden.
+%
+% MOEGLICHE BEISPIELKATEGORIEN, NUR WENN SPATER GEWOLLT:
+% - weitere Information-Extraction-Aufgaben
+% - Classification / Mapping Tasks
+% - Modellqualitaetspruefung
+% - Change Impact Assessment
+% - Requirements / Architecture transformation support
+%
+% Keine lange Fantasieliste.
+%
+% PROJEKTEVIDENZ:
+% Thesis_Outlook_Adaptive_Human_Feedback_Learning.md
+% -> "reuse/portability applications of the Turing Generator"
+
+
+\subsubsection{Adaptive Human-Feedback-Lernarchitektur}
+\label{sec:outlook_adaptive_learning}
+
+% PROJEKTSTATUS:
+% Future concept / thesis outlook
+% NICHT Teil der implementierten v0.3.0-Baseline.
+%
+% PROJEKTDOKUMENT:
+% collaboration/checkpoints/Thesis_Outlook_Adaptive_Human_Feedback_Learning.md
+%
+% KERNIDEE:
+%
+% Persistierte Human-in-the-Loop-Entscheidungen werden nicht nur
+% als Engineering Authority genutzt,
+% sondern koennen zukuenftig als strukturiertes supervisiertes Feedback
+% fuer weitere LLM-gestuetzte Engineering Tasks dienen.
+%
+% KEIN:
+% uncontrolled online self-modification.
+%
+% ZIEL:
+% controlled continual learning.
+
+
+\paragraph{Konzeptioneller Lernpfad}
+\label{sec:outlook_adaptive_learning_loop}
+
+% ZUKUENFTIGER FLOW:
+%
+% LLM Proposal
+% -> Human Review
+% -> Accept as generated / Modify / Reject / Defer
+% -> persist exact delta + provenance
+% -> detect recurring correction patterns
+% -> train / update candidate learned policy
+% -> offline / shadow evaluation
+% -> governed promotion decision
+% -> version learned policy
+% -> Adaptive Inference Gateway
+% -> next inference cycle
+%
+% WICHTIG:
+% gelernter Zustand ist ein versioniertes / pruefbares Artefakt.
+% Keine stille Aenderung produktiver Engineering Authority.
+
+
+\paragraph{First-Pass Human Acceptance Rate als moegliche Messgroesse}
+\label{sec:outlook_acceptance_metric}
+
+% PRIMARY DESCRIPTIVE METRIC:
+%
+% First-Pass Human Acceptance Rate
+%
+% accepted without Human content change
+% -------------------------------------
+% all Human-decided proposals
+%
+% In LaTeX spaeter ggf. Formel.
+%
+% Messung bevorzugt ueber:
+% exact machine proposal content / fingerprint
+% vs.
+% Human-reviewed result
+%
+% NICHT allein ueber UI Outcome Label.
+%
+% ZUSAETZLICHE HUMAN INTERVENTION METRIKEN:
+%
+% - accepted as generated
+% - accepted with modification
+% - rejected
+% - deferred / out of scope
+% - changed fields
+% - type / magnitude of change
+% - recurring correction patterns
+% - review effort, soweit messbar
+%
+% WICHTIG:
+% Acceptance Rate ist KEIN alleiniger Optimierungs-Score.
+
+
+\paragraph{Guardrails fuer adaptives Lernen}
+\label{sec:outlook_adaptive_guardrails}
+
+% Optimierungslogik:
+%
+% maximize:
+% - first-pass Human acceptance
+% - reduction of Human correction effort
+%
+% subject to:
+% - source grounding preserved
+% - coverage sufficient
+% - traceability complete
+% - technical validation passed
+% - Human authority rules satisfied
+% - uncertainty remains visible
+% - no trivial / overconservative proposals only to increase acceptance
+%
+% WICHTIGER THESIS-PUNKT:
+%
+% Eine steigende Acceptance Rate darf NICHT automatisch
+% Human Approval ersetzen.
+
+
+\paragraph{Nutzung wiederkehrender Human-Korrekturen}
+\label{sec:outlook_tacit_knowledge}
+
+% LANGFRISTIG BESONDERS INTERESSANT:
+%
+% Nicht nur Accept/Reject lernen,
+% sondern wiederkehrende inhaltliche Aenderungsmuster.
+%
+% PROJEKTBEISPIEL:
+%
+% Machine repeatedly infers purpose from capability statement
+% -> Engineer repeatedly restores source-supported capability semantics
+% -> recurring correction detected
+% -> candidate learned rule:
+%    do not infer purpose when source supports only capability
+%
+% INTERPRETATION FUER DEN AUSBLICK:
+%
+% Human Review koennte dadurch neben Quality Gate
+% zu einer strukturierten Quelle wiederverwendbaren Expertenwissens werden.
+%
+% VORSICHT:
+% Nicht behaupten, dass tacit knowledge vollstaendig extrahierbar ist.
+% Nur "Teile wiederkehrender Expertenkorrekturen" / "Muster".
+
+
+\paragraph{Moeglicher Reifungspfad}
+\label{sec:outlook_learning_maturity}
+
+% REPO-KONZEPT:
+%
+% Stage 1:
+% 100% Human Review
+%
+% Stage 2:
+% learned assistance reduces correction effort
+%
+% Stage 3:
+% risk-/confidence-based Human review focuses on exceptions
+%
+% Stage 4:
+% bounded classes may become candidates for automatic approval
+%
+% EXTREM WICHTIG:
+%
+% Stage 4 benoetigt eine neue explizite
+% Governance-/Requirements-Entscheidung.
+%
+% Es ist KEINE automatische Folge hoher Acceptance Rates.
+
+
+\subsubsection{Erweiterung der semantischen und modellseitigen Abdeckung}
+\label{sec:outlook_target_coverage}
+
+% ZIEL:
+% die wichtigsten echten technischen Weiterentwicklungen zusammenfassen.
+%
+% KANDIDATEN:
+%
+% - breitere SysML-v2-Construct-Coverage
+% - generalisierte Target-Model Formulation
+% - weitere Relationship families
+% - verbesserte predicate-variant consolidation
+% - weitere Source Types
+%
+% RELEVANTE FINDINGS:
+% SEM-009
+% SEM-011
+% SEM-015
+%
+% NICHT:
+% komplette Finding-/Backlog-Liste wiederholen.
+
+
+\subsubsection{Weiterentwicklung der Multi-Source-Verarbeitung}
+\label{sec:outlook_multisource}
+
+% STATUS HEUTE:
+% thesis MVP endet bewusst bei:
+%
+% source admissibility / Project Fit
+% + provenance-preserving downstream flow.
+%
+% ZUKUENFTIG:
+%
+% project-level semantic reconciliation
+% change control
+% equivalent / complementary / conflicting / superseding information
+% source revisions
+% explicit Project Engineering Authority
+%
+% WICHTIG:
+% kein synthetic merged AEI.
+%
+% source provenance darf semantic grouping nicht automatisch bestimmen.
+%
+% PROJEKTEVIDENZ:
+% Zusatz im Adaptive Human Feedback Learning checkpoint
+% nach BLK-002 closeout.
+
+
+\subsubsection{Betriebs- und Skalierungsfaehigkeit}
+\label{sec:outlook_scalability}
+
+% Nur kompakt:
+%
+% - Background Processing
+% - Cancellation / recovery
+% - Reprocessing / supersession
+% - Runtime / Token / Cost optimization
+% - groessere Datensaetze
+% - weitere Source Types
+%
+% Nicht zu viel Raum geben.
+% Das sind technische Weiterentwicklungen, nicht Hauptbeitrag.
+
+
+\subsubsection{Weiterfuehrende wissenschaftliche und industrielle Validierung}
+\label{sec:outlook_validation}
+
+% ZUKUENFTIGE UNTERSUCHUNGEN:
+%
+% - unabhaengige Evaluation
+% - groessere / realere Brownfield-Datensaetze
+% - weitere Engineering Domains
+% - Vergleich unterschiedlicher LLM- / Agentenstrategien
+% - quantitative Human-effort measurement
+% - quantitative acceptance / intervention measurement
+% - langfristige Studie zum Adaptive Human Feedback Learning
+%
+% Safe Demo:
+% je nach Ergebnis als erster externer Praxisimpuls,
+% aber NICHT als Ersatz fuer groessere Validierung.
+%
+% MOEGLICHE LANGFRISTIGE FRAGEN:
+%
+% - Wie stabil ist First-Pass Acceptance ueber Projekte / Domains?
+% - Welche Korrekturmuster sind tatsaechlich wiederverwendbar?
+% - Wann reduziert Lernen Review-Aufwand, ohne Coverage / Grounding zu verschlechtern?
+% - Wie muss Shadow Evaluation fuer learned policies gestaltet sein?
+% - Welche Governance ist fuer risk-based review erforderlich?
+
+
+% =============================================================================
+\subsection{Abschliessende Einordnung}
+\label{sec:conclusion_closing}
+% =============================================================================
+
+% Optionaler letzter kurzer Abschnitt / letzter Absatz.
+%
+% Ziel:
+% Arbeit mit einer klaren, aber nicht werblichen Schlussaussage beenden.
+%
+% Moegliche inhaltliche Linie:
+%
+% Die Arbeit zeigt im abgegrenzten PoC,
+% dass KI-gestuetzte Legacy-to-SysML-v2-Verarbeitung nicht allein
+% durch leistungsfaehige LLMs bestimmt wird,
+% sondern wesentlich durch die Architektur der Informations-, Authority-,
+% Provenance- und Validierungsgrenzen.
+%
+% Der entwickelte Prototyp ist damit weniger als fertiges Produkt zu verstehen,
+% sondern als technisch erprobte Instanziierung eines Architekturkonzepts.
+%
+% Der Ausblick auf weitere Engineering Tasks und
+% kontrolliertes Human-Feedback Learning knuepft direkt an
+% die heute bereits vorhandenen modularen und versionierten Boundaries an.
+%
+% WICHTIG:
+% Kein neuer Claim.
+% Kein Marketing-Satz.
+% Keine grossen Zukunftsversprechen.
+
+
+% =============================================================================
+% EMPFOHLENE ABBILDUNGEN / TABELLEN
+% =============================================================================
+%
+% PRIORITAET 1
+% Abb. 9.1 Adaptive Human-Feedback Learning Loop
+%
+% Human Review
+% -> intervention delta
+% -> learning
+% -> shadow validation
+% -> governed promotion
+% -> Adaptive Inference Gateway
+% -> future proposal
+%
+% Sehr geeignet fuer Thesis + Kolloquium.
+%
+% PRIORITAET 2
+% Tab. 9.1 Implementiert / konzeptionell ermoeglicht / Future Work
+%
+% Beispiel:
+%
+% Persisted Human Decisions:
+% implemented
+%
+% First-Pass Acceptance measurement:
+% conceptually enabled / future measurement
+%
+% Learned Policy Training:
+% future work
+%
+% Adaptive Inference Gateway:
+% future work
+%
+% Risk-based Review:
+% future work
+%
+% Automatic Approval bounded classes:
+% long-term future, new governance decision required
+%
+% Diese Tabelle verhindert Overclaiming.
+
+
+% =============================================================================
+% LITERATURBEDARF KAPITEL 9
+% =============================================================================
+%
+% Kapitel 9 sollte keine neue grosse Literaturbasis eroeffnen.
+%
+% Fuer den Adaptive-Learning-Ausblick kann spaeter,
+% wenn passend und bereits in Kapitel 8 diskutiert:
+%
+% - Human Feedback Learning
+% - continual learning
+% - active learning
+% - human-in-the-loop adaptation
+%
+% kurz referenziert werden.
+%
+% Grundsatz:
+% Literaturargumentation primaer Kapitel 8.
+% Kapitel 9 verweist knapp auf dort etablierte Erkenntnisse.
+
+
+% =============================================================================
+% PROJEKTEVIDENZ FUER KAPITEL 9
+% =============================================================================
+%
+% FINAL STATE:
+% collaboration/checkpoints/
+% 2026-09-02_catia_modeling_complete_thesis_writing_transition_ssot.md
+%
+% ADAPTIVE LEARNING OUTLOOK:
+% collaboration/checkpoints/
+% Thesis_Outlook_Adaptive_Human_Feedback_Learning.md
+%
+% FINDINGS / OPEN COVERAGE:
+% collaboration/audits/wp12_findings.md
+%
+% MULTI-SOURCE OUTLOOK:
+% BLK-002 closeout content in adaptive learning checkpoint
+%
+% WICHTIG:
+% Future concept bleibt klar vom implementierten Baseline-Stand getrennt.
+
+
+% =============================================================================
+% OFFENE ARBEIT VOR AUSFORMULIERUNG
+% =============================================================================
+%
+% [ ] Kapitel 8 finalisieren, bevor Kapitel 9 geschrieben wird.
+%
+% [ ] Exakte finalen RQ-Antworten aus Kapitel 8 als Basis fuer 9.1 verwenden.
+%
+% [ ] Safe Demo Ergebnis beruecksichtigen.
+%
+% [ ] First-Pass Acceptance Rate nur als Future Metric darstellen,
+%     sofern fuer aktuelle Runs keine belastbare retrospektive Messung vorliegt.
+%
+% [ ] Adaptive-Learning-Diagramm erstellen.
+%
+% [ ] Implementiert / enabled / future Tabelle erstellen.
+%
+% [ ] Ausblick nicht mit OBS-/Backlog-Liste aufblasen.
+
+
+% =============================================================================
+% CLAIM-CHECK VOR DEM SCHREIBEN
+% =============================================================================
+%
+% [ ] Keine Forschungsfragen erneut ausfuehrlich beantwortet?
+% [ ] Keine neue Empirie?
+% [ ] Beitrag klar von Resultaten getrennt?
+% [ ] Keine Production-Readiness-Behauptung?
+% [ ] Reuse fuer weitere Tasks als Potenzial, nicht als validierter Fakt?
+% [ ] Adaptive Learning klar Future Work?
+% [ ] Kein uncontrolled online learning suggeriert?
+% [ ] Acceptance Rate nicht als alleinige Qualitaetsmetrik?
+% [ ] Human Authority bleibt erhalten?
+% [ ] Automatic Approval nur als langfristige, neue Governance-Entscheidung?
+% [ ] Tacit Knowledge nur vorsichtig als wiederkehrende Korrekturmuster?
+% [ ] Multi-Source Future Scope korrekt abgegrenzt?
+% [ ] Keine lange technische Backlog-Liste?
+% [ ] Kapitel insgesamt kompakt?
+% [ ] Keine Gedankenstriche als Satzzeichen im finalen Fliesstext?
+% [ ] Kein unpersoenliches "man"?
+% [ ] Tabellenueberschrift oben, Abbildungsunterschrift unten?
+%
+% =============================================================================

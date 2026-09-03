@@ -1,6 +1,1604 @@
-\section{Diskussion}
-\subsection{Interpretation der Ergebnisse}
-\subsection{Grenzen des Ansatzes}
-\subsection{Toolgrenzen: CATIA Magic, SysIDE und SysML v2 Syntax}
-\subsection{Übertragbarkeit auf andere Brownfield Szenarien}
-\subsection{Risiken und offene Punkte}
+% =============================================================================
+% Kapitel 8: Diskussion, Reflexion und Beantwortung der Forschungsfragen
+% ARBEITSGERUEST / REVIEW CANDIDATE
+% Stand: 03.09.2026
+%
+% Dieses Dokument enthaelt bewusst NOCH KEINEN ausformulierten Thesis-Text.
+%
+% Kapitel 7 = Was wurde beobachtet?
+% Kapitel 8 = Was bedeuten die beobachteten Ergebnisse?
+%
+% ZENTRALE AUFGABEN VON KAPITEL 8:
+%
+% 1. Ergebnisse aus Kapitel 7 interpretieren.
+% 2. Ergebnisse mit Literatur und Stand der Technik abgleichen.
+% 3. Spannungen, Widersprueche und Grenzen offen diskutieren.
+% 4. technische Machbarkeit von wissenschaftlicher / fachlicher Validitaet trennen.
+% 5. Effizienz, Kosten, Laufzeit und Human Interaction reflektieren.
+% 6. Safe-Demo-Feedback wissenschaftlich einordnen.
+% 7. AI im Turing Generator und AI als Entwicklungswerkzeug getrennt reflektieren.
+% 8. HF / TF1 / TF2 / TF3 explizit beantworten.
+%
+% HARTER SCHREIBGRUNDSATZ:
+%
+% Kapitel 8 darf interpretieren, aber nur auf Basis von:
+% - Ergebnissen aus Kapitel 7,
+% - wissenschaftlicher Literatur,
+% - explizit dokumentierter Projektevidenz.
+%
+% KEINE neue empirische Beobachtung in Kapitel 8 einfuehren,
+% die nicht zuvor in Kapitel 7 dokumentiert wurde.
+%
+% QUELLENLOGIK:
+%
+% wissenschaftlicher General Claim
+% -> wissenschaftliche Literatur
+%
+% projektspezifische Beobachtung
+% -> Kapitel 7 / Projektartefakt
+%
+% Interpretation der Beobachtung
+% -> Kombination aus Ergebnis + Literatur
+%
+% ADR
+% -> Design Rationale / Projektevidenz, NICHT Literatur.
+%
+% MUST:
+% - keine Forschungsfrage stillschweigend umformulieren
+% - keine universellen Aussagen aus einem PoC ableiten
+% - keine Ontologie als alleinige Anti-Hallucination-Loesung darstellen
+% - SYSIDE-Validitaet nicht mit Engineering Correctness gleichsetzen
+% - Testanzahl nicht als wissenschaftliche Validitaet interpretieren
+% - Multi-Source-Scope nicht ueber Project 308131 hinaus verallgemeinern
+%
+% =============================================================================
+
+\section{Diskussion, Reflexion und Beantwortung der Forschungsfragen}
+\label{sec:discussion}
+
+% =============================================================================
+\subsection{Diskussionsrahmen}
+\label{sec:discussion_frame}
+% =============================================================================
+
+\subsubsection{Bezug zwischen Ergebnissen, Literatur und Forschungsfragen}
+\label{sec:discussion_evidence_logic}
+
+% ZWECK:
+% Leser kurz erklaeren, wie Kapitel 8 aufgebaut ist.
+%
+% LOGIK:
+%
+% Ergebnis aus Kapitel 7
+% -> Interpretation
+% -> Abgleich mit Literatur
+% -> Limitation / Gegenbefund
+% -> Beitrag zur Forschungsfrage
+%
+% KEINE erneute ausfuehrliche Ergebniswiedergabe.
+%
+% Beispielstruktur pro Diskussionsblock:
+%
+% 1. 1-2 Saetze Ergebnisreferenz
+% 2. Interpretation
+% 3. Literaturabgleich
+% 4. Claim Boundary
+% 5. RQ-Relevanz
+%
+% NICHT:
+% Kapitel 7 paraphrasieren.
+
+
+\subsubsection{Ebenen der Diskussion}
+\label{sec:discussion_levels}
+
+% Die Diskussion unterscheidet vier Ebenen:
+%
+% A. Architektur:
+%    Welche Verantwortungstrennungen waren tragfaehig?
+%
+% B. KI-gestuetzte Informationsverarbeitung:
+%    Wo ist LLM-Unterstuetzung sinnvoll und wo braucht es deterministische /
+%    Human-controlled Boundaries?
+%
+% C. Modellbildung / SysML v2:
+%    Welche Trennung ist zwischen Meaning, Representation, Formulation,
+%    Assembly und Serialization erforderlich?
+%
+% D. Untersuchung / PoC:
+%    Wie belastbar und uebertragbar sind die Ergebnisse?
+%
+% Dadurch nicht Architektur-, Tool- und Evaluationserkenntnisse vermischen.
+
+
+% =============================================================================
+\subsection{Interpretation der Ergebnisse zur source-grounded Informationsverarbeitung}
+\label{sec:discussion_source_grounding}
+% =============================================================================
+
+\subsubsection{Source Purity als notwendige Voraussetzung}
+\label{sec:discussion_source_purity}
+
+% ERGEBNISBASIS:
+% Kapitel 7:
+% - SEM-001
+% - BLK-003
+% - fruehe Processing Runs vs R4c
+%
+% ZU INTERPRETIEREN:
+%
+% 1. Warum ist die Trennung von Engineering Source und Processing Context
+%    architektonisch relevant?
+%
+% 2. Welche Fehler entstehen, wenn Prompt-/Task-/Orchestration-Information
+%    als fachliche Evidence behandelt wird?
+%
+% 3. Was bedeutet das fuer TF1:
+%    Nicht nur Dokumentqualitaet, sondern kontrollierter Source Context /
+%    Evidence Boundary ist Voraussetzung.
+%
+% MOEGLICHE KERNAUSSAGE:
+%
+% Zuverlaessige KI-Verarbeitung setzt nicht nur "gute Eingangsdaten" voraus.
+% Ebenso wichtig ist eine explizite maschinelle Grenze zwischen:
+%
+% Engineering Source Content
+% und
+% Processing / Reference / Orchestration Context.
+%
+% LITERATURABGLEICH:
+%
+% [REPO-BIB]
+% Chis 2025 / heterogeneous KB / RAG
+% Tian 2025 / heterogeneous multi-source data
+% ggf. provenance / context literature
+%
+% [ADD / PRUEFEN]
+% LLM grounding / context contamination / provenance source
+%
+% CLAIM BOUNDARY:
+% PoC-Evidenz zeigt dies im untersuchten Workflow,
+% nicht fuer alle LLM-basierten Engineering-Systeme.
+
+
+\subsubsection{Evidence und Subject Identity vor Persona Interpretation}
+\label{sec:discussion_subject_identity}
+
+% ERGEBNISBASIS:
+% SEM-003
+% SEM-004
+% BLK-003
+% R4c-Recovery
+%
+% ZU INTERPRETIEREN:
+%
+% Frueher:
+% Persona erzeugt Proposal Population
+% -> nachgelagerte Consolidation
+%
+% Beobachtet:
+% D3 109 -> D4 109
+%
+% Spaeter:
+% source-grounded Evidence
+% -> shared Subject Identity
+% -> Persona Interpretation
+%
+% DISKUSSIONSFRAGE:
+%
+% Warum ist eine gemeinsame Identitaet vor Multi-Persona-Verarbeitung
+% methodisch / architektonisch robuster als spaetere Rekonstruktion?
+%
+% WICHTIG:
+% Nicht allein aus 109->109 universell schliessen.
+% Kombination:
+% - empirische Beobachtung
+% - weitere semantische Findings
+% - Architekturkorrektur
+% - Retest
+%
+% POTENZIELLER THESIS-BEITRAG:
+%
+% Persona Diversity sollte auf denselben source-grounded Gegenstand
+% angewendet werden.
+%
+% Persona diversity != unabhängige Subject discovery.
+%
+% LITERATUR:
+% [ADD]
+% Multi-agent disagreement / diversity:
+% Wang 2023
+% Liang 2024
+% Du 2024
+% Cui 2026
+% Kostka & Chudziak 2026
+%
+% Vor Verwendung Volltexte claimweise pruefen.
+
+
+\subsubsection{Review-Item Count als ungeeignetes Primaerziel}
+\label{sec:discussion_review_count}
+
+% ERGEBNISBASIS:
+% SEM-005
+%
+% ZU INTERPRETIEREN:
+%
+% Weniger Review Items koennen:
+% - bessere Konsolidierung bedeuten
+% - ODER Informationsverlust bedeuten
+%
+% Mehr Review Items koennen:
+% - echte Informationsdichte darstellen
+% - ODER kuenstliche Persona-/Run-Multiplikation
+%
+% Deshalb:
+% Count alleine keine sinnvolle Assurance-/Qualitaetsmetrik.
+%
+% Kandidaten fuer geeignetere Kriterien:
+% - Source Purity
+% - Grounding
+% - Relevance
+% - Coverage
+% - echte Variance
+% - Human effort
+% - unresolved ambiguity
+%
+% WICHTIG:
+% Diese Kriterien als Interpretation diskutieren,
+% nicht als bereits statistisch validierte Metrik verkaufen.
+
+
+% =============================================================================
+\subsection{Interpretation der Ergebnisse zu Unsicherheit, Persona-Varianz und Human Authority}
+\label{sec:discussion_human_authority}
+% =============================================================================
+
+\subsubsection{Legitime Unsicherheit als Engineering Information}
+\label{sec:discussion_uncertainty}
+
+% ERGEBNISBASIS:
+% SEM-008
+% PASS-004
+% Open Questions in Project 120412
+%
+% ZENTRALE INTERPRETATION:
+%
+% Unsicherheit muss nicht automatisch:
+% - erzwungen aufgeloest,
+% - halluzinatorisch ergaenzt,
+% - oder als technischer Failure behandelt werden.
+%
+% Sinnvolle Trennung:
+%
+% semantic uncertainty
+% -> Human Engineering Review
+%
+% integrity / provenance / identity violation
+% -> fail closed
+%
+% DISKUSSION:
+% Das ist eine wichtige Assurance-Grenze.
+%
+% LITERATUR:
+% [ADD]
+% HITL / Human oversight:
+% Lazaros 2026
+% Mosqueira-Rey 2023
+% Zhu 2026
+%
+% [REPO-BIB]
+% ggf. GRADE nur wenn Claim passt.
+%
+% TF2-Relevanz hoch.
+
+
+\subsubsection{Consensus, Shared Ambiguity und Persona Variance}
+\label{sec:discussion_variance}
+
+% ERGEBNISBASIS:
+% SEM-013
+% OBS-031
+%
+% Drei unterschiedliche Zustandsarten:
+%
+% 1. consensus on one interpretation
+% 2. shared ambiguity
+% 3. actual Persona variance
+%
+% INTERPRETATION:
+%
+% Diese drei Zustaende sollten nicht dieselbe Human-Interaction ausloesen.
+%
+% Effective Intervention:
+%
+% single consensus:
+% -> geringe Interaktionslast
+%
+% shared ambiguity:
+% -> Human waehlt / klaert gemeinsame Alternativen
+%
+% actual variance:
+% -> Differenzen explizit untersuchen
+%
+% WICHTIG:
+% Human Approval darf bei Consensus trotzdem nicht implizit werden,
+% wenn Engineering Authority erforderlich ist.
+%
+% Literatur:
+% Multi-agent disagreement / ensemble / confidence
+% nach Volltextpruefung.
+%
+% TF2-Kernbereich.
+
+
+\subsubsection{Human Authority als gestufte statt einmalige Kontrolle}
+\label{sec:discussion_staged_authority}
+
+% ERGEBNISBASIS:
+%
+% Kapitel 7:
+% - Engineering Review
+% - Model Placement Review
+% - Model Quality / Formulation Review
+% - Assembly relationship resolution
+% - Final Model Review
+% - Publication Approval
+%
+% INTERPRETATION:
+%
+% "Human in the Loop" ist fuer diesen Use Case kein einzelner
+% generischer Approve-Schritt.
+%
+% Unterschiedliche Entscheidungstypen:
+%
+% Meaning Authority
+% Placement Authority
+% Formulation / Quality Authority
+% Model Authority
+% Publication Authority
+%
+% Diese Entscheidungen haben unterschiedliche Informationsbedarfe.
+%
+% TF2:
+% Effective Intervention bedeutet nicht maximale Human Interaction.
+% Es bedeutet Human Authority an materiellen Engineering-Entscheidungen,
+% kombiniert mit Reduktion unnoetiger Interaktion.
+%
+% Literatur:
+% HITL / Human oversight / meaningful human control.
+%
+% Wichtig:
+% nicht behaupten, dass exakt diese Gate-Anzahl universell optimal ist.
+
+
+\subsubsection{Revidierbarkeit und Auditierbarkeit menschlicher Entscheidungen}
+\label{sec:discussion_human_revision}
+
+% ERGEBNISBASIS:
+% OBS-020
+% OBS-021
+% OBS-025
+% OBS-026
+%
+% INTERPRETATION:
+%
+% Human Authority ist nicht nur "jemand klickt Approve".
+%
+% Eine belastbare Authority Chain benoetigt:
+%
+% - eindeutige Action Semantics
+% - Reviewer Binding
+% - immutable Decision Revision
+% - explizites Reopen / Supersede
+% - nachvollziehbaren finalen Authority State
+%
+% Literatur:
+% Provenance / auditability / human oversight.
+%
+% W3C PROV ggf. fuer provenance,
+% aber nicht als Human-Authority-Norm ueberdehnen.
+
+
+% =============================================================================
+\subsection{Interpretation der Ergebnisse zur Modellableitung}
+\label{sec:discussion_model_derivation}
+% =============================================================================
+
+\subsubsection{Engineering Meaning ist nicht Target Model Representation}
+\label{sec:discussion_meaning_representation}
+
+% ERGEBNISBASIS:
+% SEM-002
+% SEM-012
+% BLK-006
+%
+% ZENTRALE INTERPRETATION:
+%
+% Engineering Information Classification:
+% beschreibt Bedeutung der extrahierten Information.
+%
+% Target Model Representation:
+% beschreibt, wie diese Information im Zielmodell repraesentiert wird.
+%
+% Beides ist nicht zwingend 1:1.
+%
+% Beispiel aus Projekt:
+% Engineering Information = constraint
+% Target Representation = stakeholder requirement
+%
+% DISKUSSION:
+% Warum ist ein direktes Mapping problematisch?
+% Welche Verantwortung muss zwischen beiden Ebenen liegen?
+%
+% Literaturabgleich:
+% - Model Transformation / Metamodelle
+% - QVT / MDA
+% - SysML transformation approaches
+%
+% [REPO-BIB]
+% Kapos 2014
+% Li 2022
+% Zhou 2024
+% Meyers 2013
+% Zhao 2023
+%
+% TF3 sehr relevant.
+
+
+\subsubsection{Placement, Formulation und Serialization als getrennte Verantwortungen}
+\label{sec:discussion_formulation}
+
+% ERGEBNISBASIS:
+% BLK-006
+% SEM-015
+% SEM-014
+%
+% Finales Konzept:
+%
+% Engineering Meaning
+% -> Model Placement
+% -> Target-Model Formulation
+% -> deterministic Assembly
+% -> SysML v2 Serialization
+%
+% INTERPRETATION:
+%
+% Placement beantwortet:
+% Wo / als welche Modellrolle soll Information repraesentiert werden?
+%
+% Formulation beantwortet:
+% Wie wird akzeptierte Bedeutung modellgerecht formuliert?
+%
+% Serialization beantwortet:
+% Wie wird ein autorisiertes Modell deterministisch in Syntax ueberfuehrt?
+%
+% Diese Trennung verhindert, dass Syntaxgenerator implizit Engineering Meaning
+% erfinden oder umdeuten muss.
+%
+% LITERATUR:
+% SysML v2 spec
+% model transformation
+% LLM SysML generation papers
+% Architecture as Code
+%
+% [REPO-BIB]
+% Cibrian 2025
+% Cibrian 2025b
+% Pan 2025
+% Ahlbrecht 2024
+% SysMLv2
+%
+% [ADD]
+% July 2026 Prompt-Strategy-Driven SysML-v2 Artefact Generation
+%
+% WICHTIG:
+% "verhindert Halluzination" nicht absolut schreiben.
+% Besser:
+% reduziert den Entscheidungsspielraum downstream / macht Entscheidungen explizit.
+
+
+\subsubsection{Deterministische Assembly und Generation}
+\label{sec:discussion_deterministic_generation}
+
+% ERGEBNISBASIS:
+% BLK-007
+% IEM
+% Generation / SYSIDE
+%
+% INTERPRETATION:
+%
+% Nach Human-authorized Meaning + Placement:
+% keine erneute freie LLM-Interpretation in Assembly / Serialization.
+%
+% Vorteile im PoC:
+% - reproduzierbarer downstream artifact path
+% - explizite unsupported semantics
+% - fail-closed behavior
+% - klare Validierungsgrenze
+%
+% Tradeoff:
+% - begrenzte Construct Coverage
+% - neue Constructs brauchen explizite Profiles / Mappings
+%
+% Literatur:
+% deterministic transformation
+% metamodel validation
+% SysML v2 generation.
+%
+% TF3 / HF.
+
+
+\subsubsection{Formale Modellvaliditaet und Engineering Correctness}
+\label{sec:discussion_validity_correctness}
+
+% ERGEBNISBASIS:
+% SYSIDE PASS
+% Human Final Model Review
+%
+% ZENTRALE TRENNUNG:
+%
+% external tool validation
+% !=
+% Engineering correctness
+%
+% SYSIDE prueft:
+% akzeptierte syntax/tool compatibility im verwendeten Scope.
+%
+% Human Final Review prueft:
+% fachliche Plausibilitaet / autorisierte Modellentscheidung im PoC.
+%
+% Keines ersetzt das andere.
+%
+% Literatur:
+% SysML v2 spec
+% Cibrian metamodel validation
+% Verification/Validation sources.
+%
+% Diese Trennung unbedingt in HF/TF3-Antwort aufnehmen.
+
+
+% =============================================================================
+\subsection{Interpretation der Multi-Source-Ergebnisse}
+\label{sec:discussion_multisource}
+% =============================================================================
+
+\subsubsection{Project-wide Identity und Provenance}
+\label{sec:discussion_multisource_identity}
+
+% ERGEBNISBASIS:
+% BLK-002 initial FAIL
+% Project 308131 Retest PASS
+%
+% INTERPRETATION:
+%
+% Source-local Eindeutigkeit reicht nicht,
+% sobald mehrere Sources in einen Project-level Prozess eingehen.
+%
+% Benoetigt:
+% project-aware identity
+% source/run/artifact provenance
+% exact admission
+%
+% Diskussion mit:
+% W3C PROV
+% multi-source data integration literature
+% heterogeneous engineering information literature
+%
+% [ADD]
+% W3C PROV-DM / PROV Primer
+% optional Simmhan 2005
+%
+% TF1 / HF.
+
+
+\subsubsection{Source Neutrality und Konfliktbehandlung}
+\label{sec:discussion_source_neutrality}
+
+% ERGEBNISBASIS:
+% Project 308131 acceptance semantics
+%
+% Keine a-priori Source Authority Hierarchy.
+%
+% Equivalent:
+% kann zusammengefuehrt / gemeinsam weitergefuehrt werden,
+% Provenance bleibt erhalten.
+%
+% Distinct / complementary:
+% koexistiert.
+%
+% Conflict / uncertainty:
+% bleibt explizit / Human Authority.
+%
+% INTERPRETATION:
+%
+% "neueste Source gewinnt" oder "Source Type X ist autoritativ"
+% wurde bewusst nicht generalisiert.
+%
+% Literatur:
+% heterogeneous information integration
+% provenance
+% data fusion / conflict resolution, falls passende Literatur vorhanden.
+%
+% WICHTIG:
+% Nur accepted Project-308131-Scope diskutieren.
+% Automatic cross-source change control bleibt Outlook.
+
+
+\subsubsection{Grenzen des Genuine-Multi-Source-Nachweises}
+\label{sec:discussion_multisource_limits}
+
+% Klarstellen:
+%
+% Project 308131:
+% genuine Multi-Source PoC evidence
+%
+% NICHT nachgewiesen:
+% - beliebig viele Sources
+% - langfristiges Change Management
+% - automatische Authority Resolution
+% - industrielle Scale
+% - beliebige Source Types
+%
+% Concern-centric S3A/S3B/S4/S5:
+% prototype evidence only.
+%
+% Diese Grenzen spaeter auch Threats to Validity zuordnen.
+
+
+% =============================================================================
+\subsection{Abgleich mit Stand der Technik und Forschungsluecke}
+\label{sec:discussion_literature_gap}
+% =============================================================================
+
+\subsubsection{LLM-basierte SysML-v2-Generierung}
+\label{sec:discussion_llm_sysml}
+
+% Literatur aus Kapitel 2 wieder aufnehmen:
+%
+% Pan 2025
+% Cibrian 2025
+% Cibrian 2025b
+% Prompt-Strategy-Driven SysML-v2 Artefact Generation
+%
+% VERGLEICHSACHSEN:
+%
+% - Eingangsquelle / Heterogenitaet
+% - Source Grounding
+% - Human Authority
+% - Multi-Source
+% - Provenance
+% - Model Placement
+% - Target Formulation
+% - deterministic generation
+% - external validation
+%
+% Nicht paper-by-paper referieren.
+% Besser Matrix / thematischer Abgleich.
+%
+% Forschungsbeitrag nicht als "erstes System ueberhaupt" behaupten.
+% Formulierung:
+% "In der durchgefuehrten Literaturrecherche wurde kein Ansatz identifiziert,
+% der die untersuchten Verantwortungen in dieser Kombination abbildet."
+%
+% Nur wenn LSR dies nach finalem Screening stuetzt.
+
+
+\subsubsection{Ontologien und semantische Leitplanken}
+\label{sec:discussion_ontology_guardrails}
+
+% TF3 fragt explizit nach ontologischen Regeln / Leitplanken.
+%
+% Ergebnis des Projekts duerfte differenzierter sein:
+%
+% Ontologie / semantic profiles sind hilfreich fuer:
+% - Terminologie
+% - Klassifikation
+% - erlaubte Beziehungen / types
+% - controlled semantics
+%
+% Aber im PoC waren zusaetzlich erforderlich:
+%
+% - Source Grounding
+% - Provenance
+% - Identity
+% - Human Authority
+% - Project Fit
+% - explicit model placement
+% - Target-Model Formulation
+% - deterministic assembly
+% - validation
+%
+% ZENTRALE DISKUSSION:
+%
+% TF3-Annahme ggf. praezisieren:
+% Ontologische Regeln allein sind keine ausreichende Architektur.
+%
+% WICHTIG:
+% Forschungsfrage nicht umschreiben.
+% Antwort darf zeigen, dass die Ausgangsannahme zu eng war.
+%
+% Literatur:
+% Dong
+% Drobnjakovic / IOF
+% ISO/IEC 21838-2
+% Liu SysDO
+% Lu
+% Orellana/Mandrick
+%
+% Keine Aussage "Ontology prevents hallucination".
+
+
+\subsubsection{Architecture as Code}
+\label{sec:discussion_architecture_as_code}
+
+% Abgleich:
+%
+% Architecture as Code:
+% maschinenlesbare / versionierbare Architekturartefakte
+%
+% Turing Generator:
+% generiert textual SysML v2 als kontrolliertes Zielartefakt.
+%
+% Diskussion:
+% - versionierbarkeit
+% - deterministic generation
+% - traceability
+% - reproducibility
+% - human approval
+%
+% Literatur:
+% Bucaioni et al. ICSA 2025
+% Stirbu et al. IEEE Software 2022
+% ggf. Pontillo ICSA 2026
+%
+% Nicht behaupten, dass jede SysML-v2-Textdatei automatisch Architecture as Code ist.
+% Bedingungen explizieren.
+
+
+% =============================================================================
+\subsection{Effizienz, Laufzeit und praktische Nutzbarkeit}
+\label{sec:discussion_efficiency}
+% =============================================================================
+
+\subsubsection{LLM-Aufrufe, Laufzeit und Kosten}
+\label{sec:discussion_runtime_cost}
+
+% ERGEBNISBASIS:
+% SEM-007
+% OBS-017
+% ggf. spaetere Token-/Runtime-Metriken
+%
+% NOCH ZU ERMITTELN / ZU SAMMELN:
+%
+% - LLM Call Count representative Runs
+% - Input / Output Tokens, falls Logging vorhanden
+% - Laufzeiten representative Processing Steps
+% - ggf. API-Kosten fuer representative Runs
+%
+% KEINE Zahlen erfinden.
+%
+% DISKUSSION:
+%
+% Multi-Persona / Repetition verbessert nicht automatisch den Nutzen,
+% verursacht aber Calls / Laufzeit / Review-Volumen.
+%
+% R4c reduziert unnoetige Proposal Multiplication,
+% aber quantitative Effizienzverbesserung nur behaupten,
+% wenn Daten vorhanden.
+%
+% Kapitel 8 darf qualitative Tradeoffs diskutieren,
+% quantitative Claims brauchen Messdaten.
+
+
+\subsubsection{Human Interaction und Automatisierungsgrad}
+\label{sec:discussion_human_efficiency}
+
+% ERGEBNISBASIS:
+% SEM-005
+% SEM-013
+% OBS-031
+% Human Review Gates
+%
+% SPANNUNG:
+%
+% mehr Human Gates:
+% + kontrollierte Engineering Authority
+% - mehr Interaktionsaufwand
+%
+% Ziel:
+% Authority nicht minimieren,
+% sondern Human Attention auf materielle Entscheidungen konzentrieren.
+%
+% Diskutieren:
+% - consensus one-click
+% - shared ambiguity targeted choice
+% - true variance deep review
+% - unimportant technical metadata progressive disclosure
+%
+% TF2-Relevanz hoch.
+
+
+\subsubsection{Praxistauglichkeit des PoC}
+\label{sec:discussion_practicality}
+
+% ERGEBNISBASIS:
+% E2E
+% Runtime
+% Streamlit coupling
+% Safe Demo spaeter
+%
+% Diskutieren:
+%
+% PoC demonstrierbar / technisch end-to-end
+%
+% aber nicht Production Ready:
+% - Background execution
+% - cancellation
+% - reprocessing / supersession
+% - broader target coverage
+% - performance
+% - usability
+%
+% Keine Produktreife suggerieren.
+
+
+% =============================================================================
+\subsection{Einordnung der externen Safe Demo}
+\label{sec:discussion_safe_demo}
+% =============================================================================
+
+% STATUS:
+% erst nach Safe Demo ausformulieren.
+
+
+\subsubsection{Abgleich mit den internen Evaluationsergebnissen}
+\label{sec:discussion_safe_demo_alignment}
+
+% NACH DER DEMO:
+%
+% Welche internen Beobachtungen wurden durch Practitioner Feedback:
+% - bestaetigt?
+% - relativiert?
+% - nicht angesprochen?
+% - neu ergaenzt?
+%
+% Wichtig:
+% keine "Validation by experts" behaupten, wenn es nur Demo + Feedback war.
+
+
+\subsubsection{Aussagekraft der Practitioner-Rueckmeldung}
+\label{sec:discussion_safe_demo_validity}
+
+% Grenzen:
+% - kleine / nicht representative Gruppe
+% - Demonstrationskontext
+% - keine kontrollierte Vergleichsgruppe
+% - moegliche Gruppendynamik
+% - Entwickler praesentiert eigenes System
+%
+% Staerke:
+% - externe fachliche Perspektive
+% - Praxisplausibilisierung
+% - konkrete Fragen / Bedenken / Akzeptanzsignale
+%
+% Nur tatsaechlich dokumentiertes Feedback verwenden.
+
+
+% =============================================================================
+\subsection{Reflexion des KI-gestuetzten Entwicklungsprozesses}
+\label{sec:discussion_ai_development}
+% =============================================================================
+
+% WICHTIGE TRENNUNG:
+%
+% AI ROLE A:
+% KI als Bestandteil des untersuchten Turing Generators
+%
+% AI ROLE B:
+% KI als Entwicklungswerkzeug / Coding- und Architecture Assistant
+%
+% Nicht vermischen.
+
+
+\subsubsection{KI als Bestandteil des untersuchten Systems}
+\label{sec:discussion_ai_system_role}
+
+% Zusammenfassen:
+%
+% AI beteiligt an:
+% - Evidence / semantic interpretation, soweit finaler Flow
+% - Persona Interpretation
+% - Model Derivation / Formulation in bounded stages
+%
+% Keine Engineering Approval Authority.
+%
+% Diskutieren:
+% wo probabilistische Interpretation sinnvoll war
+% und wo deterministische / Human-controlled Verarbeitung bevorzugt wurde.
+
+
+\subsubsection{KI als Entwicklungs- und Coding-Werkzeug}
+\label{sec:discussion_ai_coding}
+
+% PROJEKTSPEZIFISCHE REFLEXION:
+%
+% Entwicklungsworkflow:
+%
+% AI proposal
+% -> Human Review
+% -> ADR / Architecture Decision
+% -> bounded slice
+% -> automated tests
+% -> observed failure
+% -> root-cause analysis
+% -> architecture correction
+% -> retest / regression
+% -> Human acceptance
+%
+% Potenzielle Beobachtungen:
+%
+% - Code-Erzeugung wurde stark beschleunigt.
+% - Human-Arbeit verschob sich teilweise von Zeilenimplementierung zu:
+%   Architecture Boundaries
+%   Contracts
+%   Test Interpretation
+%   Root-Cause Analysis
+%   Scope
+%   Acceptance
+%
+% ABER:
+% Diese Aussagen nur als Projekterfahrung formulieren,
+% sofern keine quantitativen Daten vorliegen.
+%
+% NICHT:
+% allgemeine Produktivitaetssteigerung fuer Softwareentwicklung behaupten.
+%
+% Literatur:
+% Agentic Systems as Boosting Weak Reasoning Models
+% Code as Agent Harness
+% ggf. wissenschaftliche AI-assisted development studies
+%
+% [ADD / PRUEFEN]
+% aktuelle empirische Literatur zu AI coding assistants.
+
+
+\subsubsection{Human Authority auch im Entwicklungsprozess}
+\label{sec:discussion_ai_development_authority}
+
+% Interessanter Meta-Befund:
+%
+% Dieselbe Grundidee wie im Turing Generator:
+% AI kann Vorschlaege erzeugen,
+% Engineering Authority bleibt beim Menschen.
+%
+% ABER:
+% Vorsicht vor zu eleganter Selbstaehnlichkeit.
+% Nicht behaupten, dies sei empirisch "bewiesen".
+%
+% Diskutierbar:
+% - Architekturfreigabe
+% - ADR Acceptance
+% - Test Interpretation
+% - Scope Freeze
+% - finaler CATIA Model Freeze
+%
+% Human war Entscheidungstraeger.
+
+
+\subsubsection{Risiken des KI-gestuetzten Entwicklungsprozesses}
+\label{sec:discussion_ai_development_risks}
+
+% Diskutieren:
+%
+% - plausible, aber falsche Implementierungsvorschlaege
+% - lokale Fixes, die Architekturgrenzen verletzen
+% - Test Overfitting
+% - Kontextverlust bei langen Entwicklungsverlaeufen
+% - Gefahr, Tests als Ersatz fuer Engineering Review zu behandeln
+% - hoher Reviewbedarf bei umfangreichen Codeaenderungen
+%
+% Gegenmassnahmen im Projekt:
+%
+% - ADRs
+% - SSOT Checkpoints
+% - bounded slices
+% - focused tests
+% - complete regression
+% - Human Acceptance
+% - CATIA architecture authority
+%
+% Generalisierung nur mit Literatur.
+
+
+% =============================================================================
+\subsection{Limitationen und Threats to Validity}
+\label{sec:discussion_limitations}
+% =============================================================================
+
+\subsubsection{Formative Selbstevaluation und Entwicklerbias}
+\label{sec:discussion_self_evaluation_limit}
+
+% WP-12 Evaluator = Entwickler / Systems Engineer.
+%
+% Konsequenzen:
+% - nicht unabhaengig
+% - Erwartungsbias moeglich
+% - qualitative Beobachtung
+%
+% Mitigation:
+% - vorab definierte Protokolle
+% - fail states erhalten
+% - Findings Register
+% - immutable checkpoints
+% - Safe Demo als externe Zusatzperspektive
+%
+% Keine Behauptung, dass Bias eliminiert wurde.
+
+
+\subsubsection{Veraenderung des Systems waehrend formativer Evaluation}
+\label{sec:discussion_formative_change_limit}
+
+% WP-12 war formative Evaluation:
+% System wurde zwischen Findings korrigiert.
+%
+% Vorteil:
+% Artifact Improvement / Architecture Learning
+%
+% Limitation:
+% kein fixed-build Benchmark.
+%
+% Deshalb:
+% formative Evidenz und final acceptance getrennt.
+
+
+\subsubsection{Begrenzte Eingangs- und Domaenenabdeckung}
+\label{sec:discussion_input_scope_limit}
+
+% Eingangsquellen:
+% bounded demonstrator / controlled data
+%
+% Genuine Multi-Source:
+% Project 308131
+%
+% NICHT:
+% industrielle Datenmenge / alle Legacy-Typen.
+%
+% TF1-Antwort deshalb als Constraints im untersuchten Scope formulieren.
+
+
+\subsubsection{LLM-Variabilitaet und Reproduzierbarkeit}
+\label{sec:discussion_llm_variability_limit}
+
+% LLM-Ausgaben koennen variieren.
+%
+% Projekt-Gegenmassnahmen:
+% - pinned configuration, soweit vorhanden
+% - immutable processing artifacts
+% - fingerprints
+% - provenance
+% - Human decisions
+% - repeated runs als stability evidence, NICHT votes
+%
+% Aber:
+% semantische Outputs nicht vollstaendig deterministisch.
+%
+% Keine uebertriebene Reproduzierbarkeitsbehauptung.
+
+
+\subsubsection{Target-Model-Coverage}
+\label{sec:discussion_target_scope_limit}
+
+% SEM-011
+% SEM-015 partial
+%
+% Nicht alle SysML-v2-Constructs abgedeckt.
+%
+% Daher:
+% keine allgemeine SysML-v2-Generierungsfaehigkeit behaupten.
+%
+% Architektur kann erweiterbar konzipiert sein,
+% Extension selbst aber nicht vollstaendig validiert.
+
+
+\subsubsection{Tool- und Validierungsgrenzen}
+\label{sec:discussion_tool_limit}
+
+% CATIA:
+% Architekturmodellierungswerkzeug / authority for Turing architecture.
+%
+% SYSIDE:
+% externe Target Artifact Validation.
+%
+% SysML v2:
+% official OMG specification.
+%
+% Grenzen:
+% - Tool-Versionen
+% - locally validated syntax patterns
+% - keine Garantie anderer Toolchains
+%
+% Wichtig:
+% CATIA model ist NICHT Syntax Authority fuer generierte Zielmodelle.
+
+
+\subsubsection{Usability und Production Readiness}
+\label{sec:discussion_usability_limit}
+
+% Keine unabhaengige Usability Study.
+%
+% Keine statistische UX-Auswertung.
+%
+% Streamlit PoC.
+%
+% Runtime-/background-/cancel-/reprocessing findings.
+%
+% Safe Demo != usability validation.
+%
+% Production Readiness explizit ausserhalb des Claims.
+
+
+% =============================================================================
+\subsection{Uebertragbarkeit}
+\label{sec:discussion_transferability}
+% =============================================================================
+
+\subsubsection{Uebertragbare Architekturprinzipien}
+\label{sec:discussion_transferable_principles}
+
+% Nicht "das System ist universell uebertragbar".
+%
+% Stattdessen:
+% Welche Prinzipien KOENNTEN bei aehnlichen Problemklassen relevant sein?
+%
+% Kandidaten:
+% - source-grounded Evidence
+% - explicit provenance
+% - identity before multi-agent interpretation
+% - uncertainty preservation
+% - staged Human Authority
+% - separation Meaning / Representation / Formulation / Serialization
+% - deterministic downstream generation
+% - independent validation
+%
+% Generalisierung mit Literatur abgleichen.
+
+
+\subsubsection{Voraussetzungen fuer andere Brownfield-Szenarien}
+\label{sec:discussion_transfer_conditions}
+
+% Conditions:
+%
+% - Source muss technisch zugreifbar / projizierbar sein
+% - ausreichende inhaltliche Evidenz
+% - kontrollierter Project Context
+% - definierte Target Profile
+% - Human Domain Expertise
+% - externe Validierungsmethode
+%
+% Unterscheiden:
+% Architekturprinzip uebertragbar
+% vs konkrete Taxonomie / Prompts / Profiles projektspezifisch.
+
+
+\subsubsection{Grenzen der Uebertragbarkeit}
+\label{sec:discussion_transfer_limits}
+
+% Unbekannt / nicht validiert:
+%
+% - andere Industriesektoren
+% - andere Modellierungssprachen
+% - sehr grosse Repositories
+% - multimodale Inputs
+% - kontinuierliche Change Streams
+% - Safety-critical production use
+%
+% Diese Punkte in Outlook aufnehmen, nicht als aktuellen Scope darstellen.
+
+
+% =============================================================================
+\subsection{Beantwortung der Forschungsfragen}
+\label{sec:discussion_rq_answers}
+% =============================================================================
+
+% WICHTIG:
+% Die Forschungsfragen exakt aus Kapitel 1 uebernehmen.
+% Nicht umformulieren.
+%
+% Hier spaeter jeweils:
+%
+% 1. exakte Forschungsfrage
+% 2. kurze direkte Antwort (ca. 1 Absatz)
+% 3. 3-5 tragende Ergebnisse
+% 4. Literaturabgleich
+% 5. Claim Boundary
+%
+% Reihenfolge:
+% TF1 -> TF2 -> TF3 -> HF
+%
+% Dadurch baut die HF-Antwort auf den Teilfragen auf.
+
+
+\subsubsection{Teilforschungsfrage 1: Input Assessment und Constraints}
+\label{sec:answer_tf1}
+
+% EXAKTE TF1:
+%
+% "Welche Anforderungen (Constraints) müssen an die Eingangsdaten gestellt werden,
+% damit ein KI-Agent zuverlässig arbeiten kann?"
+%
+% MOEGLICHE ANTWORTSTRUKTUR, NOCH NICHT FINALE FORMULIERUNG:
+%
+% Constraints liegen auf mehreren Ebenen:
+%
+% A. Source Accessibility / Parsability
+% B. klare Source Boundary
+% C. ausreichende Evidence / Informationsgehalt
+% D. Provenance / Identity
+% E. Project Relevance / Project Fit
+% F. Unsicherheit darf explizit bleiben
+% G. keine ungepruefte Vermischung von Sources / Contexts
+%
+% EVIDENZ:
+% SEM-001
+% BLK-002
+% BLK-003
+% R4c
+% Multi-Source Project 308131
+%
+% WICHTIG:
+% "zuverlaessig" nicht als absolute fehlerfreie LLM-Leistung interpretieren.
+% Definieren im Kontext der Architektur:
+% reviewable, provenance-preserving, fail-closed bei Integritaetsproblemen.
+
+
+\subsubsection{Teilforschungsfrage 2: Assurance und Effective Intervention}
+\label{sec:answer_tf2}
+
+% TF2 EXAKTEN WORTLAUT AUS KAPITEL 1 EINFUEGEN.
+% Nicht aus Erinnerung paraphrasieren, sobald Kapitel 1 finalisiert ist.
+%
+% Inhaltliche Antwortstruktur:
+%
+% Human muss nicht jede automatisierte Operation kontrollieren.
+%
+% Human Authority ist erforderlich bei:
+% - Engineering Meaning / Review
+% - materieller Unsicherheit / Varianz
+% - Model Placement
+% - Formulation / Quality, wo semantische Entscheidung verbleibt
+% - unresolved Relationships
+% - Final Model Review
+% - Publication
+%
+% Effective Intervention:
+% - klare Evidence
+% - sichtbare Alternatives / Variance
+% - explicit Decision Semantics
+% - Reopen / revise
+% - keine substantive defaults
+% - reduzierte Interaktion bei echtem Consensus
+%
+% EVIDENZ:
+% SEM-005
+% SEM-008
+% SEM-013
+% SEM-014
+% OBS-020/021/025/026/031
+% Human gates
+%
+% Safe-Demo-Feedback spaeter integrieren.
+
+
+\subsubsection{Teilforschungsfrage 3: Leitplanken-Design}
+\label{sec:answer_tf3}
+
+% TF3 EXAKTEN WORTLAUT AUS KAPITEL 1 EINFUEGEN.
+%
+% Inhaltliche Antwortstruktur:
+%
+% Ontologische Regeln / Profiles sind notwendige,
+% aber im PoC nicht hinreichende Leitplanken.
+%
+% Erforderliches Gesamtset:
+%
+% - controlled semantics / ontology
+% - source grounding
+% - provenance / identity
+% - Project Fit
+% - Human Authority
+% - separation Meaning / Representation
+% - explicit Placement
+% - Target-Model Formulation
+% - deterministic Assembly / Serialization
+% - independent validation
+%
+% Plug & Play / Modularity:
+% nicht durch Ontologie allein.
+%
+% Stattdessen:
+% explizite Contracts und profile-controlled transformations.
+%
+% EVIDENZ:
+% SEM-011
+% SEM-012
+% SEM-014
+% SEM-015
+% BLK-006
+% BLK-007
+% SYSIDE Validation
+%
+% Literatur:
+% Ontology + transformation + SysML + provenance.
+
+
+\subsubsection{Hauptforschungsfrage}
+\label{sec:answer_hf}
+
+% EXAKTE HF:
+%
+% "Wie muss eine Informationsverarbeitungsarchitektur gestaltet sein, um
+% heterogene Bestandsdaten durch ein systematisches Bewertungs- und
+% Synthese-Framework sicher in valide SysML v2 Strukturen zu überführen?"
+%
+% MOEGLICHE SYNTHETISCHE ANTWORTSTRUKTUR:
+%
+% Eine tragfaehige Architektur benoetigt eine kontrollierte Kette:
+%
+% Project / Source Context
+% -> source-local Processing
+% -> source-grounded Evidence
+% -> shared Subject Identity
+% -> Persona Interpretation
+% -> Human Engineering Review
+% -> Approved Engineering Information
+% -> Project Fit / Multi-Source Reconciliation
+% -> Human Project-level Authority
+% -> Model Derivation / Placement
+% -> Target-Model Formulation
+% -> deterministic IEM Assembly
+% -> deterministic SysML-v2 Generation
+% -> independent Validation
+% -> Final Human Model Review
+% -> Publication Gate
+%
+% "sicher" in der Thesis nicht im funktional-safety-Sinn,
+% sondern als governed / traceable / fail-closed / Human-authorized erklaeren,
+% falls dieser Begriff in Kapitel 1 so gemeint ist.
+%
+% "valide SysML v2 Strukturen":
+% formale / toolseitige Validitaet
+% + separate Human Engineering Acceptance.
+%
+% WICHTIG:
+% HF-Antwort muss kompakt sein.
+% Keine erneute komplette Architekturkapitel-Zusammenfassung.
+
+
+% =============================================================================
+\subsection{Synthese der Diskussion}
+\label{sec:discussion_synthesis}
+% =============================================================================
+
+% ZWECK:
+% 1 Seite oder weniger.
+%
+% Zusammenfassen:
+%
+% - Welche Architekturannahmen wurden bestaetigt?
+% - Welche mussten korrigiert / differenziert werden?
+% - Was ist der eigentliche wissenschaftliche / konzeptionelle Beitrag?
+% - Welche Claim Boundaries bleiben?
+%
+% MOEGLICHE VIER-PUNKT-SYNTHESE:
+%
+% 1. Grounding / Provenance vor freier KI-Interpretation.
+% 2. Human Authority an materiellen Engineering-Entscheidungen.
+% 3. Meaning / Representation / Formulation / Serialization trennen.
+% 4. Multi-Source braucht project-wide identity + explicit authority.
+%
+% Plus:
+% formale Validation != Engineering Correctness.
+%
+% UEBERGANG ZU KAPITEL 9:
+% Fazit fasst Beitrag und Ausblick komprimiert zusammen.
+
+
+% =============================================================================
+% EMPFOHLENE ABBILDUNGEN / TABELLEN
+% =============================================================================
+%
+% PRIORITAET 1
+% Tab. 8.1 Ergebnis -> Interpretation -> Literatur -> RQ
+%
+% Ergebniscluster
+% | Interpretation
+% | Literaturbezug
+% | RQ
+% | Claim Boundary
+%
+% PRIORITAET 1
+% Abb. 8.1 Synthese der Architekturprinzipien
+%
+% Grounding
+% -> Human Authority
+% -> Model Responsibility Separation
+% -> Deterministic Generation / Validation
+%
+% Diese Abbildung darf interpretativ sein.
+%
+% PRIORITAET 1
+% Tab. 8.2 Beantwortung der Forschungsfragen
+%
+% RQ
+% | Kurzantwort
+% | wichtigste Evidenz
+% | Grenze
+%
+% PRIORITAET 2
+% Tab. 8.3 Threats to Validity
+%
+% Threat
+% | Auswirkung
+% | Mitigation
+% | Rest-Risiko
+%
+% PRIORITAET 2
+% Tab. 8.4 AI im System vs AI im Entwicklungsprozess
+%
+% Rolle
+% | Aufgabe
+% | Human Authority
+% | Risiko
+% | Kontrolle
+%
+% OPTIONAL
+% Effizienz-/Token-Tabelle, NUR wenn belastbare Daten vorliegen.
+
+
+% =============================================================================
+% LITERATURBEDARF KAPITEL 8
+% =============================================================================
+%
+% HOCH:
+%
+% [ADD] Wieringa 2014
+% [ADD] HITL / Human oversight:
+%       Lazaros 2026
+%       Mosqueira-Rey 2023
+%       Zhu 2026
+%
+% [ADD] Multi-agent variance / disagreement:
+%       Wang 2023
+%       Liang 2024
+%       Du 2024
+%       Cui 2026
+%       Kostka & Chudziak 2026
+%
+% [ADD] W3C PROV-DM / PROV Primer
+%
+% [ADD] Architecture as Code:
+%       Bucaioni ICSA 2025
+%       Stirbu IEEE Software 2022
+%       optional Pontillo ICSA 2026
+%
+% [ADD] Topcu & Husain 2025 Trust at Your Own Peril
+%
+% [ADD] Prompt-Strategy-Driven SysML-v2 Artefact Generation 2026
+%
+% MITTEL:
+%
+% [ADD] AI coding assistant empirical literature
+% fuer die Development Reflection.
+%
+% [REPO-BIB]
+% SysMLv2 official OMG
+% Cibrian 2025 / 2025b
+% Pan 2025
+% Chis 2025
+% Tian 2025
+% Meyers 2013
+% Kapos 2014
+% Li 2022
+% Zhou 2024
+% Zhao 2023
+% ontology papers
+% ISO42030, falls passender Claim
+%
+% WICHTIG:
+% Jede allgemeine Aussage vor Schreiben gegen Volltext pruefen.
+
+
+% =============================================================================
+% PROJEKTEVIDENZ FUER KAPITEL 8
+% =============================================================================
+%
+% Kapitel 8 sollte primaer auf Kapitel 7 referenzieren.
+% Fuer Detailbelege:
+%
+% [PROJECT]
+% wp12_findings.md
+% wp12_formative_self_test_report.md
+% BLK-002 closeout
+% Gate-3 checkpoints
+% final CATIA / thesis transition SSOT
+% selected ADRs as Design Rationale
+%
+% ADRs insbesondere:
+% ADR-016 Human authority
+% ADR-019 IEM
+% ADR-021 deterministic generation
+% ADR-022 validation
+% ADR-023 final review/publication
+% ADR-027 Evidence before Persona
+% ADR-029 placement / assembly separation
+% ADR-032/033/034 Multi-Source
+%
+% ADRs NICHT als wissenschaftliche Stuetzung verwenden.
+
+
+% =============================================================================
+% OFFENE ARBEIT VOR AUSFORMULIERUNG
+% =============================================================================
+%
+% PRIORITAET A
+%
+% [ ] Exakte TF2- und TF3-Wortlaute aus finalem Kapitel 1 einfuegen.
+%
+% [ ] Literatur-Jagdliste nach Abschluss aller Kapitelgerueste erzeugen.
+%
+% [ ] P1 Findings -> Interpretationscluster final mappen.
+%
+% [ ] Safe Demo durchfuehren und Kapitel 7 zuerst aktualisieren.
+%
+% [ ] Danach erst Safe-Demo-Interpretation in Kapitel 8.
+%
+% [ ] Token / Laufzeit / Kosten Daten pruefen:
+%     Was ist tatsaechlich geloggt und thesis-verwendbar?
+%
+% PRIORITAET B
+%
+% [ ] Finding -> ADR Mapping fuer Architekturkorrekturen verifizieren.
+%
+% [ ] Ontology-Claims aus altem LSR reduzieren / korrigieren.
+%
+% [ ] Literature Gap gegen finalen LSR / PRISMA Corpus pruefen.
+%
+% [ ] RQ Answers erst nach Literaturintegration finalisieren.
+%
+% PRIORITAET C
+%
+% [ ] AI-assisted development reflection mit geeigneter Literatur absichern.
+%
+% [ ] Transferability Claims bewusst konservativ formulieren.
+
+
+% =============================================================================
+% CLAIM-CHECK VOR DEM SCHREIBEN
+% =============================================================================
+%
+% [ ] Jede Interpretation hat ein Ergebnis aus Kapitel 7?
+% [ ] General Claims wissenschaftlich belegt?
+% [ ] Keine neue empirische Evidenz nur in Kapitel 8?
+% [ ] Keine Finding-ID als Ersatz fuer Argumentation?
+% [ ] Ontologie nicht als alleinige Hallucination Guardrail?
+% [ ] Human Authority nicht als pauschal "mehr Human = sicherer" dargestellt?
+% [ ] Effective Intervention beruecksichtigt Interaktionsaufwand?
+% [ ] Meaning / Representation / Formulation / Serialization getrennt?
+% [ ] SYSIDE-Validitaet klar von Engineering Correctness getrennt?
+% [ ] Testanzahl nicht als wissenschaftliche Validitaet?
+% [ ] Multi-Source nicht uebergeneralisiert?
+% [ ] Target Coverage Partial klar genannt?
+% [ ] Safe Demo nicht als representative Expert Validation?
+% [ ] AI-as-system und AI-as-development-tool getrennt?
+% [ ] AI coding productivity nicht ohne Daten generalisiert?
+% [ ] TF1 / TF2 / TF3 exakt aus Kapitel 1 zitiert?
+% [ ] HF exakt aus Kapitel 1 zitiert?
+% [ ] RQ-Beantwortung direkt, knapp und evidenzbasiert?
+% [ ] Keine Forschungsfrage nachtraeglich umgeschrieben?
+% [ ] Limitationen nicht erst im Fazit versteckt?
+% [ ] Keine Gedankenstriche als Satzzeichen im finalen Fliesstext?
+% [ ] Kein unpersoenliches "man"?
+% [ ] Tabellenueberschrift oben, Abbildungsunterschrift unten?
+%
+% =============================================================================
