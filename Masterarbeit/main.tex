@@ -19,6 +19,10 @@
 \usepackage{tabularx}
 \usepackage{xltabular}
 \usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
+\usepackage{listings}
+\usepackage{csquotes}
+\AtBeginDocument{\counterwithin{lstlisting}{section}}
+
 \addbibresource{literatur.bib} % Einbindung der Datenbankdatei
 \geometry{a4paper, left=30mm, right=25mm, top=25mm, bottom=25mm}
 \onehalfspacing
@@ -64,7 +68,13 @@
 \newpage
 \input{Kapitel/09_Fazit}
 \newpage
-\input{Anhang/01_Findings_Register}
+\input{Anhang/01_Literaturrecherche}
+\newpage
+\input{Anhang/02_Findings_Register}
+\newpage
+\input{Anhang/03_Testdaten}
+\newpage
+\input{Anhang/04_TestReport_WP12}
 %\input{Kapitel/LSP}
 %\newpage
 %\input{Kapitel/LSR}
