@@ -1,0 +1,976 @@
+% =============================================================================
+% Kapitel 3: Methodisches Vorgehen
+% ARBEITSGERUEST / REVIEW CANDIDATE
+% Stand: 03.09.2026
+%
+% Dieses Dokument enthaelt bewusst NOCH KEINEN ausformulierten Thesis-Text.
+% Die Kommentare bilden die Argumentationsstruktur, Kernaussagen, Quellenbasis,
+% Projektevidenz, Abgrenzungen sowie offene Quellenluecken ab.
+%
+% Quellenstatus:
+% [REPO-BIB]  Quelle ist im Thesis-Repository und in literatur.bib vorhanden.
+%             Der konkrete Claim muss vor finaler Verwendung im Volltext
+%             nochmals geprueft werden.
+% [REPO-FILE] Quelle ist als Datei im Repository vorhanden, aber noch nicht
+%             verlaesslich in literatur.bib eingebunden und/oder claimweise
+%             geprueft.
+% [ADD]       Empfohlene Quelle ist noch nicht im Repository und muss vor
+%             Verwendung beschafft, gespeichert, gelesen und in literatur.bib
+%             aufgenommen werden.
+% [PROJECT]   Projektevidenz. Belegt den tatsaechlichen Projektverlauf,
+%             ersetzt aber keine wissenschaftliche Literatur fuer allgemeine
+%             Aussagen.
+% [PRACTICE]  Praxisimpuls ohne empirischen Auswertungsanspruch.
+%
+% Arbeitsregel:
+% Erst nach Pruefung der hier zugeordneten Quellen wird der jeweilige Abschnitt
+% in Fliesstext ueberfuehrt.
+% =============================================================================
+
+\section{Methodisches Vorgehen}
+\label{sec:methodik}
+
+% -----------------------------------------------------------------------------
+% FUNKTION DES KAPITELS
+% -----------------------------------------------------------------------------
+% Zweck:
+% Dieses Kapitel erklaert, WIE das Architekturkonzept entwickelt, begruendet,
+% konkretisiert und untersucht wurde.
+%
+% Das Kapitel beschreibt NICHT die finale Architektur im Detail.
+% Die resultierende Architektur folgt in Kapitel 4.
+%
+% Der methodische rote Faden:
+%
+% wissenschaftliche Ausgangsbasis
+% -> literaturbasierte Ausgangshypothese
+% -> Forschungsfragen und Engineering-Anforderungen
+% -> modellbasierte Architekturentwicklung
+% -> Gestaltungsprinzipien fuer KI-gestuetzte Informationsverarbeitung
+% -> iterative Architekturentscheidungen
+% -> prototypische Realisierung als Untersuchungsmittel
+% -> Verifikation und Validierung
+%
+% Kernaussage des gesamten Kapitels:
+% Die finale Informationsverarbeitungsarchitektur entstand nicht aus einer
+% einmaligen Implementierungsentscheidung. Sie wurde aus Literatur, fachlichen
+% Anforderungen und einer fruehen Architekturhypothese abgeleitet, modellbasiert
+% konkretisiert und durch prototypische Untersuchungen iterativ weiterentwickelt.
+%
+% NICHT HIER:
+% - vollstaendige Beschreibung der neun finalen Subsysteme
+% - detaillierte Implementierungsbeschreibung einzelner Python-Module
+% - konkrete Versuchsergebnisse
+% - Interpretation der Versuchsergebnisse
+% - Reflexion der KI als Coding-Werkzeug
+%
+% Diese Inhalte gehoeren in Kapitel 4, 5, 7 bzw. 8.
+
+
+% =============================================================================
+\subsection{Forschungsdesign und Vorgehensmodell}
+\label{sec:forschungsdesign}
+% =============================================================================
+
+% Zweck:
+% Einordnung der Arbeit als gestaltungsorientierte, empirisch rueckgekoppelte
+% Architekturuntersuchung. Der Untersuchungsgegenstand ist das
+% Architekturkonzept. Der Prototyp dient seiner Konkretisierung und Untersuchung.
+%
+% Zentrale Frage des Abschnitts:
+% Welche Forschungslogik verbindet Literatur, Architekturentwicklung,
+% prototypische Realisierung und Evaluation?
+
+Die vorliegende Arbeit verfolgt einen gestaltungsorientierten Forschungsansatz.
+Gegenstand der Untersuchung ist die Konzeption einer
+Informationsverarbeitungsarchitektur zur kontrollierten Überführung heterogener
+Engineering-Bestandsinformationen in SysML v2. Die prototypische
+Softwareimplementierung stellt dabei kein eigenständiges Produktziel dar, sondern
+dient als Proof of Concept zur Konkretisierung und Untersuchung des
+Architekturkonzepts.
+
+Ein solches Vorgehen weist Parallelen zu designorientierten Forschungsansätzen
+im Bereich von Informationssystemen und Software Engineering auf. Wieringa
+beschreibt Design Science als Verbindung zwischen der Gestaltung eines Artefakts
+und der Untersuchung seiner Eignung zur Adressierung eines bestehenden Problems
+\cite{Wieringa2014}. Diese Einordnung dient in der vorliegenden Arbeit als
+methodischer Bezugsrahmen, ohne dass der Projektablauf als unmittelbare Umsetzung
+eines fest vorgegebenen Design-Science-Prozessmodells verstanden wird.
+
+Ausgangspunkt der Architekturentwicklung war eine frühe literaturbasierte
+Lösungshypothese. Auf Basis des initial untersuchten Forschungsstands wurden
+zunächst drei übergeordnete Betrachtungsebenen unterschieden: ein Data Layer für
+die Erfassung und Aufbereitung heterogener Informationen, ein Process Layer für
+deren gesteuerte Verarbeitung sowie ein Knowledge Layer für semantische
+Harmonisierung, Validierung und wissensgestützte Verarbeitung. Parallel wurde
+eine erste Prozessfolge aus Feature Ingestion, Sortierung, ontologischer
+Anpassung, Mustererkennung, Human-in-the-Loop und Synthese formuliert. Diese
+Struktur stellte keine vorweggenommene Zielarchitektur dar, sondern diente als
+konzeptioneller Ausgangspunkt für die weitere Untersuchung. Die zugrunde liegende
+Literatur umfasste insbesondere Arbeiten zu LLM-gestützter Modellgenerierung,
+modellgetriebener Transformation, Metamodellvalidierung, Ontologien und
+semantischer Normalisierung sowie agentenbasierter Informationsverarbeitung
+\cite{Pan.2025,Cibrian.2025,Li.2022,Cafe.2013,Kapos.2014,Cibrian.2025b,
+Meng.2025,Abonyi.2024,Chis.2025}.
+
+Die Ausgangshypothese wurde nicht unmittelbar implementiert, sondern durch die
+Forschungsfragen, fachliche Anforderungen und Stakeholder-Bedürfnisse weiter
+konkretisiert. Ergänzende Praxisimpulse, unter anderem aus dem fachlichen
+Austausch im Umfeld der MESCONF 2026, dienten zur Schärfung einzelner
+Fragestellungen, beispielsweise hinsichtlich Human-in-the-Loop, semantischer
+Leitplanken und der Grenzen KI-gestützter Modellgenerierung. Solche Impulse
+wurden jedoch nicht als eigenständige empirische Evidenz oder als allgemeiner
+fachlicher Konsens gewertet. Allgemeine wissenschaftliche Aussagen werden daher
+weiterhin durch Literatur getragen.
+
+Die weitere Architekturentwicklung erfolgte iterativ. Einzelne
+Architekturannahmen wurden schrittweise konkretisiert, prototypisch umgesetzt
+und anhand definierter Tests und Beobachtungen untersucht. Zeigten sich dabei
+Probleme, wurden diese nicht ausschließlich als Implementierungsfehler behandelt.
+Lag die Ursache auf konzeptioneller Ebene, etwa in unklaren Verantwortungsgrenzen
+oder unzureichend definierten Übergängen zwischen Verarbeitungsschritten, wurde
+die zugrunde liegende Architekturentscheidung angepasst. Dieses Wechselspiel
+zwischen Gestaltung und Untersuchung entspricht ebenfalls einer zentralen
+Charakteristik designorientierter Forschung \cite{Wieringa2014}.
+
+Die Forschungsfragen selbst blieben während dieses Prozesses unverändert und
+bildeten den konstanten Bezugspunkt für die Weiterentwicklung der Architektur
+und deren spätere Bewertung. Untersucht wird damit nicht die langfristige
+produktive Einführung eines fertigen Systems, sondern die Frage, inwieweit die
+entwickelte Informationsverarbeitungsarchitektur auf konzeptioneller und
+prototypischer Ebene geeignet ist, die aus der Problemstellung und den
+Forschungsfragen abgeleiteten Anforderungen zu adressieren.
+
+
+% =============================================================================
+\subsection{Literaturrecherche und Ableitung des Forschungsbedarfs}
+\label{sec:literaturmethodik}
+% =============================================================================
+
+% Zweck:
+% Kompakte und reproduzierbare Beschreibung der Literaturmethodik.
+% Die detaillierten Suchstrings, Screeningtabellen und Zwischenstaende werden
+% in den Anhang verschoben.
+%
+% WICHTIG:
+% Kapitel 2 enthaelt die INHALTLICHE Synthese des State of the Art.
+% Kapitel 3.2 beschreibt die METHODE der Recherche.
+
+Die wissenschaftliche Ausgangsbasis der Arbeit wurde durch eine strukturierte
+Literaturrecherche erarbeitet. Ziel war es, den Stand der Technik in den für die
+Forschungsfragen relevanten Themenfeldern zu erfassen und daraus sowohl den
+Forschungsbedarf als auch eine belastbare Grundlage für die anschließende
+Architekturkonzeption abzuleiten. Inhaltlich umfasste der Suchraum insbesondere
+SysML und SysML v2, modellgetriebene Transformation, generative KI und Large
+Language Models im Systems Engineering, den Umgang mit heterogenen
+Bestandsinformationen sowie semantische Normalisierung und Ontologien. Die
+Vorgehensweise orientierte sich an etablierten Empfehlungen für systematische
+Literaturreviews im Software Engineering \cite{KitchenhamCharters2007}. Der
+vollständige Literature Search Plan mit Suchraum, Suchparametern und
+Auswahlkriterien ist in Anhang~\ref{app:lsp} dokumentiert.
+
+Die Recherche wurde in Scopus, ScienceDirect, IEEE Xplore und der ACM Digital
+Library durchgeführt. Zur Strukturierung des Suchraums wurden die
+Forschungsfragen zunächst auf Themenfelder übertragen und anschließend in
+Suchbegriffscluster für Modellierungssprachen, KI-Technologien,
+MBSE beziehungsweise Architecture as Code sowie Brownfield- und
+Heterogenitätsprobleme überführt. Die vollständige Definition der verwendeten
+Suchcluster und die datenbankspezifischen Suchstrings sind in
+Anhang~\ref{app:lsp} aufgeführt. Ergänzend wurde Scopus AI explorativ eingesetzt,
+wobei zusätzlich identifizierte Publikationen vor dem Screening mit den
+Ergebnissen der regulären Datenbanksuche abgeglichen wurden.
+
+Die Auswahl der Literatur erfolgte in einem zweistufigen Screening. Nach der
+Bereinigung von Dubletten wurden die Treffer zunächst anhand von Titel und
+Abstract bewertet. Potenziell relevante Publikationen wurden anschließend einer
+Volltextprüfung unterzogen. Die Ein- und Ausschlusskriterien waren bereits im
+Literature Search Plan definiert und sind ebenfalls in
+Anhang~\ref{app:lsp} dokumentiert. Die Nachvollziehbarkeit von Identifikation,
+Screening und Auswahl orientiert sich an den Transparenzprinzipien von PRISMA
+\cite{Page.2021}. Der initial dokumentierte Suchlauf umfasste 28 Publikationen;
+die vollständigen Screeningentscheidungen und deren Zuordnung zu den definierten
+Kriterien sind im Literature Search Report in Anhang~\ref{app:lsr}
+wiedergegeben.
+
+Die eingeschlossenen Publikationen wurden anschließend entlang der für die
+Forschungsfragen relevanten Lösungsbausteine synthetisiert. Dabei zeichneten
+sich insbesondere modellgetriebene Transformation, LLM- und agentenbasierte
+Modellgenerierung, metamodellgestützte Validierung, semantische
+Normalisierung, Human-in-the-Loop sowie Modularität und Interoperabilität als
+wiederkehrende Themenfelder ab. Der ursprüngliche Literature Search Report
+dokumentiert diese erste Synthese und ist in Anhang~\ref{app:lsr} enthalten.
+Die inhaltliche Einordnung und Aktualisierung des Forschungsstands erfolgt in
+Kapitel~2; der Literature Search Report dient dagegen der Nachvollziehbarkeit
+des ursprünglichen Recherche- und Syntheseprozesses.
+
+Auf Basis dieser Synthese wurden sowohl der in Kapitel~2 dargestellte
+Forschungsbedarf als auch die in Abschnitt~\ref{sec:forschungsdesign}
+beschriebene frühe Architekturhypothese abgeleitet. Die Literaturrecherche hatte
+damit eine doppelte Funktion: Sie diente einerseits der Einordnung des
+wissenschaftlichen Stands und andererseits als Ausgangsbasis für die
+anschließende Architekturkonzeption.
+
+
+% =============================================================================
+\subsection{Methodik der modellbasierten Architekturentwicklung}
+\label{sec:architekturmethodik}
+% =============================================================================
+
+% Zweck:
+% Erklaeren, wie aus Forschungsbedarf, Stakeholder-Beduerfnissen und
+% Architekturhypothese ein konsistentes Architekturmodell abgeleitet wurde.
+
+Die Architekturentwicklung erfolgte modellbasiert und ausgehend von der in
+Abschnitt~\ref{sec:forschungsdesign} beschriebenen konzeptionellen
+Ausgangshypothese. Als System of Interest wurde die
+Informationsverarbeitungsarchitektur des Turing Generators betrachtet. Die
+Systemgrenze trennt dabei die eigentliche Verarbeitung von außerhalb des Systems
+liegenden Engineering-Informationsquellen und menschlichen Stakeholdern. Für die
+Architekturentwicklung wurden fachliche Anforderungen, Systemfunktionen und
+logische Verantwortlichkeiten als unterschiedliche Abstraktionsebenen behandelt.
+Diese Trennung unterstützt eine nachvollziehbare Architekturbeschreibung und die
+explizite Zuordnung von Stakeholder-Anliegen zu den daraus resultierenden
+Architekturelementen \cite{ISO42010_2022}.
+
+Zur Strukturierung der Modellierung wurde das RFLP-Prinzip als methodischer
+Referenzrahmen verwendet. Ausgehend von fachlichen Anforderungen wurden zunächst
+die erforderlichen Systemfunktionen abgeleitet und anschließend logischen
+Verantwortlichkeiten beziehungsweise Komponenten zugeordnet. Für die vorliegende
+Arbeit wurde die Betrachtung bewusst auf die Ebenen Requirements, Functional und
+Logical Architecture begrenzt. Die Physical-Ebene wurde nicht weiter
+ausgearbeitet, da sie für die Untersuchung der Informationsverarbeitungsarchitektur
+keinen zusätzlichen methodischen Erkenntnisgewinn erwarten ließ und den
+Modellierungsumfang unnötig erweitert hätte. Die resultierende RFL-Struktur
+diente damit als kompakter Rahmen zur Trennung von fachlichem Bedarf,
+Systemfunktion und logischer Verantwortung. Die schrittweise Ableitung von
+Anforderungen über Funktionen hin zu logischen Architekturelementen entspricht
+dem Grundgedanken RFLP-basierter Architekturentwicklung, wie er auch in der
+Literatur beschrieben wird \cite{LiLockettLawson2020}.
+
+Die fachlichen Anforderungen wurden aus den Forschungszielen, den identifizierten
+Stakeholder-Bedürfnissen sowie den aus Literatur und früher Architekturhypothese
+abgeleiteten Randbedingungen konkretisiert. Dabei wurde darauf geachtet,
+Anforderungen so zu formulieren und zu verknüpfen, dass ihre Herkunft und ihre
+Beziehung zu nachgelagerten Funktionen und logischen Verantwortlichkeiten
+nachvollziehbar bleiben. Traceability wurde deshalb nicht erst nach Abschluss der
+Modellierung ergänzt, sondern als Bestandteil der Architekturentwicklung
+behandelt. Die Nachvollziehbarkeit zwischen Ursprung, Anforderung und
+nachgelagerten Systemelementen entspricht einem grundlegenden Prinzip des
+Requirements Engineering \cite{ISO29148}.
+
+Die Ableitung zwischen den Architekturebenen wurde nicht als starre
+Einbahnstraße verstanden. Erkenntnisse auf funktionaler oder logischer Ebene
+konnten zeigen, dass vorgelagerte Anforderungen zu grob, redundant oder
+unvollständig formuliert waren. In solchen Fällen wurden die betroffenen
+Elemente überarbeitet und die Konsistenz zwischen den Ebenen erneut geprüft. Die
+modellbasierte Architekturentwicklung verlief damit iterativ zwischen
+Requirements, Funktionen und logischen Verantwortlichkeiten. Ziel war nicht eine
+möglichst frühe Festlegung der späteren Softwarestruktur, sondern eine
+nachvollziehbare Zuordnung zwischen Problemstellung, geforderter Fähigkeit und
+fachlicher Verantwortung.
+
+SysML v2 wurde als formale Modellierungssprache zur Repräsentation der
+entwickelten Architekturelemente und ihrer Beziehungen verwendet
+\cite{SysMLv2}. Die grundlegende Einordnung von SysML v2 sowie die Begründung
+seiner Verwendung im Kontext des in dieser Arbeit verfolgten
+Architecture-as-Code-Ansatzes erfolgen in Kapitel~2. In diesem Abschnitt steht
+dagegen ausschließlich die methodische Nutzung der Sprache für die Entwicklung
+und Strukturierung des untersuchten Systems im Vordergrund.
+
+Die detaillierte Ausprägung der daraus resultierenden Anforderungen, Funktionen,
+logischen Komponenten und ihrer Beziehungen wird in Kapitel~4 dargestellt. Das
+dort erneut aufgegriffene RFLP-Konzept ist von der hier beschriebenen
+Modellierungsmethodik zu unterscheiden: Während RFLP in diesem Abschnitt als
+Strukturierungsrahmen für die Entwicklung des Turing Generators dient, bildet es
+innerhalb der später beschriebenen Informationsverarbeitungsarchitektur selbst
+einen Gegenstand der Verarbeitung und Modellbildung.
+
+
+% =============================================================================
+\subsection{Gestaltungsprinzipien der KI-gestuetzten Informationsverarbeitung}
+\label{sec:ki_gestaltungsprinzipien}
+% =============================================================================
+
+% Zweck:
+% Die theoretischen und methodischen Prinzipien beschreiben, anhand welcher
+% Kriterien die Informationsverarbeitungsarchitektur gestaltet wurde.
+%
+% WICHTIGE GRENZE:
+% Hier steht, WARUM ein Prinzip verwendet wird.
+% Kapitel 4 zeigt, WIE dieses Prinzip in der finalen Architektur umgesetzt ist.
+
+Die KI-gestützte Verarbeitung heterogener Engineering-Informationen basiert auf
+mehreren grundlegenden Prinzipien. Dazu gehören die Unterscheidung zwischen
+probabilistischer Interpretation und regelgebundener Verarbeitung, die Bindung
+von Interpretationen an eine nachvollziehbare Informationsgrundlage, der Umgang
+mit unterschiedlichen Interpretationsergebnissen sowie die gezielte Einbindung
+menschlicher Entscheidungsinstanzen.
+
+Generative KI kann insbesondere bei semantisch offenen Aufgaben eingesetzt
+werden, bei denen Informationen interpretiert, eingeordnet oder in einen neuen
+fachlichen Zusammenhang überführt werden müssen. Gleichzeitig erfordern formale
+Modellierungsprozesse zusätzliche Prüfmechanismen, da sprachlich plausible
+Ergebnisse nicht automatisch strukturell oder syntaktisch valide Modelle
+darstellen \cite{Cibrian.2025b,Kapos.2014}. Für KI-gestützte
+Engineering-Prozesse ist deshalb eine Trennung zwischen generativer
+Interpretation, formaler Validierung und fachlicher Entscheidung von besonderer
+Bedeutung.
+
+Human-in-the-Loop-Ansätze adressieren die Einbindung menschlichen Wissens,
+menschlicher Kontrolle und expliziter Entscheidungen in KI-gestützte
+Verarbeitungsprozesse \cite{MosqueiraRey2023,Lazaros2026}. Dabei kann die Rolle
+des Menschen je nach System unterschiedlich ausgeprägt sein und von der
+Überwachung automatisierter Prozesse bis zur aktiven fachlichen Entscheidung
+reichen. Entscheidend ist dabei nicht allein die Anwesenheit eines Menschen im
+Prozess, sondern auch, an welchen Stellen eine Intervention möglich ist und auf
+welcher Informationsbasis diese Entscheidung erfolgt.
+
+Eine weitere Grundlage bildet die Nachvollziehbarkeit der verwendeten
+Informationsbasis. Bei der Verarbeitung heterogener Wissensquellen ist die
+Bindung generierter oder interpretierter Ergebnisse an ihre jeweiligen
+Ausgangsinformationen wesentlich, um Herkunft und Kontext der Verarbeitung
+erhalten zu können \cite{Chis.2025}. Auf dieser Grundlage können auch mehrere
+Interpretationsperspektiven miteinander verglichen werden, ohne den Bezug zur
+ursprünglichen Information zu verlieren.
+
+Die folgenden Abschnitte erläutern daher die theoretischen Grundlagen von
+probabilistischer und deterministischer Verarbeitung, Source Grounding,
+Multi-Persona-Interpretation, Varianz und Stabilität sowie Human Authority und
+semantischen Leitplanken.
+
+\subsubsection{Trennung probabilistischer Interpretation und deterministischer Verarbeitung}
+\label{sec:det_prob}
+
+% KERNAUSSAGEN:
+%
+% 1. Nicht jeder Verarbeitungsschritt benoetigt ein LLM.
+%
+% 2. Semantisch offene Aufgaben koennen probabilistische Interpretation
+%    erfordern.
+%
+% 3. Aufgaben mit eindeutig definierbaren Regeln, Identitaeten, Contracts
+%    oder Syntaxpruefungen sollen soweit moeglich deterministisch umgesetzt
+%    werden.
+%
+% 4. LLM-Ausgaben erhalten nicht automatisch Engineering Authority.
+%
+% 5. Die Architektur trennt deshalb Generierung bzw. Interpretation von
+%    Validierung, Entscheidung und deterministischer Weiterverarbeitung.
+%
+% LITERATUR:
+%
+% [REPO-BIB] \cite{Cibrian.2025b}
+%       Metamodel-driven Validation von SysML-v2-Modellen.
+%       Claimweise pruefen fuer:
+%       - getrennte Validierung generierter Inhalte
+%       - formale Konsistenzpruefung
+%
+% [REPO-FILE] 2605.18747v1.pdf
+%       Ning et al. (2026), Code as Agent Harness.
+%       Relevanz:
+%       - Code als kontrollierbares Ausfuehrungs- und Verifikationssubstrat
+%       - Trennung von generativen Agentenaktionen und mechanischer Pruefung
+%       - Multi-Agent-Koordination und Verification
+%       Status: arXiv / Preprint. Nicht als alleinige starke Evidenz verwenden.
+%       TODO BibTeX.
+%
+% [ADD / PRUEFEN] Literatur zu Nichtdeterminismus von LLM-Ausgaben und
+%       deterministischen Guardrails, falls eine allgemeine Aussage zur
+%       Zuverlaessigkeit gemacht wird.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] Architekturtrenngrenzen im finalen System
+% [PROJECT] ADRs zur deterministischen Assembly, Generation und Validation
+%
+% VORSICHT:
+% Nicht behaupten, deterministische Verarbeitung sei generell "korrekt".
+% Sie ist reproduzierbar und regelgebunden, kann aber falsche Regeln
+% deterministisch ausfuehren.
+
+
+Generative KI eignet sich insbesondere für Aufgaben, bei denen Informationen
+nicht ausschließlich anhand eindeutig formulierter Regeln verarbeitet werden
+können. Dazu zählen beispielsweise die Interpretation unstrukturierter Texte,
+die semantische Einordnung unterschiedlicher Informationsquellen oder die
+Ableitung möglicher Zusammenhänge aus sprachlich beschriebenen Sachverhalten.
+
+Large Language Models erzeugen ihre Ergebnisse probabilistisch auf Grundlage
+erlernter Muster und Kontextinformationen. Dies ermöglicht eine flexible
+Verarbeitung semantisch offener Eingaben, führt jedoch gleichzeitig dazu, dass
+identische oder inhaltlich ähnliche Eingaben nicht zwingend zu vollständig
+identischen Ausgaben führen müssen.
+
+Demgegenüber stehen Verarbeitungsschritte, deren zulässiges Verhalten durch
+explizite Regeln, formale Modelle oder definierte Schnittstellen beschrieben
+werden kann. Hierzu gehören beispielsweise die Prüfung von Identifikatoren und
+Datenstrukturen, die Validierung definierter Beziehungen, regelbasierte
+Modelltransformationen sowie die syntaktische Prüfung erzeugter Modellartefakte.
+
+Modellgetriebene Transformationsansätze zeigen, dass Transformationen zwischen
+formal bekannten Modellrepräsentationen anhand expliziter Regeln beschrieben und
+automatisiert ausgeführt werden können
+\cite{Kapos.2014,Li.2022}. Im Kontext generierter SysML-v2-Modelle können
+zusätzlich Metamodelle und formale Sprachregeln verwendet werden, um strukturelle
+beziehungsweise syntaktische Eigenschaften der erzeugten Artefakte unabhängig
+vom Generierungsprozess zu prüfen
+\cite{Cibrian.2025b,SysMLv2}.
+
+Aus methodischer Sicht ist deshalb zwischen \emph{Interpretation} und
+\emph{Verarbeitung} zu unterscheiden. Eine probabilistische Interpretation
+beantwortet die Frage, welche fachliche Bedeutung aus einer gegebenen
+Informationsgrundlage abgeleitet werden könnte.
+
+Eine deterministische Verarbeitung setzt dagegen voraus, dass die Regeln für
+den nächsten Verarbeitungsschritt hinreichend eindeutig definiert sind. Ein
+generiertes Ergebnis wird dadurch nicht automatisch zu einer autorisierten oder
+validen Engineering-Information.
+
+Semantische Interpretation, formale Transformation, technische Validierung und
+fachliche Freigabe stellen daher unterschiedliche Aufgaben mit unterschiedlichen
+Entscheidungskriterien dar.
+
+Die Trennung dieser Aufgaben erhöht insbesondere die Nachvollziehbarkeit des
+Verarbeitungsprozesses. Wird ein Large Language Model auch für Schritte
+eingesetzt, die durch explizite Regeln beschrieben werden könnten, vermischen
+sich semantische Interpretation und technische Verarbeitung.
+
+Dadurch wird schwerer erkennbar, ob eine Änderung im Ergebnis aus einer anderen
+fachlichen Interpretation oder aus einer Variation innerhalb eines eigentlich
+regelgebundenen Verarbeitungsschritts entstanden ist. Die Trennung
+probabilistischer und deterministischer Verarbeitung ermöglicht dagegen,
+unterschiedliche Fehler- und Unsicherheitsquellen getrennt zu betrachten.
+
+Dabei ist deterministische Verarbeitung nicht mit fachlicher Korrektheit
+gleichzusetzen. Ein deterministischer Prozess kann eine fehlerhafte Regel ebenso
+reproduzierbar ausführen wie eine korrekte. Der wesentliche Unterschied liegt in
+der Reproduzierbarkeit und Prüfbarkeit des Verhaltens.
+
+Während probabilistische Interpretation einen möglichen fachlichen
+Bedeutungsraum erschließt, kann regelgebundene Verarbeitung anhand definierter
+Bedingungen überprüft und bei identischen Eingaben reproduziert werden.
+
+Für KI-gestützte Engineering-Prozesse ergibt sich daraus ein grundlegendes
+Gestaltungsprinzip: Probabilistische Verfahren werden dort eingesetzt, wo
+semantische Offenheit oder Interpretationsbedarf besteht.
+
+Sobald ein Verarbeitungsschritt durch explizite Regeln beschrieben werden kann,
+sollte dessen Verhalten von der probabilistischen Interpretation getrennt und
+möglichst formal beziehungsweise deterministisch ausgeführt werden. Dadurch
+bleibt erkennbar, an welchen Stellen im Gesamtprozess Unsicherheit durch
+Interpretation entsteht und an welchen Stellen ein Ergebnis auf einer definierten
+Verarbeitungsvorschrift beruht.
+
+\subsubsection{Source Grounding und gemeinsame Evidence-Basis}
+\label{sec:source_grounding}
+
+% KERNAUSSAGEN:
+%
+% 1. Semantische Interpretation benoetigt einen eindeutig gebundenen
+%    Ausgangsgegenstand.
+%
+% 2. Deshalb wird zuerst source-grounded Evidence identifiziert und
+%    erst danach durch unterschiedliche Personas interpretiert.
+%
+% 3. Mehrere Personas sollen dieselbe Evidence interpretieren.
+%    Andernfalls ist beobachtete Differenz nicht eindeutig auf unterschiedliche
+%    Interpretation zurueckzufuehren.
+%
+% 4. Source Provenance wird nicht nur als nachtraeglicher Audit-Trail
+%    behandelt. Sie beeinflusst, welche Informationen in welchem Projekt-
+%    und Verarbeitungskontext zulaessig sind.
+%
+% LITERATUR:
+%
+% [REPO-BIB] \cite{Chis.2025}
+%       Heterogeneous Knowledge Bases und Retrieval-Augmented Generation.
+%       Claimweise pruefen fuer:
+%       - grounding in externen Wissensquellen
+%       - Umgang mit heterogenen Wissensbasen
+%
+% [REPO-BIB] \cite{Bressan.2000}
+%       Kontextrepraesentation und Reasoning.
+%       Nur verwenden, falls der konkrete Claim nach Volltextpruefung passt.
+%
+% [REPO-FILE] Jake Van Clief's Interpretable Context Methodology_260703_235902.pdf
+%       Relevanz:
+%       - explizite Context Boundaries
+%       - stufenweise Informationsweitergabe
+%       Status: Preprint / methodische Sekundaerevidenz.
+%       TODO BibTeX und genaue Claim-Pruefung.
+%
+% [ADD] geeignete Primaerliteratur zu Data/Information Provenance im
+%       Engineering oder zu provenance-aware AI, falls fuer allgemeine
+%       Aussagen ueber Provenance erforderlich.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] ADR-026
+% [PROJECT] ADR-027
+% [PROJECT] source-local authority chain
+% [PROJECT] project-wide Artifact Identity und Project Fit
+%
+% NICHT HIER:
+% - konkrete Klassen, Manifeste und Fingerprints.
+%   Diese folgen in Kapitel 5.
+
+Eine vergleichbare Interpretation mehrerer KI-Instanzen setzt voraus, dass klar
+definiert ist, worauf sich diese Interpretation bezieht. Unterschiedliche
+Antworten mehrerer Agenten können nur dann sinnvoll als Interpretationsvarianz
+betrachtet werden, wenn die zugrunde liegende Informationsbasis kontrolliert
+wird. Andernfalls lässt sich nicht unterscheiden, ob eine Abweichung aus einer
+anderen fachlichen Interpretation oder lediglich aus unterschiedlichen
+Ausgangsinformationen resultiert.
+
+Aus diesem Grund ist zwischen source-grounded Evidence und deren anschließender
+Interpretation zu unterscheiden. Zunächst wird festgelegt, welche Information
+aus einer konkreten Engineering-Quelle Gegenstand der weiteren Verarbeitung ist.
+Erst anschließend können unterschiedliche Perspektiven beziehungsweise Personas
+dieselbe Evidence interpretieren. Ansätze zur Nutzung heterogener Wissensbasen
+und Retrieval-gestützter generativer Verarbeitung verdeutlichen die Bedeutung
+einer expliziten Bindung generierter Ergebnisse an externe Informationsquellen
+\cite{Chis.2025}.
+
+Source Provenance beschreibt ergänzend die Herkunft und den
+Entstehungszusammenhang einer Information. Provenance-Modelle ermöglichen es,
+Beziehungen zwischen Daten, Verarbeitungsschritten und beteiligten Akteuren
+nachvollziehbar abzubilden \cite{MoreauMissier2013}. Provenance wird damit nicht
+ausschließlich als nachträglicher Audit-Trail betrachtet, sondern bildet bereits
+während der Verarbeitung einen relevanten Kontext.
+
+Dies ist insbesondere bei der Verarbeitung mehrerer Engineering-Quellen von
+Bedeutung. Interpretationen müssen auf ihren jeweiligen Quellkontext
+zurückgeführt werden können, bevor Informationen auf Projektebene miteinander
+verglichen oder zusammengeführt werden.
+
+Die Trennung zwischen Evidence und Interpretation schafft zugleich eine
+Voraussetzung für die Multi-Persona-Verarbeitung. Mehrere Personas interpretieren
+denselben nachvollziehbar gebundenen Evidence-Gegenstand. Beobachtete
+Unterschiede können dadurch gezielter als Unterschiede in der Interpretation
+betrachtet werden, anstatt sie mit Unterschieden in der zugrunde liegenden
+Informationsbasis zu vermischen.
+
+\subsubsection{Multi-Persona-Interpretation, Varianz und Stabilität}
+\label{sec:multipersona}
+
+% KERNAUSSAGEN:
+%
+% 1. Mehrere LLM-Instanzen bzw. Personas koennen unterschiedliche
+%    Interpretationspfade oder fachliche Perspektiven erzeugen.
+%
+% 2. Unterschiedliche Ergebnisse sind nicht automatisch ein Fehler.
+%    Varianz kann relevante Unsicherheit oder Interpretationsspielraum
+%    sichtbar machen.
+%
+% 3. Uebereinstimmung ist ebenfalls kein Wahrheitsbeweis.
+%    Korrelation oder Konformitaet kann zu gemeinsam falschen Ergebnissen
+%    fuehren.
+%
+% 4. Das Turing-Konzept verwendet deshalb KEIN demokratisches
+%    Mehrheitsprinzip als Engineering Authority.
+%
+% 5. Consensus und Variance sind Informationen fuer die nachfolgende
+%    Bewertung.
+%
+% 6. Wiederholte Aufrufe derselben Perspektive werden als
+%    Stabilitaetsevidenz interpretiert und nicht als zusaetzliche Stimmen.
+%
+% 7. Die konkrete Nutzung von Varianz als Aufmerksamkeits- bzw.
+%    Escalation-Signal ist als Designentscheidung der Arbeit zu kennzeichnen,
+%    sofern keine Literatur eine allgemeinere Aussage traegt.
+%
+% LITERATUR:
+%
+% [ADD] Wang et al. (2023):
+%       Self-Consistency Improves Chain of Thought Reasoning in Language Models.
+%       ICLR 2023.
+%       Relevanz:
+%       - diverse reasoning paths
+%       - Konsistenz ueber mehrere Samples
+%       WICHTIG:
+%       Das Verfahren waehlt selbst die konsistenteste Antwort.
+%       Turing uebernimmt diesen Entscheidungsmechanismus NICHT ungeprueft.
+%
+% [ADD] Liang et al. (2024):
+%       Encouraging Divergent Thinking in Large Language Models through
+%       Multi-Agent Debate.
+%       EMNLP 2024. DOI: 10.18653/v1/2024.emnlp-main.992
+%       Relevanz:
+%       - unterschiedliche Agenten koennen Divergenz erzeugen
+%       - Selbstreflexion kann in bestehenden Denkpfaden degenerieren
+%
+% [ADD] Du et al. (2024):
+%       Improving Factuality and Reasoning in Language Models through
+%       Multiagent Debate.
+%       ICML 2024, PMLR 235.
+%       Relevanz:
+%       - mehrere Modellinstanzen fuer gegenseitige Pruefung
+%       - empirische Verbesserungen auf untersuchten Benchmarks
+%
+% [ADD] Cui et al. (2026):
+%       Free-MAD: Consensus-Free Multi-Agent Debate.
+%       Findings of ACL 2026.
+%       DOI: 10.18653/v1/2026.findings-acl.1600
+%       Relevanz:
+%       - Grenzen von Konsens und Majority Voting
+%       - Konformitaet und Fehlerfortpflanzung
+%       - sehr passend zur Turing-Entscheidung "variance, not votes"
+%
+% [ADD] Kostka & Chudziak (2026):
+%       Controlling Uncertainty and Hallucination Risk in Multi-Agent
+%       Fact Verification.
+%       UAI 2026, PMLR 337.
+%       Relevanz:
+%       - Konsens kann bei korrelierten Fehlern falsche Sicherheit erzeugen
+%       - steigende Disagreement/Deviation wird als Unsicherheitssignal genutzt
+%       - besonders passend fuer Varianz als Attention Signal
+%
+% [REPO-FILE] 2605.14163v1.pdf
+%       Agentic Systems as Boosting Weak Reasoning Models.
+%       Moegliche Zusatzquelle fuer Committee-/Verifier-Logik.
+%       Status: Preprint. TODO BibTeX und Claim-Pruefung.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] ADR-026
+% [PROJECT] ADR-027
+% [PROJECT] Multi-Persona-Manifeste und Stability/Variance-Verarbeitung
+%
+% VORSICHT:
+% - Nicht behaupten, Multi-Persona liefere "die Wahrheit".
+% - Nicht behaupten, Mehrheit sei automatisch besser.
+% - Literaturergebnisse auf Benchmarks nicht ohne Begrenzung auf
+%   Engineering-Modellierung uebertragen.
+Die Verwendung mehrerer KI-Perspektiven verfolgt nicht das Ziel, durch eine
+Mehrheitsentscheidung automatisch eine vermeintlich richtige Antwort zu
+bestimmen. Vielmehr können unterschiedliche Instanzen beziehungsweise Personas
+denselben Evidence-Gegenstand aus verschiedenen fachlichen Perspektiven
+interpretieren. Multi-Agent-Ansätze zeigen, dass die Kombination mehrerer
+Modellinstanzen zu unterschiedlichen Argumentations- und Lösungswegen führen kann
+\cite{Du2024}. Daraus lässt sich jedoch nicht ableiten, dass Konsens oder Mehrheit
+automatisch fachliche Korrektheit bedeuten.
+
+Für die weitere Betrachtung ist daher die zwischen mehreren Interpretationen
+beobachtete Abweichung selbst von Interesse. Unter \emph{Varianz} wird in dieser
+Arbeit die fachlich relevante Abweichung zwischen mehreren, auf derselben
+Evidence basierenden Interpretationsergebnissen verstanden.
+
+Eine hohe Übereinstimmung zeigt zunächst nur, dass unterschiedliche Perspektiven
+zu ähnlichen Ergebnissen gelangen. Sie stellt keinen Wahrheitsbeweis dar. Ebenso
+bedeutet eine Abweichung nicht automatisch, dass eine der Interpretationen falsch
+ist. Sie kann vielmehr auf Mehrdeutigkeit, unterschiedliche fachliche
+Perspektiven oder eine unzureichende Informationsgrundlage hinweisen.
+
+Von dieser Varianz zwischen unterschiedlichen Personas ist die
+\emph{Stabilität} einer einzelnen Perspektive zu unterscheiden. Wiederholte
+Ausführungen derselben Persona können aufgrund des probabilistischen Verhaltens
+des zugrunde liegenden Modells unterschiedliche Ergebnisse erzeugen. Die
+Übereinstimmung beziehungsweise Abweichung wiederholter Ausführungen liefert
+damit eine Aussage über die Stabilität dieser Interpretation.
+
+Varianz und Stabilität beschreiben somit zwei unterschiedliche Eigenschaften.
+Varianz betrachtet Unterschiede zwischen verschiedenen Interpretations-
+perspektiven, während Stabilität die Reproduzierbarkeit einer einzelnen
+Perspektive über mehrere Ausführungen beschreibt. Wiederholte Ausführungen
+derselben Persona sind deshalb nicht als zusätzliche unabhängige Stimmen zu
+verstehen.
+
+Beide Größen können als zusätzliche Bewertungsinformation verwendet werden.
+Insbesondere kann eine erhöhte Varianz darauf hinweisen, dass ein
+Informationsgegenstand nicht eindeutig interpretiert wird und deshalb eine
+weitergehende fachliche Bewertung erforderlich sein könnte. Dieser Zusammenhang
+ist jedoch nicht als allgemeiner Nachweis fachlicher Unsicherheit zu verstehen.
+Varianz und Stabilität liefern Hinweise über das Verhalten der
+Interpretationsprozesse, ersetzen jedoch keine fachliche Beurteilung.
+
+\subsubsection{Human Authority und semantische Leitplanken}
+\label{sec:human_authority}
+
+% KERNAUSSAGEN:
+%
+% 1. Human in the Loop wird in dieser Arbeit nicht als beliebige
+%    Benutzerinteraktion verstanden.
+%
+% 2. Der Mensch erhaelt Engineering Authority an definierten
+%    Entscheidungs- und Promotionsgrenzen.
+%
+% 3. Ziel ist nicht die manuelle Kontrolle jedes Verarbeitungsschritts.
+%    Menschliche Aufmerksamkeit soll an Stellen eingesetzt werden, an denen
+%    fachliche Mehrdeutigkeit, Konflikte oder Authority-Uebergaenge bestehen.
+%
+% 4. Fuer wirksame Entscheidungen muss der Review-Kontext ausreichend
+%    Informationen enthalten, beispielsweise:
+%    - zugrunde liegende Evidence
+%    - Provenance
+%    - Alternativen
+%    - Varianz bzw. Unsicherheit
+%    - bisherige Entscheidungen
+%
+% 5. Automatisierte technische Validierung und menschliche fachliche
+%    Freigabe sind unterschiedliche Funktionen.
+%
+% 6. Human Approval darf durch einen bestandenen technischen Check nicht
+%    stillschweigend ersetzt werden.
+%
+% LITERATUR:
+%
+% [ADD] Lazaros, K.; Vrahatis, A. G.; Kotsiantis, S. (2026):
+%       Human-in-the-Loop Artificial Intelligence:
+%       A Systematic Review of Concepts, Methods, and Applications.
+%       Entropy 28(4), 377.
+%       DOI: 10.3390/e28040377
+%       Relevanz:
+%       - Human Oversight, Feedback und Decision-Making an unterschiedlichen
+%         Stellen einer AI Pipeline
+%       - Taxonomie von HITL-Ansaetzen
+%       - Herausforderungen von Oversight
+%
+% [ADD] Zhu, L.; Lu, Q.; Ding, M. et al. (2026):
+%       Designing meaningful human oversight in AI.
+%       AI and Ethics 6, 286.
+%       DOI: 10.1007/s43681-026-01147-7
+%       Relevanz:
+%       - Unterschied zwischen operativer AI Agency und evaluativer
+%         menschlicher Agency
+%       - Risiko von Rubber-Stamp Oversight
+%       - explizite Handover Points, Provenance, Escalation und Override
+%       - sehr hohe konzeptionelle Naehe zu Human Authority im Turing Generator
+%
+% [REPO-BIB] \cite{Cibrian.2025}
+%       Claimweise pruefen, in welchem Umfang Human Review / Expert Validation
+%       im agentenbasierten SysML-v2-Ansatz enthalten ist.
+%
+% [PRACTICE] MESCONF 2026
+%       Praxisimpuls zu Human Control und Guardrails.
+%       Nicht als wissenschaftlicher Wirksamkeitsnachweis verwenden.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] TF2
+% [PROJECT] SR_4 / fruehes Expert Validation Requirement
+% [PROJECT] Human Review Gates und Decision Binding
+% [PROJECT] ADR-023 final model review/publication
+%
+% BEGRIFF:
+% "Effective Intervention" kann als Zielbegriff aus der Forschungsfrage und
+% dem Projekt verwendet werden. Fuer allgemeine Aussagen ueber wirksame
+% Human Oversight sollten Lazaros und Zhu herangezogen werden.
+
+% KERNAUSSAGEN:
+%
+% 1. Ontologien und explizite semantische Modelle koennen Begriffe,
+%    Relationen und zulaessige Bedeutungsstrukturen formal bzw. kontrolliert
+%    beschreiben.
+%
+% 2. Fuer heterogene Engineering-Informationen ist dies als moeglicher
+%    Mechanismus fuer semantische Harmonisierung und Interoperabilitaet
+%    relevant.
+%
+% 3. Die urspruengliche Forschungsannahme betrachtete Ontologien als zentrale
+%    Leitplanke fuer die KI-gestuetzte Transformation.
+%
+% 4. Die spaetere Architektur untersucht Ontologien nicht isoliert, sondern
+%    im Zusammenspiel mit:
+%    - Source Provenance
+%    - expliziten Contracts
+%    - Human Authority
+%    - deterministischer Assembly
+%    - unabhaengiger Output-Validierung
+%
+% 5. Eine Ontologie alleine wird NICHT als Garantie gegen Halluzinationen
+%    dargestellt.
+%
+% 6. Wenn die Untersuchung zeigt, dass TF3 urspruenglich zu eng auf
+%    Ontologien fokussiert war, wird dies spaeter als Forschungsergebnis
+%    diskutiert und nicht durch nachtraegliches Umschreiben von TF3 geloest.
+%
+% LITERATUR:
+%
+% [REPO-BIB] \cite{Abonyi.2024}
+%       Semantische Technologien, Ontologien und Knowledge Graphs fuer
+%       industrielle Datenintegration und Wiederverwendbarkeit.
+%
+% [REPO-FILE] ISO/IEC 21838-2:2021, Basic Formal Ontology.
+%       Fuer Definition und formale Rolle einer Top-Level-Ontologie.
+%       TODO BibTeX und genaue Clauses.
+%
+% [REPO-FILE] Drobnjakovic et al. (2022):
+%       The Industrial Ontologies Foundry Core Ontology.
+%       Relevanz fuer industrielle semantische Standardisierung.
+%
+% [REPO-FILE] Orellana & Mandrick (2019):
+%       The Ontology of Systems Engineering.
+%       Relevanz fuer SE-spezifische Semantik.
+%
+% [REPO-FILE] Lu et al. (2022):
+%       Design Ontology Supporting Model-Based Systems Engineering Formalisms.
+%
+% [REPO-FILE] Liu et al. (2025):
+%       SysDO.
+%
+% [REPO-FILE] Dong et al. (2026):
+%       Insights into ontology-based MBSE.
+%
+% FUER ALLE REPO-FILE-QUELLEN:
+% - BibTeX ergaenzen
+% - konkrete Claims im Volltext pruefen
+%
+% [QUELLENLUECKE]
+% Fuer eine allgemeine Aussage "Ontologien reduzieren Halluzinationen"
+% ist noch eine spezifische, belastbare Quelle erforderlich.
+% Bis dahin nur als Designhypothese bzw. Praxisimpuls formulieren.
+%
+% PROJEKTEVIDENZ:
+% [PROJECT] TF3
+% [PROJECT] initialer Knowledge Layer
+% [PROJECT] Semantic Governance / Vocabulary / Terminology Decisions
+% [PRACTICE] MESCONF 2026
+
+Human-in-the-Loop bezeichnet die gezielte Einbindung menschlichen Wissens,
+menschlicher Kontrolle oder expliziter Entscheidungen in einen KI-gestützten
+Verarbeitungsprozess. Die konkrete Rolle des Menschen kann dabei unterschiedlich
+ausgeprägt sein und von der Überwachung automatisierter Schritte bis zur
+fachlichen Bewertung oder Entscheidung reichen
+\cite{MosqueiraRey2023,Lazaros2026}.
+
+Für Engineering-Anwendungen ist dabei insbesondere relevant, dass menschliche
+Beteiligung nicht auf eine rein formale Bestätigung automatisierter Ergebnisse
+reduziert wird. Eine wirksame Intervention setzt voraus, dass die für eine
+Entscheidung relevanten Informationen verfügbar sind und eine tatsächliche
+Möglichkeit zur Korrektur, Zurückweisung oder Freigabe besteht. Hierzu gehören
+beispielsweise die zugrunde liegende Evidence, deren Provenance, alternative
+Interpretationen sowie Hinweise auf Varianz oder Stabilität.
+
+Der Begriff \emph{Human Authority} bezeichnet in dieser Arbeit die fachliche
+Entscheidungsbefugnis des Menschen an solchen Stellen, an denen ein
+KI-generiertes oder KI-interpretiertes Ergebnis in eine autorisierte
+Engineering-Information überführt werden soll. Human Authority ist damit von
+bloßer menschlicher Beteiligung zu unterscheiden. Entscheidend ist nicht allein,
+dass ein Mensch Bestandteil des Prozesses ist, sondern dass ihm an definierten
+Entscheidungsgrenzen eine tatsächliche fachliche Entscheidungsfunktion zukommt.
+
+Semantische und ontologische Leitplanken bilden hierzu einen ergänzenden
+Mechanismus. Ontologien und explizite semantische Modelle können Begriffe,
+Relationen und zulässige Bedeutungsstrukturen beschreiben und dadurch die
+Harmonisierung heterogener Informationen unterstützen \cite{Abonyi.2024}.
+Insbesondere bei unterschiedlich strukturierten oder unterschiedlich benannten
+Engineering-Informationen können solche Leitplanken dazu beitragen, gemeinsame
+semantische Bezugspunkte herzustellen.
+
+Die Einhaltung semantischer oder ontologischer Regeln ist jedoch nicht mit
+fachlicher Korrektheit gleichzusetzen. Eine formal oder semantisch zulässige
+Interpretation kann weiterhin unvollständig oder fachlich unangemessen sein.
+Semantische Leitplanken begrenzen damit den möglichen Interpretationsraum und
+unterstützen die Erkennung von Inkonsistenzen, ersetzen jedoch weder Source
+Grounding noch technische Validierung oder menschliche fachliche Bewertung.
+
+Human Authority und semantische Leitplanken erfüllen somit unterschiedliche,
+aber komplementäre Funktionen. Semantische Regeln strukturieren und begrenzen
+die automatisierte Verarbeitung, während die fachliche Entscheidungsautorität
+an den dafür vorgesehenen Stellen beim Menschen verbleibt.
+
+% =============================================================================
+% =============================================================================
+
+\subsection{Iterative Konkretisierung und prototypische Untersuchung}
+\label{sec:iterative_konkretisierung}
+
+Die Entwicklung der Informationsverarbeitungsarchitektur erfolgte nicht durch
+eine vollständige Vorausplanung bis auf Implementierungsebene. Stattdessen
+wurden zunächst die für den Untersuchungsgegenstand wesentlichen
+Architekturprinzipien, Systemgrenzen und Verantwortlichkeiten festgelegt. Der
+Detaillierungsgrad wurde anschließend jeweils dort erhöht, wo eine weitere
+Konkretisierung für die Modellierung, prototypische Umsetzung oder Prüfung
+erforderlich wurde.
+
+Dieses Vorgehen entspricht einer progressiven Detaillierung des
+Untersuchungsgegenstands. Die Architektur wurde dabei nicht als statisches,
+bereits zu Beginn vollständig bestimmbares Ergebnis behandelt, sondern
+schrittweise konkretisiert. Designorientierte Forschungsansätze beschreiben
+vergleichbare Wechselwirkungen zwischen Gestaltung und Untersuchung, bei denen
+ein Artefakt entwickelt, untersucht und auf Grundlage gewonnener Erkenntnisse
+weiterentwickelt wird \cite{Wieringa2014}.
+
+Die progressive Konkretisierung ist dabei nicht als bewusste Entwicklung
+provisorischer Zwischenlösungen zu verstehen. Architekturentscheidungen und
+prototypische Umsetzungen wurden jeweils mit dem Anspruch getroffen, innerhalb
+des zu diesem Zeitpunkt verfügbaren Erkenntnisstands tragfähig zu sein. Eine
+spätere Anpassung erfolgte dann, wenn zusätzliche Erkenntnisse eine Präzisierung,
+Erweiterung oder Revision erforderlich machten.
+
+Auf diese Weise konnten frühzeitig stabile Architekturprinzipien festgelegt
+werden, ohne Detailentscheidungen vorwegzunehmen, deren Randbedingungen zu diesem
+Zeitpunkt noch nicht ausreichend bekannt waren. Gleichzeitig blieb die
+Architektur offen für Erkenntnisse, die erst aus der weiterführenden
+Modellierung, der prototypischen Umsetzung oder deren Prüfung hervorgingen.
+
+
+\subsubsection{Progressive Detaillierung und formative Verifikation}
+\label{sec:progressive_detaillierung}
+
+Die zunehmende Detaillierung der Architektur wurde durch formative
+Verifikation begleitet. Ziel dieser Prüfungen war nicht ausschließlich der
+Nachweis einer fehlerfreien Implementierung. Sie dienten ebenso dazu zu
+untersuchen, ob die jeweils konkretisierten Architekturannahmen unter den
+betrachteten Bedingungen konsistent und umsetzbar waren.
+
+Zeigte sich bei der Modellierung oder prototypischen Umsetzung, dass eine
+Verantwortungsgrenze nicht eindeutig definiert war, ein Informationsübergang
+nicht ausreichend spezifiziert wurde oder eine zuvor getroffene Annahme zu
+unerwünschten Folgewirkungen führte, konnte die zugrunde liegende
+Architekturentscheidung erneut betrachtet werden.
+
+Damit entstand eine Rückkopplung zwischen Architekturkonzeption,
+Konkretisierung und Prüfung. Neue Erkenntnisse wurden nicht ausschließlich als
+lokale Implementierungsprobleme behandelt, sondern zunächst daraufhin bewertet,
+auf welcher Ebene ihre Ursache lag. Konnte die Ursache auf eine unzureichende
+Architekturannahme zurückgeführt werden, wurde diese auf der entsprechenden
+Abstraktionsebene angepasst.
+
+Dieses Wechselspiel zwischen Gestaltung und Untersuchung entspricht der
+Grundlogik designorientierter Forschung, bei der die Entwicklung eines
+Artefakts und die Untersuchung seines Verhaltens nicht vollständig voneinander
+getrennt erfolgen \cite{Wieringa2014}. Die formative Verifikation hatte damit
+eine steuernde Funktion innerhalb der Architekturentwicklung und unterstützte
+die schrittweise Erhöhung der Detaillierung.
+
+
+\subsubsection{Prototyp als Untersuchungs- und Evaluationsinstrument}
+\label{sec:poc_evaluation}
+
+Die prototypische Realisierung dient in dieser Arbeit als
+Untersuchungsinstrument für die entwickelte Informationsverarbeitungsarchitektur.
+Der Prototyp stellt damit kein eigenständiges Forschungsziel dar, sondern
+operationalisiert ausgewählte Architekturprinzipien, sodass deren Zusammenspiel
+unter kontrollierten Bedingungen untersucht werden kann. Diese Rolle eines
+Artefakts als Mittel zur Untersuchung einer entworfenen Lösung entspricht
+ebenfalls der Logik designorientierter Forschung \cite{Wieringa2014}.
+
+Im Mittelpunkt steht dabei nicht die vollständige Realisierung eines
+produktionsreifen Systems. Untersucht wird vielmehr, ob zentrale Eigenschaften
+der Architektur innerhalb des gewählten Proof-of-Concept-Umfangs praktisch
+umgesetzt und nachvollziehbar geprüft werden können. Dazu zählen insbesondere
+die Verarbeitung heterogener Informationsquellen, die Aufrechterhaltung von
+Traceability und Provenance, die Trennung unterschiedlicher
+Verarbeitungsverantwortlichkeiten, die Einbindung menschlicher
+Entscheidungsinstanzen sowie die Überführung akzeptierter Engineering-
+Informationen in formale SysML-v2-Artefakte.
+
+Die Bewertung dieser Eigenschaften erfordert unterschiedliche Formen von
+Evidenz. Automatisierte Prüfungen können beispielsweise die Einhaltung
+definierter Datenstrukturen, Verträge und technischer Invarianten untersuchen.
+End-to-End-Prüfungen ermöglichen dagegen die Betrachtung vollständiger
+Informationsflüsse über mehrere Verarbeitungsschritte hinweg. Für erzeugte
+SysML-v2-Artefakte kann zusätzlich eine von der Generierung getrennte formale
+Validierung gegen die verwendete Modellierungsumgebung beziehungsweise
+Sprachregeln erfolgen \cite{Cibrian.2025b,SysMLv2}.
+
+Technische Verifikation ist dabei von fachlicher Bewertung zu unterscheiden.
+Ein formal valides Modell ist nicht automatisch ein fachlich korrektes oder
+geeignetes Engineering-Modell. Die Untersuchung der Architektur berücksichtigt
+deshalb zusätzlich menschliche Review- und Entscheidungsprozesse, deren
+theoretische Grundlagen in Abschnitt~\ref{sec:human_authority} beschrieben
+wurden.
+
+Die Ergebnisse der prototypischen Untersuchung sind auf den realisierten
+Proof-of-Concept-Umfang begrenzt. Sie können zeigen, dass die betrachteten
+Architekturprinzipien unter den untersuchten Bedingungen operationalisierbar
+sind und wie sie miteinander interagieren. Daraus lässt sich jedoch weder eine
+allgemeine Wirksamkeit für beliebige Engineering-Domänen noch eine
+Produktionsreife des resultierenden Systems ableiten.

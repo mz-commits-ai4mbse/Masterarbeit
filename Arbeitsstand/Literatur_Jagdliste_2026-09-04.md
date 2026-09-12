@@ -71,6 +71,7 @@ Für jede Quelle möglichst:
 **Quelle:** Alessio Bucaioni, Amleto Di Salle, Ludovico Iovino, Patrizio Pelliccione, Franco Raimondi, “Architecture as Code,” *IEEE International Conference on Software Architecture (ICSA)*, 2025, pp. 187–198.
 **DOI:** `10.1109/ICSA65012.2025.00027`
 **Priorität:** MUST
+**Status:** BESCHAFFT – Volltext vorhanden und geprüft (12.09.2026)
 **Kapitel:** 2.3, 8.6, ggf. 1 Motivation
 **Wofür benötigt:**
 - wissenschaftliche Definition und Motivation von Architecture as Code,
@@ -201,8 +202,9 @@ Für jede Quelle möglichst:
 
 ## B1 — Peffers et al.: DSR Methodology
 
-**Quelle:** Ken Peffers, Tuure Tuunanen, Marcus A. Rothenberger, Samir Chatterjee, “A Design Science Research Methodology for Information Systems Research,” *Journal of Management Information Systems*, 24(3), 45–77.
+**Quelle:** Ken Peffers, Tuure Tuunanen, Marcus A. Rothenberger, Samir Chatterjee, “A Design Science Research Methodology for Information Systems Research,” *Journal of Management Information Systems*, 24(3), 45–77, 2007.
 **DOI:** `10.2753/MIS0742-1222240302`
+**Status:** BESCHAFFT – Volltext vorhanden und geprüft (12.09.2026)
 **Kapitel:** 3
 **Nutzen:** zweite methodische DSR-Referenz neben Wieringa.
 **Entscheidung später:** Wenn Wieringa das tatsächliche Vorgehen bereits vollständig abdeckt, nur ergänzend verwenden.

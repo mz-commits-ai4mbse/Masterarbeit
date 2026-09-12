@@ -1,0 +1,1058 @@
+% =============================================================================
+% Kapitel 7: Ergebnisse
+% ARBEITSGERUEST / REVIEW CANDIDATE
+% Stand: 03.09.2026
+%
+% Dieses Dokument enthaelt bewusst NOCH KEINEN ausformulierten Thesis-Text.
+%
+% Kapitel 6 = Wie wurde verifiziert und validiert?
+% Kapitel 7 = Was wurde beobachtet / welche Resultate lagen vor?
+% Kapitel 8 = Was bedeuten diese Resultate / wie sind sie einzuordnen?
+%
+% HARTER SCHREIBGRUNDSATZ FUER KAPITEL 7:
+%
+% ERLAUBT:
+% - beobachtete Zahlen / Mengen
+% - PASS / FAIL / PASS WITH FINDINGS
+% - aufgetretene Findings
+% - dokumentierte Korrekturen
+% - Retest-Status
+% - erreichte System-/Artifact-Zustaende
+% - aktuell offene / akzeptierte Grenzen
+%
+% NICHT HIER:
+% - "dies zeigt, dass ..."
+% - "daraus folgt ..."
+% - "dies belegt die Notwendigkeit ..."
+% - "die Ursache liegt konzeptionell ..."
+% - "besonders relevant ist ..."
+% - finale Beantwortung HF / TF1 / TF2 / TF3
+%
+% Solche Aussagen gehoeren in Kapitel 8.
+%
+% TRANSPARENZREGEL:
+% Der Haupttext verwendet nur thesis-relevante, verdichtete Findings.
+% Die vollstaendige formative Finding-Liste wird im Anhang bereitgestellt.
+% Finding-IDs dienen hier als Evidenzreferenz, NICHT als Kapitelstruktur.
+%
+% Quellenstatus:
+% [PROJECT]  Findings, Checkpoints, Reports, SSOT
+% [TEST]     Test-/Regressionsevidenz
+% [ARTIFACT] konkrete Projekt-/Modell-/Output-Artefakte
+% [APPENDIX] vollstaendige Findings-Liste
+%
+% Kapitel 7 benoetigt grundsaetzlich wenig wissenschaftliche Literatur.
+% Ergebnisse werden primaer durch die Projektexperimente und Artefakte belegt.
+% =============================================================================
+
+\section{Ergebnisse}
+\label{sec:results}
+
+% -----------------------------------------------------------------------------
+% FUNKTION DES KAPITELS
+% -----------------------------------------------------------------------------
+%
+% Ziel:
+% Die beobachteten Ergebnisse der in Kapitel 6 beschriebenen V&V
+% strukturiert und moeglichst interpretationsfrei darstellen.
+%
+% DARSTELLUNGSLOGIK:
+%
+% 1. finaler technischer End-to-End-Stand
+% 2. Ergebnisse der semantischen Informationsverarbeitung
+% 3. Ergebnisse der Human-Authority-Gates
+% 4. Ergebnisse der Modellableitung und SysML-v2-Erzeugung
+% 5. Ergebnisse des Genuine-Multi-Source-Pfads
+% 6. verbleibende PoC-Grenzen / offene Findings
+% 7. Safe Demo nach Durchfuehrung
+%
+% Die vollstaendige Finding-Historie bleibt im Anhang.
+
+
+% =============================================================================
+\subsection{Darstellungsumfang und Ergebnisbasis}
+\label{sec:results_scope}
+% =============================================================================
+
+\subsubsection{Beruecksichtigte Evidenz}
+\label{sec:results_evidence_base}
+
+% KERNAUSSAGEN:
+%
+% Ergebnisse stammen insbesondere aus:
+%
+% - WP-12 controlled dry run
+% - WP-12 formative recovery / single-source live E2E
+% - Golden E2E
+% - Gate-3 Project 000116
+% - Genuine Multi-Source Project 308131
+% - Focused / Complete Regression
+% - Generated Artifact Validation
+% - externe SYSIDE Validation
+% - Human Engineering / Model / Publication Decisions
+%
+% [PROJECT]
+% collaboration/audits/wp12_findings.md
+% collaboration/audits/wp12_formative_self_test_report.md
+% collaboration/checkpoints/...
+%
+% [APPENDIX]
+% Vollstaendige Finding-Liste.
+%
+% WICHTIG:
+% Hier nur die Datenbasis benennen.
+% Noch keine Bewertung ihrer Aussagekraft.
+
+
+\subsubsection{Verdichtung der Findings im Haupttext}
+\label{sec:results_finding_reduction}
+
+% KERNAUSSAGEN:
+%
+% 1. BLK- und SEM-Findings werden im Haupttext nur dort genannt,
+%    wo sie einen thesis-relevanten beobachteten Zustand beschreiben.
+%
+% 2. OBS-Findings werden im Haupttext nicht einzeln aufgelistet.
+%    Relevante UX-/Human-Authority-Beobachtungen werden nur verdichtet.
+%
+% 3. Die vollstaendige Liste bleibt im Anhang.
+%
+% 4. Historische Finding-Status werden erhalten.
+%    Spaetere Retests werden als spaeterer Zustand daneben gestellt.
+%
+% Beispiel:
+%
+% BLK-002:
+% initial FAILED WITH BLOCKER
+% -> spaeter RESOLVED / LIVE RETESTED
+%
+% NICHT:
+% alten Zustand ueberschreiben.
+
+
+% =============================================================================
+\subsection{Technischer End-to-End-Stand}
+\label{sec:results_e2e}
+% =============================================================================
+
+\subsubsection{Single-Source Gate-3}
+\label{sec:results_gate3}
+
+% BEOBACHTETE FAKTEN:
+%
+% Project:
+% 000116
+%
+% Akzeptierter Status:
+%
+% Project 000116 Lead-Source Gate 3: PASS
+% Real SYSIDE validation:              PASS
+% Human publication approval:          PASS
+% Immutable Published Output:          PASS
+%
+% Vollstaendige Repository Regression zum Gate-3-Stand:
+% 6100 passed
+%
+% [PROJECT]
+% current_state.md
+% Gate-3 closeout checkpoint
+%
+% [ARTIFACT]
+% immutable Gate-3 project evidence
+%
+% IM TEXT SPAETER:
+% nur Zustand / Reihenfolge / PASS nennen.
+%
+% NICHT:
+% "Damit ist die Architektur bewiesen."
+% -> Kapitel 8.
+
+
+\subsubsection{Finaler Integrations- und Regressionstand}
+\label{sec:results_final_regression}
+
+% FINALER AKZEPTIERTER INTEGRATIONSSTAND:
+%
+% complete regression:
+% 6335 passed
+% 12 skipped
+%
+% [PROJECT]
+% 2026-09-02 CATIA Modeling Complete / Thesis Writing Transition SSOT
+%
+% ZUSAETZLICH:
+%
+% WP-12:                              COMPLETE
+% BLK-002 genuine Multi-Source:       RESOLVED / ACCEPTED
+% Project 000116 Gate-3:              IMMUTABLE ACCEPTED BASELINE
+% Project 308131 Multi-Source retest: PASS
+%
+% DARSTELLUNG:
+% Tabelle 7.1 kann den finalen Verification State kompakt zusammenfassen.
+%
+% NICHT:
+% Anzahl der Tests als Qualitaetsscore interpretieren.
+
+
+% =============================================================================
+\subsection{Ergebnisse der source-grounded Informationsverarbeitung}
+\label{sec:results_source_grounding}
+% =============================================================================
+
+\subsubsection{Frueher semantischer Verarbeitungspfad}
+\label{sec:results_early_semantic_path}
+
+% ZWECK:
+% Historischen Mess-/Beobachtungszustand knapp dokumentieren,
+% der spaeter zur R4c-Recovery fuehrte.
+%
+% REPRESENTATIVE EVIDENZ:
+%
+% Project 877791 / RUN-000001
+%
+% single source
+% 3 Personas x 1 run
+% real LLM
+%
+% Raw proposals:
+% 93 Element proposals
+% 41 Relationship proposals
+% 134 total
+%
+% D3:
+% 70 Element subjects
+% 39 Relationship subjects
+% 109 total
+%
+% D4:
+% 70 synthesized Elements
+% 39 synthesized Relationships
+% 109 total
+%
+% Human Review:
+% 70 Element Items
+% 39 Relationship Items
+% 1 Open Question
+% 110 total
+%
+% [PROJECT]
+% wp12_findings.md
+%
+% ZUGEHOERIGE FINDINGS:
+% SEM-001
+% SEM-002
+% SEM-003
+% SEM-004
+% SEM-005
+%
+% WICHTIG:
+% NUR Daten und Findings nennen.
+%
+% Nicht schreiben:
+% "Die unveraenderte Zahl beweist die Ineffektivitaet."
+%
+% Kapitel 7:
+% D3 = 109, D4 = 109.
+%
+% Kapitel 8:
+% Interpretation dieser Beobachtung.
+
+
+\subsubsection{R4c source-grounded Live-Pfad}
+\label{sec:results_r4c}
+
+% Project:
+% 120412
+% RUN-000001 / ATT-000001
+%
+% Mode:
+% real LLM
+%
+% Source:
+% legacy/demo/wp12/01_product_overview.md
+%
+% BEOBACHTETE ZUSTAENDE:
+%
+% Published Processing outputs:      17
+% Canonical Subjects:                24
+% Final Review Revision:             RVR-000062
+% Finalization Decision:             HRD-000001
+% Approved Inputs:                   17
+% Accepted semantic Relationships:   21
+%
+% Phase-H:
+%
+% Approved Subjects: 17
+%   mapped:       3
+%   ambiguous:    8
+%   unmapped:     6
+%
+% Accepted semantic Relationships: 21
+%   mapped:                      1
+%   ambiguous:                   0
+%   unmapped:                   14
+%   intentionally_not_projected: 6
+%
+% [PROJECT]
+% wp12_findings.md
+% wp12_formative_self_test_report.md
+%
+% ZUGEHOERIGE POSITIVE EVIDENZ:
+% PASS-006
+% PASS-008
+% PASS-009
+% PASS-010
+%
+% ZUGEHOERIGE HISTORISCHE / KORRIGIERTE FINDINGS:
+% BLK-003
+% BLK-004
+% BLK-005
+%
+% OPTIONAL TABELLE:
+%
+% Verarbeitungsstufe | Anzahl / Status
+%
+% Keine Interpretation, warum 24 besser/schlechter als 109 sind.
+% Das gehoert in Kapitel 8.
+
+
+\subsubsection{Beobachtete Unsicherheits- und Precision-Faelle}
+\label{sec:results_uncertainty_precision}
+
+% BEOBACHTUNGEN:
+%
+% - legitime Open Question zur Klassifikation von "microscope workstation"
+% - Discovery False Positives:
+%   "not yet been agreed"
+%   "acceptable"
+%
+% Human Review:
+% False Positives konnten abgelehnt werden.
+%
+% [PROJECT]
+% SEM-008
+% OBS-019
+%
+% Ergebnisdarstellung:
+% Zahl / Beispiel / Entscheidung nennen.
+%
+% NICHT:
+% "Das zeigt die Wirksamkeit von HITL."
+% -> Kapitel 8.
+
+
+% =============================================================================
+\subsection{Ergebnisse der Human-Authority-Gates}
+\label{sec:results_human_authority}
+% =============================================================================
+
+\subsubsection{Engineering Review und Finalization}
+\label{sec:results_engineering_review}
+
+% Project 120412:
+%
+% 24 Subject Decisions
+% 30 outgoing Relationship Decisions
+%
+% Finalization blieb blockiert, solange eine accepted Relationship
+% zu einem rejected Subject bestand.
+%
+% Nach Korrektur:
+% Final Review Revision RVR-000062
+% Finalization Decision HRD-000001
+%
+% [PROJECT]
+% PASS-007
+% SEM-010
+%
+% Darstellen:
+% - Anzahl
+% - blocked state
+% - korrigierte Entscheidung
+% - danach finalization PASS
+%
+% Keine Bewertung der Governance-Bedeutung.
+
+
+\subsubsection{Promotion und Approved Engineering Information}
+\label{sec:results_approved_information}
+
+% Beobachtete Promotion:
+%
+% Created Approved Inputs: 17
+% Reused:                  0
+% Skipped Open Questions:  7
+% Active Approved Inputs: 17
+%
+% Human Overrides blieben erhalten.
+%
+% Accepted semantic Relationships:
+% 21
+%
+% [PROJECT]
+% BLK-004 Retest
+% BLK-005 Retest
+% PASS-008
+% PASS-009
+%
+% WICHTIG:
+% technische Beobachtung:
+% Relationships waren nach Korrektur Teil des authoritative Phase-H-Handoffs.
+%
+% Interpretation der Authority Boundary -> Kapitel 8.
+
+
+\subsubsection{Revision und Korrektur menschlicher Entscheidungen}
+\label{sec:results_decision_revision}
+
+% THESIS-RELEVANTE, VERDICHTETE OBS-EVIDENZ:
+%
+% OBS-020:
+% Accept-as-generated vs Accept-with-modification korrigiert / live validated
+%
+% OBS-021:
+% Plain Accept wird korrekt als accepted_as_generated persistiert
+%
+% OBS-025:
+% Reopen Subject Decision eingefuehrt / live validated
+%
+% OBS-026:
+% entschiedene Relationships read-only; Aenderung ueber Reopen
+%
+% Nicht jede OBS-ID muss im Fliesstext erscheinen.
+%
+% Ergebnis spaeter moeglich als:
+% "Im finalen Review-Pfad waren Accept-as-generated,
+% Accept-with-modification sowie explizites Reopen als getrennte
+% Decision-Lifecycle-Zustaende vorhanden."
+%
+% Das ist deskriptiv.
+%
+% Interpretation fuer "effective intervention" -> Kapitel 8.
+
+
+% =============================================================================
+\subsection{Ergebnisse der Modellableitung und Zielmodellerzeugung}
+\label{sec:results_model_derivation}
+% =============================================================================
+
+\subsubsection{Findings im Model-Derivation-Pfad}
+\label{sec:results_model_derivation_findings}
+
+% HISTORISCHER ABLAUF, INTERPRETATIONSFREI:
+%
+% BLK-006:
+% Model generation / downstream path zunaechst blockiert.
+%
+% Im weiteren Retest:
+% IEM-000001:
+% 13 elements
+% 3 relationships
+%
+% Generation preflight meldete vier unsupported mappings:
+%
+% 2 x stakeholder mapping unsupported
+% 2 x traces_to mapping unsupported
+%
+% dependency Relationship:
+% supported / passed
+%
+% Parallel:
+% BLK-007 wurde entdeckt:
+% Model Assembly rief Model Placement personas fuer Relationship representation auf.
+%
+% BLK-007:
+% corrected / live retest PASS
+%
+% Neue Finding-Gruppe:
+% SEM-012
+% SEM-013
+% SEM-014
+% SEM-015
+%
+% [PROJECT]
+% wp12_findings.md
+% 2026-08-25 C6 SysML Generation SSOT
+%
+% WICHTIG:
+% Kapitel 7 dokumentiert nur:
+% was blockierte,
+% welche Mapping-Faelle betroffen waren,
+% welcher Zustand nach Korrektur vorlag.
+
+
+\subsubsection{Target-Model Formulation und Successor IEM}
+\label{sec:results_target_formulation}
+
+% SEM-015 finaler thesis-relevanter Status:
+%
+% architecture:                    IMPLEMENTED
+% Golden-E2E scope:                VALIDATED
+% general target-type formulation: OPEN / PARTIAL
+% dependency-aware selective rerun:DEFERRED
+%
+% Implementierter Golden-Scope:
+%
+% Engineering Meaning
+% -> Human-reviewed placement / classification
+% -> bounded Target-Model Formulation
+% -> type-specific model-quality refinement
+% -> Human Review 2
+% -> successor IEM
+% -> deterministic generation
+%
+% Accepted successor:
+% IEM-000002
+%
+% [PROJECT]
+% wp12_formative_self_test_report.md
+% wp12_findings.md
+%
+% WICHTIG:
+% Die allgemeine Coverage nicht als abgeschlossen darstellen.
+
+
+\subsubsection{Deterministische SysML-v2-Generierung}
+\label{sec:results_sysml_generation}
+
+% Beobachteter akzeptierter Golden-E2E-Stand:
+%
+% Successor IEM:
+% IEM-000002
+%
+% Generated model:
+% 13 elements
+% 1 formal relationship
+%
+% Zwei traces_to Relationships:
+% intentionally not materialized
+%
+% Eine dependency Relationship:
+% materialized
+%
+% Stakeholder roles:
+% TN_003 Part Definition pattern
+%
+% [PROJECT]
+% wp12_formative_self_test_report.md
+%
+% [ARTIFACT]
+% generated_model.sysml
+%
+% NICHT:
+% fachliche Bewertung der Modellierungsentscheidung.
+
+
+\subsubsection{Externe SYSIDE-Validierung und Publication}
+\label{sec:results_syside_publication}
+
+% Golden / Gate-3 Evidence:
+%
+% SYSIDE Modeler CLI:
+% version 0.10.3
+% exit code 0
+% diagnostics 0
+% All checks passed
+%
+% Final Review:
+% FMR-000001
+% accepted revision FRV-000002
+%
+% Human Release:
+% FRD-000001
+%
+% Published Output:
+% OUT-000001
+%
+% Published package:
+% data/output/120412/OUT-000001/
+%
+% [PROJECT]
+% wp12_formative_self_test_report.md
+%
+% [ARTIFACT]
+% exact generated / validation / review / release artifacts
+%
+% Ergebnis:
+% nur den beobachteten Status dokumentieren.
+%
+% "SYSIDE PASS = fachlich korrekt" ist ausdruecklich NICHT zu schreiben.
+
+
+% =============================================================================
+\subsection{Ergebnisse der Multi-Source-Verarbeitung}
+\label{sec:results_multisource}
+% =============================================================================
+
+\subsubsection{Initialer Multi-Source-Test und BLK-002}
+\label{sec:results_blk002_initial}
+
+% Formaler Test:
+% WP12-E2E-DRY-001
+%
+% Project:
+% 308131
+%
+% Initiale Classification:
+% FAILED WITH BLOCKER
+%
+% Finding:
+% BLK-002
+% Cross-Source Processing Artifact Identity Collision
+%
+% Beobachtung:
+% Processing Artifact Identity war project-wide nicht ausreichend
+% auf Source/Run-Kontext gebunden.
+%
+% [PROJECT]
+% wp12_findings.md
+% wp12_multi_document_dry_run_test_protocol.md
+%
+% WICHTIG:
+% historischen FAIL erhalten.
+
+
+\subsubsection{Korrektur und Live-Retest Project 308131}
+\label{sec:results_multisource_retest}
+
+% FINALER STATUS:
+%
+% BLK-002:
+% RESOLVED / LIVE RETESTED
+%
+% Project 308131:
+% Multi-Source retest PASS
+%
+% Accepted path:
+%
+% contextual Processing Artifact identity
+% -> exact Project Fit
+% -> explicit ProjectFitPhaseHHandoff
+% -> source-scoped Phase-H Subject identity
+% -> separate source-local AEI sets
+% -> ONE Model Candidate Set
+% -> Human Final Model Review
+%
+% [PROJECT]
+% 2026-09-01 BLK-002 closeout
+% 2026-09-02 final CATIA / thesis-writing transition SSOT
+%
+% WICHTIGE FINAL SCOPE BOUNDARY:
+%
+% Concern-centric S3A/S3B/S4/S5:
+% prototype evidence only
+%
+% automatic cross-source reconciliation / change control:
+% Outlook
+%
+% Nicht interpretieren, warum diese Boundaries wissenschaftlich wichtig sind.
+% -> Kapitel 8.
+
+
+\subsubsection{Beobachtete Multi-Source-Akzeptanzzustaende}
+\label{sec:results_multisource_acceptance}
+
+% Im final akzeptierten Multi-Source-Pfad dokumentieren:
+%
+% - mehrere Sources im selben Project-Kontext
+% - source-local AEI bleibt getrennt
+% - exact Project Fit / admission
+% - project-level Candidate Flow
+% - Human Authority vorhanden
+% - downstream Path weiterhin nutzbar
+%
+% Sofern konkrete Source-/Subject-/Relation-Zahlen aus dem finalen
+% Project-308131-Closeout vorliegen:
+% hier eintragen.
+%
+% [OPEN FOR FINAL WRITING]
+% Exakte final akzeptierte Counts fuer Project 308131 aus Closeout ziehen,
+% falls sie im Haupttext einen Mehrwert bieten.
+%
+% Keine Zahlen erfinden.
+
+
+% =============================================================================
+\subsection{Verbleibende Grenzen des realisierten PoC}
+\label{sec:results_open_limits}
+% =============================================================================
+
+% ACHTUNG:
+% Dieser Abschnitt nennt nur den beobachteten / akzeptierten Status.
+% Warum die Grenzen relevant sind, folgt Kapitel 8.
+
+
+\subsubsection{Semantische und Governance-Findings}
+\label{sec:results_open_semantic}
+
+% OPEN / ACCEPTED LIMITATIONS:
+%
+% SEM-009:
+% predicate-variant Relationship Consolidation noch nicht vollstaendig
+%
+% SEM-010:
+% Relationship lifecycle bei rejected Subject nicht automatisch aligned
+%
+% SEM-013:
+% shared ambiguity vs actual Persona variance weiterhin als Finding
+%
+% SEM-014:
+% unresolved target Relationship representation requires explicit Human selection
+%
+% OBS-019:
+% Subject Discovery over-generation / abstention
+%
+% Im Haupttext NICHT jede ID einzeln breit diskutieren.
+% Besser kompakte Tabelle:
+%
+% Bereich | beobachteter Restpunkt | Status
+%
+% Vollstaendige Details -> Anhang.
+
+
+\subsubsection{Target-Model-Coverage}
+\label{sec:results_target_coverage_limit}
+
+% SEM-011:
+% relevant SysML element-type coverage incomplete
+%
+% SEM-015:
+% general target-type formulation partial
+%
+% SEM-015-F01:
+% deferred
+%
+% Beispiele fuer noch nicht vollstaendig abgedeckte Constructs:
+% State Machine
+% State
+% Transition
+% Interface
+% Port
+% Item / weitere Occurrences, soweit finaler Stand dies bestaetigt
+%
+% WICHTIG:
+% Nur final verifizierte offene Coverage nennen.
+% Vor Formulierung gegen finalen Target Notation / Roadmap Stand pruefen.
+
+
+\subsubsection{Runtime und Human-facing Workflow}
+\label{sec:results_runtime_limits}
+
+% Nur verdichtete, thesis-relevante Beobachtungen:
+%
+% - mehrstufige Agentenverarbeitung kann mehrere Minuten dauern
+% - Background Processing ist im PoC nicht vollstaendig vom Streamlit UI-Lifecycle entkoppelt
+% - einzelne Human-Review-/Placement-Interaktionen blieben aufwendig
+% - Deterministic Review Export war nicht vollstaendig realisiert
+%
+% RELEVANTE FINDINGS:
+% SEM-007
+% OBS-012
+% OBS-017
+% OBS-027
+% OBS-031
+%
+% Keine komplette OBS-Liste im Haupttext.
+%
+% Interpretation:
+% Kapitel 8.
+
+
+% =============================================================================
+\subsection{Ergebnisse der externen Safe Demo}
+\label{sec:results_safe_demo}
+% =============================================================================
+
+% STATUS AM 03.09.2026:
+% NOCH NICHT DURCHGEFUEHRT.
+%
+% DIESER ABSCHNITT BLEIBT BIS NACH DEM TERMIN OFFEN.
+
+
+\subsubsection{Durchfuehrungsstatus}
+\label{sec:results_safe_demo_execution}
+
+% NACH DEM TERMIN:
+%
+% - Datum
+% - Teilnehmerrollen / fachlicher Hintergrund
+% - verwendete Systembaseline
+% - geplanter vs realer Ablauf
+% - vollstaendig / teilweise / abgebrochen
+%
+% KEINE Interpretation.
+
+
+\subsubsection{Beobachtungen entlang der vorab definierten Kriterien}
+\label{sec:results_safe_demo_observations}
+
+% Nach Demo tabellarisch:
+%
+% Kriterium
+% | Beobachtung
+% | Resultat
+% | Finding / Kommentar
+%
+% K1 Workflow nachvollziehbar
+% K2 AI Proposal vs Human Authority unterscheidbar
+% K3 Traceability / Provenance nachvollziehbar
+% K4 Multi-Source nachvollziehbar
+% K5 Human Review plausibel
+% K6 SysML-v2-Output plausibel
+% K7 erkannte Risiken / fehlende Information
+%
+% Keine Interpretation der wissenschaftlichen Bedeutung.
+
+
+\subsubsection{Strukturierte Practitioner-Rueckmeldungen}
+\label{sec:results_safe_demo_feedback}
+
+% Nur tatsaechlich geaeusserte / protokollierte Rueckmeldungen.
+%
+% Positive UND kritische Rueckmeldungen aufnehmen.
+%
+% Keine Aussagen rekonstruieren, die nicht protokolliert wurden.
+%
+% Spaetere Einordnung:
+% Kapitel 8.
+
+
+% =============================================================================
+\subsection{Konsolidierte Ergebnisuebersicht}
+\label{sec:results_overview}
+% =============================================================================
+
+% TABELLE 7.X:
+%
+% Ergebnisbereich
+% | beobachteter Zustand
+% | primaere Evidenz
+% | Finding-/Project-Referenz
+%
+% Beispiel:
+%
+% Single-Source E2E
+% | Gate-3 PASS
+% | Project 000116
+%
+% Regression
+% | 6335 passed / 12 skipped
+% | final integration checkpoint
+%
+% Source-grounded Processing
+% | Project 120412, 24 Canonical Subjects, 17 Approved Inputs
+% | WP-12 R4c
+%
+% Model / Generation
+% | IEM-000002 -> SYSIDE PASS -> Human Release -> OUT-000001
+% | Golden E2E
+%
+% Multi-Source
+% | BLK-002 initial FAIL -> resolved -> Project 308131 PASS
+% | Multi-Source closeout
+%
+% Open Scope
+% | SEM-011 / SEM-015 general coverage partial
+% | finding register
+%
+% Safe Demo
+% | [nach Durchfuehrung]
+%
+% Diese Tabelle kann Kapitel 7 abschliessen.
+%
+% WICHTIG:
+% KEINE Spalte "Interpretation".
+
+
+% =============================================================================
+\subsection{Zwischenfazit der Ergebnisdarstellung}
+\label{sec:results_summary}
+% =============================================================================
+
+% Spaeter maximal ein kurzer neutraler Absatz:
+%
+% - welche End-to-End-Staende erreicht wurden
+% - welche wesentlichen Finding-Gruppen dokumentiert wurden
+% - welche Grenzen offen blieben
+% - Safe Demo Status
+%
+% Der letzte Satz darf lediglich zu Kapitel 8 ueberleiten:
+%
+% "Kapitel 8 ordnet diese Ergebnisse im Hinblick auf die Forschungsfragen,
+% die Literatur und die Grenzen der Untersuchung ein."
+%
+% KEINE Vorwegnahme dieser Einordnung.
+
+
+% =============================================================================
+% ANHANGSSTRATEGIE
+% =============================================================================
+%
+% Vollstaendige formative Findings im Anhang:
+%
+% BLK-*
+% SEM-*
+% OBS-*
+% PASS-*
+%
+% Fuer jeden Finding wenn verfuegbar:
+%
+% ID
+% Titel
+% Erstbeobachtung
+% damaliger Status
+% Testkontext
+% Korrektur / Disposition
+% Retest
+% finaler Status
+% relevante ADR / Contract / Checkpoint Referenz
+%
+% Die vollstaendige Liste darf aus Repository-Evidenz uebernommen /
+% thesisgerecht formatiert werden.
+%
+% Haupttext Kapitel 7:
+% nur fokussierte Auswahl / Verdichtung.
+
+
+% =============================================================================
+% EMPFOHLENE ABBILDUNGEN / TABELLEN
+% =============================================================================
+%
+% PRIORITAET 1
+% Tab. 7.1 Finaler technischer Acceptance State
+%
+% Project / Test
+% | Scope
+% | Result
+% | wichtigste Artefakte
+%
+% PRIORITAET 1
+% Tab. 7.2 R4c Processing / Human Review Counts
+%
+% PRIORITAET 1
+% Tab. 7.3 Model / Generation / Validation / Release State
+%
+% PRIORITAET 1
+% Tab. 7.4 Multi-Source initial / final state
+%
+% PRIORITAET 1
+% Tab. 7.5 Konsolidierte Ergebnisuebersicht
+%
+% OPTIONAL
+% Abb. 7.1 historische E2E-Gate-Sequenz als reine Statusdarstellung
+%
+% NICHT:
+% - Interpretationsdiagramm
+% - kausales "Finding -> Erkenntnis"-Diagramm
+% - Literaturvergleich
+%
+% Solche Darstellungen eher Kapitel 8.
+
+
+% =============================================================================
+% PROJEKTEVIDENZ FUER KAPITEL 7
+% =============================================================================
+%
+% OVERALL FINAL STATE
+% [PROJECT]
+% collaboration/checkpoints/
+% 2026-09-02_catia_modeling_complete_thesis_writing_transition_ssot.md
+%
+% FINDINGS
+% [PROJECT]
+% collaboration/audits/wp12_findings.md
+%
+% FORMATIVE SYNTHESIS
+% [PROJECT]
+% collaboration/audits/wp12_formative_self_test_report.md
+%
+% WP-12 TEST DESIGN / HISTORY
+% [PROJECT]
+% collaboration/audits/wp12_multi_document_dry_run_test_protocol.md
+%
+% HUMAN / UX SUPPORTING EVIDENCE
+% [PROJECT]
+% collaboration/ux/wp12_formative_self_evaluation_log.md
+%
+% GATE-3
+% [PROJECT]
+% Project 000116 accepted Gate-3 checkpoint(s)
+%
+% MULTI-SOURCE
+% [PROJECT]
+% BLK-002 closeout
+% Project 308131 retest
+%
+% SYSML / RELEASE
+% [PROJECT]
+% ADR-021 / ADR-022 / ADR-023 as provenance only
+% Golden E2E / Gate-3 checkpoints
+%
+% HINWEIS:
+% ADRs sind in Kapitel 7 keine Ergebnisquelle fuer Beobachtungen,
+% sofern ein Test-/Artifact-Beleg existiert.
+% Sie werden nur benoetigt, um eine dokumentierte Korrektur eindeutig
+% zu referenzieren.
+%
+% Vollstaendige Finding Details -> Appendix.
+
+
+% =============================================================================
+% OFFENE ARBEIT VOR AUSFORMULIERUNG
+% =============================================================================
+%
+% PRIORITAET A
+%
+% [ ] Vollstaendige Findings-Liste als Appendix-Artefakt erzeugen.
+%
+% [ ] Exakte P1 Finding -> Kapitel-7-Observation Zuordnung finalisieren.
+%
+% [ ] Finalen Project-308131 Closeout lesen und ggf. konkrete Counts
+%     fuer Multi-Source Ergebnisdarstellung ziehen.
+%
+% [ ] Project-000116 Gate-3 Artefakte / IDs fuer Tabelle 7.1 final fixieren.
+%
+% [ ] Safe Demo nach Durchfuehrung eintragen.
+%
+% PRIORITAET B
+%
+% [ ] Historische Run-Zahlen (877791 / 120412) gegen kanonische Reports pruefen.
+%
+% [ ] IEM-000002 / SYSIDE / FMR / FRV / FRD / OUT IDs final gegen
+%     akzeptierte Golden-E2E-Evidenz pruefen.
+%
+% [ ] Pruefen, welche OBS-Findings im finalen UI-Stand bereits obsolet sind.
+%     Nur falls sie im Haupttext verwendet werden.
+%
+% PRIORITAET C
+%
+% [ ] Tabellenform fuer Findings Appendix definieren.
+%
+% [ ] Appendix ggf. als mehrere Tabellen nach BLK / SEM / OBS / PASS strukturieren.
+
+
+% =============================================================================
+% CLAIM-CHECK VOR DEM SCHREIBEN
+% =============================================================================
+%
+% [ ] Beantwortet Kapitel 7 nur "Was wurde beobachtet?"
+% [ ] Keine "daraus folgt"-Formulierungen?
+% [ ] Keine Literaturdiskussion?
+% [ ] Keine Forschungsfragen final beantwortet?
+% [ ] Keine Kausalitaet aus reiner Korrelation / Zaehlwerten abgeleitet?
+% [ ] Historische FAILs bleiben sichtbar?
+% [ ] Spaetere Retests werden separat als spaeterer Zustand dargestellt?
+% [ ] BLK-002 historisch FAIL, final RESOLVED/PASS?
+% [ ] Gate-3 klar Single-Source?
+% [ ] Project 308131 klar Multi-Source?
+% [ ] 6335 PASS / 12 SKIP nur als technischer Zustand?
+% [ ] SYSIDE PASS nicht als Engineering Correctness interpretiert?
+% [ ] SEM-015 General Coverage klar PARTIAL?
+% [ ] OBS-Findings nur verdichtet?
+% [ ] Vollstaendige Findings transparent im Anhang?
+% [ ] Safe-Demo-Ergebnisse erst nach realer Durchfuehrung?
+% [ ] Keine Gedankenstriche als Satzzeichen im finalen Fliesstext?
+% [ ] Kein unpersoenliches "man"?
+% [ ] Tabellenueberschrift oben, Abbildungsunterschrift unten?
+%
+% =============================================================================
