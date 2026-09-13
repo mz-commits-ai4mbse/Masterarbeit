@@ -1,0 +1,665 @@
+% =============================================================================
+% Anhang: Referenzlauf 930444 – Testdaten und exemplarische Traceability-Evidence
+% =============================================================================
+
+\section{Referenzlauf 930444: Testdaten und exemplarische Traceability-Evidence}
+\label{app:traceability_930444}
+
+Dieser Anhang dokumentiert die im Haupttext in
+Abschnitt~\ref{sec:results_traceability} exemplarisch dargestellte
+End-to-End-Traceability des Referenzprojekts~930444. Die Darstellung verfolgt
+zwei Ziele: Zum einen werden die im Referenzlauf registrierten und für die
+Evaluation aufbereiteten Eingangsdaten vollständig offengelegt. Zum anderen
+werden für den exemplarisch gewählten Informationspfad
+\emph{Microscope Workstation} die für die Rekonstruktion relevanten
+persistierten Artefakte in Originalauszügen zusammengeführt.
+
+Der vollständige Lauf erzeugte einen wesentlich größeren Evidence-, Decision-,
+Provenance- und Traceability-Artefaktsatz. Eine vollständige Wiedergabe aller
+maschinenlesbaren JSON-Artefakte würde den Anhang unverhältnismäßig erweitern.
+Daher werden die kurzen Eingangsdokumente und der kompakte Validation Report
+vollständig wiedergegeben. Umfangreiche Reports und Maschinenartefakte werden auf die für
+den dargestellten Pfad relevanten Felder reduziert. Artefaktidentitäten,
+Vorgängerbezüge, Reviewer, Rationale und Authority-Referenzen bleiben dabei
+sichtbar.
+
+Die Reviewer-Identität \texttt{MZ} bezeichnet das im Prototyp verwendete
+Kürzel des Autors. Es leitet sich aus \emph{MoritZ} ab und wurde während des
+Referenzlaufs für die expliziten Human-Review-, Model-Placement-,
+Model-Quality-, Target-Formulation- und Release-Entscheidungen verwendet.
+
+\subsection{Aufbereitete Engineering-Eingangsdaten des Referenzlaufs}
+\label{app:traceability_930444_inputs}
+
+Die im Referenzlauf verwendeten Dokumente basieren auf realen
+Engineering-Inhalten von PreciPoint zum betrachteten
+Remote-Collaboration-Kontext. Für den abschließenden Referenzlauf wurden die
+Inhalte gegenüber den umfangreicheren formativen Testdaten weiter reduziert
+und strukturiert. Ziel war es, den vollständigen Informations- und
+Authority-Pfad anhand klar abgrenzbarer Engineering-Aussagen reproduzierbar
+zu untersuchen und gleichzeitig Laufzeit und Tokenbedarf der wiederholten
+LLM-Verarbeitung zu begrenzen. Die Dokumente sind damit keine unveränderten
+Produktivdokumente, ihre fachliche Grundlage stammt jedoch aus realen
+Engineering-Daten.
+
+Für den Referenzlauf wurden sechs Quellen separat registriert. Vier Quellen
+wurden als \texttt{engineering\_source} verarbeitet. Zwei kurze
+Produktkontexte wurden als \texttt{context\_only} registriert und dienten dem
+projektbezogenen Interpretations- und Project-Fit-Kontext.
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption{Registrierte Quellen des Referenzprojekts 930444}
+    \label{tab:app_930444_sources}
+    \begin{tabularx}{\textwidth}{p{2.1cm}p{4.0cm}p{3.2cm}X}
+        \hline
+        \textbf{Source} & \textbf{Datei} & \textbf{Rolle} & \textbf{Dateipfad} \\
+        \hline
+        \texttt{SRC-000001} & \texttt{01\_product\_context.md} & \texttt{context\_only} & \path{safe_demo/01_product_context.md} \\
+        \texttt{SRC-000002} & \texttt{02\_stakeholders.md} & \texttt{engineering\_source} & \path{safe_demo/02_stakeholders.md} \\
+        \texttt{SRC-000003} & \texttt{03\_user\_workflow.md} & \texttt{engineering\_source} & \path{safe_demo/03_user_workflow.md} \\
+        \texttt{SRC-000004} & \texttt{04\_system\_requirements.md} & \texttt{engineering\_source} & \path{safe_demo/04_system_requirements.md} \\
+        \texttt{SRC-000005} & \texttt{05\_architecture\_notes.md} & \texttt{engineering\_source} & \path{safe_demo/05_architecture_notes.md} \\
+        \texttt{SRC-000006} & \texttt{01\_product\_context.md} & \texttt{context\_only} & \path{safe_demo/live_minimal/01_product_context.md} \\
+        \hline
+    \end{tabularx}
+\end{table}
+
+Die zugehörigen SHA-256-Werte wurden mit den registrierten Source-Manifests
+persistiert:
+
+\begin{evidencebox}
+SRC-000001  81aeec42e1a5971e8951312edb1a6fe4466e267b1f102e4e147f5ff262e51a86
+SRC-000002  1138b4f0d55b161492fc0a4d33505965465d554c00590653808f89cac3bd6624
+SRC-000003  cef50598657ae53b9f03db36567f50752fc03caf7685980bccdd79029c8df12e
+SRC-000004  d7c7c73a8ebe0e2483b0b54c63758cd918159fa2af835e2b1a8e9b1a26c4ec26
+SRC-000005  a4cd264fdbdd518999d4eb162d8d8a3e97a1df57f5f75ca53bb1ebfcbc4d0e77
+SRC-000006  1590465ec7c01cffde3a9567b96cfafca4f9213d6f1a8198f031219365933faa
+\end{evidencebox}
+
+\paragraph{Produktkontext, \texttt{SRC-000001}.}
+Originaldatei: \path{legacy/demo/safe_demo/01_product_context.md}.
+
+\begin{evidencebox}
+# Product Context
+
+iO Stream supports remote collaboration in digital microscopy.
+
+A Microscope Operator works locally and a Remote Expert participates remotely.
+\end{evidencebox}
+
+\paragraph{Stakeholder-Beschreibung, \texttt{SRC-000002}.}
+Originaldatei: \path{legacy/demo/safe_demo/02_stakeholders.md}.
+
+\begin{evidencebox}
+# Stakeholders
+
+The Microscope Operator is the local user.
+
+The Remote Expert is the remote user.
+\end{evidencebox}
+
+\paragraph{User Workflow, \texttt{SRC-000003}.}
+Originaldatei: \path{legacy/demo/safe_demo/03_user_workflow.md}.
+
+\begin{evidencebox}
+# User Workflow
+
+1. The Microscope Operator starts the collaboration session.
+2. The Remote Expert requests microscope control.
+3. The Microscope Operator may take back control.
+\end{evidencebox}
+
+\paragraph{System Requirements, \texttt{SRC-000004}.}
+Originaldatei: \path{legacy/demo/safe_demo/04_system_requirements.md}.
+
+\begin{evidencebox}
+# System Requirements
+
+The system shall indicate the current controller.
+
+The system shall disable remote control after connection loss.
+
+The system shall return control to the Microscope Operator after connection loss.
+\end{evidencebox}
+
+\paragraph{Architecture Notes, \texttt{SRC-000005}.}
+Originaldatei: \path{legacy/demo/safe_demo/05_architecture_notes.md}.
+Diese Quelle enthält den im folgenden Traceability-Beispiel verfolgten
+Gegenstand \emph{Microscope Workstation}.
+
+\begin{evidencebox}
+# Architecture Notes
+
+The Microscope Workstation provides local session control.
+
+The Remote Client provides remote viewing and control requests.
+\end{evidencebox}
+
+\paragraph{Minimaler Produktkontext, \texttt{SRC-000006}.}
+Originaldatei:
+\path{legacy/demo/safe_demo/live_minimal/01_product_context.md}.
+
+\begin{evidencebox}
+# Product Context
+
+iO Stream supports remote collaboration in digital microscopy.
+The main users are a Microscope Operator and a Remote Expert.
+\end{evidencebox}
+
+\subsection{Exemplarischer Traceability-Pfad: Microscope Workstation}
+\label{app:traceability_930444_workstation}
+
+Der folgende Nachweis verfolgt einen einzelnen Informationspfad vom
+registrierten Source-Inhalt bis zum publizierten SysML-v2-Artefakt. Der Pfad
+wurde ausgewählt, weil innerhalb desselben Gegenstands mehrere unterschiedliche
+Verarbeitungszustände sichtbar sind: ein fehlgeschlagener Processing Attempt,
+ein expliziter Retry, divergierende Persona-Klassifikationen, eine Human
+Engineering Decision, Model Placement, eine nachgelagerte Model-Quality-
+Entscheidung sowie die finale Output-Traceability.
+
+\subsubsection{Source und fehlgeschlagener Processing Attempt}
+
+\texttt{SRC-000005} wurde in \texttt{RUN-000001} als
+\texttt{engineering\_source} verarbeitet. Der erste Attempt
+\texttt{ATT-000001} wechselte aus dem Zustand \texttt{running} in
+\texttt{failed}. Der Fehlerzustand wurde als eigenes Processing Event
+persistiert.
+
+\begin{evidencebox}
+event_id:         EVT-000003
+previous_state:   running
+next_state:       failed
+processing_stage: agentic_ingestion
+event_type:       run_failed
+attempt_id:       ATT-000001
+reason_code:      shared_evidence_interpretation_failed
+\end{evidencebox}
+
+\noindent\textit{Originalartefakt:}
+\texttt{runs/RUN-000001/events/EVT-000003.json}.
+
+Für den fehlgeschlagenen Attempt blieb zugleich die rohe Antwort des
+Literal-Interpreters erhalten. Der folgende Ausschnitt zeigt das im ersten
+Interpretationseintrag zurückgegebene Feld \texttt{extracton\_rationale}.
+
+\begin{evidencebox}
+{
+  "source_evidence_id": "EVD-000001",
+  "interpreted_statement": "This source is labeled as architecture notes.",
+  "information_type": "definition",
+  "statement_modality": "descriptive",
+  "epistemic_class": "explicit",
+  "missing_evidence": null,
+  "extracton_rationale": "The evidence explicitly names the source material as architecture notes, but provides no further engineering content.",
+  "uncertainties": [
+    "The note title is broad and does not specify a concrete system behavior or element."
+  ]
+}
+\end{evidencebox}
+
+\noindent\textit{Originalartefakt:}
+\texttt{ATT-000001/.../agent\_legacy\_literal\_interpreter\_run\_01.json}.
+Der zugehörige Parsing-Contract erwartet an dieser Stelle das Feld
+\texttt{extraction\_rationale}. Der fehlerhafte Attempt wurde nicht als
+nachgelagerter Engineering-Zustand weitergeführt. Stattdessen wurde mit
+\texttt{ATT-000002} ein neuer Attempt begonnen. Die Event-Historie persistiert
+diesen Übergang separat:
+
+\begin{evidencebox}
+event_id:       EVT-000004
+previous_state: failed
+next_state:     running
+event_type:     retry_started
+attempt_id:     ATT-000002
+reason_code:    agentic_ingestion_retry_started
+\end{evidencebox}
+
+\subsubsection{Source-grounded Evidence und Canonical Subject}
+
+Im erfolgreichen zweiten Attempt wurde die Source-Aussage als
+\texttt{EVD-000002} mit Source- und Segmentbezug persistiert.
+
+\begin{evidencebox}
+source_evidence_id: EVD-000002
+source_id:          SRC-000005
+source_projection:  SP-000001
+source_anchor:      SEG-000002 [0, 58]
+source_excerpt:     The Microscope Workstation provides local session control.
+\end{evidencebox}
+
+\noindent\textit{Originalartefakt:}
+\texttt{semantics/source\_evidence/EVD-000002.json}.
+
+Die anschließende Subject Discovery führte den Gegenstand als gemeinsames
+Canonical Engineering Subject \texttt{SUBJ-000001}.
+
+\begin{evidencebox}
+canonical_subject_id: SUBJ-000001
+canonical_label:      Microscope Workstation
+subject_form:         entity
+identity_status:      resolved
+mention_ids:          [MNT-000001]
+\end{evidencebox}
+
+\noindent\textit{Originalartefakt:}
+\texttt{canonical\_subject\_set.json} aus
+\texttt{RUN-000001/ATT-000002}.
+
+\subsubsection{Persona-Interpretationen und Consensus/Variance}
+
+Die drei Persona-Interpretationen referenzieren dasselbe Canonical Subject.
+Für die Dimension \texttt{information\_type} lagen drei unterschiedliche
+Klassifikationen vor. Der Consensus-Zustand wurde deshalb mit
+\texttt{divergent} und \texttt{review\_attention\_required=true} persistiert.
+
+\begin{evidencebox}
+canonical_subject_id: SUBJ-000001
+
+information_type:
+  confidence:                low
+  consensus_level:           divergent
+  review_attention_required: true
+
+  PERSONA_LEGACY_LITERAL_INTERPRETER:
+    function
+
+  PERSONA_LEGACY_SYSTEMS_ENGINEERING_INTERPRETER:
+    logical_element
+
+  PERSONA_LEGACY_SKEPTICAL_AMBIGUITY_INTERPRETER:
+    physical_element
+
+uncertainty:
+  The exact system boundary and whether this is hardware,
+  software, or a combined workstation are not specified.
+\end{evidencebox}
+
+\noindent\textit{Originalartefakt:}
+\texttt{runs/RUN-000001/artifacts/consensus\_reports/agentic\_ingestion/}
+\texttt{ATT-000002/subject\_consensus.json}.
+
+Der Consensus-Zustand enthält an dieser Stelle noch keine autorisierende
+Engineering-Entscheidung. Er bündelt die auf denselben Subject-Bezug
+zurückgeführten Persona-Ergebnisse und markiert die Dimension, für die Human
+Review erforderlich ist.
+
+\subsubsection{Human Engineering Review}
+
+Das Canonical Subject wurde als \texttt{RIT-000016} in das Human Engineering
+Review überführt. Der finalisierte Report enthält den freigegebenen Inhalt,
+die Human Classification, den Review Outcome sowie die zugehörige Rationale.
+
+\begin{evidencebox}
+RIT-000016 -- Microscope Workstation
+
+Review Outcome:
+  accepted_with_modification
+
+Reviewed Content:
+  The Microscope Workstation is described as providing local session control.
+
+Information Type:
+  logical_element
+
+Modality:
+  descriptive
+
+Epistemic Status:
+  explicit
+
+Human Rationale:
+  Logical
+\end{evidencebox}
+
+\noindent\textit{Originalartefakt:}
+\texttt{reviews/RVD-000004/versions/RVV-000001/finalized/reviewed\_report.md}.
+
+Die zugehörige Revision \texttt{RVR-000009} persistiert zusätzlich die
+Dimensionen der Human Decision, die Reviewer-Identität und den Zeitpunkt der
+Auswahl.
+
+\begin{evidencebox}
+dimension: classification
+selected_values:
+  - logical_element
+  - descriptive
+  - explicit
+value_origin: item_override
+rationale:    Logical
+selected_by:  MZ
+selected_at:  2026-09-11T05:30:09Z
+
+review_outcome:
+  accepted_with_modification
+\end{evidencebox}
+
+\noindent\textit{Originalartefakt:}
+\texttt{reviews/RVD-000004/versions/RVV-000001/revisions/RVR-000009.json}.
+
+\subsubsection{Approved Engineering Information und Project Fit}
+
+Nach Finalisierung des Reviews wurde der autorisierte Zustand als
+\texttt{AIN-000011} persistiert. Das Approved Input bindet den fachlichen
+Inhalt an den exakten Review-, Source-, Run- und Attempt-Zustand.
+
+\begin{evidencebox}
+approved_input_id:      AIN-000011
+authority_state:        active
+review_document_id:     RVD-000004
+review_version_id:      RVV-000001
+review_revision_id:     RVR-000009
+review_item_id:         RIT-000016
+source_id:              SRC-000005
+processing_run_id:      RUN-000001
+attempt_id:             ATT-000002
+
+canonical_content:
+  title:                Microscope Workstation
+  primary_text:         The Microscope Workstation is described as providing local session control.
+  information_type:     logical_element
+  modality:             descriptive
+  epistemic_status:     explicit
+\end{evidencebox}
+
+\noindent\textit{Originalartefakt:}
+\texttt{approved\_inputs/manifests/AIN-000011.json}.
+
+Für \texttt{SRC-000005} wurde anschließend ein eigener Project-Fit-Zustand
+persistiert. Er referenziert weiterhin Source, Source Projection, Run und
+Attempt und hält das Ergebnis sowie die verwendete Begründung fest.
+
+\begin{evidencebox}
+source_id:         SRC-000005
+processing_run_id: RUN-000001
+attempt_id:        ATT-000002
+outcome:           plausible_in_scope
+
+rationale:
+The candidate source describes a Microscope Workstation with local session
+control and a Remote Client that issues remote viewing and control requests,
+which aligns with the project context of iO Stream for remote collaboration
+in digital microscopy. It matches the local/remote user split and the remote
+control workflow described in the context sources.
+\end{evidencebox}
+
+\noindent\textit{Originalartefakt:}
+\texttt{project\_reconciliation/project\_fit/}
+\texttt{0c4839947bd3dcaa17d43734c129356542bf46ac2a1d6a60eb52ad070ca8a49d.json}.
+
+\subsubsection{Model Placement und Internal Engineering Model}
+
+Für \texttt{AIN-000011} wurde mit \texttt{MPD-000016} eine explizite Model
+Placement Decision gespeichert. Sie legt den Zielbereich und die anzuwendende
+Placement Rule fest.
+
+\begin{evidencebox}
+decision_id:       MPD-000016
+approved_input_id: AIN-000011
+outcome:           accepted
+selected_rule_id:  ELEMENT_SYSTEM_LOGICAL
+reviewer_identity: MZ
+rationale:         Systemlevel
+reviewed_at:       2026-09-11T09:08:58Z
+\end{evidencebox}
+
+\noindent\textit{Originalartefakt:}
+\texttt{model\_placement\_reviews/.../decisions/MPD-000016.json}.
+
+Der daraus aufgebaute interne Modellzustand \texttt{IEM-000001} enthält den
+Gegenstand als \texttt{IME-000011}. Die Placement Authority bleibt direkt am
+Modellelement referenziert.
+
+\begin{evidencebox}
+internal_model_element_id: IME-000011
+approved_input_id:         AIN-000011
+name:                      Microscope Workstation
+description:               The Microscope Workstation is described as providing local session control.
+element_type:              logical_component
+framework_assignment:      FW_SYSTEM_LOGICAL
+model_area:                system.logical
+
+placement_authority:
+  authority_id:            MPD-000016
+  authority_type:          model_placement_decision
+\end{evidencebox}
+
+\noindent\textit{Originalartefakt:}
+\texttt{internal\_models\_v2/IEM-000001/snapshot.json}.
+
+\subsubsection{Model Quality Decision und Successor IEM}
+
+Im Model-Quality-Schritt wurde für dasselbe interne Modellelement eine
+modellbezogene Formulierung vorgeschlagen und durch \texttt{MZ} freigegeben.
+Die Entscheidung wurde als \texttt{MQD-000008} persistiert.
+
+\begin{evidencebox}
+decision_id:              MQD-000008
+internal_model_element_id: IME-000011
+decision:                 approved
+reviewer_identity:        MZ
+
+approved_name:
+  Microscope Workstation
+
+approved_description:
+  Logical component described as providing local session control.
+
+rationale:
+  Batch-confirmed after the refinement quality contract reported preserved
+  meaning, no unsupported information and no explicit Human-attention flag.
+\end{evidencebox}
+
+\noindent\textit{Originalartefakt:}
+\texttt{model\_quality/decisions/MQD-000008.json}.
+
+Die freigegebene Formulierung wird nicht in den Vorgängerzustand
+\texttt{IEM-000001} zurückgeschrieben. Sie erscheint im nachfolgenden
+\texttt{IEM-000002} unter derselben internen Elementidentität.
+
+\begin{evidencebox}
+internal_model_element_id: IME-000011
+name:                      Microscope Workstation
+description:               Logical component described as providing local session control.
+element_type:              logical_component
+framework_assignment:      FW_SYSTEM_LOGICAL
+model_area:                system.logical
+placement_authority:       MPD-000016
+\end{evidencebox}
+
+\noindent\textit{Originalartefakt:}
+\texttt{internal\_models\_v2/IEM-000002/snapshot.json}.
+
+\subsubsection{Generiertes SysML v2 und Output-Traceability}
+
+Die deterministische Generierung überführt \texttt{IME-000011} in das finale
+SysML-v2-Artefakt. Der relevante Originalausschnitt lautet:
+
+\begin{evidencebox}
+part IME_000011 {
+    doc /* Engineering name: Microscope Workstation
+    Description:
+    Logical component described as providing local session control. */
+}
+\end{evidencebox}
+
+\noindent\textit{Originalartefakt:}
+\texttt{data/output/930444/OUT-000001/generated\_model.sysml},
+Zeilen~73--77.
+
+Das zugehörige Output-Traceability-Artefakt bindet das erzeugte Symbol an das
+Approved Input, die Model Placement Authority, den Successor-IEM-Zustand und
+die genaue Position im generierten Artefakt.
+
+\begin{evidencebox}
+approved_input_id:                    AIN-000011
+authority_id:                         MPD-000016
+authority_type:                       model_placement_decision
+generated_symbol_id:                  IME_000011
+generated_unit_id:                    GSU-000001
+source_internal_engineering_model_id: IEM-000002
+source_internal_model_element_id:      IME-000011
+generated_location:
+  start_line: 73
+  end_line:   77
+\end{evidencebox}
+
+\noindent\textit{Originalartefakt:}
+\texttt{data/output/930444/OUT-000001/traceability.json}.
+
+\subsubsection{Technische Validierung und Human Release}
+
+Der publizierte Output enthält einen menschenlesbaren Validation Report. Da der
+Report kompakt ist, wird er hier vollständig wiedergegeben.
+
+\begin{evidencebox}
+# SysML v2 Validation Report
+
+- Project: `930444`
+- Source IEM: `IEM-000002`
+- Validation status: **valid**
+- Publication gate: **passed**
+- Artifact set fingerprint: `217e89b7e5c37a39842f0479076e3389a0c4b8de0847706b6d84cd77a9ff730c`
+- Validation result fingerprint: `aa196bed0529b592c28b3b61d18924b31167d56571f9837f900f6ae48deb4fae`
+- Validation profile: `TURING_SYSML_V2_VALIDATION 1.0.0`
+- Findings: 0
+
+## External validator evidence
+
+- `SYSIDE_CLI` -- SYSIDE Modeler CLI syside 0.10.3
+  (b6e216cb48b5336ea48283e99c68a0e10e17b8cc);
+  execution=completed; diagnostics=0
+
+## Findings
+
+No validation findings.
+\end{evidencebox}
+
+\noindent\textit{Originalartefakt:}
+\texttt{data/output/930444/OUT-000001/validation\_report.md}.
+
+Nach der technischen Validierung wurde die Human Release Decision separat
+persistiert. Die Entscheidung verweist auf die exakte Final-Model-Review-
+Revision, den generierten Artifact-Set-Fingerprint sowie den zugehörigen
+Validation Result Fingerprint.
+
+\begin{evidencebox}
+final_model_review_decision_id: FRD-000001
+decision:                       approved_for_publication
+reviewer_identity:              MZ
+reviewed_at:                    2026-09-11T09:24:10Z
+rationale:                      null
+
+target:
+  final_model_review_id:          FMR-000001
+  final_model_review_revision_id: FRV-000001
+  validation_status:              valid
+  publication_gate:               passed
+  generated_artifact_set_fingerprint:
+    217e89b7e5c37a39842f0479076e3389a0c4b8de0847706b6d84cd77a9ff730c
+  validation_result_fingerprint:
+    aa196bed0529b592c28b3b61d18924b31167d56571f9837f900f6ae48deb4fae
+\end{evidencebox}
+
+\noindent\textit{Originalartefakt:}
+\texttt{final\_model\_reviews/FMR-000001/decisions/FRD-000001.json}.
+
+\subsection{Ergänzende Beispiele für weitere persistierte Entscheidungsarten}
+\label{app:traceability_930444_additional}
+
+Der Hauptpfad \emph{Microscope Workstation} deckt nicht jede im Referenzlauf
+auftretende Entscheidungsart ab. Zwei kurze ergänzende Beispiele dokumentieren
+daher eine Relationship Decision sowie eine explizite Target-Model-Formulation
+Decision. Diese Beispiele werden nicht als Fortsetzung desselben
+Informationspfads behandelt.
+
+\subsubsection{Relationship Decision: Ablehnung und separate akzeptierte Gegenrichtung}
+
+Im Review der System Requirements wurden zwei getrennte Relationship Proposals
+für die Subjects \emph{system} und \emph{indicate the current controller}
+entschieden. \texttt{SRD-000001} verwirft die Richtung vom Verhalten zum
+System. Die eingegebene Live-Demo-Rationale lautete \texttt{vice versa}.
+
+\begin{evidencebox}
+decision_id:       SRD-000001
+source_subject_id: SUBJ-000002   # indicate the current controller
+relationship_kind: performs
+target_subject_id: SUBJ-000001   # system
+outcome:           rejected
+rationale:         vice versa
+reviewer_identity: MZ
+\end{evidencebox}
+
+\noindent\textit{Originalartefakt:}
+\path{subject_review_relationship_decisions/RVD-000003/RVV-000001/SRD-000001.json}.
+
+Eine separate Proposition mit entgegengesetzter Source-/Target-Richtung wurde
+als \texttt{SRD-000012} akzeptiert. Es handelt sich nicht um eine Revision von
+\texttt{SRD-000001}, sondern um eine eigenständige Relationship Decision.
+
+\begin{evidencebox}
+decision_id:       SRD-000012
+source_subject_id: SUBJ-000001   # system
+relationship_kind: performs
+target_subject_id: SUBJ-000002   # indicate the current controller
+outcome:           accepted
+rationale:         null
+reviewer_identity: MZ
+\end{evidencebox}
+
+\noindent\textit{Originalartefakt:}
+\path{subject_review_relationship_decisions/RVD-000003/RVV-000001/SRD-000012.json}.
+
+\subsubsection{Target-Model-Formulation: Microscope Operator}
+
+Für das interne Modellelement \texttt{IME-000001} wurde eine separate
+Target-Model-Formulation Decision persistiert. Der ausgewählte Zustand legt
+fest, dass der Gegenstand formal materialisiert wird, und bindet die konkrete
+Formulierung an einen Target-Model-Pattern- und Target-Notation-Construct-Bezug.
+
+\begin{evidencebox}
+decision_id:                       TFD-000001
+authority_subject_id:              IME-000001
+subject_kind:                      element
+selected_relevance_outcome:        materialize_formally
+selected_target_model_pattern_id:  standalone_reusable_stakeholder_role_part_definition
+selected_target_notation_construct_id: TN_003
+selected_formulation_text:         part def 'Microscope Operator';
+reviewer_identity:                 MZ
+
+rationale:
+  Batch-confirmed during deterministic Target-Model preparation from the exact
+  pinned Target Model, Target Notation and generation-profile evidence.
+\end{evidencebox}
+
+\noindent\textit{Originalartefakt:}
+\texttt{target\_model\_formulation/decisions/TFD-000001.json}.
+
+Im generierten SysML-v2-Artefakt erscheint derselbe Engineering-Gegenstand als
+Symbol \texttt{IME\_000001}:
+
+\begin{evidencebox}
+part def IME_000001 {
+    doc /* Engineering name: Microscope Operator
+    Description:
+    Local person working at the microscope workstation and responsible for the local session. */
+}
+\end{evidencebox}
+
+\subsection{Umfang des im Anhang wiedergegebenen Evidenzsatzes}
+\label{app:traceability_930444_scope}
+
+Die vorstehenden Auszüge bilden bewusst keinen vollständigen Dump des
+Runtime-Verzeichnisses. Vollständig wiedergegeben werden die kurzen, für die Evaluation
+aufbereiteten Engineering-Eingangsdokumente und der kompakte Validation Report. Bei den
+umfangreicheren Maschinenartefakten werden diejenigen Felder gezeigt, die zur
+Rekonstruktion des exemplarischen Pfads und der ergänzenden Entscheidungsarten
+erforderlich sind. Die Originalartefakte bleiben jeweils über ihre eindeutigen
+IDs, Dateipfade und persistierten Fingerprints identifizierbar.
+
+Der Anhang ergänzt damit die Ergebnisdarstellung in
+Abschnitt~\ref{sec:results_traceability}. Die Einordnung, welche Bedeutung die
+persistierten Zwischenzustände, Human Decisions und Authority-Bindungen für die
+Kontrollierbarkeit des KI-gestützten Engineering-Prozesses besitzen, erfolgt
+getrennt in Kapitel~\ref{sec:discussion}.

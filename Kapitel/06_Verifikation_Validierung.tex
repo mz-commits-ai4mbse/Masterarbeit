@@ -3,3 +3,728 @@
 
 \section{Verifikation und Validierung}
 \label{sec:validation}
+\subsection{Ziel und Prüfgegenstände}
+\label{sec:validation_objectives}
+
+Die in Kapitel~\ref{sec:architecture} entwickelte
+Informationsverarbeitungsarchitektur wurde in Kapitel~\ref{sec:implementation}
+als ausführbarer Proof of Concept instanziiert. Die technische Realisierung
+allein beantwortet jedoch noch nicht, ob die vorgesehenen
+Architekturverantwortungen tatsächlich eingehalten werden und ob der
+resultierende Workflow innerhalb des untersuchten Anwendungsrahmens
+funktionsfähig ist. Die prototypische Instanziierung wurde deshalb einer
+mehrstufigen Verifikation und Validierung unterzogen.
+
+Die Evaluation technischer Artefakte kann in entwurfsorientierten
+Forschungsarbeiten dazu dienen, Eigenschaften, Verhalten und Grenzen einer
+entwickelten Lösung systematisch zu untersuchen
+\cite{Wieringa2014,ISO42030}. Für den Turing Generator wurde daraus keine
+einzelne globale Erfolgsprüfung abgeleitet. Stattdessen wurden diejenigen
+Eigenschaften separat geprüft, die durch das Architekturkonzept bewusst als
+unterschiedliche Verantwortungen definiert wurden.
+
+Im Mittelpunkt stehen vier Prüfgegenstände. Erstens ist zu verifizieren, ob
+die Software die definierten Datenstrukturen, Verträge, Zustandsübergänge und
+fail-closed Grenzen entsprechend ihrer Spezifikation implementiert. Diese
+Ebene betrifft insbesondere deterministische Verarbeitung, Identitäten,
+Fingerprints, Provenance-Bindungen und die kontrollierte Weitergabe
+autorisierter Zustände.
+
+Zweitens ist zu prüfen, ob diese Einzelmechanismen auch im Zusammenspiel einen
+durchgängigen Engineering Information Flow bilden. Hierzu muss ein
+Verarbeitungsfall über Source Registration, Engineering Information
+Processing, Human Engineering Review, projektweite Verarbeitung,
+Modellbildung, Generierung und Freigabe geführt werden können, ohne die in
+Kapitel~\ref{sec:architecture} definierten Authority-Grenzen zu umgehen oder
+Provenance stillschweigend zu verlieren.
+
+Drittens bildet das erzeugte SysML-v2-Artefakt einen eigenständigen
+Prüfgegenstand. Die technische Gültigkeit und Verarbeitbarkeit des
+serialisierten Modells wird unabhängig von der vorgelagerten
+Engineering-Interpretation geprüft. Damit wird insbesondere vermieden, einen
+erfolgreichen Softwaredurchlauf mit der technischen Validität des erzeugten
+SysML-v2-Modells gleichzusetzen.
+
+Viertens umfasst der untersuchte Workflow mehrere explizite
+Human-Authority-Grenzen. Automatisierte Tests können prüfen, ob diese Grenzen
+technisch vorhanden und nicht umgehbar sind. Ob die erzeugte Evidence für eine
+menschliche Entscheidung hinreichend nachvollziehbar dargestellt wird und ob
+der vorgesehene Review-Pfad praktisch ausführbar ist, erfordert dagegen eine
+manuelle beziehungsweise formative Prüfung.
+
+Aus diesen Prüfgegenständen wurde eine gestufte V\&V-Strategie abgeleitet:
+
+\begin{center}
+Software- und Contract-Verifikation\\
+$\downarrow$\\
+Integration und End-to-End-Verifikation\\
+$\downarrow$\\
+technische SysML-v2-Validierung\\
+$\downarrow$\\
+Manual Acceptance und Human-Workflow-Prüfung.
+\end{center}
+
+Die einzelnen Ebenen liefern unterschiedliche Evidenz. Ein bestandener
+Unit- oder Regressionstest belegt beispielsweise die getestete
+Implementierungseigenschaft, jedoch nicht die fachliche Richtigkeit eines
+Engineering-Modells. Ebenso belegt eine erfolgreiche SysML-v2-Validierung die
+technische Verarbeitbarkeit des erzeugten Artefakts, nicht aber die
+Engineering-Korrektheit der darin repräsentierten Information. Eine
+menschliche Freigabe wiederum ersetzt keine technische Verifikation der
+Software oder Syntax.
+
+Die V\&V-Strategie wurde deshalb so aufgebaut, dass diese Evidenzarten
+nebeneinander erhalten bleiben und erst in der späteren Auswertung gemeinsam
+betrachtet werden. Die nachfolgenden Abschnitte beschreiben die verwendeten
+Prüfverfahren und Akzeptanzkriterien. Die beobachteten Ergebnisse werden
+getrennt davon in Kapitel~\ref{sec:results} dargestellt.
+
+\subsection{Evaluationsdesign und Evidenzbasis}
+\label{sec:validation_design}
+
+Die Verifikation und Validierung des Turing Generators wurde nicht als
+einzelner abschließender Test angelegt. Stattdessen wurden mehrere
+komplementäre Prüfungen verwendet, die unterschiedliche Eigenschaften des
+entwickelten Architekturkonzepts und seiner prototypischen Instanziierung
+adressieren. Ein solches Vorgehen entspricht der Evaluation von
+Design-Artefakten, bei der unterschiedliche Evaluationsmethoden eingesetzt
+werden können, um Verhalten, Eigenschaften und Grenzen eines Artefakts aus
+verschiedenen Perspektiven zu untersuchen
+\cite{Wieringa2014,Peffers2007,ISO42030}.
+
+Für diese Arbeit wurden vier miteinander verbundene Evidenzstränge
+unterschieden: ein formativer End-to-End-Selbsttest während der
+Prototypentwicklung, ein kontrollierter Multi-Source-End-to-End-Test, ein
+abschließender Referenzlauf der konsolidierten Architektur sowie
+automatisierte Softwaretests und die externe technische Validierung der
+erzeugten SysML-v2-Artefakte.
+
+\paragraph{Formativer End-to-End-Selbsttest}
+
+Der formative End-to-End-Selbsttest diente dazu, den verbundenen
+Engineering-Workflow unter realer Ausführung zu untersuchen. Hierzu wurden
+Engineering Sources durch die implementierten Verarbeitungs-, Review-,
+Authority-, Modellierungs-, Generierungs- und Freigabestufen geführt. Der
+Prüfgegenstand war damit nicht ausschließlich die Funktion einzelner
+Softwarekomponenten, sondern insbesondere ihr Zusammenwirken über mehrere
+Architekturgrenzen hinweg.
+
+Der Test wurde bewusst formativ durchgeführt. Während der verbundenen
+Ausführung erkannte technische, semantische oder architektonische Probleme
+wurden dokumentiert und zur gezielten Weiterentwicklung des Prototyps
+verwendet. Nach einer Korrektur wurde der jeweils betroffene
+Verarbeitungsschritt erneut gegen dasselbe relevante Akzeptanzkriterium
+geprüft. Der zuvor beobachtete Fehlerzustand blieb dabei als Teil der
+Evaluationsevidenz erhalten. Dieses Vorgehen erlaubt es, Defekte an
+Verantwortungs- und Authority-Grenzen sichtbar zu machen, die in isolierten
+Komponententests nicht zwingend erkennbar sind.
+
+Der Selbsttest kombiniert hierzu technische End-to-End-Verifikation,
+Inspektion semantischer und modellbezogener Zwischenzustände,
+Human-Authority-Prüfungen, formative Beobachtungen der Bedienbarkeit,
+automatisierte Regression und externe SysML-v2-Validierung. Die
+zugrunde liegende Evaluation wurde vom Entwickler und Systems Engineer des
+Prototyps selbst durchgeführt. Sie wird daher als qualitative formative
+Selbstevaluation und nicht als unabhängige Usability- oder Nutzerstudie
+behandelt. Das zugehörige Evaluationsprotokoll beschreibt den Test
+ausdrücklich als task-basierte formative Evaluation und grenzt statistisch
+repräsentative Usability-Aussagen aus.
+
+\paragraph{Kontrollierter Multi-Source-End-to-End-Test}
+
+Ein eigener Prüfgegenstand ist die Verarbeitung mehrerer voneinander
+getrennter Engineering Sources. Hierfür wurde ein kontrollierter
+Multi-Source-End-to-End-Test mit mehreren synthetischen Legacy-Dokumenten
+definiert. Jede Source wird dabei separat registriert und zunächst
+source-lokal verarbeitet. Anschließend wird geprüft, ob die Informationen an
+den vorgesehenen projektweiten Übergängen kontrolliert zusammengeführt und
+an die nachgelagerte Modellbildung weitergegeben werden können.
+
+Im Mittelpunkt stehen insbesondere eindeutige Source- und
+Processing-Identitäten, der Erhalt source-lokaler Provenance, die korrekte
+Bindung von Human-Review- und Authority-Zuständen sowie die Vermeidung
+unbeabsichtigter Vermischung verschiedener Verarbeitungspfade. Das
+Testprotokoll fordert deshalb ausdrücklich getrennte Source-Identitäten,
+separate Processing-Zustände und den Erhalt der Herkunftsinformationen über
+den End-to-End-Workflow hinweg.
+
+Wird an einer kontrollierten Grenze eine blockierende Abweichung erkannt,
+wird der betroffene Verarbeitungspfad nicht stillschweigend fortgesetzt.
+Nach der Korrektur wird der relevante Gate erneut geprüft. Fehlerzustand,
+Korrektur und Retest bleiben dabei als voneinander unterscheidbare
+Evidenzzustände erhalten. Die konkreten Ergebnisse dieser Multi-Source-
+Verifikation werden erst in Kapitel~\ref{sec:results} dargestellt.
+
+\paragraph{Abschließender Referenzlauf}
+
+Nach Abschluss der wesentlichen Architektur- und Implementierungskorrekturen
+wurde zusätzlich ein abschließender Referenzlauf durchgeführt. Während der
+formative Selbsttest insbesondere der Identifikation und Korrektur von
+Problemen diente, untersucht der Referenzlauf den konsolidierten
+End-to-End-Workflow als zusammenhängenden Informations- und
+Authority-Pfad.
+
+Der Referenzlauf umfasst die Verarbeitung registrierter Engineering- und
+Context Sources über source-grounded Evidence, Engineering Subjects,
+Persona-Interpretationen, Human Engineering Review, autorisierte Engineering
+Information, projektweite Verarbeitung, Model Placement, Internal
+Engineering Model, Target-Model-Formulation, deterministische
+SysML-v2-Erzeugung, technische Validierung, Final Model Review und Human
+Release bis zum publizierten Output.
+
+Ein besonderer Schwerpunkt liegt dabei auf der Traceability. Für jede
+relevante Verarbeitungsstufe werden die zugrunde liegenden Evidence-,
+Decision-, Provenance- und Authority-Zustände persistiert. Dadurch kann
+geprüft werden, ob ein finaler Modellinhalt innerhalb des registrierten und
+für die Verarbeitung zugelassenen Informationsbestands über die
+vorgelagerten Modell-, Review-, Processing- und Source-Zustände
+zurückverfolgt werden kann.
+
+Die Traceability-Prüfung adressiert damit die im Architekturkonzept
+geforderte nachvollziehbare Engineering-Herleitung. Sie trifft keine Aussage
+darüber, ob außerhalb der registrierten Sources weitere relevante
+Engineering-Information existiert. Geprüft wird vielmehr, ob die vom System
+zugelassenen Informationen und die darauf beruhenden Entscheidungen entlang
+des implementierten Verarbeitungspfads vollständig nachvollziehbar gebunden
+bleiben.
+
+\paragraph{Automatisierte Verifikation und technische Validierung}
+
+Quer zu den End-to-End-Prüfungen wurden automatisierte Unit-, Contract-,
+Integrations- und Regressionstests eingesetzt. Sie prüfen insbesondere
+deterministische Eigenschaften wie Identifier- und Manifestregeln,
+Fingerprints, Persistenzverträge, Zustandsübergänge, Repository-Verhalten,
+Authority-Bindungen und die zulässige Weitergabe von Artefakten zwischen
+einzelnen Verarbeitungsschritten.
+
+Fokussierte Tests adressieren jeweils konkrete Architektur- oder
+Implementierungsverträge. Die vollständige Repository-Regression dient
+zusätzlich dazu, nach Änderungen bereits implementierte Verträge erneut
+auszuführen und unbeabsichtigte Auswirkungen auf bestehende
+Verarbeitungspfade sichtbar zu machen. Die Anzahl bestandener Tests wird
+dabei nicht als eigenständige Qualitätsmetrik interpretiert. Sie stellt
+ausschließlich Evidenz für die jeweils spezifizierten und tatsächlich
+ausgeführten technischen Prüfungen dar.
+
+Das erzeugte SysML-v2-Artefakt bildet einen davon getrennten
+Validierungsgegenstand. Neben internen Konsistenzprüfungen wird das
+serialisierte Modell mit der SYSIDE Modeler CLI gegen eine externe
+SysML-v2-Werkzeugumgebung geprüft. Diese Prüfung adressiert die technische
+Verarbeitbarkeit und Tool-Kompatibilität des erzeugten Artefakts. Sie ersetzt
+weder die fachliche Engineering-Bewertung noch die abschließende Human
+Authority.
+
+Damit werden in der Evaluation vier unterschiedliche Evidenzarten
+zusammengeführt:
+
+\begin{itemize}
+    \item formative Evidenz aus der verbundenen End-to-End-Erprobung,
+    \item Multi-Source-Evidenz für Identität, Provenance und kontrollierte
+          projektweite Verarbeitung,
+    \item Traceability- und Authority-Evidence aus dem abschließenden
+          Referenzlauf sowie
+    \item technische Evidenz aus automatisierter Softwareverifikation und
+          externer SysML-v2-Validierung.
+\end{itemize}
+
+Die nachfolgenden Abschnitte beschreiben die konkrete Durchführung und die
+jeweiligen Akzeptanzkriterien dieser Prüfungen. Beobachtete Ergebnisse,
+Findings, Retests und finale Artefaktzustände werden davon getrennt in
+Kapitel~\ref{sec:results} dargestellt.
+
+\subsection{Software- und Contract-Verifikation}
+\label{sec:validation_software}
+
+Die automatisierte Softwareverifikation adressiert diejenigen Eigenschaften
+des Turing Generators, die unabhängig von der fachlichen Bewertung eines
+konkreten Engineering-Inhalts deterministisch geprüft werden können. Dazu
+gehören insbesondere Datenstrukturen, Identitäten, Persistenzregeln,
+Zustandsübergänge sowie die Verträge zwischen aufeinanderfolgenden
+Verarbeitungsstufen. Die Verifikation dient damit der Prüfung, ob die
+prototypische Implementierung die in der Architektur vorgesehenen
+Verantwortungs- und Authority-Grenzen technisch einhält. Die Bewertung
+einzelner Implementierungseigenschaften erfolgt dabei gegen zuvor definierte
+Erwartungen und nicht anhand eines globalen Qualitätswerts
+\cite{Wieringa2014,ISO42030}.
+
+Die automatisierten Tests sind auf unterschiedlichen Ebenen angeordnet. Auf
+der untersten Ebene prüfen fokussierte Unit- und Contract-Tests einzelne
+deterministische Mechanismen. Dazu zählen unter anderem die Erzeugung und
+Validierung stabiler Identitäten, Manifeststrukturen und Fingerprints, die
+Bindung von Artefakten an ihre Provenance sowie die Persistenz
+unveränderlicher Zustände.
+
+Eine zweite Gruppe von Tests adressiert die Übergänge zwischen
+Architekturverantwortungen. Hier steht nicht mehr ausschließlich ein einzelnes
+Datenobjekt im Mittelpunkt, sondern die Frage, ob ein Zustand nur unter den
+dafür vorgesehenen Voraussetzungen an die nächste Verarbeitungsstufe
+übergeben werden kann. Dies betrifft beispielsweise Übergänge von Processing
+zu Human Review, von Human Review zu autorisierter Engineering Information,
+von autorisierten Modellierungsentscheidungen zur Model Assembly sowie von
+einem Internal Engineering Model zur nachgelagerten Generierungs- und
+Validierungsstufe.
+
+Besondere Bedeutung besitzen hierbei Negativ- und Grenzfallprüfungen. Die
+Architektur fordert an mehreren Stellen fail-closed Verhalten. Entsprechend
+wird nicht nur geprüft, ob ein gültiger Zustand erfolgreich weiterverarbeitet
+werden kann, sondern auch, ob unvollständige, inkonsistente oder nicht
+autorisierte Zustände die nachgelagerte Verarbeitung tatsächlich blockieren.
+Zu den relevanten Prüfbedingungen gehören beispielsweise fehlende
+Authority-Bindungen, widersprüchliche Identitäten, nicht passende
+Fingerprints, unvollständige Referenzen oder nicht unterstützte
+Modellierungszustände.
+
+Für LLM-gestützte Verarbeitungsschritte wird dabei zwischen probabilistischer
+Interpretation und deterministisch prüfbarem Systemverhalten unterschieden.
+Automatisierte Softwaretests bewerten nicht, ob eine freie sprachliche
+Interpretation fachlich ``richtig'' ist. Geprüft wird vielmehr der
+kontrollierte technische Rahmen, innerhalb dessen solche Ergebnisse verwendet
+werden dürfen. Dazu gehören zulässige Schemas, vollständige Referenzen auf den
+verarbeiteten Source-Zustand, die Trennung von Processing Evidence und
+Engineering Authority sowie das Verbot einer automatischen Promotion
+nicht autorisierter Inhalte.
+
+Nach Änderungen an einer Architektur- oder Implementierungsgrenze wurden
+zunächst fokussierte Tests des betroffenen Bereichs ausgeführt. Anschließend
+wurden angrenzende Workflow- und Integrationstests wiederholt. Den
+abschließenden technischen Sicherheitsrahmen bildet die vollständige
+Repository-Regression, in der auch bereits zuvor implementierte Verträge
+erneut ausgeführt werden. Dadurch kann geprüft werden, ob eine lokale
+Korrektur unbeabsichtigte Auswirkungen auf bestehende Upstream- oder
+Downstream-Verarbeitungspfade erzeugt.
+
+Die automatisierte Verifikation lässt sich damit in drei Ebenen gliedern:
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption{Ebenen der automatisierten Softwareverifikation}
+    \label{tab:validation_software_levels}
+    \begin{tabular}{p{3.4cm}p{5.0cm}p{5.0cm}}
+        \hline
+        \textbf{Prüfebene} &
+        \textbf{Prüfgegenstand} &
+        \textbf{Beispielhafte Kriterien} \\
+        \hline
+
+        Unit / Contract &
+        einzelne deterministische Mechanismen &
+        Identitäten, Manifeste, Fingerprints,
+        Persistenz, Schema- und Typregeln \\
+
+        Integration / Boundary &
+        Übergänge zwischen Architekturverantwortungen &
+        Authority-Bindungen, Provenance-Erhalt,
+        zulässige Zustandsübergänge,
+        fail-closed Verhalten \\
+
+        Repository-Regression &
+        Zusammenspiel bereits implementierter Verträge &
+        keine unbeabsichtigte Regression bestehender
+        Verarbeitungs- und Authority-Pfade \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Zusätzlich wurde die technische Konsistenz des Repository-Zustands durch
+statische Prüfungen der vorgenommenen Änderungen kontrolliert. Diese
+Prüfungen ergänzen die funktionalen Tests, besitzen jedoch keine eigene
+Aussage über die fachliche Qualität des erzeugten Engineering-Modells.
+
+Die automatisierte Softwareverifikation bildet damit die technische
+Grundlage für die nachfolgenden End-to-End-Prüfungen. Sie kann zeigen, dass
+spezifizierte Implementierungs- und Contract-Eigenschaften im getesteten
+Softwarestand eingehalten werden. Sie kann dagegen weder die fachliche
+Richtigkeit einer LLM-Interpretation noch die Engineering-Qualität des
+resultierenden Systemmodells nachweisen. Diese Eigenschaften werden deshalb
+in den nachfolgenden Prüfungen getrennt betrachtet.
+
+\subsection{Formative End-to-End- und Multi-Source-Verifikation}
+\label{sec:validation_e2e_multisource}
+
+Die automatisierte Softwareverifikation aus
+Abschnitt~\ref{sec:validation_software} prüft einzelne Implementierungs- und
+Contract-Eigenschaften. Ergänzend wurde der Turing Generator in verbundenen
+End-to-End-Szenarien ausgeführt, um das Zusammenspiel der zuvor isoliert
+geprüften Architekturverantwortungen zu untersuchen. Im Mittelpunkt stand
+dabei insbesondere die Frage, ob Engineering-Information kontrolliert über
+mehrere Processing-, Review-, Authority- und Modellierungsgrenzen hinweg
+weitergegeben werden kann.
+
+Für die formative End-to-End-Verifikation wurde ein vollständiger
+Verarbeitungspfad vom registrierten Eingangsdokument bis zum publizierten
+SysML-v2-Artefakt verwendet. Die Durchführung erfolgte über die reguläre
+Anwendungsschnittstelle des Prototyps und kombinierte manuelle
+Engineering-Entscheidungen mit den automatisierten Verarbeitungsschritten des
+Systems. Dadurch konnte nicht nur die technische Erreichbarkeit einzelner
+Zustände, sondern auch deren tatsächliche Einbettung in den vorgesehenen
+Engineering-Workflow geprüft werden.
+
+Der formative Test wurde entlang der wesentlichen Architekturgrenzen
+durchgeführt. Dazu gehörten insbesondere:
+
+\begin{enumerate}
+    \item Registrierung und eindeutige Bindung der Engineering Source,
+    \item source-lokale Verarbeitung und Erzeugung nachvollziehbarer Evidence,
+    \item Bildung gemeinsamer Engineering Subjects vor der
+          Persona-Interpretation,
+    \item Human Engineering Review und explizite Autorisierung fachlicher
+          Information,
+    \item Überführung autorisierter Engineering Information in die
+          Modellbildungsstufen,
+    \item Human Model Placement und weitere modellbezogene
+          Authority-Entscheidungen,
+    \item deterministische Assembly des Internal Engineering Model,
+    \item kontrollierte Target-Model-Formulation,
+    \item deterministische SysML-v2-Generierung,
+    \item technische Validierung des erzeugten Artefakts sowie
+    \item Final Model Review, Human Release und Publikation.
+\end{enumerate}
+
+Für jede dieser Grenzen wurde geprüft, ob die jeweils erforderlichen
+Vorgängerzustände vorhanden und eindeutig gebunden waren. Ein nachgelagerter
+Verarbeitungsschritt durfte nur dann fortgesetzt werden, wenn die für ihn
+vorgesehene Evidence beziehungsweise Authority vorlag. Dadurch wurde der
+End-to-End-Test zugleich als Prüfung der in
+Kapitel~\ref{sec:architecture} definierten Verantwortungstrennung verwendet.
+
+Der formative Charakter des Tests zeigte sich insbesondere darin, dass
+erkannte Abweichungen nicht nur als Endergebnis dokumentiert wurden. Führte
+eine Abweichung zu einem blockierten Verarbeitungsschritt, wurde zunächst die
+betroffene Architektur- oder Implementierungsgrenze analysiert. Nach einer
+begrenzten Korrektur wurden fokussierte Softwaretests ausgeführt und
+anschließend derselbe relevante Verarbeitungsschritt erneut im verbundenen
+Workflow geprüft. Der End-to-End-Test wurde erst fortgesetzt, wenn die zuvor
+blockierte Grenze wieder kontrolliert durchlaufen werden konnte.
+
+Damit entstand ein wiederkehrendes Prüfverfahren aus:
+
+\begin{center}
+beobachtete Abweichung\\
+$\downarrow$\\
+Identifikation der betroffenen Verantwortungsgrenze\\
+$\downarrow$\\
+begrenzte Korrektur\\
+$\downarrow$\\
+fokussierte automatisierte Verifikation\\
+$\downarrow$\\
+Retest derselben Grenze im End-to-End-Workflow.
+\end{center}
+
+Der ursprüngliche Fehlerzustand blieb dabei erhalten und wurde nicht durch
+den erfolgreichen Retest ersetzt. Diese Vorgehensweise war insbesondere für
+die Untersuchung von Authority- und Handoff-Problemen relevant, da ein lokal
+korrekter Softwarebaustein im verbundenen Workflow dennoch auf einen
+inkompatiblen oder unvollständigen Downstream-Contract treffen kann.
+
+\paragraph{Multi-Source-Verifikation}
+
+Zusätzlich zum formativen Einzelpfad wurde ein kontrollierter
+Multi-Source-End-to-End-Test durchgeführt. Hierfür wurden vier synthetische,
+inhaltlich aufeinander bezogene Legacy-Dokumente als getrennte Engineering
+Sources verwendet. Die Dokumente repräsentieren unterschiedliche
+Informationsperspektiven auf dasselbe technische Projekt und werden
+unabhängig voneinander registriert und verarbeitet.
+
+Die Multi-Source-Prüfung wurde bewusst nicht als gemeinsamer
+Dokumenten-Upload ausgeführt. Jede Source musste eine eigene Source-Identität,
+einen eigenen Processing-Kontext sowie eigene source-lokale Evidence- und
+Review-Zustände behalten. Erst nach Abschluss der jeweiligen source-lokalen
+Verarbeitung durfte eine projektweite Verarbeitung stattfinden. Dadurch kann
+geprüft werden, ob mehrere Informationsquellen zusammengeführt werden, ohne
+ihre ursprüngliche Herkunft oder Authority stillschweigend zu verlieren.
+
+Die zentralen Akzeptanzkriterien des Multi-Source-Tests waren:
+
+\begin{itemize}
+    \item jede Engineering Source bleibt eindeutig identifizierbar,
+    \item Processing-Zustände verschiedener Sources überschreiben sich nicht,
+    \item Evidence und Human-Review-Zustände bleiben an ihre jeweilige
+          Source- und Run-Provenance gebunden,
+    \item projektweite Verarbeitung erfolgt erst nach erfolgreicher
+          source-lokaler Autorisierung,
+    \item mehrere autorisierte Sources können in einen gemeinsamen
+          projektweiten Modellbildungsprozess überführt werden,
+    \item source-lokale Informationen bleiben auch nach der projektweiten
+          Verarbeitung rückverfolgbar und
+    \item kein Source-Pfad erhält allein aufgrund seiner Reihenfolge,
+          Häufigkeit oder technischen Verarbeitung automatisch höhere
+          Engineering Authority.
+\end{itemize}
+
+Besondere Aufmerksamkeit galt dabei der Identität projektweiter Artefakte.
+Lokale Identifikatoren dürfen innerhalb unabhängiger Processing Runs
+wiederverwendet werden, ohne dass daraus projektweit eine eindeutige Identität
+entsteht. Die Verifikation musste deshalb sicherstellen, dass projektweite
+Referenzen den konkreten Processing-Kontext berücksichtigen und verschiedene
+Source-Pfade nicht aufgrund lokal identischer Artefaktkennungen
+zusammenfallen.
+
+Auch die projektweite Zusammenführung selbst wurde als kontrollierter
+Authority-Übergang behandelt. Die technische Erkennung inhaltlicher
+Übereinstimmung, Ergänzung, möglicher Konflikte oder Unsicherheit darf
+projektweite Engineering-Entscheidungen vorbereiten, aber nicht automatisch
+ersetzen. Entsprechend wurde geprüft, ob source-lokale Engineering Authority
+erhalten bleibt und die projektweite Modellbildung nur auf ausdrücklich
+zugelassenen Zuständen aufbaut.
+
+Die Durchführung des Multi-Source-Tests folgte derselben fail-closed Logik wie
+der formative End-to-End-Test. Eine blockierende Abweichung an einer
+Identitäts-, Provenance- oder Authority-Grenze führte zum Abbruch des
+betroffenen Pfads. Nach der Korrektur wurde der relevante Abschnitt erneut
+gegen dieselben Akzeptanzkriterien ausgeführt, bevor der Test fortgesetzt
+wurde.
+
+Die End-to-End- und Multi-Source-Verifikation adressieren damit insbesondere
+die Integration der Architekturverantwortungen. Sie ergänzen die
+automatisierten Tests um die Prüfung realer Zustandsfolgen und
+Authority-Übergänge innerhalb des ausgeführten Prototyps. Die während dieser
+Tests beobachteten Abweichungen, Korrekturen und finalen Testzustände werden
+in Kapitel~\ref{sec:results} dargestellt.
+
+\subsection{Abschließender Referenzlauf und Traceability-Prüfung}
+\label{sec:validation_reference_run}
+
+Nach Abschluss der formativen End-to-End-Erprobung und der
+Multi-Source-Verifikation wurde ein abschließender Referenzlauf mit dem
+konsolidierten Prototyp durchgeführt. Im Unterschied zu den zuvor
+beschriebenen formativen Prüfungen diente dieser Lauf nicht primär dazu,
+weitere Architekturprobleme zu identifizieren und den Prototyp während der
+Durchführung anzupassen. Ziel war vielmehr, den implementierten
+Engineering Information Flow in seinem finalen Untersuchungsstand
+zusammenhängend auszuführen und die dabei entstehende Provenance-,
+Authority- und Traceability-Kette zu überprüfen.
+
+Für den Referenzlauf wurde ein Projekt mit mehreren registrierten
+Informationsquellen verwendet. Dabei wurden Engineering Sources und
+Context Sources als unterschiedliche Informationsrollen behandelt. Nur
+Engineering Sources durften fachliche Evidence über das zu modellierende
+System begründen, während Context Sources ausschließlich die Interpretation
+und Verarbeitung unterstützen durften. Diese Trennung wurde über den
+gesamten nachfolgenden Workflow beibehalten.
+
+Die Engineering Sources wurden zunächst source-lokal verarbeitet. Dabei
+entstanden source-grounded Evidence, Canonical Engineering Subjects und die
+darauf aufbauenden Persona-Interpretationen. Die resultierenden
+Interpretationszustände wurden anschließend über den Human Engineering
+Review in explizit autorisierte Engineering Information überführt. Erst
+diese autorisierten Zustände durften an die projektweite Verarbeitung und
+nachgelagerte Modellbildung übergeben werden.
+
+Der weitere Referenzlauf umfasste die projektweite Zulassung der
+source-lokalen Engineering Information, die Bildung eines gemeinsamen
+Model Candidate Set, Human Model Placement, die deterministische Assembly
+des Internal Engineering Model, die kontrollierte Target-Model-Formulation
+sowie die deterministische Erzeugung des SysML-v2-Artefakts. Der erzeugte
+Artefaktzustand wurde anschließend technisch validiert und zusammen mit dem
+zugehörigen Validation Result an die abschließende Human Review und
+Freigabe übergeben. Die technische Validierung und die finale Human
+Acceptance werden in Abschnitt~\ref{sec:validation_sysml_human} gesondert
+betrachtet.
+
+Der zentrale Prüfgegenstand des Referenzlaufs war die durchgängige
+Traceability. Dabei wurde nicht lediglich kontrolliert, ob zu einem
+publizierten Modell eine ursprüngliche Source angegeben werden kann.
+Geprüft wurde vielmehr, ob die einzelnen fachlichen und technischen
+Transformationen durch persistierte Zwischen- und Entscheidungszustände
+miteinander verbunden bleiben.
+
+Für fachlich aus Engineering Sources abgeleitete Modellinhalte ergibt sich
+daraus eine rückwärts gerichtete Prüfkette der Form:
+
+\begin{center}
+publiziertes SysML-v2-Element\\
+$\uparrow$\\
+generierter Artefaktzustand\\
+$\uparrow$\\
+Internal Engineering Model\\
+$\uparrow$\\
+autorisierte Model-Placement- und Formulierungsentscheidungen\\
+$\uparrow$\\
+Model Candidate\\
+$\uparrow$\\
+Approved Engineering Information\\
+$\uparrow$\\
+Human Engineering Review\\
+$\uparrow$\\
+Persona-Interpretationen und Engineering Subject\\
+$\uparrow$\\
+source-grounded Evidence\\
+$\uparrow$\\
+registrierte Engineering Source.
+\end{center}
+
+Nicht jeder Bestandteil des erzeugten Modells muss dabei unmittelbar aus
+einer Engineering Source stammen. Strukturelle Elemente, die durch das
+verwendete Framework, das Model Structure Profile oder die
+Generierungsregeln vorgegeben werden, besitzen eine andere
+Provenance-Kette. Für diese Elemente wurde entsprechend geprüft, ob ihre
+Herkunft auf die jeweils verwendeten versionierten Framework- und
+Policy-Artefakte zurückgeführt werden kann. Dadurch wird verhindert, dass
+Framework-bedingte Modellstruktur fälschlich als aus einer Engineering
+Source abgeleitete fachliche Information erscheint.
+
+Neben der Rückwärtsverfolgung wurde die Traceability auch in
+Vorwärtsrichtung betrachtet. Ausgangspunkt ist hierbei eine registrierte
+Engineering Source beziehungsweise eine daraus abgeleitete Evidence Unit.
+Von dort wird geprüft, über welche Review-, Authority- und
+Modellierungszustände die Information weitergeführt wurde und ob sie in
+einen finalen Modellinhalt eingegangen ist, verworfen, zurückgestellt oder
+anderweitig aufgelöst wurde. Eine fehlende Modellrepräsentation wird damit
+nicht automatisch als Verlust interpretiert, sofern der entsprechende
+Entscheidungszustand nachvollziehbar erhalten bleibt.
+
+Für die Traceability-Prüfung wurden insbesondere folgende
+Akzeptanzkriterien verwendet:
+
+\begin{itemize}
+    \item fachlich abgeleitete Modellinhalte besitzen eine nachvollziehbare
+          Bindung an ihre Engineering Evidence,
+    \item Human-Authority-Entscheidungen referenzieren den jeweils konkret
+          geprüften Informationszustand,
+    \item projektweite Verarbeitung entfernt oder ersetzt keine
+          source-lokale Provenance,
+    \item Model Placement und nachfolgende Modelltransformationen bleiben
+          auf die autorisierten Engineering-Zustände zurückführbar,
+    \item generierte SysML-v2-Elemente und Relationships können ihren
+          internen Modellobjekten zugeordnet werden,
+    \item framework- oder policy-bedingte Modellanteile bleiben von
+          source-abgeleiteter Engineering Information unterscheidbar,
+    \item Revisionen und Nachfolgerzustände überschreiben ihre
+          Vorgängerzustände nicht und
+    \item der publizierte Output ist an den konkret geprüften und
+          freigegebenen Modellzustand gebunden.
+\end{itemize}
+
+Die Prüfung der Traceability bezieht sich ausschließlich auf den im
+Referenzprojekt registrierten und für die Verarbeitung zugelassenen
+Informationsbestand. Eine vollständige Traceability innerhalb dieses
+Verarbeitungskontexts bedeutet daher nicht, dass sämtliche für ein reales
+Engineering-Projekt potenziell relevanten Informationen vom System erfasst
+wurden. Sie beschreibt vielmehr die Nachvollziehbarkeit der tatsächlich
+zugelassenen Informationen und der daraus innerhalb des Prototyps
+abgeleiteten Entscheidungen und Modellzustände.
+
+Die während des Referenzlaufs erzeugten Processing-, Evidence-, Review-,
+Authority-, Modell-, Generierungs-, Validierungs- und Release-Artefakte
+wurden als zusammengehöriger Evidenzbestand archiviert. Dieser bildet die
+Grundlage für die in Kapitel~\ref{sec:results} dargestellte Auswertung der
+erreichten End-to-End-Traceability und ermöglicht dort auch die exemplarische
+Rückverfolgung einzelner finaler Modellinhalte.
+
+\subsection{Technische SysML-v2-Validierung und Human Acceptance}
+\label{sec:validation_sysml_human}
+
+Die abschließende Prüfung des erzeugten Modellartefakts wurde bewusst in
+technische Validierung und fachliche Freigabe getrennt. Diese Trennung folgt
+der in Kapitel~\ref{sec:architecture} eingeführten Unterscheidung zwischen
+technischer Gültigkeit eines Modellartefakts und der fachlichen Autorität über
+den darin repräsentierten Engineering-Inhalt. Eine erfolgreiche technische
+Validierung erlaubt daher keine unmittelbare Aussage über die Engineering-
+Korrektheit des Modells \cite{SysMLv2,ISO42030}.
+
+\paragraph{Technische SysML-v2-Validierung}
+
+Die technische Validierung wird auf dem tatsächlich erzeugten
+SysML-v2-Artefakt durchgeführt. Der Prüfgegenstand ist damit nicht das
+Internal Engineering Model oder ein vorgelagerter Modellierungszustand,
+sondern die konkrete serialisierte Repräsentation, die anschließend zur
+Freigabe vorgelegt werden kann.
+
+Die Validierung umfasst zunächst interne deterministische Prüfungen. Dabei
+werden insbesondere die Konsistenz des generierten Artefakts, die Bindung an
+den verwendeten Modell- und Generierungszustand sowie die Vollständigkeit der
+für die nachgelagerte Prüfung erforderlichen Metadaten kontrolliert. Die
+Validierungslogik verändert das erzeugte Modell dabei nicht. Ein erkannter
+Fehler führt zu einem negativen oder unvollständigen Validation Result und
+nicht zu einer automatischen Reparatur des Artefakts.
+
+Ergänzend wird das erzeugte Modell mit der SYSIDE Modeler CLI gegen eine
+externe SysML-v2-Werkzeugumgebung geprüft. Dadurch wird kontrolliert, ob die
+verwendete textuelle Repräsentation von einem unabhängigen SysML-v2-Tool
+verarbeitet werden kann. Als technische Akzeptanzkriterien werden insbesondere
+die erfolgreiche Ausführung des Validators sowie das Fehlen blockierender
+Parser- oder Modeler-Diagnosen verwendet.
+
+Die externe Tool-Validierung besitzt dabei eine klar begrenzte Aussagekraft.
+Sie prüft die technische Kompatibilität des erzeugten Artefakts mit der
+verwendeten SysML-v2-Werkzeugumgebung. Sie bewertet dagegen nicht, ob eine
+Anforderung fachlich korrekt interpretiert, eine Funktion richtig abgeleitet
+oder eine Systemstruktur aus Engineering-Sicht angemessen modelliert wurde.
+Diese Unterscheidung ist insbesondere deshalb relevant, weil auch ein
+syntaktisch und technisch valides Modell fachlich unzutreffende oder
+unvollständige Aussagen enthalten kann.
+
+Die technische Validierung wird deshalb als eigener persistierter Zustand
+behandelt. Das Validation Result referenziert das konkret geprüfte generierte
+Artefakt. Eine spätere Änderung am Modell oder eine erneute Generierung
+erfordert entsprechend eine neue technische Validierung; ein früheres
+Validation Result darf nicht auf einen veränderten Artefaktzustand übertragen
+werden.
+
+\paragraph{Human Acceptance}
+
+Auch ein technisch valides SysML-v2-Artefakt wird nicht automatisch
+publiziert. Vor der Freigabe erfolgt eine abschließende Human Review, bei der
+das konkret generierte Modell zusammen mit dem zugehörigen Validation Result
+geprüft wird. Die technische Validierung bildet damit eine Voraussetzung für
+die Freigabe, ersetzt aber nicht die Human Authority.
+
+Die abschließende Review richtet sich insbesondere auf die Frage, ob der
+vorliegende Modellzustand dem zuvor autorisierten Engineering-Inhalt
+entspricht und ob während Modellbildung und Serialisierung keine fachlich
+unerwünschte Veränderung eingeführt wurde. Dabei können sowohl der
+Modellinhalt als auch die zugehörige Traceability und die technische
+Validierung berücksichtigt werden.
+
+Für die Human Acceptance wurden folgende Mindestbedingungen zugrunde gelegt:
+
+\begin{itemize}
+    \item das zur Freigabe vorgelegte Artefakt ist eindeutig identifiziert,
+    \item das zugehörige Validation Result referenziert exakt diesen
+          Artefaktzustand,
+    \item die relevanten Engineering- und Model-Authority-Entscheidungen sind
+          nachvollziehbar gebunden,
+    \item bekannte blockierende Validierungsfehler liegen nicht vor,
+    \item offene fachliche Entscheidungen wurden nicht stillschweigend durch
+          Generation oder Validierung aufgelöst und
+    \item die Publikation erfolgt erst nach einer expliziten Human
+          Release Decision.
+\end{itemize}
+
+Wird das Modell im Rahmen der finalen Review abgelehnt oder zur Überarbeitung
+zurückgegeben, entsteht kein freigegebener Published Output. Eine erforderliche
+Änderung wird in den zuständigen vorgelagerten Verarbeitungsschritt
+zurückgeführt und erzeugt anschließend einen neuen Modell-, Generierungs- und
+Validierungszustand. Dadurch bleibt die Trennung zwischen fachlicher
+Entscheidung, technischer Validierung und Publikationsfreigabe erhalten.
+
+Die erfolgreiche Human Acceptance führt schließlich zu einer expliziten
+Release Decision. Erst danach darf der zugehörige Artefaktzustand als
+publizierter Output abgelegt werden. Der publizierte Zustand wird dabei an das
+konkret geprüfte Modell, dessen Validation Result und die Freigabeentscheidung
+gebunden. Damit ist nachvollziehbar, welcher technische und fachliche Zustand
+tatsächlich veröffentlicht wurde.
+
+Die kombinierte Prüfung folgt damit einer gestuften Logik:
+
+\begin{center}
+Generated SysML v2\\
+$\downarrow$\\
+interne technische Prüfung\\
+$\downarrow$\\
+externe SYSIDE-Validierung\\
+$\downarrow$\\
+Final Model Review\\
+$\downarrow$\\
+Human Release Decision\\
+$\downarrow$\\
+Published Output.
+\end{center}
+
+Diese Reihenfolge verhindert, dass technische Verarbeitbarkeit und fachliche
+Freigabe zu einer gemeinsamen, unscharfen Erfolgsbedingung zusammenfallen.
+Die technische Validierung liefert Evidence über die Verarbeitbarkeit des
+Artefakts, während die finale Human Review die Engineering- und Release-
+Authority behält. Die konkrete Ausprägung der beobachteten Validation Results,
+Review-Zustände und Freigaben wird in Kapitel~\ref{sec:results} dargestellt.

@@ -1,11 +1,53 @@
-\section{Testdaten der Verifikation und Validierung}
+\section{Aufbereitete Engineering-Testdaten der Verifikation und Validierung}
 \label{app:vv_test_data}
 
+Die für die formative End-to-End- und Multi-Source-Verifikation verwendeten
+Testdaten wurden aus realen Engineering-Informationen von PreciPoint
+abgeleitet. Inhalt und fachliche Zusammenhänge orientieren sich an einem
+realen Remote-Collaboration-Anwendungsfall aus der digitalen Mikroskopie.
+
+Für die kontrollierte Evaluation wurden die zugrunde liegenden Informationen
+hinsichtlich Umfang, Struktur und Formulierung gezielt reduziert und
+aufbereitet. Ziel war es, die relevanten fachlichen Zusammenhänge und
+Informationsüberschneidungen zwischen mehreren Dokumenttypen zu erhalten und
+gleichzeitig einzelne Verarbeitungsschritte eindeutig nachvollziehbar zu
+machen. Die Begrenzung des Informationsumfangs reduzierte zudem Laufzeit und
+Tokenbedarf der wiederholten LLM-basierten Testläufe.
+
+Die nachfolgend dokumentierten Dateien stellen daher keine unveränderten
+Produktivdokumente des Unternehmens dar. Ihre fachliche Grundlage stammt
+jedoch aus realen Engineering-Daten. Die vier Dokumente bilden unterschiedliche
+Informationsperspektiven auf denselben Produktkontext ab: Produktbeschreibung,
+User Workflow, System Requirements und technische Architektur.
+
 \subsection{Product Overview}
-\input{Anhang/Testdaten_WP12/01_product_overview.md}
+
+\lstinputlisting[
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    columns=fullflexible
+]{Anhang/Testdaten_WP12/01_product_overview.md}
+
 \subsection{User Workflow Notes}
-\input{Anhang/Testdaten_WP12/02_user_workflow_notes.md}
+
+\lstinputlisting[
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    columns=fullflexible
+]{Anhang/Testdaten_WP12/02_user_workflow.md}
+
 \subsection{Draft System Requirements}
-\input{Anhang/Testdaten_WP12/03_draft_system_requirements.md}
+
+\lstinputlisting[
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    columns=fullflexible
+]{Anhang/Testdaten_WP12/03_system_requirements.md}
+
 \subsection{Technical Architecture Notes}
-\input{Anhang/Testdaten_WP12/04_technical_architecture_notes.md}
+
+\lstinputlisting[
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    columns=fullflexible
+]{Anhang/Testdaten_WP12/04_technical_architecture_notes.md}

@@ -46,6 +46,21 @@ Die verwendeten Präfixe haben folgende Bedeutung:
     \item \texttt{PASS}: positive oder bestätigende Projektevidenz.
 \end{itemize}
 
+Die interne Finding-Kategorie oder Schweregradbezeichnung bestimmt dabei nicht
+unmittelbar die wissenschaftliche Bedeutung eines Befunds. Für die Auswahl im
+Haupttext ist entscheidend, ob ein Finding eine angenommene Verantwortungs-,
+Informations-, Provenance- oder Authority-Grenze des Architekturkonzepts
+infrage stellte oder eine wesentliche Ergebnisgrenze sichtbar machte.
+
+Architekturwirksame Findings führten zu einer begründeten
+Architekturkorrektur, deren Umsetzung anschließend am betroffenen
+Verarbeitungspfad erneut geprüft wurde. Technische Blocker ohne
+Architekturwirkung wurden auf Implementierungsebene korrigiert und retestet.
+Nach Erreichen des vorgesehenen Proof-of-Concept-Umfangs verbliebene
+nicht blockierende semantische, integrative oder bedienungsbezogene Findings
+wurden als dokumentierte Limitationen beziehungsweise Ausgangspunkte für die
+weitere Entwicklung erhalten.
+
 \subsection{Blockierende Findings}
 
 \paragraph{BLK-001: Derivation Producer Contract zu permissiv}
@@ -321,8 +336,10 @@ Stage-01..03-LLM-Responses. Die globale Completeness-Anfrage wurde praktisch zu 
 \texttt{HISTORICAL / PRODUCTIVE R4c PATH SUPERSEDES SOURCE-WIDE COMPLETENESS}.
 
 \textbf{Thesis-Verwendung:}
-Unterstützende Evidenz für Laufzeit, Call-Volumen und bounded work units in
-Kapitel 8.
+Unterstützende formative Evidenz für die Diskussion von Laufzeit,
+LLM-Call-Volumen und begrenzten Verarbeitungseinheiten in
+Abschnitt~\ref{sec:discussion_limitations}. Die Beobachtung ist von der
+separaten Tokenmessung des Referenzlaufs~930444 zu unterscheiden.
 
 
 \paragraph{SEM-008: Legitimate uncertainty funktioniert als Human-Review-Fall}
@@ -348,7 +365,8 @@ unterschiedlichen Prädikaten getrennt bleiben.
 \texttt{OPEN / NON-BLOCKING SEMANTIC QUALITY}.
 
 \textbf{Thesis-Verwendung:}
-PoC-Grenze / Anhang, gegebenenfalls Kapitel 7.7.
+Dokumentierte PoC-Grenze und Grundlage der Limitationen in
+Abschnitt~\ref{sec:discussion_limitations}.
 
 
 \paragraph{SEM-010: Relationship lifecycle nicht automatisch an rejected Subject ausgerichtet}
@@ -557,8 +575,21 @@ wissenschaftlicher Qualitäts- oder Korrektheitsscore.
 
 \subsection{Verwendung des Registers im Haupttext}
 
-Kapitel 7 verwendet nur thesis-relevante Beobachtungen aus diesem Register und
-verweist bei Bedarf auf die zugehörigen Finding-IDs. Die Interpretation ihrer
-Bedeutung erfolgt erst in Kapitel 8. UX- und Integrationsbeobachtungen werden nur
-dort in den Haupttext übernommen, wo sie eine Forschungsfrage oder eine explizite
-Systemgrenze unmittelbar stützen.
+Das Register erhält die vollständige, für die Arbeit relevante
+Finding-Population in thesisgerecht verdichteter Form. Die technischen
+Primärartefakte und ausführlicheren historischen Projektprotokolle verbleiben
+im Entwicklungsrepository.
+
+Kapitel~7 übernimmt aus diesem Register nur solche Befunde einzeln, die eine
+wesentliche Evaluationsbeobachtung darstellen oder eine spätere
+Architekturkorrektur ausgelöst haben. Die Auswahl erfolgt dabei nicht anhand
+der internen Finding-Kategorie, sondern anhand ihrer Bedeutung für den
+Untersuchungsgegenstand. Technische Detailfehler sowie UX- und
+Integrationsbeobachtungen werden nur dort im Haupttext aufgegriffen, wo sie
+eine relevante Systemgrenze sichtbar machen.
+
+Kapitel~8 ordnet die ausgewählten Ergebnisse anschließend gegenüber dem
+Forschungsstand und den Forschungsfragen ein. Ein später erfolgreich
+retesteter Verarbeitungspfad hebt die historische Erstbeobachtung eines
+Findings dabei nicht auf. Erstbeobachtung, Reaktion und Retest bilden
+gemeinsam die Evaluationsevidenz.

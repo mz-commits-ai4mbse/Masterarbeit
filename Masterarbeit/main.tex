@@ -26,7 +26,27 @@
 \addbibresource{literatur.bib} % Einbindung der Datenbankdatei
 \geometry{a4paper, left=30mm, right=25mm, top=25mm, bottom=25mm}
 \onehalfspacing
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{listings}
 
+\newtcblisting{evidencebox}{
+    listing only,
+    colback=gray!8,
+    colframe=gray!45,
+    boxrule=0.4pt,
+    arc=1pt,
+    left=2mm,
+    right=2mm,
+    top=1.5mm,
+    bottom=1.5mm,
+    listing options={
+        basicstyle=\ttfamily\small,
+        breaklines=true,
+        columns=fullflexible,
+        keepspaces=true,
+        showstringspaces=false
+    }
+}
 
 \begin{document}
 
@@ -68,17 +88,35 @@
 \newpage
 \input{Kapitel/09_Fazit}
 \newpage
+
+\appendix
+
+\clearpage
+\part*{Anhang}
+\addcontentsline{toc}{part}{Anhang}
+
 \input{Anhang/01_Literaturrecherche}
+
 \newpage
-%\input{Anhang/02_Findings_Register}
+\input{Anhang/02_Findings_Register}
+
 \newpage
-%\input{Anhang/03_Testdaten}
+\input{Anhang/03_Testdaten}
+
 \newpage
-%\input{Anhang/04_TestReport_WP12}
-%\input{Kapitel/LSP}
-%\newpage
-%\input{Kapitel/LSR}
+\input{Anhang/04_TestReport_WP12}
+
 \newpage
-%\nocite{*}
-\printbibliography[heading=bibintoc, title={Literaturverzeichnis}]
+\input{Anhang/05_Architecture_Decision_Records}
+
+\newpage
+\input{Anhang/06_Referenzlauf_930444_Evidenz}
+
+\newpage
+
+\printbibliography[
+    heading=bibintoc,
+    title={Literaturverzeichnis}
+]
+
 \end{document}

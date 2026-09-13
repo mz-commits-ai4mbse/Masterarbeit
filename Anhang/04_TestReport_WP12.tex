@@ -1,2 +1,207 @@
-\section{WP-12 Multi-Document End-to-End Test Protocol}
+\section{Formative End-to-End- und Multi-Source-Verifikation}
 \label{app:wp12_test_protocol}
+
+\paragraph{Hinweis zur historischen Testdokumentation}
+
+Die ursprünglichen projektinternen Testprotokolle verwenden für die
+aufbereiteten Testdateien teilweise die Bezeichnung
+\emph{synthetic fixtures}. Diese Bezeichnung wird in den historischen
+Primärartefakten unverändert beibehalten. Die Testinhalte wurden jedoch nicht
+frei synthetisiert, sondern aus realen Engineering-Informationen von
+PreciPoint abgeleitet und für die kontrollierte Evaluation hinsichtlich
+Umfang, Struktur und Formulierung reduziert. Die in dieser Arbeit verwendete
+Einordnung lautet daher \emph{aufbereitete Engineering-Testdaten}. Die
+verwendeten Dokumente sind in Anhang~\ref{app:vv_test_data} vollständig
+wiedergegeben.
+
+\subsection{Evaluationsgegenstand und Testaufbau}
+
+Die formative End-to-End-Verifikation untersuchte den verbundenen
+Verarbeitungspfad des Prototyps über die Grenzen einzelner Softwaremodule
+hinweg. Ziel war nicht ausschließlich der Nachweis technisch ausführbarer
+Einzelschritte. Geprüft wurde insbesondere, ob Engineering-Information über
+Source Registration, KI-gestützte Interpretation, Human Review,
+Autorisierung, Modellbildung, SysML-v2-Generierung, technische Validierung
+und Human Release hinweg kontrolliert weitergeführt werden konnte.
+
+Die Evaluation wurde als iterative, task-basierte Selbstevaluation durch den
+Entwickler und Autor durchgeführt. Beobachtete Blocker und semantische
+Abweichungen wurden dokumentiert, hinsichtlich ihrer Ursache eingeordnet und,
+wenn sie den untersuchten Architekturpfad betrafen, gezielt korrigiert.
+Anschließend wurde der jeweils betroffene Verarbeitungsschritt erneut
+ausgeführt. Historische Fehlerzustände blieben dabei erhalten und wurden nicht
+durch spätere erfolgreiche Retests ersetzt. Die vollständige Finding-Historie
+ist in Anhang~\ref{app:findings_register} dokumentiert.
+
+Der ursprüngliche Multi-Document-Test verwendete vier separat registrierte
+Engineering-Dokumente, die unterschiedliche Informationsperspektiven auf
+denselben Produktkontext abbildeten. Dadurch konnten sowohl überlappende als
+auch komplementäre Engineering-Information sowie kontrollierte semantische
+Spannungen zwischen mehreren Sources untersucht werden.
+
+\subsection{Verwendete Engineering-Testdaten}
+
+Die vier verwendeten Testdokumente repräsentierten eine
+Produktbeschreibung, einen User Workflow, System Requirements sowie
+technische Architekturnotizen. Die Inhalte basieren auf realen
+Engineering-Informationen von PreciPoint und wurden für die Evaluation
+gezielt reduziert und strukturiert.
+
+Die vollständigen Testdokumente einschließlich der Beschreibung ihrer
+Aufbereitung sind in Anhang~\ref{app:vv_test_data} wiedergegeben. Die
+Dokumente wurden im Test jeweils als eigenständige Sources registriert.
+Dadurch blieb überprüfbar, aus welcher Source eine spätere Engineering-Aussage
+hervorgegangen war und ob Informationen aus mehreren Sources innerhalb eines
+gemeinsamen Projektkontexts verarbeitet werden konnten.
+
+\subsection{Akzeptanzkriterien}
+
+Die Akzeptanzkriterien wurden nicht als erwartete exakte SysML-v2-Struktur
+formuliert. Maßgeblich war, ob die in den Sources enthaltene
+Engineering-Bedeutung, ihre Provenance und die vorgesehenen
+Authority-Grenzen erhalten blieben. Damit durfte das resultierende Modell
+strukturell von einer vorab gedachten Modellform abweichen, solange die
+fachliche Bedeutung nachvollziehbar erhalten blieb.
+
+Für die inhaltliche Prüfung wurden insbesondere folgende Bereiche betrachtet:
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption{Zentrale Akzeptanzbereiche der formativen End-to-End-Verifikation}
+    \label{tab:app_wp12_acceptance}
+    \begin{tabularx}{\textwidth}{p{3.8cm}X}
+        \hline
+        \textbf{Akzeptanzbereich} & \textbf{Prüfgegenstand} \\
+        \hline
+        Source und Provenance &
+        Separate Source-Identität, eindeutige Herkunft abgeleiteter Information
+        und Erhalt der Source-Bezüge über nachgelagerte Verarbeitungsschritte. \\
+
+        Engineering Meaning &
+        Erkennen der zentralen Rollen, Verhaltensweisen, Constraints und
+        technischen Verantwortlichkeiten des betrachteten
+        Remote-Collaboration-Kontexts. \\
+
+        Multi-Source-Synthese &
+        Gemeinsame Verarbeitung überlappender und komplementärer
+        Engineering-Information ohne stillen Verlust source-lokaler Provenance. \\
+
+        Unsicherheit &
+        Mehrdeutige oder widersprüchliche Information wird explizit
+        weitergeführt und nicht ohne Authority-Entscheidung aufgelöst. \\
+
+        Missing Information &
+        Nicht in den Sources enthaltene quantitative oder technische Angaben
+        werden nicht als positive Engineering-Fakten ergänzt. \\
+
+        Human Authority &
+        KI-generierte Interpretation oder Agent Agreement erzeugt keine
+        automatische Engineering-Freigabe. \\
+
+        Modellbildung &
+        Autorisierte Engineering-Information wird ohne verdeckte semantische
+        Neuinterpretation in nachgelagerte Modellzustände überführt. \\
+        \hline
+    \end{tabularx}
+\end{table}
+
+Die Akzeptanzkriterien dienten damit als semantischer Engineering Contract.
+Sie sollten insbesondere verhindern, dass ein formal plausibles Ergebnis als
+erfolgreich bewertet wird, obwohl Provenance, Engineering Meaning oder Human
+Authority innerhalb des Verarbeitungspfads verloren gegangen waren.
+
+\subsection{Formative Testhistorie und Retests}
+
+Der erste formale Multi-Source-Durchlauf zeigte, dass die Verarbeitung
+mehrerer separat registrierter Sources nicht allein durch erfolgreiche
+source-lokale Verarbeitung nachgewiesen werden konnte. Processing-Artefakte
+waren projektweit nicht ausreichend eindeutig an ihren Source-, Run- und
+Artifact-Kontext gebunden. Der betroffene Multi-Source-Pfad wurde deshalb
+nicht fortgesetzt und zunächst als fehlgeschlagen klassifiziert.
+
+Parallel dazu wurde der verbundene Verarbeitungspfad in klar getrennten
+Single-Source-Läufen weiter untersucht. Diese formative Erprobung machte
+mehrere Architekturgrenzen sichtbar. Hierzu gehörten insbesondere die
+Trennung von Engineering Source und Processing Context, die Bildung
+gemeinsamer Engineering Subjects vor der Persona-Interpretation, die
+Aufnahme akzeptierter semantischer Relationships in die autorisierte
+Engineering Information sowie die Trennung von Engineering Meaning,
+Target-Model Representation, Target-Model Formulation und technischer
+Serialisierung.
+
+Weitere Connected-Workflow-Tests zeigten, dass Model Assembly keine neue
+probabilistische Engineering-Interpretation einführen darf. Die Assembly
+wurde deshalb auf die deterministische Materialisierung bereits
+autorisierter Zustände begrenzt. Nicht eindeutig abbildbare
+Engineering-Information blieb explizit unresolved und wurde einer
+vorgesehenen Human Authority zugeführt.
+
+Die Korrekturen wurden jeweils am betroffenen Verarbeitungspfad erneut
+getestet. Ein erfolgreicher Retest ersetzte dabei nicht die ursprüngliche
+Beobachtung. Die vollständigen technischen und semantischen Findings
+einschließlich ihrer historischen und finalen Zustände sind in
+Anhang~\ref{app:findings_register} dokumentiert.
+
+Der später etablierte Single-Source-End-to-End-Pfad erreichte neben der
+Human-autoriserten Modellbildung auch die deterministische
+SysML-v2-Generierung, die externe technische Validierung und die explizite
+Human Release des validierten Artefakts. Damit stand ein stabiler
+Single-Source-Referenzpfad zur Verfügung, bevor die zuvor blockierte
+Multi-Source-Grenze erneut adressiert wurde.
+
+\subsection{Multi-Source-Abschluss}
+
+Die Korrektur des Multi-Source-Pfads führte eine projektweit eindeutige
+Processing-Artifact-Identität und eine explizite Project-Fit-Grenze ein.
+Source-lokale Approved Engineering Information blieb dabei separat
+referenzierbar und wurde nicht in ein synthetisches gemeinsames
+Authority-Artefakt überführt.
+
+Nach der Project-Fit-Entscheidung konnten mehrere zugelassene
+source-lokale Informationszustände in einen gemeinsamen projektweiten
+Model-Candidate-Pfad eingehen. Die Source-Provenance blieb dabei erhalten,
+während die Modellbildung nicht künstlich an den jeweiligen Source-Grenzen
+getrennt wurde.
+
+Der abschließende Retest mit Project~\texttt{308131} durchlief diesen
+Genuine-Multi-Source-Pfad erfolgreich. Der zuvor blockierende
+Cross-Source-Identity-Befund wurde damit als
+\texttt{RESOLVED / LIVE RETESTED} geschlossen. Der finale
+Integrationsstand wurde zusätzlich durch eine vollständige
+Repository-Regression mit
+
+\begin{center}
+\texttt{6335 passed, 12 skipped}
+\end{center}
+
+technisch abgesichert. Die Anzahl der automatisierten Tests beschreibt dabei
+die Breite der Regressionsevidenz und ist nicht als wissenschaftlicher
+Qualitäts- oder Korrektheitsscore zu interpretieren.
+
+Die Multi-Source-Verifikation zeigt damit für den untersuchten
+Proof-of-Concept-Scope, dass source-lokale Provenance und Human Authority
+erhalten bleiben können, während autorisierte Informationen aus mehreren
+Sources anschließend in einen gemeinsamen projektweiten Modellbildungsprozess
+überführt werden. Eine allgemeine automatische semantische Reconciliation
+oder ein vollständiges Change-Control-Verfahren wurde dadurch nicht
+nachgewiesen.
+
+\subsection{Einordnung der Findings}
+
+Die formative Evaluation erzeugte neben blockierenden Findings auch
+semantische, modellierungsbezogene sowie UX- und
+Integrationsbeobachtungen. Nicht jedes Finding führte zu einer Änderung des
+Architekturkonzepts. Architekturwirksame Befunde wurden in die
+Architekturentwicklung zurückgeführt und nach ihrer Umsetzung erneut
+verifiziert. Rein technische Blocker wurden korrigiert und retestet, ohne
+daraus einen eigenständigen Architekturbeitrag abzuleiten. Nach Erreichen des
+für die Arbeit vorgesehenen Proof-of-Concept-Umfangs verbliebene
+nicht blockierende Beobachtungen wurden als Limitationen beziehungsweise als
+Ausgangspunkte für eine spätere Weiterentwicklung erhalten.
+
+Das vollständige Findings-Register mit Erstbeobachtung, Reaktion,
+Retest beziehungsweise finalem Status ist in
+Anhang~\ref{app:findings_register} dokumentiert. Die ausführliche
+Interpretation der daraus abgeleiteten Architekturprinzipien erfolgt in
+Kapitel~8.
