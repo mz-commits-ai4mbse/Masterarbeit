@@ -1587,3 +1587,118 @@ Scopes. Nicht gezeigt wurden eine universelle semantische Korrektheit,
 vollständige SysML-v2-Abdeckung, industrielle Skalierbarkeit oder
 Produktionsreife. Die daraus entstehenden Weiterentwicklungsbedarfe werden
 im Ausblick aufgegriffen.
+
+\subsection{Reflexion des KI-gestützten Entwicklungsprozesses}
+\label{sec:discussion_ai_assisted_development}
+
+Neben dem Einsatz von Large Language Models innerhalb des untersuchten
+Turing-Generator-Konzepts wurde generative KI auch als Werkzeug bei der
+Entwicklung des Forschungsartefakts eingesetzt. Beide Rollen sind
+methodisch voneinander zu unterscheiden. Die LLM-basierte Verarbeitung von
+Engineering-Information ist Bestandteil des Untersuchungsgegenstands und
+wurde durch die in Kapitel~6 beschriebene Evaluation untersucht. Die
+entwicklungsbegleitende KI dagegen unterstützte die Konkretisierung von
+Architekturideen, die Implementierung, die Ableitung von Tests sowie die
+Analyse technischer Zwischenstände. Sie ist damit Teil des
+Entwicklungsprozesses, nicht Teil der Evaluationsevidenz des Artefakts.
+
+Der Einsatz generativer Modelle für Softwareentwicklungsaufgaben kann die
+Erzeugung und Überarbeitung von Code sowie die Exploration technischer
+Lösungen unterstützen. Gleichzeitig verändert er die Interaktion zwischen
+Entwickler und Implementierung. Statt sämtliche Lösungsdetails unmittelbar
+selbst zu formulieren, verschiebt sich ein Teil der Tätigkeit auf die
+Spezifikation des gewünschten Verhaltens, die Bewertung erzeugter Lösungen
+und deren iterative Korrektur. Untersuchungen zur Nutzung codegenerierender
+Modelle beschreiben vergleichbare Interaktionsmuster zwischen
+zielgerichteter Beschleunigung und explorativer Zusammenarbeit
+\cite{Barke2023}. Für Engineering-Anwendungen bleibt dabei relevant, dass
+plausibel erzeugter Code oder Text nicht automatisch fachlich oder technisch
+korrekt ist \cite{Topcu2025,Sergeyuk2025}.
+
+Im Entwicklungsprozess dieser Arbeit wurde die KI deshalb nicht als
+autoritative Entwicklungsinstanz behandelt. Architekturentscheidungen,
+fachliche Zielzustände und die Freigabe von Änderungen verblieben beim
+Entwickler. Generierte Implementierungsvorschläge wurden in kleine,
+überprüfbare Änderungen zerlegt und anschließend durch fokussierte Tests,
+Regressionstests oder verbundene End-to-End-Läufe überprüft. Der praktische
+Entwicklungszyklus entsprach damit im Kern einer wiederholten Folge aus
+Spezifikation, KI-gestützter Realisierung, Verifikation und gegebenenfalls
+Korrektur.
+
+Diese Arbeitsweise erwies sich insbesondere für die Umsetzung eines
+umfangreichen prototypischen Systems als hilfreich. Die KI konnte
+wiederkehrende Implementierungsaufgaben, Testableitungen und die
+Übertragung zuvor definierter Architekturentscheidungen in konkrete
+Softwarestrukturen unterstützen. Dadurch konnte sich die menschliche
+Entwicklungsarbeit stärker auf Verantwortungsgrenzen, Engineering-Semantik
+und die Bewertung des resultierenden Systemverhaltens konzentrieren. Aus
+der vorliegenden Untersuchung lässt sich daraus jedoch keine quantitative
+Produktivitätssteigerung ableiten, da weder Entwicklungszeit noch eine
+vergleichbare Implementierung ohne KI systematisch erhoben wurden.
+
+Gleichzeitig zeigte der Entwicklungsprozess Grenzen dieses Vorgehens. Eine
+KI kann lokal plausible Änderungen vorschlagen, ohne sämtliche bereits
+bestehenden Architekturentscheidungen, Authority-Grenzen oder
+Abhängigkeiten des Gesamtsystems konsistent zu berücksichtigen. Mit
+zunehmendem Projektumfang steigt deshalb die Bedeutung einer stabilen,
+außerhalb des Dialogkontexts persistierten Wissensbasis. Im vorliegenden
+Projekt wurden akzeptierte Architekturzustände, Design-Rationale,
+Implementierungszustände und Evaluationsergebnisse deshalb in
+versionierten Projektartefakten, Architecture Decision Records,
+Architekturmodellen und Tests festgehalten. Der jeweilige Dialog mit dem
+KI-System war nicht die maßgebliche Quelle für den akzeptierten
+Projektzustand.
+
+Diese Trennung besitzt eine direkte Parallele zum entwickelten
+Architekturkonzept selbst. Innerhalb des Turing Generators darf eine
+plausible LLM-Interpretation nicht allein deshalb autoritativ werden, weil
+sie technisch verwertbar erscheint. Im Entwicklungsprozess galt entsprechend,
+dass ein KI-generierter Implementierungsvorschlag nicht allein aufgrund
+seiner Plausibilität als akzeptierter Systemzustand behandelt wurde. In
+beiden Fällen entsteht Kontrolle durch explizite Zustände,
+Verantwortungsgrenzen, persistierte Entscheidungen und nachgelagerte
+Verifikation.
+
+Die formative Entwicklung des Prototyps verstärkte diese Notwendigkeit.
+Mehrere architekturrelevante Findings wurden erst während verbundener
+End-to-End-Läufe sichtbar. Ihre Korrektur erforderte teilweise Änderungen
+über mehrere Module und Verarbeitungsschritte hinweg. Ein ausschließlich
+promptbasierter Entwicklungsmodus ohne stabile Architektur- und
+Regressionsevidenz hätte hier das Risiko erhöht, lokale Fehlerkorrekturen
+durch neue Inkonsistenzen an anderen Stellen zu erkaufen. Die
+finding-getriebene Rückkopplung aus Beobachtung, Architekturkorrektur,
+Implementierung und Retest bildete deshalb zugleich einen
+Kontrollmechanismus für die KI-gestützte Entwicklung. Das iterative
+Überarbeiten eines Forschungsartefakts auf Grundlage von
+Evaluationsergebnissen entspricht dabei grundsätzlich dem Charakter
+gestaltungsorientierter Forschung \cite{Wieringa2014}.
+
+Eine weitere methodische Grenze ergibt sich daraus, dass ein Teil des
+Artefakts mit Unterstützung derselben Technologieklasse entwickelt wurde,
+deren Einsatz im Artefakt untersucht wird. Hieraus darf insbesondere keine
+unabhängige Bestätigung der Leistungsfähigkeit generativer KI abgeleitet
+werden. Der wissenschaftliche Nachweis stützt sich deshalb nicht auf die
+Tatsache, dass KI an der Implementierung beteiligt war, sondern auf die
+explizite Architekturbeschreibung, die persistierte Design-Rationale, die
+technische Verifikation sowie die dokumentierten End-to-End- und
+Multi-Source-Ergebnisse. Die entwicklungsbegleitende KI ist damit ein
+Engineering-Werkzeug, nicht die Quelle der wissenschaftlichen Gültigkeit der
+Ergebnisse.
+
+Aus dem Entwicklungsprozess ergibt sich dennoch eine weiterführende
+Beobachtung: Der produktive Einsatz generativer KI verschiebt die benötigte
+menschliche Kompetenz nicht einfach von Softwareentwicklung zu
+Prompt-Erstellung. Mit zunehmender Leistungsfähigkeit der Generierung steigt
+vielmehr die Bedeutung präziser Anforderungen, klarer
+Systemverantwortlichkeiten, nachvollziehbarer Architekturentscheidungen und
+konsequenter Verifikation. Die KI kann die Realisierung solcher Vorgaben
+beschleunigen, sie ersetzt jedoch nicht die Verantwortung für deren
+Definition und Bewertung.
+
+Damit weist die Entwicklungsweise eine strukturelle Ähnlichkeit zur
+zentralen Aussage dieser Arbeit auf. Weder bei der Transformation von
+Engineering-Information noch bei der Entwicklung des transformierenden
+Systems besteht die wesentliche Kontrollaufgabe darin, probabilistische
+Generierung vollständig zu vermeiden. Entscheidend ist vielmehr, ihre
+Ergebnisse in einen Prozess einzubetten, in dem Herkunft, Verantwortung,
+Entscheidung und Verifikation voneinander unterscheidbar bleiben.

@@ -1,0 +1,93 @@
+\section{Agenten-Personas des Turing Generators}
+\label{app:persona_definitions}
+Die KI-gestützten Verarbeitungsschritte des Turing Generators verwenden
+aufgabenspezifische Agentenrollen in Kombination mit unterschiedlichen
+Personas. Während eine Rolle die auszuführende Aufgabe festlegt, definiert
+die Persona die Perspektive, aus der diese Aufgabe bearbeitet wird.
+Die nachfolgenden Definitionen dokumentieren die im finalen, evaluierten
+Verarbeitungspfad eingesetzten Persona-Profile. Historisch vorhandene
+Persona-Definitionen aus früheren Implementierungsständen werden nicht
+aufgenommen. Die dargestellten Definitionsdateien werden unverändert aus dem
+Implementierungsstand des Turing Generators wiedergegeben.
+
+Die Persona-Ergebnisse stellen Verarbeitungsergebnisse beziehungsweise
+Entscheidungsgrundlagen dar und besitzen keine eigenständige Engineering
+Authority. Übereinstimmung zwischen mehreren Personas wird entsprechend
+nicht mit fachlicher Richtigkeit gleichgesetzt. Die vollständigen
+Definitionen werden im Folgenden nach ihrem Einsatz innerhalb des
+Verarbeitungsprozesses gruppiert.
+
+\subsection{Interpretation von Engineering-Information}
+\label{app:personas_interpretation}
+
+Für die Interpretation von Engineering-Information werden drei
+unterschiedliche Perspektiven verwendet. Sie unterscheiden zwischen einer
+möglichst quellennahen Interpretation, einer Systems-Engineering-Perspektive
+und einer gezielt auf Mehrdeutigkeiten und Unsicherheiten ausgerichteten
+Prüfperspektive.
+
+\subsubsection*{Literal Interpreter}
+\lstinputlisting[
+
+basicstyle=\ttfamily\footnotesize,
+breaklines=true,
+columns=fullflexible
+]{Anhang/PersonaDefinitions/literal_interpreter.md}
+
+\subsubsection*{Systems Engineering Interpreter}
+\lstinputlisting[
+
+basicstyle=\ttfamily\footnotesize,
+breaklines=true,
+columns=fullflexible
+]{Anhang/PersonaDefinitions/systems_engineering_interpreter.md}
+
+\subsubsection*{Skeptical Ambiguity Interpreter}
+\lstinputlisting[
+
+basicstyle=\ttfamily\footnotesize,
+breaklines=true,
+columns=fullflexible
+]{Anhang/PersonaDefinitions/skeptical_ambiguity_interpreter.md}
+
+\subsection{Modellplatzierung}
+\label{app:personas_model_placement}
+Für die Zuordnung bereits autorisierter Engineering-Information zur
+Zielmodellstruktur werden drei Modellierungsperspektiven verwendet.
+Sie betrachten die zulässige Platzierung aus Sicht der Modellierungsregeln,
+der Systemarchitektur sowie einer konservativen Gegenprüfung. Abweichungen
+zwischen den Vorschlägen bleiben erhalten und können im anschließenden
+Human Model Placement Review bewertet werden.
+\subsubsection*{SysML Profile Modeler}
+\lstinputlisting[
+basicstyle=\ttfamily\footnotesize,
+breaklines=true,
+columns=fullflexible
+]{Anhang/PersonaDefinitions/sysml_profile_modeler.md}
+\subsubsection*{System Architecture Modeler}
+\lstinputlisting[
+basicstyle=\ttfamily\footnotesize,
+breaklines=true,
+columns=fullflexible
+]{Anhang/PersonaDefinitions/system_architecture_modeler.md}
+\subsubsection*{Conservative Modeling Reviewer}
+\lstinputlisting[
+basicstyle=\ttfamily\footnotesize,
+breaklines=true,
+columns=fullflexible
+]{Anhang/PersonaDefinitions/conservative_modeling_reviewer.md}
+
+\subsection{Model Quality Refinement}
+\label{app:persona_model_quality}
+Nach der fachlichen Autorisierung und Modellplatzierung kann ein
+zusätzlicher KI-gestützter Refinement-Schritt zur sprachlichen und
+strukturellen Verbesserung des Modellinhalts eingesetzt werden. Im Gegensatz
+zu den vorhergehenden Multi-Persona-Gruppen verwendet dieser Schritt eine
+einzelne konservativ ausgerichtete Editing-Persona. Die vorgeschlagenen
+Änderungen besitzen ebenfalls keine eigenständige Engineering Authority.
+\subsubsection*{Model Quality Refiner}
+\lstinputlisting[
+basicstyle=\ttfamily\footnotesize,
+breaklines=true,
+columns=fullflexible
+]{Anhang/PersonaDefinitions/model_quality_refiner.md}

@@ -161,9 +161,10 @@ SysML-v2-Artefakts.
 Der Knowledge Layer besitzt eine andere Ausprägung als die beiden übrigen
 Schichten. Er wurde nicht als isoliertes Wissenssubsystem realisiert, sondern
 als querschnittliche Verantwortung. Semantische Referenzen,
-Modellierungsleitplanken, Framework-Definitionen, Agentenprofile und weitere
-versionierte Kontextartefakte werden an diejenigen Systemfunktionen
-angebunden, die sie für Interpretation, Review oder Modellbildung benötigen.
+Modellierungsleitplanken, Framework-Definitionen, Agentenrollen,
+Persona-Definitionen und weitere versionierte Kontextartefakte werden an
+diejenigen Systemfunktionen angebunden, die sie für Interpretation, Review
+oder Modellbildung benötigen.
 Damit entspricht seine technische Realisierung dem in
 Abschnitt~\ref{sec:architecture_information_authority} eingeführten Prinzip,
 dass zusätzliche Kontextinformation die Verarbeitung unterstützen kann, ohne
@@ -597,6 +598,13 @@ Information enthalten. Die LLM-gestützte Verarbeitung arbeitet damit nicht
 auf einem von seiner Herkunft gelösten Textbestand. Identifizierte Evidence
 bleibt an konkrete Source-Ausschnitte und deren Provenance gebunden.
 
+Die Evidence Detection erfolgt dabei bewusst persona-unabhängig. Erst nachdem
+eine gemeinsame source-grounded Evidence-Identität hergestellt wurde,
+verzweigt die Verarbeitung in unterschiedliche interpretative Perspektiven.
+Damit können spätere Unterschiede zwischen Persona-Ergebnissen auf dieselbe
+fachliche Informationsgrundlage bezogen werden und entstehen nicht bereits
+durch unterschiedliche Auswahl oder Segmentierung der Source.
+
 Diese Evidence bildet wiederum noch nicht unmittelbar die Einheit, auf der die
 unterschiedlichen Persona-Perspektiven arbeiten. Ein Source-Ausschnitt kann
 mehrere unabhängig bewertbare Engineering-Aussagen enthalten, während
@@ -614,14 +622,24 @@ Processing Run konfigurierten Perspektiven dieselben Canonical Engineering
 Subjects als gemeinsame Interpretationsbasis. Dadurch bleiben Unterschiede
 zwischen ihren Ergebnissen auf denselben source-grounded Gegenstand bezogen.
 
-Die Persona-Verarbeitung verwendet konfigurierte Agentenprofile, um
-unterschiedliche interpretative Perspektiven auf diese gemeinsamen Subjects
-zu erzeugen. Die LLM-Inferenz stellt dabei eine externe
-Verarbeitungskapazität dar. Ihre Ergebnisse werden als Processing Evidence
-persistiert und besitzen keine eigene Engineering Approval Authority. Neben
-der eigentlichen Interpretation können dabei beispielsweise unterschiedliche
-Einschätzungen bezüglich fachlicher Bedeutung, Klassifikation, Unsicherheit
-oder Modellrelevanz entstehen.
+Die technische Realisierung trennt dabei zwischen der Aufgabe eines Agenten
+und der Perspektive, aus der diese Aufgabe ausgeführt wird. Die Agentenrolle
+definiert die jeweilige Verarbeitungsverantwortung, während die Persona deren
+Fokus und Bewertungsverhalten variiert. Für die Interpretation werden drei
+Perspektiven eingesetzt. Der \emph{Literal Interpreter} orientiert sich
+möglichst eng an den expliziten Aussagen der Source und vermeidet zusätzliche
+fachliche Ableitungen. Der \emph{Systems Engineering Interpreter} betrachtet
+dieselbe Information mit Fokus auf modellrelevante Zusammenhänge wie Akteure,
+Systemgrenzen, Funktionen, Schnittstellen und Constraints. Der
+\emph{Skeptical Ambiguity Interpreter} sucht gezielt nach unklaren,
+unterspezifizierten oder widersprüchlichen Aussagen und löst erkannte
+Mehrdeutigkeit nicht selbstständig auf.
+
+Alle drei Perspektiven arbeiten auf derselben source-grounded
+Informationsbasis. Ihre vollständigen Persona-Definitionen sind in
+Anhang~\ref{app:personas_interpretation} dokumentiert. Die resultierenden
+Interpretationen werden als Processing Evidence persistiert und besitzen
+keine eigene Engineering Approval Authority.
 
 Nach Abschluss der Persona-Interpretationen werden die Ergebnisse
 subject-bezogen zusammengeführt und hinsichtlich ihrer Übereinstimmung und
@@ -633,9 +651,10 @@ Review zur Verfügung steht.
 Dabei wird nicht die Anzahl technischer LLM-Aufrufe als fachliches
 Stimmengewicht verwendet. Mehrere Interpretationen eines gemeinsamen
 Engineering Subjects werden anhand ihrer inhaltlichen Ergebnisse
-gegenübergestellt. Übereinstimmungen können als stabile gemeinsame
-Interpretation sichtbar werden, während abweichende Ergebnisse als Variance
-erhalten bleiben. Unsichere oder gemeinsam als unklar erkannte Sachverhalte
+gegenübergestellt. Übereinstimmungen werden als Consensus-Evidence sichtbar, ohne dadurch
+fachliche Richtigkeit oder Engineering Authority zu begründen, während
+abweichende Ergebnisse als Variance erhalten bleiben.
+ Unsichere oder gemeinsam als unklar erkannte Sachverhalte
 werden ebenfalls nicht stillschweigend aufgelöst.
 
 Die im Processing entstandenen Ergebnisse werden anschließend durch
@@ -825,11 +844,24 @@ Authority-Grenze für die Modellplatzierung.
 
 Für diese Aufgabe können entweder profilbasierte Vorschläge oder
 LLM-gestützte Modellierungsperspektiven verwendet werden. Im
-LLM-unterstützten Pfad erhalten mehrere Modellierungs-Personas dieselbe
+LLM-unterstützten Pfad erhalten drei Modellierungs-Personas dieselbe
 Approved Engineering Information und dieselben zulässigen Placement-Optionen.
+Der \emph{SysML Profile Modeler} bewertet die angebotenen
+Placement-Möglichkeiten vorrangig anhand der festgelegten Modellierungs- und
+Profilregeln. Der \emph{System Architecture Modeler} betrachtet insbesondere
+Abstraktionsebene und architektonische Einordnung innerhalb des
+Zielmodellrahmens. Der \emph{Conservative Modeling Reviewer} prüft die
+Vorschläge gezielt auf nicht ausreichend gestützte Platzierungen und erhält
+Unsicherheit, wenn keine eindeutige Einordnung ableitbar ist. Die
+vollständigen Persona-Definitionen sind in
+Anhang~\ref{app:personas_model_placement} dokumentiert.
+
 Die resultierenden Vorschläge werden in einem Model Placement Review Bundle
-zusammengeführt. Auch auf dieser Ebene erzeugen weder Mehrheit noch
-Einstimmigkeit automatisch Model Authority.
+zusammengeführt. Abweichungen zwischen den Personas stellen dabei kein
+Verarbeitungsversagen dar, sondern zusätzliche Review-Evidence. Auch auf
+dieser Ebene erzeugen weder Mehrheit noch Einstimmigkeit automatisch Model
+Authority.
+
 
 Der Human Reviewer legt stattdessen für die erforderlichen
 Engineering-Gegenstände eine autorisierte Placement Decision fest. Die
@@ -1016,10 +1048,17 @@ noch keine vollständige Zielmodellformulierung bestimmen.
 
 Für den implementierten Proof of Concept wird ein IEM anhand eines
 versionierten Model-Quality-Kontexts für diese Formulierungsstufe aufbereitet.
-Innerhalb des unterstützten Scopes können fokussierte LLM-gestützte
-Refinement-Vorschläge erzeugt werden. Ihre Aufgabe besteht nicht darin, die
-bereits autorisierte Engineering-Bedeutung erneut zu bestimmen, sondern die
-Formulierung innerhalb des zuvor festgelegten Modellkontexts vorzubereiten.
+Innerhalb des unterstützten Scopes kann ein fokussierter LLM-gestützter
+Refinement-Vorschlag erzeugt werden. Hierfür ist mit dem
+\emph{Conservative Engineering Model Editor} eine einzelne
+Model-Quality-Persona konfiguriert. Sie priorisiert die semantische Treue zum
+bereits autorisierten Engineering-Inhalt gegenüber stilistischer Kreativität
+und darf Formulierungen hinsichtlich Klarheit, Prägnanz,
+Anforderungsqualität sowie Funktions- und Aktionsbenennung verbessern.
+Fehlende Engineering-Information darf dabei nicht durch Annahmen ergänzt
+werden, sondern muss für den Human Review sichtbar bleiben. Die vollständige
+Persona-Definition ist in Anhang~\ref{app:persona_model_quality}
+dokumentiert.
 
 Diese Vorschläge besitzen wiederum keine automatische Model Authority.
 Sie werden in einem eigenen \emph{Human Model Quality Review} geprüft.
