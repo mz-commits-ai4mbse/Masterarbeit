@@ -3,3 +3,472 @@
 
 \section{Methodisches Vorgehen}
 \label{sec:methodik}
+
+\subsection{Forschungsdesign und Vorgehensmodell}
+\label{sec:forschungsdesign}
+
+Die vorliegende Arbeit untersucht die Gestaltung einer
+Informationsverarbeitungsarchitektur, mit der heterogene
+Engineering-Bestandsinformationen kontrolliert in SysML-v2-Strukturen
+überführt werden können. Im Mittelpunkt steht damit nicht die Entwicklung
+eines produktionsreifen Softwaresystems, sondern die Herleitung,
+Konkretisierung und Untersuchung eines Architekturkonzepts. Die
+prototypische Realisierung des Turing Generators dient dazu, ausgewählte
+Eigenschaften dieses Konzepts praktisch zu operationalisieren und unter
+kontrollierten Bedingungen untersuchen zu können.
+
+Die Forschungslogik weist damit wesentliche Merkmale gestaltungsorientierter
+Forschung auf. Designorientierte Ansätze verbinden die Entwicklung eines
+Artefakts mit der Untersuchung, inwieweit dieses ein zuvor beschriebenes
+Problem adressiert \cite{Wieringa2014,Peffers2007}. Dieser Zusammenhang
+dient als methodischer Bezugsrahmen der Arbeit. Der tatsächliche
+Entwicklungsprozess wird dabei nicht als Umsetzung eines einzelnen
+vorgegebenen Design-Science-Prozessmodells verstanden, sondern orientiert
+sich an der wiederholten Rückkopplung zwischen Problemverständnis,
+Architekturentwurf, Konkretisierung und Evaluation.
+
+Ausgangspunkt war die in Kapitel~2 dargestellte wissenschaftliche
+Ausgangsbasis. Aus der initialen Literatursynthese wurde zunächst eine
+vorläufige Lösungshypothese für die Verarbeitung heterogener
+Engineering-Information abgeleitet. Diese frühe Struktur stellte noch keine
+Zielarchitektur dar. Sie diente dazu, die Forschungsfragen in erste
+Verarbeitungsaufgaben und Architekturannahmen zu überführen und dadurch einen
+Ausgangspunkt für die weitere Modellierung zu schaffen. Die methodische
+Herleitung dieser Ausgangsbasis wird in
+Abschnitt~\ref{sec:literaturmethodik} beschrieben.
+
+
+% -------------------------------------------------------------------------
+% ABBILDUNG 3.x
+% Frühe literaturbasierte Lösungshypothese aus dem Kick-off-Stand
+%
+% Die Abbildung zeigt die nach der initialen Literaturrecherche formulierte
+% sechsstufige Prozessfolge für die KI-gestützte Transformation heterogener
+% Engineering-Information. Sie stellt nicht den in der Literatur gefundenen
+% Stand der Technik dar, sondern eine erste eigene Synthese der zuvor
+% identifizierten Ansätze und Problemfelder.
+%
+% Inhaltlich bildet sie damit den Übergang zwischen Kapitel 2 und der
+% anschließenden Architekturentwicklung:
+%
+% Stand der Technik
+% -> literaturbasierte Lösungshypothese
+% -> weitere modellbasierte Konkretisierung
+% -> prototypische Untersuchung
+%
+% Mögliche Caption:
+%
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=\textwidth]
+%       {Abbildungen/Initiale_Loesungshypothese_Kickoff.pdf}
+%     \caption{Frühe literaturbasierte Lösungshypothese für den
+%     KI-gestützten Transformationsprozess}
+%     \label{fig:initial_processing_hypothesis}
+% \end{figure}
+%
+% Begleittext nach der Abbildung:
+%
+% Die dargestellte sechsstufige Prozessfolge bildete den konzeptionellen
+% Ausgangspunkt der weiteren Architekturentwicklung. Sie wurde im Verlauf der
+% Arbeit nicht als unveränderliches Vorgehensmodell behandelt, sondern durch
+% Modellierung, prototypische Konkretisierung und formative Evaluation
+% schrittweise präzisiert.
+% -------------------------------------------------------------------------
+
+
+Die anschließende Architekturentwicklung erfolgte schrittweise. Aus
+Forschungsfragen, fachlichen Anforderungen und der frühen Lösungshypothese
+wurden Systemfunktionen und logische Verantwortlichkeiten konkretisiert.
+Architekturentscheidungen wurden dabei nicht ausschließlich aus der
+Softwareimplementierung abgeleitet, sondern modellbasiert beschrieben und
+begründet. Die hierfür verwendete Vorgehensweise wird in
+Abschnitt~\ref{sec:architekturmethodik} erläutert.
+
+Die zunehmende Konkretisierung wurde durch eine prototypische Realisierung
+begleitet. Dadurch konnten zunächst konzeptionell formulierte
+Verantwortungsgrenzen und Informationsübergänge in einem ausführbaren
+Verarbeitungspfad untersucht werden. Zeigte eine solche Untersuchung, dass
+eine beobachtete Abweichung nicht lediglich auf einen lokalen
+Implementierungsfehler, sondern auf eine unzureichende
+Architekturannahme zurückzuführen war, wurde die betroffene
+Architekturentscheidung präzisiert und der Verarbeitungspfad anschließend
+erneut geprüft. Diese Rückkopplung zwischen Gestaltung und Evaluation
+entspricht dem iterativen Charakter gestaltungsorientierter Forschung
+\cite{Wieringa2014}.
+
+Die Evaluation besitzt damit zwei Funktionen. Einerseits überprüft sie, ob
+definierte technische und prozessuale Eigenschaften im prototypischen
+System realisiert wurden. Andererseits liefert die formative
+End-to-End-Erprobung Hinweise darauf, ob die angenommenen Informations-,
+Verantwortungs-, Provenance- und Authority-Grenzen des Architekturkonzepts
+unter den untersuchten Bedingungen tragfähig sind. Die Evaluation von
+Architekturen kann sich dabei auf unterschiedliche Qualitäts- und
+Entscheidungsgegenstände beziehen und ist stets an den jeweiligen
+Evaluationszweck und dessen Evidenzbasis zu binden
+\cite{ISO42030}. Das konkrete Evaluationsdesign dieser Arbeit wird in
+Kapitel~6 beschrieben.
+
+Die Forschungsfragen bilden über diesen Prozess hinweg den konstanten
+Bezugsrahmen. Die schrittweise Weiterentwicklung des Artefakts verändert
+damit nicht den Untersuchungsgegenstand, sondern erhöht den
+Konkretisierungsgrad, auf dem die Forschungsfragen untersucht werden können.
+Die resultierende Forschungslogik lässt sich zusammenfassend als Folge aus
+wissenschaftlicher Ausgangsbasis, vorläufiger Lösungshypothese,
+modellbasierter Architekturentwicklung, prototypischer Konkretisierung und
+formativer beziehungsweise abschließender Evaluation beschreiben.
+
+\subsection{Literaturrecherche und Ableitung des Forschungsbedarfs}
+\label{sec:literaturmethodik}
+
+Die wissenschaftliche Ausgangsbasis der Arbeit wurde durch eine strukturierte
+Literaturrecherche erarbeitet. Ziel war es, relevante Arbeiten an der
+Schnittstelle von MBSE, SysML, KI-gestützter Modellgenerierung,
+Brownfield-Transformation und semantischer Informationsverarbeitung zu
+identifizieren und daraus sowohl den in Kapitel~2 dargestellten Forschungsstand
+als auch erste Lösungsbausteine für die Architekturentwicklung abzuleiten. Die
+Recherche diente damit nicht nur der Beschreibung des State of the Art, sondern
+auch der systematischen Schärfung des untersuchten Problems.
+
+Die Planung der initialen Recherche orientierte sich an etablierten
+Vorgehensweisen für nachvollziehbare Literaturstudien. Zur Strukturierung des
+Suchraums wurden die Forschungsfragen in Suchbegriffscluster überführt. Dabei
+wurden insbesondere Modellierungssprachen, KI-Technologien, MBSE beziehungsweise
+Architecture as Code sowie Brownfield- und Heterogenitätsprobleme
+berücksichtigt. Das PICOC-Schema wurde dabei als Hilfsrahmen zur Strukturierung
+von Untersuchungsgegenstand, Intervention, Vergleichsperspektive, Zielgrößen
+und Anwendungskontext verwendet. Der vollständige Literature Search Plan mit
+Suchclustern, Suchstrings und Auswahlkriterien ist in
+Anhang~\ref{app:lsp} dokumentiert.
+
+Die initiale Suche erfolgte in Scopus, ScienceDirect, IEEE Xplore und der ACM
+Digital Library. Ergänzend wurde Scopus AI explorativ genutzt, um über
+natürlichsprachliche Fragestellungen weitere potenziell relevante Arbeiten zu
+identifizieren. Diese Treffer wurden nicht ungeprüft übernommen, sondern mit
+dem bestehenden Suchbestand abgeglichen und anschließend denselben
+Relevanzentscheidungen unterzogen wie die Ergebnisse der klassischen Suche.
+
+Die Auswahl erfolgte in zwei Stufen. Zunächst wurden Titel und Abstract auf
+ihre Relevanz für die Forschungsfragen geprüft. Potenziell geeignete Arbeiten
+wurden anschließend auf Volltextebene betrachtet. Die Dokumentation von
+Identifikation, Screening und Auswahl orientierte sich an den
+Transparenzprinzipien von PRISMA \cite{Page2021}. Der initial dokumentierte
+Suchlauf umfasste 28 Publikationen. Die zugehörigen Screeningentscheidungen und
+die ursprüngliche Synthese sind im Literature Search Report in
+Anhang~\ref{app:lsr} nachvollziehbar dokumentiert.
+
+Im weiteren Verlauf der Arbeit wurden bei neu auftretenden Fragestellungen
+ergänzende themenspezifische Quellen herangezogen.
+
+Die Literatur wurde anschließend nicht allein nach Publikationstypen, sondern
+entlang der für die Forschungsfragen relevanten Lösungsbausteine betrachtet.
+Hierzu gehörten insbesondere die Transformation heterogener
+Engineering-Information, KI- beziehungsweise LLM-gestützte Modellbildung,
+semantische Harmonisierung, formale Modellvalidierung, Human-in-the-Loop sowie
+Modularität und Interoperabilität. Aus der Gegenüberstellung dieser Ansätze
+entstanden die in Kapitel~2 dargestellten Forschungslücken und die in
+Abschnitt~\ref{sec:forschungsdesign} beschriebene frühe Lösungshypothese.
+
+Die Literaturrecherche besitzt damit innerhalb des methodischen Vorgehens zwei
+Funktionen. Sie begründet zum einen die wissenschaftliche Einordnung der
+Problemstellung und der später diskutierten Ergebnisse. Zum anderen liefert sie
+den Ausgangspunkt für Architekturannahmen, die im weiteren Verlauf modellbasiert
+konkretisiert und prototypisch untersucht wurden. Die spätere Evaluation prüft
+dabei nicht die Literaturannahmen selbst, sondern das aus ihnen und den
+Forschungsfragen entwickelte Architekturkonzept.
+
+\subsection{Methodik der modellbasierten Architekturentwicklung}
+\label{sec:architekturmethodik}
+
+Die Entwicklung des Architekturkonzepts wird modellbasiert strukturiert. Ziel
+ist es, die Forschungsfragen und daraus abgeleitete fachliche Bedarfe schrittweise
+in Anforderungen, erforderliche Systemfunktionen und logische
+Verantwortlichkeiten zu überführen. Dadurch soll vermieden werden, dass die
+Architektur unmittelbar aus einer späteren Softwarestruktur oder aus einzelnen
+Implementierungsentscheidungen abgeleitet wird.
+
+Als Orientierungsrahmen dient das RFLP-Prinzip. Für die vorliegende Arbeit sind
+insbesondere die Ebenen Requirements, Functional und Logical relevant. Die
+grundsätzliche Trennung zwischen Anforderungen, Funktionen und logischer
+Architektur unterstützt eine schrittweise Konkretisierung vom fachlich
+geforderten Verhalten hin zu den dafür erforderlichen
+Architekturverantwortlichkeiten \cite{LiLockettLawson2020}. RFLP wird dabei
+nicht als starres Prozessmodell verstanden, sondern als Strukturierungsrahmen
+für die Architekturentwicklung.
+
+Ausgangspunkt der Modellierung bilden die Forschungsfragen, die daraus
+abgeleiteten Stakeholder-Bedürfnisse sowie fachliche und technische
+Randbedingungen. Diese werden zunächst in Anforderungen überführt. Anforderungen
+beschreiben dabei den zu adressierenden Bedarf beziehungsweise einzuhaltende
+Bedingungen, ohne bereits eine konkrete technische Realisierung festzulegen.
+Von diesen Anforderungen werden anschließend Funktionen abgeleitet, die
+beschreiben, welche Leistungen das betrachtete System zur Erfüllung der
+Anforderungen bereitstellen muss. Die logische Architektur ordnet diese
+Funktionen schließlich fachlichen Verantwortungsbereichen beziehungsweise
+logischen Elementen zu.
+
+Zwischen diesen Ebenen wird eine nachvollziehbare Verknüpfung angestrebt. Die
+Herkunft einer Anforderung sowie ihre Beziehung zu nachgelagerten Funktionen
+und Architekturelementen sollen dadurch auch bei zunehmender Modellkomplexität
+erkennbar bleiben. Die Nachvollziehbarkeit zwischen Anforderungen und
+nachgelagerten Engineering-Artefakten stellt ein wesentliches Prinzip des
+Requirements Engineering dar \cite{ISO29148}. Gleichzeitig unterstützt die
+explizite Beschreibung von Architekturelementen und ihren Beziehungen eine
+konsistente Darstellung unterschiedlicher Architekturbelange
+\cite{ISO42010_2022}.
+
+Die Ableitung zwischen den Modellierungsebenen wird nicht als ausschließlich
+linearer Prozess betrachtet. Erkenntnisse auf funktionaler oder logischer Ebene
+können darauf hinweisen, dass vorgelagerte Anforderungen präzisiert, ergänzt
+oder voneinander abgegrenzt werden müssen. Die Konsistenz zwischen Requirements,
+Functions und Logical Architecture wird deshalb im Verlauf der
+Architekturentwicklung wiederholt überprüft. Diese Rückkopplung ergänzt die in
+Abschnitt~\ref{sec:forschungsdesign} beschriebene iterative Forschungslogik,
+ohne eine frühzeitig festgelegte Zielarchitektur vorauszusetzen.
+
+Für die formale Repräsentation des entstehenden Architekturmodells wird SysML v2
+verwendet. Die Sprache ermöglicht die maschinenverarbeitbare Beschreibung von
+Anforderungen, Verhalten, Strukturen und den Beziehungen zwischen diesen
+Modellelementen \cite{SysMLv2}. Die konkrete Ausprägung des resultierenden
+Architekturmodells sowie dessen Umsetzung im Prototyp werden erst in den
+nachfolgenden Kapiteln dargestellt.
+
+Der methodische Modellierungsumfang endet auf der Logical-Ebene. Eine
+Physical- beziehungsweise Deployment-Architektur ist nicht Bestandteil des
+gewählten Untersuchungsrahmens, da der Fokus der Arbeit auf den fachlichen
+Verantwortungs- und Informationsverarbeitungsstrukturen der untersuchten
+Architektur liegt.
+
+\subsection{Methodische Gestaltungsprinzipien der KI-gestützten Informationsverarbeitung}
+\label{sec:ki_gestaltungsprinzipien}
+
+Die KI-gestützte Verarbeitung heterogener Engineering-Informationen erfordert
+eine methodische Trennung zwischen Aufgaben, die eine semantische Interpretation
+benötigen, und solchen, deren Verhalten durch explizite Regeln beschrieben
+werden kann. Large Language Models ermöglichen die flexible Verarbeitung
+sprachlich und strukturell heterogener Informationen, ihre Ausgaben sind jedoch
+nicht allein aufgrund ihrer sprachlichen Plausibilität als verlässliche
+Engineering-Information zu behandeln. Untersuchungen zu LLM-gestützten
+Engineering- und Softwareprozessen weisen insbesondere auf Unsicherheiten,
+Fehlerbilder und Grenzen bei der verlässlichen Nutzung generierter Inhalte hin
+\cite{Topcu2025,Barke2023,Sergeyuk2025}. Für die Architekturentwicklung wird
+daraus das Prinzip abgeleitet, probabilistische Interpretation von
+regelgebundener Verarbeitung, technischer Validierung und fachlicher
+Entscheidung zu trennen.
+
+Probabilistische Verfahren werden damit insbesondere für semantisch offene
+Aufgaben vorgesehen, beispielsweise für die Interpretation unstrukturierter
+Quellen oder die fachliche Einordnung von Engineering-Information. Sobald die
+Bedingungen eines nachfolgenden Verarbeitungsschritts hinreichend explizit
+beschrieben werden können, soll dieser dagegen möglichst regelgebunden und
+reproduzierbar ausgeführt werden. Deterministische Verarbeitung wird dabei
+nicht mit fachlicher Korrektheit gleichgesetzt. Ihr methodischer Vorteil liegt
+vielmehr darin, dass ein definiertes Verhalten unabhängig von der Varianz einer
+generativen Interpretation geprüft und bei gleichen Ausgangsbedingungen
+reproduziert werden kann.
+
+Ein zweites Gestaltungsprinzip betrifft die Bindung von Interpretationen an
+ihre Informationsgrundlage. Ergebnisse einer KI-gestützten Verarbeitung sollen
+nicht losgelöst von den zugrunde liegenden Quellen betrachtet werden. Herkunft,
+Kontext und relevante Verarbeitungsschritte müssen erhalten bleiben, damit eine
+spätere Bewertung nachvollziehen kann, auf welcher Informationsbasis eine
+Aussage entstanden ist. Provenance-Modelle dienen allgemein dazu, Beziehungen
+zwischen Informationen, Verarbeitungsschritten und ihrer Entstehung
+nachvollziehbar zu machen \cite{MoreauMissier2013,Simmhan2005}. Für die
+vorliegende Arbeit folgt daraus, dass Provenance nicht ausschließlich als
+nachträglicher Audit-Trail betrachtet wird, sondern bereits während der
+Informationsverarbeitung erhalten bleiben soll.
+
+Zur Beurteilung semantisch offener Informationen werden zudem mehrere bewusst
+unterschiedlich ausgerichtete Interpretationsperspektiven vorgesehen. Ansätze
+mit mehreren Modellinstanzen beziehungsweise Agenten zeigen, dass
+unterschiedliche Perspektiven zu voneinander abweichenden Argumentations- und
+Interpretationsergebnissen führen können \cite{Du2024,TriemDing2024}. Diese
+Abweichung wird in der vorliegenden Arbeit nicht durch ein einfaches
+Mehrheitsprinzip aufgelöst. Übereinstimmung zwischen mehreren Perspektiven wird
+nicht als Nachweis fachlicher Richtigkeit verstanden, ebenso wenig wird
+Abweichung automatisch als Fehler interpretiert. Stattdessen dienen
+Übereinstimmung und Varianz als zusätzliche Bewertungsinformation, anhand der
+potenziell mehrdeutige oder interpretationsbedürftige Inhalte für eine
+nachgelagerte fachliche Prüfung sichtbar gemacht werden können.
+
+Die Verwendung mehrerer Perspektiven setzt voraus, dass diese auf dieselbe
+nachvollziehbar gebundene Informationsbasis angewendet werden. Andernfalls
+könnte eine beobachtete Differenz sowohl auf einer unterschiedlichen
+Interpretation als auch auf unterschiedlichen Ausgangsinformationen beruhen.
+Die Vergleichbarkeit der Interpretationsergebnisse wird deshalb methodisch an
+eine gemeinsame Evidence-Basis gekoppelt. Die konkrete Ausgestaltung der dafür
+verwendeten Persona-Perspektiven und ihrer technischen Einbindung wird erst bei
+der prototypischen Realisierung beschrieben.
+
+Ein weiteres Gestaltungsprinzip bildet die gezielte Einbindung menschlicher
+Entscheidungsbefugnis. Human-in-the-Loop-Ansätze unterscheiden sich unter
+anderem darin, an welchen Stellen menschliche Kontrolle, Bewertung oder
+Entscheidung in einen KI-gestützten Prozess eingebunden wird
+\cite{MosqueiraRey2023,Lazaros2026}. Für die vorliegende Arbeit ist dabei nicht
+allein die Anwesenheit eines Menschen im Prozess entscheidend. Menschliche
+Intervention soll insbesondere dort vorgesehen werden, wo interpretations- oder
+entscheidungsbedürftige Engineering-Information in einen autorisierten
+Folgezustand überführt wird. Die hierfür erforderliche Entscheidungsgrundlage
+soll neben der interpretierten Information auch deren Herkunft sowie verfügbare
+Alternativen und Hinweise auf Unsicherheit oder Varianz umfassen.
+
+Semantische und ontologische Leitplanken ergänzen diese menschliche
+Entscheidungsfunktion. Ontologien ermöglichen die explizite Beschreibung von
+Begriffen, Relationen und semantischen Strukturen und können dadurch die
+Harmonisierung und Wiederverwendung heterogener Engineering-Information
+unterstützen
+\cite{ISO21838_2_2021,OrellanaMandrick2019,Lu2022,Kulvatunyou2022}.
+Die Einhaltung einer semantischen oder ontologischen Struktur wird jedoch nicht
+mit fachlicher Richtigkeit gleichgesetzt. Für die weitere
+Architekturentwicklung werden semantische Leitplanken deshalb mit
+nachvollziehbarer Provenance, menschlicher Entscheidungsbefugnis und
+nachgelagerten technischen Prüfungen kombiniert.
+
+Aus diesen Überlegungen ergeben sich vier methodische Leitlinien für die weitere
+Architekturentwicklung: probabilistische Interpretation und regelgebundene
+Verarbeitung werden voneinander getrennt, Interpretationen bleiben an ihre
+Informationsgrundlage gebunden, unterschiedliche Perspektiven werden zur
+Erzeugung zusätzlicher Bewertungsinformation genutzt und fachlich relevante
+Authority-Übergänge verbleiben unter menschlicher Kontrolle. Kapitel~4 zeigt,
+wie diese Leitlinien in ein zusammenhängendes Architekturkonzept überführt
+werden.
+
+\subsection{Iterative Konkretisierung und prototypische Untersuchung}
+\label{sec:prototypische_untersuchung}
+
+Das zuvor entwickelte Architekturkonzept wird im weiteren Verlauf der Arbeit
+schrittweise konkretisiert und prototypisch operationalisiert. Ziel dieser
+Konkretisierung ist nicht die Entwicklung eines produktionsreifen
+Softwaresystems, sondern die Überführung zentraler Architekturprinzipien in
+einen ausführbaren Verarbeitungspfad. Dadurch sollen Annahmen über
+Informationsflüsse, Verantwortungsgrenzen und Kontrollmechanismen unter
+praktischen Bedingungen untersucht werden können. Ein solches Vorgehen
+entspricht der gestaltungsorientierten Nutzung technischer Artefakte zur
+Konkretisierung und Untersuchung einer zuvor entwickelten Lösung
+\cite{Wieringa2014,Peffers2007}.
+
+Die Konkretisierung erfolgt iterativ. Architekturentscheidungen werden nur so
+weit detailliert, wie dies für die jeweils betrachtete Verarbeitung,
+Implementierung oder Prüfung erforderlich ist. Neue Erkenntnisse aus der
+technischen Realisierung können dabei auf vorgelagerte Architekturannahmen
+zurückwirken. Eine solche Rückkopplung verändert nicht den
+Untersuchungsgegenstand, sondern dient der schrittweisen Präzisierung des
+Architekturkonzepts.
+
+Der Prototyp übernimmt damit zugleich die Funktion eines
+Untersuchungsinstruments. Durch die technische Umsetzung werden
+Verarbeitungsschritte und Zustandsübergänge beobachtbar, die auf rein
+konzeptioneller Ebene nur eingeschränkt überprüft werden können. Hierzu zählen
+insbesondere die Übergänge zwischen probabilistischer Interpretation,
+regelgebundener Verarbeitung, menschlicher Entscheidung und formaler
+Modellerzeugung. Die prototypische Realisierung ist deshalb nicht mit dem
+wissenschaftlichen Ergebnis der Arbeit gleichzusetzen. Sie dient vielmehr
+dazu, ausgewählte Eigenschaften des Architekturkonzepts technisch zu
+instanziieren und einer systematischen Prüfung zugänglich zu machen.
+
+Die technische Konkretisierung wird durch formative Prüfungen begleitet.
+Beobachtete Abweichungen werden dabei danach unterschieden, ob sie auf einen
+lokalen Fehler der Implementierung oder auf eine unzureichende Annahme des
+zugrunde liegenden Architekturkonzepts zurückzuführen sind. Im ersten Fall
+wird die technische Realisierung korrigiert. Im zweiten Fall wird die
+betroffene Architekturannahme präzisiert und anschließend erneut
+operationalisiert und geprüft. Die Evaluation dient damit während der
+Entwicklung nicht ausschließlich einer abschließenden Bewertung, sondern auch
+der gezielten Weiterentwicklung des untersuchten Artefakts
+\cite{Wieringa2014,ISO42030}.
+
+Die Implementierung des Prototyps erfolgt in wesentlichen Teilen mit
+Unterstützung eines Large Language Models. Der Autor verfügt über grundlegende
+Programmierkenntnisse, während der fachliche Schwerpunkt der Arbeit auf
+Systems Engineering, Architekturentwicklung und der Gestaltung der
+Informationsverarbeitung liegt. Die KI-Unterstützung wird deshalb insbesondere
+für die Erstellung und Überarbeitung von Programmcode eingesetzt.
+Anforderungen, Architekturentscheidungen, fachliche Randbedingungen,
+Verantwortungsgrenzen und Akzeptanzkriterien verbleiben unter menschlicher
+Verantwortung.
+
+Durch das Large Language Model erzeugter oder veränderter Programmcode wird
+nicht allein aufgrund seiner Plausibilität übernommen. Seine Akzeptanz wird an
+definierte technische Prüfungen und die Funktionsfähigkeit innerhalb des
+zusammenhängenden Verarbeitungspfads gebunden. Damit wird für die
+Softwareentwicklung dasselbe Grundprinzip angewendet, das auch der
+untersuchten Informationsverarbeitungsarchitektur zugrunde liegt:
+probabilistisch erzeugte Ergebnisse werden erst durch explizite
+Randbedingungen und nachgelagerte Prüfungen in einen akzeptierten
+Systemzustand überführt. Bekannte Grenzen LLM-gestützter
+Softwareentwicklungsprozesse unterstreichen die Bedeutung einer solchen
+Überprüfung \cite{Topcu2025}.
+
+Aus dem Einsatz des Large Language Models als Entwicklungswerkzeug wird keine
+Aussage über eine mögliche Produktivitätssteigerung oder eine höhere
+Softwarequalität abgeleitet. Für die Arbeit ist ausschließlich relevant, dass
+die prototypische Instanziierung des Architekturkonzepts nachvollziehbar
+geprüft werden kann. Die konkrete technische Realisierung wird in
+Kapitel~5 beschrieben, während Kapitel~6 das dafür verwendete
+Evaluationsvorgehen erläutert.
+
+\subsection{Evaluationslogik und Abgrenzung}
+\label{sec:evaluationslogik}
+
+Die Evaluation wird mehrstufig angelegt, da unterschiedliche Eigenschaften
+des entwickelten Architekturkonzepts unterschiedliche Formen von Evidenz
+erfordern. Eine erfolgreiche technische Ausführung des Prototyps erlaubt
+beispielsweise noch keine Aussage darüber, ob die vorgesehenen
+Informations- und Verantwortungsgrenzen im zusammenhängenden
+Engineering-Prozess tragfähig sind. Ebenso ist die technische Validität eines
+erzeugten SysML-v2-Artefakts nicht mit dessen fachlicher Korrektheit
+gleichzusetzen. Die Evaluation orientiert sich deshalb an der Unterscheidung
+verschiedener Prüfgegenstände und Evidenzarten, wie sie auch für die Bewertung
+von Architekturentscheidungen und technischen Artefakten relevant ist
+\cite{Wieringa2014,ISO42030}.
+
+Eine erste Ebene bildet die technische Verifikation der prototypischen
+Realisierung. Dabei wird geprüft, ob definierte Zustände, Schnittstellen,
+Verarbeitungsregeln und Übergänge entsprechend ihrer jeweiligen Spezifikation
+umgesetzt werden. Diese Prüfungen dienen insbesondere dazu, lokale
+Implementierungsfehler von Problemen des zugrunde liegenden
+Architekturkonzepts unterscheiden zu können.
+
+Darauf aufbauend wird der zusammenhängende Verarbeitungspfad formativ
+untersucht. Im Mittelpunkt steht dabei nicht ausschließlich das Verhalten
+einzelner Softwarekomponenten, sondern das Zusammenspiel der zuvor
+definierten Informations-, Provenance- und Authority-Grenzen. Treten hierbei
+Abweichungen auf, wird geprüft, ob diese durch eine Korrektur der technischen
+Realisierung behoben werden können oder eine Präzisierung der zugrunde
+liegenden Architekturannahmen erforderlich ist. Die formative Evaluation ist
+damit Bestandteil der in Abschnitt~\ref{sec:prototypische_untersuchung}
+beschriebenen iterativen Konkretisierung.
+
+Nach Abschluss dieser Rückkopplung wird ein zusammenhängender Referenzlauf
+verwendet, um den vollständigen Verarbeitungspfad unter kontrollierten
+Bedingungen zu betrachten. Ziel ist es, die Weitergabe von Informationen,
+Provenance, maschinell erzeugten Interpretationen, menschlichen Entscheidungen
+und daraus hervorgehenden Modellzuständen über die wesentlichen
+Verarbeitungsstufen hinweg nachvollziehen zu können. Der Referenzlauf dient
+damit nicht als statistischer Wirksamkeitsnachweis, sondern als integrierte
+Evidenz für die technische und prozessuale Instanziierung des
+Architekturkonzepts.
+
+Die erzeugten SysML-v2-Artefakte werden zusätzlich einer technischen
+Validierung unterzogen. Diese Prüfung adressiert insbesondere die formale
+Verarbeitbarkeit und Kompatibilität der erzeugten Repräsentation mit der
+verwendeten SysML-v2-Werkzeugkette \cite{SysMLv2}. Eine erfolgreiche
+technische Validierung wird dabei ausdrücklich nicht als Nachweis fachlicher
+Richtigkeit oder Vollständigkeit interpretiert. Fachliche Bewertung und
+Freigabe bilden eine davon getrennte menschliche Entscheidungsebene.
+
+Damit unterscheidet die Arbeit zwischen technischer Verifikation,
+integrierter Untersuchung des Verarbeitungspfads, technischer
+Modellvalidierung und menschlicher fachlicher Bewertung. Diese Ebenen liefern
+unterschiedliche Evidenz für die Beurteilung des Architekturkonzepts und
+dürfen nicht gegenseitig ersetzt werden. Das konkrete Vorgehen, die
+verwendeten Prüfgegenstände und die zugehörige Evidenzbasis werden in
+Kapitel~6 beschrieben.
+
+Die Evaluation ist auf die Untersuchung des entwickelten
+Architekturkonzepts und seiner prototypischen Instanziierung begrenzt.
+Insbesondere werden keine allgemeinen Aussagen zur Produktivitätssteigerung
+gegenüber manueller Modellierung, zur industriellen Einsatzreife oder zur
+allgemeinen fachlichen Qualität KI-generierter Systemmodelle angestrebt.
+

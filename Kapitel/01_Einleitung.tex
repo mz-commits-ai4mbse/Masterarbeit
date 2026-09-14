@@ -3,3 +3,276 @@
 
 \section{Einleitung}
 \label{sec:einleitung}
+
+\subsection{Ausgangssituation und Motivation}
+\label{sec:motivation}
+
+Model-Based Systems Engineering (MBSE) verfolgt das Ziel, systembezogene
+Engineering-Information stärker in miteinander verknüpften Modellen abzubilden
+und dadurch deren Nutzung über unterschiedliche Entwicklungsaktivitäten hinweg
+zu unterstützen. Insbesondere bei komplexen technischen Systemen werden damit
+unter anderem eine verbesserte Nachvollziehbarkeit von Zusammenhängen,
+Konsistenz zwischen Engineering-Artefakten und eine stärkere
+Maschinenverarbeitbarkeit der enthaltenen Information verbunden
+\cite{Hendriks2022,Campo2023}. Die Einführung von MBSE ist jedoch selbst mit
+erheblichem organisatorischem und technischem Aufwand verbunden. Neben der
+Auswahl und Einführung geeigneter Werkzeuge müssen Modellierungsprozesse
+etabliert, Kompetenzen aufgebaut und bestehende Engineering-Information in
+modellbasierte Strukturen überführt werden \cite{Call2022,Henderson2024}.
+
+Ein wesentlicher Teil dieses Aufwands fällt bereits in frühen Phasen einer
+MBSE-Einführung an. Bevor mögliche Vorteile einer modellbasierten Arbeitsweise
+genutzt werden können, müssen unter anderem Modellierungsumgebungen,
+Arbeitsweisen und initiale Modellinhalte aufgebaut werden. Dieser zusätzliche
+Aufwand kann die Einführung insbesondere dann erschweren, wenn für den Aufbau
+der erforderlichen Modellierungslandschaft nur begrenzte personelle und
+finanzielle Ressourcen zur Verfügung stehen \cite{Call2022}. Für kleine und
+mittlere Unternehmen werden neben fehlender Erfahrung mit MBSE insbesondere
+wirtschaftliche Rechtfertigung, Schulungsbedarf und verfügbare Unterstützung
+als relevante Herausforderungen der Einführung beschrieben
+\cite{Nanfuka2023}.
+
+Diese Ausgangslage wird dadurch verschärft, dass Unternehmen bei einer
+Transformation zu MBSE typischerweise nicht in einem informationsleeren
+Ausgangszustand beginnen. Bereits bestehende Entwicklungsprojekte verfügen über
+technische Dokumente, Tabellen, Spezifikationen und weitere
+Engineering-Artefakte, in denen relevante Systeminformation über längere
+Zeiträume entstanden ist. Eine Umstellung auf modellbasierte Arbeitsweisen
+erfordert daher nicht nur die Erstellung neuer Modelle, sondern auch einen
+geeigneten Umgang mit bestehenden Informationsbeständen. Erfahrungen aus der
+industriellen MBSE-Einführung zeigen, dass insbesondere Legacy-Artefakte und
+die zeitweise Koexistenz dokumenten- und modellbasierter Arbeitsweisen eine
+zusätzliche Herausforderung darstellen können \cite{Henderson2024}.
+
+Auch die in der Literatur berichteten wirtschaftlichen und organisatorischen
+Effekte von MBSE ergeben dabei kein einheitliches Bild. Neben erwarteten
+Vorteilen hinsichtlich Entwicklungszeit, Qualität und Zusammenarbeit werden
+ebenfalls zusätzlicher Zeit-, Kosten- und Arbeitsaufwand beschrieben. Zugleich
+ist die empirische Absicherung vieler dieser Nutzen- und Aufwandsaussagen
+begrenzt \cite{Campo2023}. Für die vorliegende Arbeit wird daher nicht
+vorausgesetzt, dass eine automatisierte oder KI-gestützte Modellbildung
+zwangsläufig schneller, kostengünstiger oder qualitativ besser als eine
+manuelle Modellierung ist.
+
+Der praktische Ausgangspunkt dieser Arbeit liegt vielmehr in der Frage, wie
+der mit einer Brownfield-Transformation verbundene Modellierungs- und
+Integrationsaufwand künftig stärker unterstützt werden könnte. Im Rahmen der
+industriellen Themenfindung wurde insbesondere wahrgenommen, dass bei einer
+schrittweisen Modellierung weiterer Systembereiche wiederholt Aufwand für die
+Erfassung neuer Information sowie deren Abstimmung mit bereits bestehenden
+Teilmodellen entstehen kann. Diese Problemwahrnehmung bildet keinen
+empirischen Nachweis eines bestimmten Aufwandsverlaufs. Sie verdeutlicht jedoch
+den praktischen Bedarf nach Verfahren, die eine wiederholbare und
+nachvollziehbare Überführung bestehender Engineering-Information unterstützen
+können.
+
+Generative KI eröffnet grundsätzlich neue Möglichkeiten, auch schwach
+strukturierte und natürlichsprachliche Informationen automatisiert zu
+verarbeiten. Für einen Einsatz im Engineering reicht jedoch die Fähigkeit zur
+Erzeugung plausibler Modellinhalte allein nicht aus. Vielmehr stellt sich die
+Frage, unter welchen Bedingungen eine solche Unterstützung so gestaltet werden
+kann, dass bestehende Engineering-Information kontrolliert verarbeitet und
+deren weitere Verwendung nachvollziehbar bleibt. Diese Fragestellung führt zur
+konkreten Problemstellung der Arbeit, die im folgenden Abschnitt präzisiert
+wird.
+
+\subsection{Problemstellung}
+\label{sec:problemstellung}
+
+Die Überführung bestehender Engineering-Information in eine modellbasierte
+Repräsentation ist nicht auf eine reine Formatkonvertierung reduzierbar.
+Brownfield-Projekte verfügen typischerweise bereits über gewachsene
+Informationsbestände in Form von Spezifikationen, Tabellen, technischen
+Dokumenten und weiteren Artefakten. Diese unterscheiden sich hinsichtlich
+Struktur, Granularität, Terminologie und Explizitheit und müssen daher zunächst
+fachlich interpretiert und in einen geeigneten Modellkontext eingeordnet
+werden. Erfahrungen aus der industriellen MBSE-Einführung zeigen zugleich,
+dass Legacy-Artefakte und dokumentenbasierte Arbeitsweisen während einer
+Transformation nicht zwangsläufig vollständig verschwinden
+\cite{Henderson2024}.
+
+Dadurch entsteht ein zusätzliches Problem: Bleiben bestehende
+Engineering-Artefakte Bestandteil regulärer Entwicklungs- und
+Änderungsprozesse, können spätere Anpassungen dieser Artefakte dazu führen,
+dass bereits überführte Modellinformation erneut betrachtet und gegebenenfalls
+angepasst werden muss. Die Transformation ist damit nicht zwingend als
+einmaliger Übergang von Dokumenten zu einem abgeschlossenen Modell zu
+verstehen. Insbesondere bei einer sukzessiven Erschließung weiterer
+Systembereiche kann wiederholt Aufwand für Modellbildung, Integration und die
+Abstimmung mit bereits bestehenden Teilmodellen entstehen.
+
+Diese Problemwahrnehmung war auch Bestandteil der industriellen
+Themenfindung dieser Arbeit. Dabei wurde insbesondere der wiederkehrende
+Initial- und Integrationsaufwand als praktische Hürde bei einer schrittweisen
+Erweiterung modellbasierter Systembeschreibungen wahrgenommen.
+Abbildung~\ref{fig:problemwahrnehmung_transformation} verdichtet diese
+Wahrnehmung schematisch.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]
+      {Graphiken/1.2_Problemdarstellung.png}
+    \caption{Schematische Darstellung der im Rahmen der industriellen
+    Themenfindung wahrgenommenen wiederkehrenden Modellierungs- und
+    Integrationsaufwände bei sukzessiver Brownfield-Transformation sowie
+    eines angestrebten unterstützten Transformationspfads
+    (eigene Darstellung)}
+    \label{fig:problemwahrnehmung_transformation}
+\end{figure}
+
+Die dargestellten Verläufe stellen keine empirisch bestimmten
+Aufwandsfunktionen dar. Der wellenförmige Verlauf symbolisiert vielmehr die
+Annahme, dass mit der Modellierung weiterer Teilbereiche wiederholt Aufwand für
+deren Erfassung, Strukturierung und Integration entsteht. Der gegenübergestellte
+unterstützte Verlauf repräsentiert ein industrielles Zielbild, bei dem
+wiederholbare Transformationsschritte stärker unterstützt und manuelle
+Aufwandsanteile reduziert werden sollen. Daraus wird ausdrücklich nicht
+abgeleitet, dass eine KI-gestützte Vorgehensweise im Rahmen dieser Arbeit
+nachweislich schneller, kostengünstiger oder qualitativ überlegen ist. Auch die
+Literatur zu MBSE berichtet sowohl erwartete Vorteile als auch zusätzlichen
+Zeit-, Kosten- und Arbeitsaufwand und weist zugleich auf eine teilweise
+begrenzte empirische Absicherung entsprechender Nutzenbehauptungen hin
+\cite{Campo2023}.
+
+Generative KI und insbesondere Large Language Models erscheinen in diesem
+Zusammenhang als möglicher Unterstützungsmechanismus, da sie auch
+natürlichsprachliche und schwach strukturierte Informationen semantisch
+verarbeiten können. Ihr Einsatz führt jedoch zu einem neuen
+Kontrollproblem. LLM-generierte Inhalte können variieren, unvollständig oder
+fachlich fehlerhaft sein und dennoch sprachlich plausibel erscheinen
+\cite{Topcu2025,Barke2023,Sergeyuk2025}. Eine unmittelbar aus generierten
+Inhalten abgeleitete Engineering-Repräsentation kann daher nicht allein
+aufgrund ihrer syntaktischen oder sprachlichen Plausibilität als verlässlich
+betrachtet werden.
+
+Die zentrale Herausforderung liegt damit nicht in der Generierung syntaktisch
+plausiblen SysML-v2-Codes, sondern in der kontrollierten Herleitung der darin
+repräsentierten Engineering-Information. Für eine belastbare Transformation
+muss nachvollziehbar bleiben, aus welchen Quellen eine Information stammt, wie
+sie interpretiert wurde, an welchen Stellen Unsicherheit oder Mehrdeutigkeit
+vorliegt und durch welche fachliche Entscheidung sie für die weitere
+Verarbeitung autorisiert wurde. Gleichzeitig muss die resultierende
+Information in eine formal geeignete Zielstruktur überführt werden können.
+
+Daraus ergibt sich die Problemstellung dieser Arbeit: Es ist zu untersuchen,
+wie eine Informationsverarbeitungsarchitektur gestaltet werden muss, die
+heterogene Engineering-Bestandsinformation, probabilistische
+KI-Unterstützung, nachvollziehbare Provenance, menschliche Kontrolle und die
+Überführung in valide SysML-v2-Strukturen in einem zusammenhängenden
+Engineering-Prozess verbindet. Ziel ist dabei nicht der Nachweis einer
+wirtschaftlichen oder zeitlichen Überlegenheit gegenüber manueller
+Modellierung, sondern die konzeptionelle Untersuchung der architektonischen
+Bedingungen, unter denen eine solche Unterstützung kontrolliert eingesetzt
+werden kann.
+
+\subsection{Zielsetzung der Arbeit}
+\label{sec:zielsetzung}
+
+Ziel dieser Arbeit ist die Entwicklung und Untersuchung eines
+Architekturkonzepts für die kontrollierte KI-gestützte Transformation
+heterogener Engineering-Bestandsinformation in SysML v2. Im Mittelpunkt steht
+dabei nicht die unmittelbare Erzeugung syntaktisch plausiblen Modellcodes,
+sondern die Gestaltung eines nachvollziehbaren Informationsverarbeitungsprozesses
+zwischen bestehender Engineering-Information und formaler Zielrepräsentation.
+
+Das Architekturkonzept soll insbesondere berücksichtigen, wie die Herkunft
+verarbeiteter Informationen erhalten, semantische Interpretationen kontrolliert,
+menschliche Entscheidungen gezielt eingebunden und nachgelagerte
+Verarbeitungsschritte technisch überprüfbar gestaltet werden können. Dabei soll
+zwischen probabilistischer Interpretation, fachlicher Entscheidungsbefugnis und
+formaler Modellbildung unterschieden werden. Die konkrete Ausprägung dieser
+Verantwortlichkeiten wird im weiteren Verlauf der Arbeit systematisch
+hergeleitet.
+
+Die Architektur wird unabhängig von einer konkreten Softwareimplementierung
+beschrieben. Zur Untersuchung zentraler Architekturannahmen wird sie jedoch
+prototypisch instanziiert. Der hierfür entwickelte Turing Generator dient als
+technisches Untersuchungsinstrument, mit dem ausgewählte
+Informationsverarbeitungs-, Kontroll- und Übergangsmechanismen in einem
+durchgängigen Verarbeitungspfad bis zu einer technisch validierbaren
+SysML-v2-Repräsentation untersucht werden können.
+
+Mit der prototypischen Umsetzung ist ausdrücklich kein Nachweis verbunden,
+dass die KI-gestützte Vorgehensweise gegenüber manueller Modellierung schneller,
+kostengünstiger oder qualitativ überlegen ist. Ebenso wird kein
+produktionsreifes oder vollständig autonomes Modellierungssystem angestrebt.
+Untersuchungsgegenstand ist vielmehr die Frage, welche architektonischen
+Bedingungen erforderlich sind, damit KI-Unterstützung in einer solchen
+Transformation kontrolliert und nachvollziehbar eingesetzt werden kann.
+
+Die Arbeit zielt damit auf einen konzeptionellen Beitrag zur Gestaltung
+KI-gestützter Informationsverarbeitungsarchitekturen im Brownfield-Kontext.
+Ausgehend von der beschriebenen Problemstellung wird in Kapitel~2 der
+wissenschaftliche Stand aufgearbeitet und daraus der konkrete Forschungsbedarf
+mit den zugehörigen Forschungsfragen abgeleitet.
+
+\subsection{Abgrenzung}
+\label{sec:abgrenzung}
+
+Die Arbeit untersucht die Gestaltung einer Informationsverarbeitungsarchitektur
+für die KI-gestützte Überführung bestehender Engineering-Information in
+SysML~v2. Der Schwerpunkt liegt auf den fachlichen und informationstechnischen
+Verantwortlichkeiten, Zustandsübergängen und Kontrollmechanismen innerhalb
+dieses Transformationsprozesses. Eine Physical- oder Deployment-Architektur
+sowie Fragestellungen des produktiven Betriebs, der Skalierung oder der
+IT-Infrastruktur sind nicht Bestandteil des Untersuchungsgegenstands.
+
+Die prototypische Realisierung dient der Untersuchung ausgewählter
+Architekturmechanismen und stellt kein produktionsreifes Softwaresystem dar.
+Insbesondere wird weder eine vollständig autonome Modellgenerierung noch die
+uneingeschränkte Verarbeitung beliebiger Engineering-Artefakte angestrebt.
+Menschliche fachliche Entscheidungen bleiben dort erforderlich, wo
+interpretierte Engineering-Information bewertet, autorisiert oder in einen
+nachfolgenden Modellzustand überführt werden muss.
+
+Die Arbeit erhebt zudem keinen Anspruch darauf, sämtliche für ein reales
+Engineering-Projekt relevanten Informationen vollständig zu erfassen.
+Untersucht wird vielmehr, wie innerhalb einer kontrolliert bereitgestellten
+Informationsbasis deren Herkunft und Verarbeitung nachvollziehbar erhalten
+werden können. Informationen, die in den zugrunde liegenden Quellen nicht
+enthalten oder aus ihnen nicht belastbar ableitbar sind, sollen nicht durch
+die Architektur als vermeintlich gesichertes Engineering-Wissen ergänzt
+werden.
+
+Die in Abschnitt~\ref{sec:problemstellung} motivierte fortlaufende Veränderung
+bestehender Engineering-Artefakte wird als relevante Herausforderung einer
+Brownfield-Transformation berücksichtigt. Eine automatische kontinuierliche
+Synchronisation zwischen bestehenden PLM-Artefakten und dem erzeugten
+Systemmodell sowie eine vollständige Change-Impact-Analyse werden im Rahmen
+dieser Arbeit jedoch nicht entwickelt oder evaluiert. Der Schwerpunkt liegt
+auf den architektonischen Voraussetzungen einer kontrollierten Transformation,
+auf denen weiterführende Mechanismen zur inkrementellen Aktualisierung
+aufbauen könnten.
+
+Schließlich werden keine Aussagen zur wirtschaftlichen Vorteilhaftigkeit,
+Produktivitätssteigerung oder Zeitersparnis gegenüber manueller Modellierung
+abgeleitet. Ebenso wird aus einer technisch validen SysML-v2-Repräsentation
+keine allgemeine fachliche Korrektheit des resultierenden Systemmodells
+gefolgert. Die Evaluation beschränkt sich auf die Frage, inwieweit die
+entwickelten Architekturprinzipien prototypisch instanziiert, technisch
+überprüft und entlang eines nachvollziehbaren Verarbeitungspfads untersucht
+werden können.
+
+\subsection{Aufbau der Arbeit}
+\label{sec:aufbau}
+
+Kapitel~2 ordnet die Problemstellung in den wissenschaftlichen Stand ein.
+Hierzu werden die für die Arbeit relevanten Grundlagen zu MBSE und SysML~v2,
+zur Transformation bestehender Engineering-Information sowie zu
+KI-gestützter Informationsverarbeitung und zugehörigen Kontrollmechanismen
+betrachtet. Auf dieser Grundlage wird der Forschungsbedarf abgeleitet und in
+den Forschungsfragen konkretisiert.
+
+Kapitel~3 beschreibt das methodische Vorgehen zur Bearbeitung dieser
+Forschungsfragen. Darauf aufbauend entwickelt Kapitel~4 das
+Informationsverarbeitungs- und Architekturkonzept der Arbeit. Kapitel~5
+beschreibt dessen prototypische Realisierung im Turing Generator.
+
+Das Vorgehen zur Verifikation und Validierung der prototypischen
+Instanziierung wird in Kapitel~6 dargestellt. Kapitel~7 fasst die dabei
+beobachteten Ergebnisse zusammen. In Kapitel~8 werden diese Ergebnisse vor dem
+Hintergrund des Forschungsstands diskutiert und zur Beantwortung der
+Forschungsfragen herangezogen.
+
+Kapitel~9 schließt die Arbeit mit dem Ausblick auf weiterführende
+Entwicklungsmöglichkeiten und dem Fazit ab.

@@ -3,3 +3,226 @@
 
 \section{Theoretischer Hintergrund und Stand der Technik}
 \label{sec:grundlagen}
+
+\subsection{MBSE, SysML v2 und maschinenverarbeitbare Modelle}
+\label{sec:mbse_sysml}
+
+Systems Engineering adressiert die disziplinübergreifende Entwicklung komplexer
+technischer Systeme und verbindet dabei unter anderem Anforderungen,
+Architekturentwicklung, Integration sowie Verifikation und Validierung. Model-Based
+Systems Engineering (MBSE) erweitert diesen Ansatz durch die systematische Nutzung
+von Modellen als zentrale Träger von Engineering-Information. Ziel ist dabei nicht
+lediglich, dokumentbasierte Informationen grafisch abzubilden. Vielmehr sollen
+fachliche Zusammenhänge und Beziehungen zwischen Engineering-Artefakten explizit
+repräsentiert und dadurch konsistenter, nachvollziehbarer und maschinell
+verarbeitbar gemacht werden \cite{Hendriks2022}.
+
+Diese Verschiebung von überwiegend dokumentenorientierten zu stärker
+modellbasierten Informationsstrukturen bildet eine wesentliche Voraussetzung für
+die in dieser Arbeit untersuchte Transformation. Werden Anforderungen, Funktionen,
+Strukturen und ihre Beziehungen explizit modelliert, entsteht eine
+Informationsrepräsentation, die nicht ausschließlich durch ihre Darstellung,
+sondern auch durch ihre definierte Struktur und Semantik verarbeitet werden kann.
+MBSE ist dabei nicht als vollständige Ablösung sämtlicher bestehender
+Informationsquellen zu verstehen. Gerade in Brownfield-Situationen können
+unterschiedliche Dokumente, Datenquellen und Modelle parallel bestehen. Die
+Überführung dieser bestehenden Information in einen modellbasierten Kontext wird
+in Abschnitt~\ref{sec:brownfield} näher betrachtet.
+
+Als formale Modellierungssprache wird in dieser Arbeit SysML~v2 verwendet.
+SysML~v2 wurde für die Beschreibung komplexer Systeme entwickelt und ermöglicht
+unter anderem die Repräsentation von Anforderungen, Verhalten, Strukturen,
+Use Cases und den Beziehungen zwischen entsprechenden Modellelementen
+\cite{SysMLv2}. Die Sprache baut auf KerML als semantischer Grundlage auf und
+definiert sowohl grafische als auch textuelle Repräsentationsformen. Damit kann
+dieselbe modellierte Engineering-Information in unterschiedlichen Sichten
+verwendet werden, ohne dass die grafische Darstellung selbst zum alleinigen
+Informationsträger wird.
+
+Für die vorliegende Arbeit ist insbesondere die textuelle Repräsentation von
+SysML~v2 relevant. Formal strukturierte Modellinformation kann dadurch als
+maschinenverarbeitbares Artefakt erzeugt, gespeichert, verglichen und technisch
+geprüft werden. Aktuelle Arbeiten zu SysML~v2 greifen diese Eigenschaften
+insbesondere im Zusammenhang mit ausführbaren, überprüfbaren und navigierbaren
+Systemmodellen auf \cite{Teodorov2025}. Die textuelle Repräsentation ersetzt
+grafische Sichten dabei nicht. Beide dienen unterschiedlichen Formen der
+Interaktion mit demselben Modell und können sich insbesondere bei menschlicher
+Analyse und automatisierter Verarbeitung ergänzen.
+
+Die Behandlung von Engineering-Artefakten als formal beschriebene und
+maschinenverarbeitbare Repräsentationen weist zugleich Bezüge zu
+\emph{Everything as Code} auf. Dieses Paradigma überträgt Eigenschaften
+codezentrierter Entwicklungspraktiken, beispielsweise textuelle
+Repräsentation, Versionsverwaltung und automatisierte Verarbeitung, auf weitere
+Entwicklungsartefakte \cite{Stirbu2022}. Für Architekturbeschreibungen wird
+dieser Gedanke unter dem Begriff \emph{Architecture as Code} aufgegriffen.
+Architektur wird dabei als explizites, versionierbares und automatisiert
+verarbeitbares Artefakt behandelt \cite{Bucaioni2025}. Der Begriff wird in
+dieser Arbeit nicht mit einer bestimmten Softwarearchitekturmethodik
+gleichgesetzt. Relevant ist vielmehr das zugrunde liegende Prinzip, formale
+Engineering-Information so zu repräsentieren, dass sie in wiederholbare und
+technisch überprüfbare Verarbeitungsabläufe eingebunden werden kann.
+
+SysML~v2 besitzt damit in der vorliegenden Arbeit eine doppelte Rolle. Zum
+einen wird die Sprache zur modellbasierten Beschreibung des entwickelten
+Architekturkonzepts verwendet. Zum anderen bildet sie die Zielrepräsentation
+für Engineering-Information, die aus bestehenden Quellen in einen formalen
+Modellkontext überführt werden soll. Diese doppelte Verwendung verbindet die
+modellbasierte Architekturentwicklung mit der später untersuchten
+KI-gestützten Informationsverarbeitung. Bevor diese näher betrachtet wird,
+ist zunächst zu untersuchen, welche besonderen Herausforderungen sich aus der
+Transformation bereits bestehender Engineering-Information ergeben.
+
+\subsection{Brownfield Engineering und heterogene Bestandsinformation}
+\label{sec:brownfield}
+
+Die Einführung modellbasierter Arbeitsweisen erfolgt in bestehenden
+Entwicklungsumgebungen häufig unter Brownfield-Bedingungen. Im Gegensatz zu
+einer Greenfield-Situation existieren bereits technische Systeme,
+Engineering-Artefakte, historische Entscheidungen und gewachsene
+Informationsbestände. Relevante Systeminformation kann dabei in
+Spezifikationen, Tabellen, technischen Dokumenten, bestehenden Modellen oder
+weiteren Datenquellen verteilt sein. Für eine Transformation zu MBSE besteht
+die Aufgabe daher nicht ausschließlich darin, neue Modelle zu erstellen,
+sondern vorhandene Engineering-Information zu erschließen und in einen
+modellbasierten Zusammenhang zu überführen. Die ineffiziente Übertragung
+bestehender Informationen in modellbasierte Repräsentationen wird in diesem
+Zusammenhang ausdrücklich als eine Herausforderung der MBSE-Einführung
+beschrieben \cite{Maheshwari2018,Henderson2024}.
+
+Die vorhandenen Informationsbestände bilden dabei keine notwendigerweise
+einheitliche oder vollständig formalisierte Ausgangsbasis. Quellen können sich
+hinsichtlich Format, Strukturierungsgrad, Terminologie, Granularität,
+Abstraktionsebene und Aktualität unterscheiden. Zusätzlich können Informationen
+über mehrere Artefakte verteilt sein oder nur aus ihrem jeweiligen fachlichen
+Kontext verständlich werden. Mehrere Quellen können denselben Systemaspekt aus
+unterschiedlichen Perspektiven beschreiben, sich gegenseitig ergänzen oder
+voneinander abweichende Aussagen enthalten. Die Heterogenität bestehender
+Engineering-Information ist deshalb nicht ausschließlich als technisches
+Formatproblem zu betrachten, sondern umfasst auch eine semantische Dimension.
+
+Eine weitere Herausforderung ergibt sich aus der Veränderlichkeit bestehender
+Systeme und ihrer Dokumentation. Engineering-Artefakte entwickeln sich mit dem
+System weiter und können während seines Lebenszyklus angepasst, erweitert oder
+ersetzt werden. Arbeiten zur Co-Evolution technischer Entwicklungsartefakte
+zeigen entsprechend die Notwendigkeit, zusammengehörige Engineering-Information
+bei Änderungen konsistent weiterzuentwickeln \cite{Legat2014}. Für eine
+Brownfield-Transformation bedeutet dies, dass die Beziehung zwischen einer
+bestehenden Informationsquelle und daraus abgeleiteter Modellinformation
+langfristig relevant bleiben kann. Eine einmalige Übertragung ohne
+nachvollziehbare Herkunft erschwert dagegen die spätere Bewertung, welche
+Modellanteile durch eine Änderung ihrer Ausgangsinformation betroffen sein
+könnten.
+
+Von dieser Problemklasse sind klassische Modelltransformationen zu
+unterscheiden. Modellgetriebene Transformationsverfahren überführen
+Information zwischen bereits formal beschriebenen Quell- und Zielmodellen
+beziehungsweise zwischen definierten Metamodellen. Beispiele hierfür sind
+QVT-basierte Transformationen, XMI-basierte Austausch- und
+Transformationsverfahren sowie Transformationen zwischen unterschiedlichen
+SysML-Repräsentationen \cite{Kapos.2014,Li.2022,Zhou.2024,Meyers.2013}.
+Solche Verfahren können auf expliziten Strukturen und definierten semantischen
+Beziehungen der Ausgangsmodelle aufbauen.
+
+Bei natürlichsprachlichen oder nur teilweise strukturierten
+Bestandsinformationen ist eine solche formale Ausgangsbasis dagegen nicht
+vollständig gegeben. Bevor ein Inhalt in eine Zielstruktur überführt werden
+kann, muss zunächst bestimmt werden, welche Engineering-Bedeutung er besitzt,
+auf welchen Systemgegenstand er sich bezieht und welche Beziehung zu bereits
+vorhandener Information besteht. Die Überführung heterogener
+Legacy-Information in ein Systemmodell umfasst daher zusätzlich zur formalen
+Transformation eine vorgelagerte Interpretations- und Einordnungsaufgabe.
+
+Aus dieser Unterscheidung ergeben sich grundlegende Anforderungen an eine
+automatisiert unterstützte Verarbeitung. Eingangsinformation muss so
+bereitgestellt werden, dass ihre Identität, Herkunft und ihr relevanter Kontext
+während der weiteren Verarbeitung erhalten bleiben können. Gleichzeitig darf
+eine fehlende oder nicht eindeutig ableitbare Information nicht allein zur
+Vervollständigung einer erwarteten Modellstruktur ergänzt werden. Die Qualität
+einer späteren Modellrepräsentation hängt damit nicht nur von deren formaler
+Gültigkeit ab, sondern bereits davon, wie die zugrunde liegende
+Engineering-Information erschlossen und kontrolliert weiterverarbeitet wird.
+
+Gerade für diese semantische Erschließung bieten Verfahren der
+KI-gestützten Sprach- und Informationsverarbeitung neue Möglichkeiten. Ihre
+Eignung für Engineering-Anwendungen hängt jedoch davon ab, wie zuverlässig
+unterschiedlich strukturierte Quellen interpretiert werden können und wie mit
+Unsicherheit, Mehrdeutigkeit und möglichen Fehlinterpretationen umgegangen
+wird. Abschnitt~\ref{sec:llm_mbse} betrachtet daher im nächsten Schritt den
+Stand KI- und LLM-gestützter Ansätze zur Verarbeitung und Erzeugung von
+Engineering-Artefakten.
+
+\subsection{Literaturbasierte Strukturierung der Informationsverarbeitung}
+\label{sec:dreischichtenmodell}
+
+Die in Abschnitt~\ref{sec:brownfield} beschriebene Transformation heterogener
+Engineering-Bestandsinformation lässt sich nicht auf einen einzelnen
+Konvertierungsschritt reduzieren. Bereits die initiale Literaturauswertung
+zeigte, dass unterschiedliche Aufgaben der Informationsverarbeitung voneinander
+unterschieden werden müssen. Für die weitere Betrachtung wird die
+Transformationsaufgabe daher in drei miteinander gekoppelte Ebenen gegliedert:
+eine Datenebene, eine Prozessebene und eine Wissensebene. Diese Struktur stellt
+kein eigenständiges Referenzmodell aus einer einzelnen Literaturquelle dar,
+sondern eine Synthese der für die Problemstellung relevanten Ansätze aus der
+initialen Literaturrecherche.
+
+Die \emph{Datenebene} umfasst die vorhandenen Engineering-Informationen und
+deren technische sowie strukturelle Eigenschaften. Hierzu gehören unter anderem
+unterschiedliche Dateiformate, Strukturierungsgrade, Granularitäten und
+Informationsquellen. Im Brownfield-Kontext besteht eine wesentliche
+Herausforderung darin, solche heterogenen Informationsbestände zunächst
+zugänglich und für eine weitere Verarbeitung eindeutig referenzierbar zu
+machen. Arbeiten zur Verarbeitung heterogener Daten- und Wissensbestände zeigen,
+dass Unterschiede zwischen Quellen nicht ausschließlich auf deren technisches
+Format beschränkt sind, sondern auch unterschiedliche Schemata und
+Informationsstrukturen betreffen können
+\cite{Maheshwari2018,Tian.2025,Chis.2025}.
+
+Die \emph{Prozessebene} beschreibt die Verarbeitungsschritte, durch die
+Information aus ihrem Ausgangszustand in eine formale Zielrepräsentation
+überführt wird. Hierzu zählen beispielsweise Transformation, Zuordnung,
+Zusammenführung und Validierung von Engineering-Information. Bestehende
+modellgetriebene Transformationsansätze zeigen, dass solche Übergänge bei
+formal beschriebenen Quell- und Zielmodellen durch explizite Regeln und
+Metamodelle gesteuert werden können
+\cite{Kapos.2014,Li.2022,Zhou.2024}. Für heterogene Brownfield-Information
+reicht eine solche rein strukturelle Transformation jedoch nicht aus, da die
+fachliche Bedeutung der Ausgangsinformation zunächst erschlossen werden muss.
+
+Die hierfür erforderliche fachliche Einordnung bildet die
+\emph{Wissensebene}. Sie umfasst Begriffe, semantische Beziehungen,
+Domänenwissen und Regeln, anhand derer Informationen interpretiert und in einen
+gemeinsamen fachlichen Kontext eingeordnet werden können. Ontologien und andere
+formalisierte Wissensrepräsentationen werden in diesem Zusammenhang eingesetzt,
+um Begriffe und Relationen explizit zu beschreiben und heterogene Informationen
+semantisch aufeinander abzubilden
+\cite{Abonyi.2024,Meyers.2013,Meng.2025}. Die Wissensebene stellt damit die
+Verbindung zwischen den technisch verfügbaren Eingangsdaten und ihrer
+fachlichen Bedeutung im späteren Systemmodell her.
+
+Die drei Ebenen sind nicht als voneinander unabhängige Verarbeitungsschichten
+zu verstehen. Entscheidungen auf der Wissensebene können beispielsweise
+beeinflussen, wie Informationen auf der Prozessebene zusammengeführt werden,
+während Eigenschaften der Datenebene begrenzen können, welche
+Interpretationen überhaupt belastbar möglich sind. Die Qualität des
+resultierenden Modells hängt deshalb nicht ausschließlich von einem einzelnen
+Transformationsalgorithmus ab, sondern vom kontrollierten Zusammenspiel von
+Informationsgrundlage, Verarbeitung und fachlicher Einordnung.
+
+KI-basierte Verfahren und menschliche Kontrolle werden in dieser Struktur
+nicht als zusätzliche vierte Ebene aufgefasst. Large Language Models können
+vielmehr innerhalb der beschriebenen Ebenen beziehungsweise an deren
+Übergängen Aufgaben übernehmen, für die eine semantische Interpretation
+erforderlich ist. Gleichzeitig kann menschliche Entscheidung dort notwendig
+werden, wo Informationen mehrdeutig sind oder eine fachliche Autorisierung
+erfordern. Bestehende Ansätze zur KI-gestützten Modellgenerierung kombinieren
+entsprechend generative Verfahren mit Retrieval, formalen Prüfungen und
+menschlicher Einbindung \cite{Cibrian.2025,Topcu2025}.
+
+Das Drei-Ebenen-Modell dient damit als prinzipieller Strukturierungsrahmen für
+die betrachtete Informationsverarbeitung. Es beschreibt, \emph{was} innerhalb
+einer Brownfield-Transformation berücksichtigt werden muss, ohne bereits eine
+konkrete technische Architektur oder Implementierung vorzugeben. Auf dieser
+Grundlage wird im folgenden Abschnitt untersucht, welche bestehenden
+Mechanismen eingesetzt werden, um KI-gestützte Interpretation innerhalb einer
+solchen Verarbeitung kontrollierbar zu gestalten.
