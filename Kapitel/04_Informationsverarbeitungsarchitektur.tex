@@ -1627,14 +1627,33 @@ entscheidet an fachlich relevanten Übergängen über deren weitere Verwendung.
 Deterministische Komponenten übernehmen nachgelagerte Transformationen, wenn
 keine neue Engineering-Entscheidung erforderlich ist.
 
-% TODO: Zentrale Architekturabbildung einfügen
-% \begin{figure}[htbp]
-%     \centering
-%     \includegraphics[width=\textwidth]{Abbildungen/integrated_information_processing_architecture.pdf}
-%     \caption{Integriertes Architekturkonzept der kontrollierten
-%     KI-gestützten Engineering-Informationstransformation}
-%     \label{fig:integrated_architecture}
-% \end{figure}
+Abbildung~\ref{fig:integrated_architecture} führt die zuvor getrennt
+hergeleiteten Architekturverantwortungen zu einem Gesamtbild zusammen.
+
+\begin{figure}[p]
+    \centering
+    \includegraphics[
+        width=\textwidth,
+        height=0.82\textheight,
+        keepaspectratio
+    ]{Graphiken/4.9_Integriertes_Architekturkonzept.pdf}
+    \caption[Integriertes Architekturkonzept]{
+    Integriertes Architekturkonzept der kontrollierten KI-gestützten
+    Engineering-Informationstransformation. Die Verarbeitung verläuft von
+    einer kontrollierten Informationsbasis über source-grounded Interpretation
+    und explizite Human Engineering Authority zur kontrollierten Modellbildung
+    und schließlich zur deterministischen Zieltransformation. Engineering
+    Sources dürfen fachliche Evidence begründen; Context Sources unterstützen
+    die Interpretation, besitzen jedoch keine eigene Evidence Authority.
+    Probabilistische Interpretationsergebnisse werden erst durch menschliche
+    Engineering-Entscheidungen für die weitere Verarbeitung autorisiert.
+    Engineering Meaning, Model Placement und Target-Model Formulation bleiben
+    getrennte Verantwortungen. Provenance, Traceability, explizite Authority
+    und kontrollierte Übergänge wirken über alle Stufen hinweg. Technische
+    Validität der Zielrepräsentation impliziert dabei keine fachliche
+    Korrektheit. Eigene Darstellung.}
+    \label{fig:integrated_architecture}
+\end{figure}
 
 Provenance und Traceability bilden dabei keine zusätzliche sequenzielle
 Verarbeitungsstufe, sondern eine querschnittliche Verantwortung der gesamten

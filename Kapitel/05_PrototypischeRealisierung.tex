@@ -92,22 +92,6 @@ erst in der Diskussion bewertet.
 \subsection{Systemarchitektur des Turing Generators}
 \label{sec:implementation_system_architecture}
 
-% ABBILDUNGSKANDIDAT CATIA:
-% "Three-Layer Architecture Mapping"
-%
-% ABBILDUNGSKANDIDAT CATIA:
-% "Logical Architecture presentation view"
-%
-% Inhalt:
-% - Systemgrenze und externe Kontexte
-% - Data / Process / Knowledge als ursprüngliche Responsibility-Perspektive
-% - Knowledge Layer als cross-cutting, nicht als einzelnes Subsystem
-% - finale R/F/L-Systemarchitektur
-% - neun thesis-relevante Subsysteme auf hoher Ebene
-% - Verantwortungsschnitt statt Python-Modulstruktur
-%\subsection{Systemarchitektur des Turing Generators}
-%\label{sec:implementation_system_architecture}
-
 Die prototypische Realisierung des Turing Generators wurde nicht unmittelbar
 aus der Softwarestruktur heraus entworfen. Zwischen dem in
 Kapitel~\ref{sec:architecture} entwickelten Architekturkonzept und der
@@ -124,29 +108,26 @@ Verarbeitungskette umgesetzt, sondern in konkrete Systemverantwortungen
 überführt. Abbildung~\ref{fig:implementation_three_layer_mapping} zeigt diese
 Operationalisierung im CATIA-Modell.
 
-% -------------------------------------------------------------------------
-% CATIA-ABBILDUNG 5.x
-% Diagramm im akzeptierten CATIA-Modell:
-% "Three-Layer Architecture Mapping"
-%
-% Inhalt:
-% - Data Layer
-% - Process Layer
-% - Knowledge Layer
-% - Zuordnung zu den System-Level Logical Components
-%
-% In der Thesis möglichst direkt aus CATIA sauber exportieren.
-% Nicht Screenshot aus PowerPoint verwenden.
-%
-% \begin{figure}[htbp]
-%     \centering
-%     \includegraphics[width=\textwidth]
-%       {Abbildungen/CATIA_Three_Layer_Architecture_Mapping.pdf}
-%     \caption{Operationalisierung der ursprünglichen
-%     Drei-Schichten-Struktur im Systemmodell des Turing Generators}
-%     \label{fig:implementation_three_layer_mapping}
-% \end{figure}
-% -------------------------------------------------------------------------
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[
+        width=\textwidth,
+        height=0.76\textheight,
+        keepaspectratio
+    ]{Graphiken/5.2a_Three_Layer_Architecture_Mapping.pdf}
+    \caption[Operationalisierung der Drei-Schichten-Struktur]{
+    Operationalisierung der ursprünglichen Drei-Schichten-Struktur im
+    logischen Systemmodell des Turing Generators. Der Data Layer bündelt
+    Verantwortungen für Project- und Source-Kontext, Engineering Information
+    Processing sowie Evidence und Traceability. Der Process Layer umfasst
+    Workflow-Steuerung, Human Review, Architektursynthese sowie SysML-v2-
+    Erzeugung und -Validierung. Der Knowledge Layer ist nicht als isoliertes
+    Subsystem realisiert, sondern wirkt querschnittlich auf Verarbeitung,
+    Review, Evidence und Architektursynthese. Die Schichten beschreiben damit
+    Verantwortungsbereiche und keine sequenzielle Verarbeitungskette.
+    Eigene Darstellung auf Basis des entwickelten SysML-v2-Architekturmodells.}
+    \label{fig:implementation_three_layer_mapping}
+\end{figure}
 
 Die Datenschicht bündelt dabei keine einzelne technische Datenbank, sondern
 Verantwortungen für die Aufnahme, Kontextualisierung, Aufbereitung und
@@ -174,7 +155,7 @@ Die Dreischichtenstruktur beschreibt damit eine Sicht auf die
 Verantwortungsverteilung, stellt jedoch nicht die eigentliche Ablaufstruktur
 des finalen Systems dar. Im Verlauf der Architekturentwicklung wurden die
 zunächst grob zusammengefassten Verantwortungen weiter getrennt. Das
-Systemmodell unterscheidet auf logischer Ebene acht zentrale
+Systemmodell unterscheidet auf logischer Ebene neun zentrale
 Systemkomponenten:
 
 \begin{itemize}
@@ -185,45 +166,34 @@ Systemkomponenten:
     \item \emph{Candidate and Review Governance},
     \item \emph{Coverage Evidence and Traceability Management},
     \item \emph{Architecture Synthesis and Validation},
-    \item \emph{SysML v2 Artifact Generation}.
+    \item \emph{SysML v2 Artifact Generation},
+    \item \emph{Generated SysML v2 Validation}.
 \end{itemize}
 
 Abbildung~\ref{fig:implementation_logical_architecture} zeigt diese
 System-Level Logical Architecture einschließlich der wesentlichen internen
 Informationsbeziehungen und externen Kontexte.
 
-% -------------------------------------------------------------------------
-% CATIA-ABBILDUNG 5.x
-% Diagramm im akzeptierten CATIA-Modell:
-% "Logical Architecture presentation view"
-%
-% Dieses Diagramm wurde auch in der Zwischenpräsentation / Demo verwendet.
-%
-% Erwartete interne Systemteile:
-% LC_01 User Interaction and Status Presentation
-% LC_02 Project and Source Context Management
-% LC_03 Processing Orchestration and State Control
-% LC_04 Engineering Information Processing
-% LC_05 Candidate and Review Governance
-% LC_06 Coverage Evidence and Traceability Management
-% LC_07 Architecture Synthesis and Validation
-% LC_08 SysML v2 Artifact Generation
-%
-% Relevante externe Kontexte:
-% Human Reviewer
-% LLM Inference
-% Semantic Reference Knowledge
-% Target Model References
-% SysML Modeling References
-%
-% \begin{figure}[htbp]
-%     \centering
-%     \includegraphics[width=\textwidth]
-%       {Abbildungen/CATIA_Logical_Architecture_Presentation_View.pdf}
-%     \caption{Logische Systemarchitektur des Turing Generators}
-%     \label{fig:implementation_logical_architecture}
-% \end{figure}
-% -------------------------------------------------------------------------
+\begin{figure}[p]
+    \centering
+    \includegraphics[
+        width=\textwidth,
+        height=0.82\textheight,
+        keepaspectratio
+    ]{Graphiken/5.2b_Logical_Architecture.pdf}
+    \caption[Logische Systemarchitektur des Turing Generators]{
+    Logische Systemarchitektur des Turing Generators. Neun interne Logical
+    Components trennen Benutzerinteraktion, Project- und Source-Kontext,
+    Orchestrierung, Engineering Information Processing, Review und Authority,
+    Evidence und Traceability, Architektursynthese, SysML-v2-Erzeugung sowie
+    die separate Validierung der generierten Artefakte. Human Reviewer,
+    LLM Inference sowie semantische, Target-Model- und SysML-v2-Referenzen
+    sind als externe Kontexte dargestellt. Dadurch bleiben probabilistische
+    Verarbeitung, Engineering Authority, Modellbildung, Zielrepräsentation
+    und technische Validierung strukturell voneinander getrennt.
+    Eigene Darstellung auf Basis des entwickelten SysML-v2-Architekturmodells.}
+    \label{fig:implementation_logical_architecture}
+\end{figure}
 
 Die logische Zerlegung macht insbesondere drei unterschiedliche Arten von
 Verantwortung sichtbar. \emph{Project and Source Context Management} und
@@ -345,31 +315,28 @@ Systemebene. Die CATIA-Sicht \emph{SFB\_004 Engineering Data Transformation
 Flow} fasst die wesentlichen Verarbeitungsschritte und Informationsübergänge
 des Turing Generators zu einem End-to-End-Workflow zusammen.
 
-% -------------------------------------------------------------------------
-% CATIA-ABBILDUNG 5.x
-% Diagramm im akzeptierten CATIA-Modell:
-% "SFB_004 Engineering Data Transformation Flow"
-%
-% Bereits in Zwischenpräsentation / Demo als
-% "End-to-End Engineering Workflow" verwendet.
-%
-% Zweck in der Thesis:
-% - High-Level-Sicht auf den kompletten Engineering Information Flow
-% - keine vollständige Darstellung jedes internen Persistenzzustands
-% - Detailstufen folgen in 5.4 bis 5.7
-%
-% WICHTIG:
-% Direkt aus dem final akzeptierten CATIA-Modell exportieren.
-% Nicht den PowerPoint-Screenshot verwenden.
-%
-% \begin{figure}[htbp]
-%     \centering
-%     \includegraphics[width=\textwidth]
-%       {Abbildungen/CATIA_SFB_004_Engineering_Data_Transformation_Flow.pdf}
-%     \caption{End-to-End Engineering Information Flow des Turing Generators}
-%     \label{fig:implementation_e2e_flow}
-% \end{figure}
-% -------------------------------------------------------------------------
+\begin{figure}[p]
+    \centering
+    \includegraphics[
+        width=\textwidth,
+        height=0.82\textheight,
+        keepaspectratio
+    ]{Graphiken/5.3_End_to_End_Engineering_Information_Flow.pdf}
+    \caption[End-to-End Engineering Information Flow]{
+    End-to-End Engineering Information Flow des Turing Generators. Die
+    Darstellung verfolgt die fachlichen Informationszustände von der
+    registrierten Engineering Source über Processing und Human Engineering
+    Review, Project Fit und projektweite Modellbildung bis zum validierten
+    SysML-v2-Artefakt und dessen finaler menschlicher Freigabe. Die beschrifteten
+    Item Flows machen dabei die Übergänge unter anderem über Review Package,
+    Approved Engineering Information, Project-Admitted Engineering Information,
+    Internal Engineering Model, Generated SysML Artifact Set und
+    SysML Validation Result sichtbar. LLM Service und Human Reviewer liegen
+    außerhalb des eigentlichen Verarbeitungspfads und übernehmen
+    unterschiedliche, ausdrücklich getrennte Rollen.
+    Eigene Darstellung auf Basis des entwickelten SysML-v2-Architekturmodells.}
+    \label{fig:implementation_e2e_flow}
+\end{figure}
 
 Der Ablauf beginnt mit der Registrierung einer Source innerhalb eines
 definierten Project- und Source-Kontexts. Die Registrierung dient nicht nur
@@ -540,41 +507,29 @@ Ergebnis dieser Stufe ist daher weder ein freigegebener Engineering-Inhalt
 noch ein Modellartefakt, sondern ein persistierter Review-Kontext für die
 nachfolgende menschliche Entscheidung.
 
-% -------------------------------------------------------------------------
-% CATIA-ABBILDUNG 5.x
-% Diagramm im final akzeptierten CATIA-Modell:
-% SFB_005 "Engineering Information Processing Flow"
-%
-% CATIA View:
-% GV_EngineeringInformationProcessingFlow
-%
-% Bereits in Zwischenpräsentation / Demo verwendet als:
-% "Engineering Information Processing im Detail"
-%
-% Wesentliche sichtbare Schritte:
-% - deterministic Source Projection
-% - Source Analysis Units
-% - source-grounded Evidence Detection
-% - Canonical Engineering Subject discovery
-% - Persona Interpretation
-% - Consensus / Variance Assessment
-% - controlled Semantic Governance
-% - Coverage / Evidence Assessment
-% - Human Review Package preparation
-%
-% WICHTIG:
-% Project Fit und Project-level Model Synthesis liegen ausdrücklich
-% AUSSERHALB dieser Sicht.
-%
-% \begin{figure}[htbp]
-%     \centering
-%     \includegraphics[width=\textwidth]
-%       {Abbildungen/CATIA_SFB_005_Engineering_Information_Processing_Flow.pdf}
-%     \caption{Source-lokale Engineering Information Processing
-%     bis zur Human-Engineering-Review-Grenze}
-%     \label{fig:implementation_information_processing}
-% \end{figure}
-% -------------------------------------------------------------------------
+\begin{figure}[p]
+    \centering
+    \includegraphics[
+        width=\textwidth,
+        height=0.84\textheight,
+        keepaspectratio
+    ]{Graphiken/5.4_Engineering_Information_Processing_Flow.pdf}
+    \caption[Source-lokale Engineering Information Processing]{
+    Source-lokale Engineering Information Processing bis zur
+    Human-Engineering-Review-Grenze. Aus einer deterministischen Source
+    Projection werden zunächst Source Analysis Units und source-grounded
+    Evidence abgeleitet. Darauf aufbauend werden Canonical Engineering
+    Subjects gebildet und durch konfigurierte Personas unabhängig
+    interpretiert. Consensus, Varianz und Unsicherheit dienen als
+    Review-Evidence und stellen selbst keine fachliche Authority dar.
+    Nach kontrollierter semantischer Governance sowie der Bewertung von
+    Coverage und Evidence Sufficiency entsteht das Review Package für die
+    nachfolgende menschliche Entscheidung. Der LLM Service unterstützt
+    ausgewählte interpretative Verarbeitungsschritte, besitzt jedoch keine
+    Engineering Authority.
+    Eigene Darstellung auf Basis des entwickelten SysML-v2-Architekturmodells.}
+    \label{fig:implementation_information_processing}
+\end{figure}
 
 Am Beginn der Verarbeitung steht eine deterministische
 \emph{Source Projection}. Sie überführt den registrierten Source-Inhalt in
@@ -981,33 +936,30 @@ Engineering-Modellzustand unabhängig von einer konkreten SysML-v2-
 Textserialisierung ab. Elemente und Beziehungen erhalten dafür eigene stabile
 interne Identitäten und bleiben mit ihren autorisierten Vorgängern,
 Human-Review-Entscheidungen und Provenance-Informationen verknüpft.
+Abbildung~\ref{fig:implementation_model_realization} zeigt die hierfür
+relevanten subsystemübergreifenden Informations- und Authority-Übergänge.
 
-% -------------------------------------------------------------------------
-% CATIA-ABBILDUNGSKANDIDAT
-%
-% "SBSLA_10 Turing Generator Cross-Subsystem Logical Architecture"
-%
-% Für 5.6 sind besonders relevant:
-% SBS_05 Human Review and Engineering Authority
-% SBS_07 Architecture Derivation and Model Assembly
-% SBS_08 SysML v2 Artifact Generation
-% SBS_09 Generated Artifact Validation and Publication
-%
-% Das vollständige Diagramm besitzt 35 Interfaces und 56 typed Item Flows.
-% Deshalb nur verwenden, wenn der Export in A4/Querformat lesbar bleibt.
-% Sonst:
-% - CATIA-Ausschnitt auf SBS05/SBS07/SBS08/SBS09
-% - oder passende subsystembezogene Logical View exportieren.
-%
-% \begin{figure}[htbp]
-%     \centering
-%     \includegraphics[width=\textwidth]
-%       {Abbildungen/CATIA_Model_Realization_CrossSubsystem.pdf}
-%     \caption{Subsystemübergreifende Modellbildung,
-%     SysML-v2-Erzeugung und Validierung}
-%     \label{fig:implementation_model_realization}
-% \end{figure}
-% -------------------------------------------------------------------------
+\begin{figure}[p]
+    \centering
+    \includegraphics[
+        width=\textwidth,
+        height=0.82\textheight,
+        keepaspectratio
+    ]{Graphiken/5.6_Model_Realization_Cross_Subsystem.pdf}
+    \caption[Subsystemübergreifende Modellbildung und SysML-v2-Realisierung]{
+    Subsystemübergreifende Modellbildung, SysML-v2-Erzeugung und Validierung.
+    Die Architecture-Derivation-Verantwortung übergibt Model Candidates und
+    Model-Placement-Proposals an die Human-Authority-Grenze und erhält
+    autorisierte Placement- und Review-Entscheidungen zurück. Erst daraus wird
+    ein validierter Internal Engineering Model-Zustand an die deterministische
+    SysML-v2-Erzeugung übergeben. Das erzeugte Artifact Set wird anschließend
+    getrennt validiert und gemeinsam mit dem Validation Result der finalen
+    menschlichen Modellprüfung zugeführt. Die Darstellung verdeutlicht damit
+    insbesondere die Trennung von Modellierungsentscheidung, Modellassembly,
+    Zielrepräsentation, technischer Validierung und Human Authority.
+    Eigene Darstellung auf Basis des entwickelten SysML-v2-Architekturmodells.}
+    \label{fig:implementation_model_realization}
+\end{figure}
 
 Die Assembly selbst folgt deterministischen Regeln. Das zuvor ausgewählte
 Framework Template wird als strukturelles Gerüst materialisiert und die
