@@ -19,74 +19,15 @@ LLM-basierte Verfahren trotz probabilistischer Ausgabe, möglicher
 Fehlinterpretationen und begrenzter Verlässlichkeit in kontrollierte
 Engineering-Prozesse einzubetten \cite{Topcu2025,Barke2023,Sergeyuk2025}.
 
-Die Evaluation macht dabei deutlich, dass ein direkter Verarbeitungspfad von
-einem Legacy-Dokument zu einem generierten SysML-v2-Artefakt für den
-untersuchten Anwendungsfall nicht ausreicht. Während der formativen
-End-to-End-Erprobung mussten mehrere zunächst zusammengefasste
-Verantwortlichkeiten explizit getrennt werden. Dies betrifft insbesondere die
-Trennung von Engineering Evidence und zusätzlichem Verarbeitungskontext, die
-Bildung gemeinsamer Engineering Subjects vor deren perspektivischer
-Interpretation sowie die Unterscheidung von fachlicher Bedeutung,
-Modellplatzierung und zielmodellspezifischer Formulierung. Der resultierende
-Informationsfluss ist daher weniger als lineare Transformationskette, sondern
-als Folge kontrollierter Zustands- und Authority-Übergänge zu verstehen.
-
-Eine zweite zentrale Beobachtung betrifft die Rolle probabilistischer
-Interpretation. Die im Referenzlauf beobachteten unterschiedlichen
-Persona-Klassifikationen zeigen, dass mehrere KI-basierte Perspektiven nicht
-notwendigerweise zu einer eindeutigen fachlichen Aussage konvergieren. Im
-entwickelten Architekturkonzept wird diese Varianz deshalb nicht als
-automatischer Abstimmungsmechanismus verwendet. Stattdessen wird sie als
-Review-Evidence persistiert und einem expliziten Human Engineering Review
-zugeführt. Dies steht im Einklang mit Ansätzen des Human-in-the-Loop, bei
-denen menschliche Entscheidungskompetenz gezielt an solchen Stellen erhalten
-bleibt, an denen automatisierte Verarbeitung keine hinreichende
-Entscheidungsautorität besitzt \cite{MosqueiraRey2023,Lazaros2026}. Die
-Ergebnisse des Prototyps zeigen zugleich, dass diese Human Authority nicht nur
-an einer einzigen Stelle benötigt wird, sondern in unterschiedlichen
-Verantwortungsbereichen des Informations- und Modellbildungsprozesses.
-
-Als dritter Befund ergibt sich, dass fachlich autorisierte Engineering
-Information und deren konkrete Modellrepräsentation nicht identisch sind.
-Eine freigegebene Engineering-Aussage beantwortet zunächst, welcher fachliche
-Inhalt für die weitere Verarbeitung autorisiert ist. Davon getrennt muss
-entschieden werden, an welcher Stelle und in welcher Form dieser Inhalt im
-Zielmodell repräsentiert wird. Erst anschließend kann die konkrete
-SysML-v2-Formulierung erzeugt und technisch geprüft werden. Die im
-Referenzlauf getrennt persistierten Engineering-, Placement-, Formulation- und
-Validation-Zustände zeigen diese unterschiedlichen Verantwortungsbereiche
-auch in der prototypischen Realisierung. Die formale Ausdrucksfähigkeit von
-SysML~v2 und textbasierte Engineering- beziehungsweise
-Architecture-as-Code-Ansätze stellen hierfür die technische Grundlage bereit,
-ersetzen jedoch nicht die vorgelagerten fachlichen Entscheidungen
-\cite{SysMLv2,Stirbu2022,Bucaioni2025}.
-
-Ein weiterer zentraler Befund betrifft die Nachvollziehbarkeit des
-Entstehungsprozesses. Das Ergebnis des Referenzlaufs besteht nicht lediglich
-aus einem generierten SysML-v2-Modell. Parallel zum Modell wurde ein
-persistierter Evidence-, Decision-, Provenance- und
-Traceability-Artefaktsatz erzeugt, über den Source-Aussagen,
-maschinelle Zwischenzustände, Human Decisions, Modellzustände,
-Validierungsergebnisse und der veröffentlichte Output miteinander verbunden
-bleiben. Damit wird Provenance nicht erst nach Abschluss der Modellbildung
-ergänzt, sondern während der Verarbeitung fortlaufend aufgebaut. Die
-grundsätzliche Bedeutung expliziter Provenance für die Rekonstruktion von
-Daten- und Verarbeitungshistorien ist sowohl in allgemeinen
-Provenance-Modellen als auch in Engineering- und
-Traceability-Kontexten etabliert \cite{MoreauMissier2013,Simmhan2005,ISO29148}.
-
-Die Multi-Source-Erprobung erweitert diese Betrachtung um die
-projektübergreifende beziehungsweise projektweite Synthese mehrerer
-Engineering Sources. Dabei zeigte sich, dass source-lokale Provenance und
-projektweite Modellbildung nicht als gegensätzliche Anforderungen behandelt
-werden müssen. Die einzelnen Quellen können zunächst unabhängig verarbeitet
-und autorisiert werden, während ihre freigegebenen Informationszustände
-anschließend gemeinsam in die Modellbildung eingehen. Voraussetzung ist,
-dass Source-, Processing- und Authority-Bezüge auch nach dem Übergang in die
-projektweite Verarbeitung erhalten bleiben. Die Evaluation bezieht sich dabei
-auf die im Testfall registrierten und zugelassenen Projektinformationen und
-begründet keine Aussage über die Vollständigkeit beliebiger realer
-Engineering-Datenbestände.
+Die Evaluation verdichtet sich dabei zu mehreren miteinander verbundenen
+Befunden. Relevant sind insbesondere die Kontrolle der fachlichen
+Informationsbasis, die Nutzung von Interpretationsvarianz als Review-Evidence,
+die gestufte Human Authority, die Trennung von Engineering Meaning und
+Zielmodellrepräsentation sowie die fortlaufende Persistenz von Provenance und
+Traceability. Die Multi-Source-Erprobung erweitert diese Betrachtung um die
+kontrollierte projektweite Integration mehrerer quellengebunden verarbeiteter
+Informationszustände. Diese Befunde werden in den folgenden Abschnitten
+einzeln diskutiert.
 
 \paragraph{Umgang mit Findings und Architekturkorrekturen}
 
@@ -106,8 +47,8 @@ dokumentiert. Die korrigierte Architektur wurde anschließend implementiert und
 am betroffenen Verarbeitungspfad erneut geprüft. Die ursprüngliche Beobachtung
 blieb dabei als historische Evaluationsevidenz erhalten und wurde durch den
 späteren erfolgreichen Retest nicht rückwirkend ersetzt. Beispiele hierfür sind
-die Einführung source-grounded Evidence vor der Persona-Interpretation sowie
-die Präzisierung der source-lokalen und projektweiten Authority-Grenzen der
+die Einführung quellengebundener Evidenz vor der Persona-Interpretation sowie
+die Präzisierung der quellengebundenen und projektweiten Authority-Grenzen der
 Multi-Source-Verarbeitung.
 
 Davon getrennt wurden technische Implementierungsfehler behandelt, die den
@@ -132,18 +73,7 @@ Er zeigt vielmehr, dass der definierte und architektonisch konsolidierte
 Proof-of-Concept-Pfad unter den in dieser Arbeit untersuchten Bedingungen
 vollständig ausgeführt werden konnte.
 
-Aus den Ergebnissen lassen sich damit vier miteinander verbundene
-Diskussionsschwerpunkte ableiten: die Kontrolle der Informationsbasis, die
-Rolle von Interpretationsvarianz und Human Authority, die Trennung von
-Engineering Meaning und Zielmodellbildung sowie die durchgängige Persistenz
-von Evidence, Provenance und Traceability. Ergänzt wird diese Betrachtung um
-die Frage, wie mehrere source-lokale Informationspfade kontrolliert in einen
-gemeinsamen projektweiten Modellzustand überführt werden können. Diese
-Aspekte werden in den folgenden Abschnitten einzeln diskutiert, bevor daraus
-in Abschnitt~\ref{sec:discussion_research_questions} die Forschungsfragen
-beantwortet werden.
-
-\subsection{Kontrollierte Informationsbasis und source-grounded Evidence}
+\subsection{Kontrollierte Informationsbasis und quellengebundene Evidenz}
 \label{sec:discussion_information_basis}
 
 Die Ergebnisse der formativen Erprobung zeigen, dass die Zuverlässigkeit der
@@ -167,19 +97,11 @@ Die entscheidende Randbedingung besteht damit nicht darin, zusätzliches Wissen
 grundsätzlich aus der Verarbeitung auszuschließen, sondern die Rollen
 unterschiedlicher Informationsquellen explizit zu kontrollieren.
 
-Diese Trennung ist insbesondere für probabilistische Sprachmodelle relevant.
-LLM-basierte Systeme können sprachlich plausible Engineering-Artefakte
-erzeugen, ohne dass aus der Plausibilität unmittelbar auf die fachliche
-Korrektheit oder die Herkunft der enthaltenen Aussagen geschlossen werden
-kann. Untersuchungen zur Verwendung generativer Modelle in Engineering- und
-Softwarekontexten weisen entsprechend auf Fehlerbilder und auf die begrenzte
-Verlässlichkeit scheinbar überzeugender Modelloutputs hin
-\cite{Topcu2025,Barke2023,Sergeyuk2025}. Im hier untersuchten Ansatz wird
-dieses Problem nicht durch den Anspruch gelöst, die probabilistische
-Interpretation selbst fehlerfrei zu machen. Stattdessen wird ihre mögliche
-fachliche Wirkung an eine kontrollierte Evidenzbasis gebunden.
+Im untersuchten Ansatz wird die begrenzte Verlässlichkeit probabilistischer
+Interpretation daher nicht durch den Anspruch fehlerfreier LLM-Ausgaben
+adressiert, sondern durch deren Bindung an eine kontrollierte Evidenzbasis.
 
-Die hierfür eingeführte source-grounded Evidence bildet eine explizite
+Die hierfür eingeführte quellengebundene Evidenz bildet eine explizite
 Zwischenschicht zwischen Source und Interpretation. Ein Evidence Item hält
 nicht nur eine extrahierte Aussage fest, sondern bindet diese an die
 registrierte Source und die zugehörige Position beziehungsweise
@@ -191,15 +113,9 @@ Subject-Populationen führte. Durch die Vorverlagerung einer gemeinsamen
 Evidence- und Subject-Identität beziehen sich unterschiedliche
 Interpretationen dagegen auf denselben fachlichen Referenzgegenstand.
 
-Damit erhält Provenance bereits am Beginn des Engineering Information Flow
-eine operative Funktion. Provenance beschreibt grundsätzlich die Herkunft
-eines Datenobjekts und die Verarbeitungsschritte, durch die ein bestimmter
-Zustand entstanden ist \cite{MoreauMissier2013,Simmhan2005}. Im entwickelten
-Ansatz wird diese Herkunft nicht erst nachträglich zum erzeugten Modell
-dokumentiert. Source-, Evidence- und Processing-Bezüge werden bereits beim
-Entstehen der jeweiligen Zwischenzustände persistiert und über die
-nachfolgenden Authority-Grenzen weitergeführt. Dies schafft gleichzeitig die
-Grundlage für die in Abschnitt~\ref{sec:discussion_traceability} diskutierte
+Die persistierte Bindung von Source, Evidence und Processing schafft zugleich
+die Grundlage für die in
+Abschnitt~\ref{sec:discussion_traceability} diskutierte
 End-to-End-Traceability.
 
 Die Ergebnisse zeigen außerdem, dass die Anforderungen an die Eingangsdaten
@@ -235,16 +151,6 @@ einer definierten Informationsbasis unterstützen, die Auswahl und fachliche
 Vollständigkeit dieser Informationsbasis bleibt jedoch eine vorgelagerte
 Engineering-Verantwortung.
 
-Auch die Anforderungen des Requirements Engineering an nachvollziehbare
-Herkunft und Beziehungen zwischen Engineering-Information sprechen dafür,
-Traceability nicht erst am finalen Modell anzusetzen
-\cite{ISO29148}. Für die KI-gestützte Migration bedeutet dies, dass
-Eingangsdaten neben ihrer technischen Verarbeitbarkeit insbesondere eine
-stabile Source-Identität, eine explizite Informationsrolle und eine
-nachvollziehbare Provenance benötigen. Erst diese Randbedingungen ermöglichen
-es, nachgelagerte KI-Interpretationen von der fachlichen Evidenzbasis zu
-unterscheiden.
-
 Damit verschiebt sich die Frage nach geeigneten Eingangsdaten von einer rein
 formatbezogenen Betrachtung hin zu einer Governance-Frage. Für den
 untersuchten Ansatz ist weniger entscheidend, ob ein Legacy-Dokument bereits
@@ -262,7 +168,7 @@ Abschnitt~\ref{sec:discussion_research_questions} zusammengeführt.
 Die Ergebnisse der formativen Evaluation zeigen, dass mehrere
 KI-Perspektiven nicht automatisch zu einer eindeutigen oder fachlich richtigen
 Engineering-Aussage führen. Unterschiedliche Personas können denselben
-source-grounded Gegenstand verschieden klassifizieren, während in anderen
+fachlichen Gegenstand verschieden klassifizieren, während in anderen
 Fällen mehrere Perspektiven dieselbe Unsicherheit teilen. Für das entwickelte
 Architekturkonzept folgt daraus, dass Konsens und Varianz zunächst als
 Information über den Interpretationszustand behandelt werden und nicht als
@@ -278,26 +184,13 @@ Freigabeentscheidung im Systems Engineering gleichzusetzen. Auch eine
 übereinstimmende Aussage mehrerer probabilistischer Instanzen besitzt zunächst
 nur den Status einer maschinell erzeugten Interpretation.
 
-Der Prototyp verwendet mehrere Persona-Perspektiven deshalb nicht als
-Abstimmungsverfahren zur automatischen Ermittlung einer vermeintlich richtigen
-Antwort. Ihre Funktion besteht vielmehr darin, unterschiedliche plausible
-Interpretationen desselben zuvor identifizierten Engineering Subjects
-sichtbar zu machen. Voraussetzung dafür ist die in
-Abschnitt~\ref{sec:discussion_information_basis} diskutierte gemeinsame
-Evidence- und Subject-Identität. Erst wenn die Personas denselben
-Referenzgegenstand interpretieren, kann eine Abweichung ihrer Ergebnisse
-sinnvoll als Interpretationsvarianz betrachtet werden.
-
-Diese Trennung entstand unmittelbar aus der formativen Evaluation. In einem
-früheren Architekturstand erzeugten die Persona-Perspektiven teilweise eigene
-Subject-Populationen. Unterschiede zwischen den Ergebnissen vermischten damit
-zwei Fragestellungen: ob überhaupt derselbe Engineering-Gegenstand erkannt
-worden war und wie dieser Gegenstand interpretiert werden sollte. Die
-Architekturkorrektur verlagerte deshalb source-grounded Evidence Detection und
-Canonical Subject Discovery vor die Persona-Interpretation. Der entsprechende
-Befund wurde als Architekturentscheidung in die weitere Systemgestaltung
-überführt und nach der Umsetzung erneut geprüft
-(vgl. Anhang~\ref{app:findings_register}).
+Die Persona-Perspektiven dienen deshalb nicht als Abstimmungsverfahren,
+sondern der vergleichbaren Interpretation desselben zuvor identifizierten
+Engineering Subjects. Die dafür erforderliche gemeinsame Evidence- und
+Subject-Identität wurde bereits in
+Abschnitt~\ref{sec:discussion_information_basis} diskutiert. Erst auf dieser
+gemeinsamen Bezugsbasis lassen sich Abweichungen zwischen den Perspektiven
+sinnvoll als Interpretationsvarianz interpretieren.
 
 Der Referenzlauf zeigt zusätzlich, dass zwischen
 \emph{Interpretationsvarianz} und \emph{gemeinsamer Ambiguität} unterschieden
@@ -369,41 +262,19 @@ explizit definierten Human-Decision-Grenzen. Die Konsequenzen dieses
 Ergebnisses für die zweite Teilforschungsfrage werden in
 Abschnitt~\ref{sec:discussion_research_questions} zusammengeführt.
 
-\subsection{Von Engineering Meaning zur SysML-v2-Repräsentation}
+\subsection{Von fachlicher Bedeutung zur SysML-v2-Repräsentation}
 \label{sec:discussion_model_formation}
 
-Die formative Evaluation zeigte, dass die Überführung fachlich autorisierter
-Engineering Information in SysML~v2 nicht als unmittelbare Übersetzung
-verstanden werden kann. Eine fachlich akzeptierte Aussage legt zunächst fest,
-\emph{was} über das betrachtete System als autorisiert gilt. Daraus folgt
-jedoch nicht eindeutig, \emph{wo} diese Information im Zielmodell einzuordnen
-ist, \emph{durch welchen Modellkonstrukt} sie repräsentiert werden soll oder
-\emph{wie} die resultierende SysML-v2-Formulierung konkret auszusehen hat.
-Gerade diese zunächst nicht ausreichend getrennten Verantwortlichkeiten
-führten während der End-to-End-Erprobung zu mehreren architekturrelevanten
-Findings (vgl. Anhang~\ref{app:findings_register}).
-
-Für den finalen Architekturstand wurden deshalb vier aufeinanderfolgende
-Verantwortungsbereiche unterschieden:
-
-\begin{center}
-Engineering Meaning\\
-$\downarrow$\\
-Model Placement / Representation\\
-$\downarrow$\\
-Target-Model Formulation\\
-$\downarrow$\\
-deterministische SysML-v2-Serialisierung.
-\end{center}
-
-\emph{Engineering Meaning} bezeichnet dabei den fachlich autorisierten
-Informationszustand. Die nachfolgende Placement- beziehungsweise
-Representation-Entscheidung bestimmt, an welcher Stelle und als welcher
-zugelassene Modelltyp dieser Inhalt im Zielmodell repräsentiert werden soll.
-Die Target-Model Formulation konkretisiert anschließend die
-zielspezifische Ausprägung innerhalb der zulässigen Modellierungsnotation.
-Erst danach erfolgt die deterministische Serialisierung in ein
-SysML-v2-Artefakt.
+Die formative Evaluation bestätigt die in
+Abschnitt~\ref{sec:architecture_meaning_representation} konzeptionell
+getroffene Trennung zwischen fachlich autorisierter Bedeutung, Einordnung und
+Repräsentation im Zielmodell, zielmodellspezifischer Formulierung und
+deterministischer SysML-v2-Serialisierung. Entscheidend für die Diskussion ist, dass eine
+fachlich autorisierte Engineering-Aussage noch keine eindeutige
+Zielrepräsentation bestimmt. Gerade die Übergänge zwischen diesen
+Verantwortungsbereichen führten während der End-to-End-Erprobung zu
+architekturrelevanten Findings
+(vgl. Anhang~\ref{app:findings_register}).
 
 Diese Trennung präzisiert zugleich die Rolle ontologischer und
 modellmethodischer Leitplanken. Ontologien können Begriffe, Kategorien und
@@ -464,18 +335,8 @@ Referenzlauf~930444 zeigt mit der Target-Model-Formulation des
 \emph{Microscope Operator} exemplarisch eine solche explizite Entscheidung
 (vgl. Abschnitt~\ref{sec:results_traceability}).
 
-SysML~v2 unterstützt durch seine formale Sprachdefinition und textuelle
-Notation eine solche Trennung zwischen internem Engineering-Zustand und
-anschließender technischer Repräsentation
-\cite{SysMLv2,Teodorov2025}. Textbasierte Engineering- und
-Architecture-as-Code-Ansätze ermöglichen darüber hinaus, Modellartefakte
-deterministisch zu erzeugen, versionierbar zu behandeln und in automatisierte
-Werkzeugketten einzubetten \cite{Stirbu2022,Bucaioni2025}. Die technische
-Erzeugbarkeit eines Artefakts beantwortet jedoch weiterhin nicht die Frage,
-ob die darin enthaltene Engineering-Aussage fachlich richtig oder ausreichend
-begründet ist.
-
-Dies gilt ebenfalls für die anschließende technische Validierung. Der im
+Auch die anschließende technische Validierung bildet eine von der fachlichen
+Autorisierung getrennte Verantwortung. Der im
 Referenzlauf erfolgreich durch SYSIDE verarbeitete Output zeigt, dass das
 erzeugte Artefakt innerhalb der verwendeten Werkzeug- und Sprachumgebung
 technisch verarbeitbar war. Die Validierung ersetzt weder die vorausgehende
@@ -483,29 +344,13 @@ Engineering Authority noch die Model Authority. Entsprechend bleiben
 Generierung, technische Validation und abschließende Human Release im
 Architekturkonzept getrennte Zustände.
 
-Die Ergebnisse begrenzen zugleich die Reichweite der entwickelten
-Modellierungsleitplanken. Der Proof of Concept implementiert einen definierten
-Ausschnitt der relevanten SysML-v2-Konstrukte. Das Findings-Register weist
-weiterhin eine unvollständige Abdeckung unter anderem spezifischer Ports,
-Interfaces, Parts, Actions, States und Occurrences aus. Diese Einschränkung
-wurde nach Abschluss des vorgesehenen Proof-of-Concept-Umfangs nicht durch
-eine Erweiterung der Construct-Bibliothek aufgelöst, sondern als offene
-Systemgrenze und Gegenstand des Ausblicks erhalten
-(vgl. Anhang~\ref{app:findings_register}). Der erfolgreiche Referenzlauf ist
-daher als Nachweis des implementierten Modellierungsausschnitts und nicht als
-Nachweis einer vollständigen SysML-v2-Abdeckung zu verstehen.
+Die Aussagekraft dieses Befunds bleibt auf den implementierten
+Proof-of-Concept-Ausschnitt begrenzt. Der erfolgreiche Referenzlauf weist die
+Funktionsfähigkeit der realisierten Modellierungs- und
+Transformationsmechanismen nach, nicht jedoch eine vollständige Abdeckung von
+SysML~v2 (vgl. Anhang~\ref{app:findings_register}).
 
-Für die dritte Teilforschungsfrage ergibt sich daraus bereits eine wesentliche
-Präzisierung: Ontologische Regeln sind ein notwendiger Bestandteil der
-Leitplanken, reichen für eine kontrollierte Überführung in modulare
-SysML-v2-Strukturen jedoch nicht allein aus. Sie müssen durch Regeln für
-zulässige Zielrepräsentationen, explizite Placement- und
-Formulation-Entscheidungen sowie deterministische Validierungs- und
-Serialisierungsgrenzen ergänzt werden. Die formale Antwort auf die
-Teilforschungsfrage wird in
-Abschnitt~\ref{sec:discussion_research_questions} zusammengeführt.
-
-\subsection{Persistierte Evidence, Provenance und End-to-End-Traceability}
+\subsection{Persistierte Evidenz, Provenance und durchgängige Nachverfolgbarkeit}
 \label{sec:discussion_traceability}
 
 Die Ergebnisse des Referenzlaufs zeigen, dass der kontrollierte
@@ -554,7 +399,7 @@ Verarbeitungsprozess hinweg.
 
 Auch fehlgeschlagene Verarbeitungsschritte sind Bestandteil dieser
 Prozesshistorie. Der in Abschnitt~\ref{sec:results_traceability}
-dargestellte fehlgeschlagene Processing Attempt bleibt einschließlich seines
+dargestellte fehlgeschlagene Verarbeitungsversuch bleibt einschließlich seines
 Fehlerzustands und der Raw Response erhalten, obwohl ein späterer Retry
 erfolgreich weiterverarbeitet wurde. Der erfolgreiche Zustand ersetzt den
 fehlgeschlagenen Attempt nicht. Dadurch kann nicht nur rekonstruiert werden,
@@ -592,27 +437,17 @@ Modells übertragen. Ein veränderter Modellzustand erfordert einen neuen
 Validierungs- und Freigabepfad. Technische Validität und Human Release bleiben
 damit auch innerhalb der Traceability unterschiedliche Zustände.
 
-Die formative Evaluation führte an mehreren Stellen zu einer Präzisierung
-dieser Traceability-Grenzen. Besonders die Multi-Source-Erprobung zeigte,
-dass lokal eindeutige Artefakt-IDs für eine projektweite Verarbeitung nicht
-ausreichen, wenn derselbe Identifier in unterschiedlichen Processing Runs
-auftreten kann. Die darauf folgende Architekturkorrektur erweiterte die
-Identität um den jeweiligen Processing-Kontext und band Project Fit an den
-konkreten Source-, Run-, Attempt- und Authority-Zustand. Diese
-finding-getriebene Änderung wurde als Architekturentscheidung dokumentiert
-und anschließend im Multi-Source-Retest überprüft
-(vgl. Anhang~\ref{app:findings_register}).
+Die Multi-Source-Erprobung zeigte zusätzlich, dass Artefaktidentitäten nur
+dann projektweit nachvollziehbar bleiben, wenn auch ihr jeweiliger
+Verarbeitungskontext eindeutig erhalten wird. Die daraus abgeleiteten
+Konsequenzen für die projektweite Integration werden in
+Abschnitt~\ref{sec:discussion_multisource} diskutiert.
 
-Aus der Evaluation folgt jedoch keine Aussage über eine vollständige
-Traceability sämtlicher in der Realität relevanten Engineering-Information.
-Nachvollziehbar ist die Verarbeitung innerhalb der registrierten und für das
-Projekt zugelassenen Informationsbasis. Eine Information, die nicht als
-Source vorliegt oder nicht in den betrachteten Verarbeitungspfad aufgenommen
-wurde, kann durch die Traceability nicht nachträglich rekonstruiert werden.
-Die Architektur unterstützt damit die kontrollierte Herleitung innerhalb
-einer definierten Informationsbasis, nicht deren fachliche Vollständigkeit.
+Die Nachverfolgbarkeit bleibt dabei auf die registrierte und für das Projekt
+zugelassene Informationsbasis begrenzt. Sie erlaubt keine Aussage über die
+fachliche Vollständigkeit der zugrunde liegenden Engineering-Information.
 
-Ebenso ist der Umfang der persistierten Evidence nicht mit einer
+Ebenso ist der Umfang der persistierten Evidenz nicht mit einer
 Qualitätsaussage über den Inhalt gleichzusetzen. Eine große Zahl von
 Zwischenartefakten, Review Items oder Traceability Entries ist kein
 eigenständiger Nachweis für Modellqualität. Dies zeigte bereits die formative
@@ -623,26 +458,17 @@ Interpretationsvarianz erlaubte
 für eine konkrete Engineering-Aussage relevanten Vorgänger-, Entscheidungs-
 und Authority-Zustände eindeutig miteinander verbunden sind.
 
-Für das entwickelte Architekturkonzept ist Traceability damit nicht als
-zusätzliche Dokumentationsfunktion nach Abschluss der Modellgenerierung zu
-verstehen. Sie entsteht aus der persistierten Verkettung der kontrollierten
-Informations- und Entscheidungszustände selbst. Das resultierende
-SysML-v2-Modell bildet den veröffentlichten Engineering-Zustand ab; der
-zugehörige Evidence-, Decision-, Provenance- und Traceability-Artefaktsatz
-ermöglicht die Rekonstruktion, wie dieser Zustand innerhalb des untersuchten
-Verarbeitungspfads zustande gekommen ist.
-
-\subsection{Multi-Source-Verarbeitung und projektweite Integration}
+\subsection{Verarbeitung mehrerer Quellen und projektweite Integration}
 \label{sec:discussion_multisource}
 
 Die Multi-Source-Erprobung zeigt, dass die kontrollierte Verarbeitung mehrerer
 Engineering Sources eine zusätzliche Architekturgrenze erfordert. Eine
-source-lokale Verarbeitung allein genügt nicht, sobald autorisierte
+quellengebundene Verarbeitung allein genügt nicht, sobald autorisierte
 Informationen aus mehreren Quellen in einen gemeinsamen Modellbildungsprozess
 überführt werden sollen. Gleichzeitig darf die projektweite Integration die
 Herkunft und den jeweiligen Authority-Zustand dieser Informationen nicht
 auflösen. Für das entwickelte Architekturkonzept ergibt sich daraus die
-Anforderung, source-lokale Autorisierung und projektweite Synthese explizit
+Anforderung, quellengebundene Autorisierung und projektweite Synthese explizit
 voneinander zu trennen.
 
 Diese Trennung ist für Brownfield-Szenarien besonders relevant. Bestehende
@@ -657,47 +483,37 @@ gemeinsamen Systemmodells \cite{Zhao.2023}. Für eine KI-gestützte Migration
 entsteht jedoch zusätzlich die Frage, wie die Authority der jeweiligen
 Quellinformation während dieser Integration erhalten bleibt.
 
-Der erste formale Multi-Source-Test des Prototyps machte diese Grenze durch
-eine Identitätskollision zwischen Processing-Artifacts sichtbar. Lokal
+Die Multi-Source-Erprobung machte diese Grenze durch eine
+Identitätskollision zwischen Verarbeitungsartefakten sichtbar. Lokal
 eindeutige Artefaktidentitäten reichten für die projektweite Verarbeitung
-nicht aus, weil gleiche lokale IDs in unterschiedlichen Runs auftreten
-konnten. Damit war die Zuordnung eines nachgelagerten Artefakts zu seinem
-Source- und Processing-Kontext nicht in jedem Fall eindeutig. Der
-Verarbeitungspfad wurde an dieser Stelle nicht fortgesetzt. Die historische
-Beobachtung, die darauf folgende Architekturkorrektur und der erfolgreiche
-Retest sind im Findings-Register dokumentiert
+nicht aus, da gleiche Kennungen in unterschiedlichen Verarbeitungsläufen
+auftreten konnten. Die Architektur wurde deshalb so erweitert, dass die
+Artefaktidentität auch den jeweiligen Verarbeitungskontext berücksichtigt.
+Dadurch bleibt auch bei der projektweiten Weiterverarbeitung nachvollziehbar,
+aus welchem quellenbezogenen Informationspfad ein Artefakt stammt
 (vgl. Anhang~\ref{app:findings_register}).
 
-Die daraus abgeleitete Architekturkorrektur behandelte dieses Problem nicht
-durch eine frühzeitige Zusammenführung der source-lokalen Zustände.
-Stattdessen wurde die Identität projektweit um den Processing-Kontext
-erweitert. Ein Processing Artifact wird damit nicht ausschließlich durch
-seine lokale Artifact-ID bestimmt, sondern durch den Kontext, in dem dieser
-Zustand entstanden ist. Für die projektweite Weiterverarbeitung bleibt
-dadurch nachvollziehbar, aus welchem Processing Run und damit aus welchem
-Source-bezogenen Informationspfad ein Artefakt stammt.
-
-Diese Erkenntnis führte zugleich zur Präzisierung des Project-Fit-Schritts.
-Project Fit entscheidet nicht erneut über den fachlichen Inhalt einer bereits
-human-autorisierten Source. Der Schritt bindet vielmehr den konkreten
-source-lokalen Authority-Zustand an den Projektkontext und entscheidet, ob
-dieser Zustand für die gemeinsame Modellbildung zugelassen wird. Im finalen
-Verarbeitungspfad entsteht daher die Struktur
+Diese Erkenntnis führte zugleich zur Präzisierung der Projektzuordnung
+(\emph{Project Fit}). Dieser Schritt entscheidet nicht erneut über den
+fachlichen Inhalt einer bereits menschlich autorisierten Quelle. Er bindet
+vielmehr den konkreten quellenbezogenen Autorisierungszustand an den
+Projektkontext und entscheidet, ob dieser Zustand für die gemeinsame
+Modellbildung zugelassen wird.
 
 \begin{center}
-source-lokales Processing\\
+quellenbezogene Verarbeitung\\
 $\downarrow$\\
-source-lokale Human Authority\\
+quellenbezogene Human Authority\\
 $\downarrow$\\
-Approved Engineering Information\\
+fachlich freigegebene Engineering-Information\\
 $\downarrow$\\
-Project Fit / Admission\\
+Projektzuordnung\\
 $\downarrow$\\
 projektweite Modellbildung.
 \end{center}
 
 Eine wesentliche Konsequenz besteht darin, dass die einzelnen
-source-lokalen Approved-Engineering-Information-Zustände nicht zu einem neuen
+quellengebundenen Approved-Engineering-Information-Zustände nicht zu einem neuen
 synthetischen Authority-Artefakt verschmolzen werden. Mehrere autorisierte
 Sources werden gemeinsam als Eingabe für die Modellbildung verwendet, ihre
 jeweilige Provenance und Authority bleiben jedoch getrennt referenzierbar.
@@ -710,31 +526,10 @@ begrenzen. Zwei unterschiedliche Engineering Sources können Aussagen über
 denselben Systemgegenstand oder denselben modellierungsrelevanten Concern
 enthalten. Die Source-Provenance beschreibt in diesem Fall die Herkunft der
 Information, nicht zwingend die Grenze der späteren Modellstruktur. Im
-finalen Architekturstand werden deshalb mehrere zugelassene source-lokale
+finalen Architekturstand werden deshalb mehrere zugelassene quellengebundene
 Informationszustände in einen gemeinsamen Model Candidate Set überführt. Die
 Zielmodellbildung bleibt damit projektweit, während die Provenance der
-zugrunde liegenden Engineering Information source-lokal erhalten wird.
-
-Gerade diese Unterscheidung war Gegenstand der finding-getriebenen
-Architekturentwicklung. Die Multi-Source-Erprobung führte zunächst zu einer
-strengeren source-lokalen Abgrenzung, anschließend jedoch auch zu der
-Präzisierung, dass Provenance-Grenzen nicht automatisch zu
-Modellierungsgrenzen werden dürfen. Die entsprechenden
-Architekturentscheidungen wurden in den nachfolgenden Architecture Decision
-Records dokumentiert und in der finalen Architektur konsolidiert
-(vgl. Anhang~\ref{app:architecture_decision_records}). Der erfolgreiche
-Retest zeigt für den untersuchten Proof-of-Concept-Pfad, dass diese beiden
-Anforderungen gemeinsam realisiert werden konnten: source-lokale Authority
-blieb erhalten, während die zugelassenen Informationen anschließend in einen
-gemeinsamen projektweiten Modellbildungsprozess eingingen.
-
-Die textuelle und formale Modellrepräsentation von SysML~v2 unterstützt diese
-projektweite Zusammenführung insofern, als unterschiedliche
-Engineering-Inhalte in einem gemeinsamen, referenzierbaren Modellraum
-materialisiert werden können \cite{SysMLv2}. Die Entscheidung, welche
-Informationen überhaupt in diesen Modellraum eingehen dürfen, wird dadurch
-jedoch nicht beantwortet. Diese Verantwortung verbleibt in der vorgelagerten
-Informations- und Authority-Architektur.
+zugrunde liegenden Engineering Information quellengebunden erhalten wird.
 
 Der Multi-Source-Test bildet zugleich nur einen kontrollierten Ausschnitt
 realer Engineering-Integration ab. Die verwendeten Quellen waren synthetisch,
@@ -746,17 +541,6 @@ nicht vollständig umgesetzt. Entsprechende offene Findings wurden nach
 Abschluss des vorgesehenen Proof-of-Concept-Umfangs nicht weiter aufgelöst
 und bleiben Gegenstand der Limitationen und des Ausblicks
 (vgl. Anhang~\ref{app:findings_register}).
-
-Für das entwickelte Architekturkonzept ergibt sich daraus, dass
-Multi-Source-Fähigkeit weder durch eine möglichst frühe Zusammenführung aller
-Informationen noch durch dauerhaft getrennte source-spezifische Modelle
-erreicht wird. Erforderlich ist vielmehr eine kontrollierte Übergabe zwischen
-zwei Ebenen: Source Identity, Provenance und Human Authority bleiben lokal
-gebunden; die daraus zugelassenen Engineering-Inhalte können anschließend
-projektweit konsolidiert und gemeinsam modelliert werden. Diese
-Unterscheidung bildet gemeinsam mit den zuvor diskutierten
-Evidence-, Human-Authority- und Modellbildungsgrenzen die Grundlage für die
-nachfolgende Beantwortung der Forschungsfragen.
 
 \subsection{Beantwortung der Forschungsfragen}
 \label{sec:discussion_research_questions}
@@ -782,17 +566,12 @@ Die erste Teilforschungsfrage lautet:
 werden, damit ein KI-Agent zuverlässig arbeiten kann?}
 \end{quote}
 
-Die Ergebnisse der Arbeit präzisieren zunächst, was unter einem zuverlässigen
-Arbeiten eines KI-Agenten in diesem Kontext verstanden werden kann.
-Zuverlässigkeit kann nicht bedeuten, dass ein Large Language Model aus
-beliebigen Eingangsdaten jederzeit eine fachlich korrekte Interpretation
-erzeugt. Untersuchungen zum Einsatz generativer Modelle zeigen, dass auch
-sprachlich plausible Ergebnisse sachlich falsch, unvollständig oder
-unzureichend begründet sein können
-\cite{Topcu2025,Barke2023,Sergeyuk2025}. Die Architektur kann diese
-probabilistische Eigenschaft des Modells nicht beseitigen. Sie kann jedoch
-kontrollieren, auf welcher Informationsbasis eine Interpretation erfolgt und
-unter welchen Bedingungen deren Ergebnis weiterverwendet werden darf.
+Im untersuchten Kontext bezeichnet Zuverlässigkeit nicht die fehlerfreie
+Interpretation beliebiger Eingangsdaten durch ein Sprachmodell. Entscheidend
+ist vielmehr, dass die verwendete Informationsbasis kontrolliert ist und
+nachgelagerte Engineering-Zustände nur unter definierten Bedingungen
+autorisiert werden können
+\cite{Topcu2025,Barke2023,Sergeyuk2025}.
 
 Damit verschiebt sich die Antwort gegenüber einer rein formatbezogenen
 Betrachtung der Eingangsdaten. Die Evaluation hat nicht gezeigt, dass
@@ -803,70 +582,15 @@ sie in eine kontrollierte Source-Repräsentation überführt worden waren.
 Entscheidend waren vielmehr die Bedingungen, unter denen eine Source in den
 Engineering Information Flow aufgenommen wurde.
 
-Eine erste notwendige Bedingung ist die eindeutige \emph{Identität} der
-Informationsquelle. Eine Source muss innerhalb des Projektkontexts stabil
-identifizierbar sein und ihr verarbeiteter Zustand muss auf genau diese Source
-zurückgeführt werden können. Bei wiederholter oder paralleler Verarbeitung
-muss zusätzlich unterscheidbar bleiben, in welchem Run und Attempt ein
-resultierender Informationszustand entstanden ist. Die Multi-Source-Erprobung
-zeigte unmittelbar, dass eine nur lokal eindeutige Artefaktidentität hierfür
-nicht ausreicht. Ohne den Processing-Kontext wäre die Herkunft späterer
-Artefakte projektweit nicht mehr eindeutig rekonstruierbar.
-
-Eine zweite Bedingung betrifft die \emph{Informationsrolle} der Source.
-Die formative Evaluation zeigte, dass zusätzliche Instruktionen,
-Orchestrierungsinformationen oder Kontextwissen von einem Sprachmodell
-inhaltlich genauso verarbeitet werden können wie die eigentliche
-Engineering Source. Daraus folgt jedoch nicht, dass diese Informationen
-dieselbe fachliche Authority besitzen. Das entwickelte Architekturkonzept
-unterscheidet deshalb zwischen Engineering Sources, die fachliche Evidence
-für Aussagen über das System liefern können, und Context Sources, die die
-Interpretation, Klassifikation oder projektbezogene Einordnung unterstützen.
-Zusätzliches Wissen wird damit nicht grundsätzlich ausgeschlossen. Seine
-Rolle und damit seine zulässige Wirkung im Engineering-Prozess müssen jedoch
-explizit begrenzt sein.
-
-Die dritte Bedingung ist die \emph{Rückführbarkeit fachlicher Aussagen auf
-konkrete Source-Inhalte}. Hierfür wurde source-grounded Evidence als eigene
-Informationsschicht eingeführt. Eine spätere Interpretation darf nicht nur
-einen plausiblen Engineering-Inhalt enthalten, sondern muss auf den
-zugrunde liegenden Source-Ausschnitt zurückführbar bleiben. Dies entspricht
-der allgemeinen Funktion von Provenance, die Herkunft von Daten und die zu
-ihnen führenden Verarbeitungsschritte nachvollziehbar zu machen
-\cite{MoreauMissier2013,Simmhan2005}. Im Requirements Engineering bildet
-die Nachvollziehbarkeit von Herkunft und Beziehungen zwischen
-Engineering-Information ebenfalls ein wesentliches Prinzip
-\cite{ISO29148}.
-
-Eine vierte Bedingung betrifft den Umgang mit \emph{fehlender oder nicht
-eindeutig ableitbarer Information}. Heterogene Legacy-Daten müssen für eine
-kontrollierte KI-Verarbeitung nicht vollständig oder widerspruchsfrei sein.
-Dies wäre gerade für Brownfield-Szenarien eine unrealistische Voraussetzung.
-Die Architektur muss jedoch zwischen vorhandener, aber mehrdeutiger
-Information und nicht vorhandener Information unterscheiden. Eine
-mehrdeutige Aussage kann als Unsicherheit oder Open Question weitergeführt
-werden. Fehlt dagegen eine hinreichende Source-Evidence, darf aus der
-statistischen Plausibilität einer möglichen Ergänzung keine autorisierte
-Engineering-Aussage entstehen.
-
-Dieser Punkt grenzt die entwickelte Lösung auch von einer bloßen
-Informationsanreicherung ab. Für die Modellmigration ist nicht entscheidend,
-dass das LLM möglichst viele vermeintlich vollständige Engineering-Aussagen
-produziert. Entscheidend ist, dass erkennbar bleibt, welche Aussagen durch
-die zugelassene Informationsbasis gestützt werden. Die im Bereich MBSE
-angestrebte stärkere Integration und Vernetzung von Engineering-Information
-\cite{Hendriks2022} setzt gerade bei einer Migration aus bestehenden
-Informationsbeständen voraus, dass die Herkunft der integrierten Information
-nicht verloren geht.
-
-Die fünfte Bedingung besteht deshalb in einer kontrollierten
-\emph{Admission} der Informationsbasis. Eine vorhandene Datei ist nicht allein
-durch ihre technische Verfügbarkeit Bestandteil des autoritativen
-Engineering-Prozesses. Sie wird zunächst registriert, in ihrer Rolle
-klassifiziert und einem konkreten Projekt zugeordnet. Bei mehreren Sources
-bleiben diese Zustände zunächst source-lokal. Erst nach Verarbeitung und
-Human Authority werden die daraus hervorgegangenen Engineering-Zustände für
-die projektweite Modellbildung zugelassen.
+Für die Eingangsdaten ergeben sich daraus fünf zentrale Anforderungen. Die
+Informationsquelle muss eindeutig identifizierbar und ihrem
+Verarbeitungskontext zuordenbar sein. Ihre Informationsrolle muss festlegen,
+ob sie fachliche Evidenz begründen oder lediglich die Interpretation
+unterstützen darf. Fachliche Aussagen müssen auf konkrete Quelleninhalte
+zurückführbar bleiben. Fehlende und mehrdeutige Information muss explizit
+behandelt werden, ohne nicht belegte Inhalte zu ergänzen. Schließlich muss
+kontrolliert sein, welche Quellen beziehungsweise daraus autorisierten
+Informationszustände in die projektweite Verarbeitung aufgenommen werden.
 
 Damit zeigt die Untersuchung zugleich eine Grenze des Begriffs
 ``Eingabedatenqualität''. Die Architektur kann gewährleisten, dass die
@@ -881,16 +605,16 @@ Informationsbasis bleibt daher eine vorgelagerte Engineering-Verantwortung.
 Für eine zuverlässige KI-gestützte Verarbeitung müssen die Eingangsdaten
 nicht bereits homogen, vollständig oder modellkonform vorliegen. Sie müssen
 jedoch als kontrollierte Informationsbasis behandelbar sein. Dazu gehören
-eine eindeutige und stabile Source-Identität, eine explizite Zuordnung ihrer
-Informationsrolle, eine nachvollziehbare Provenance, die Rückführbarkeit
-abgeleiteter Aussagen auf konkrete Source-Evidence sowie ein expliziter
-Umgang mit fehlender und mehrdeutiger Information. Kontextwissen muss von
-fachlich evidenzgebenden Sources getrennt bleiben. Informationen, die aus der
-zugelassenen Source-Basis nicht ableitbar sind, dürfen nicht stillschweigend
-ergänzt werden. Zuverlässigkeit entsteht damit nicht durch die Annahme eines
-fehlerfreien KI-Agenten, sondern durch die kontrollierte Begrenzung seiner
-Informationsbasis und seiner Wirkung auf nachfolgende Engineering-Zustände.
-
+eine eindeutige und stabile Quellenidentität, eine explizite
+Informationsrolle, nachvollziehbare Provenance, die Rückführbarkeit
+abgeleiteter Aussagen auf konkrete quellengebundene Evidenz sowie ein
+expliziter Umgang mit fehlender und mehrdeutiger Information. Kontextwissen
+muss von fachlich evidenzgebenden Quellen getrennt bleiben. Informationen,
+die aus der zugelassenen Informationsbasis nicht ableitbar sind, dürfen nicht
+stillschweigend ergänzt werden. Zuverlässigkeit entsteht damit nicht durch
+die Annahme eines fehlerfreien KI-Agenten, sondern durch die kontrollierte
+Begrenzung seiner Informationsbasis und seiner Wirkung auf nachfolgende
+Engineering-Zustände.
 
 \subsubsection{Teilforschungsfrage 2: Einbindung des Ingenieurs als Kontrollorgan}
 \label{sec:discussion_rq2}
@@ -902,94 +626,39 @@ Die zweite Teilforschungsfrage lautet:
 um bei detektierten Mehrdeutigkeiten effektiv einzugreifen?}
 \end{quote}
 
-Human-in-the-Loop-Ansätze gehen grundsätzlich davon aus, dass menschliche
-Expertise an geeigneten Stellen in automatisierte Analyse- und
-Entscheidungsprozesse eingebunden wird
-\cite{MosqueiraRey2023,Lazaros2026}. Für den hier untersuchten
-Engineering-Prozess reicht es jedoch nicht aus, den Menschen lediglich als
-abschließenden Prüfer eines bereits erzeugten SysML-v2-Modells vorzusehen.
-Die formative Evaluation zeigte, dass fachlich relevante
-Authority-Entscheidungen an mehreren voneinander verschiedenen Stellen des
-Informationsflusses auftreten.
+Die Ergebnisse bestätigen, dass menschliche Entscheidungsautorität nicht erst
+am Ende eines KI-gestützten Modellbildungsprozesses erforderlich ist.
+Human-in-the-Loop-Ansätze sowie Untersuchungen zu Multi-Agent-Verfahren
+stützen grundsätzlich die Notwendigkeit menschlicher Bewertung bei
+probabilistischen beziehungsweise mehrperspektivischen
+Entscheidungsprozessen
+\cite{MosqueiraRey2023,Lazaros2026,TriemDing2024}.
 
-Ein Ausgangspunkt der Architektur war die Verwendung mehrerer
-Persona-Perspektiven zur Interpretation derselben Engineering-Information.
-Multi-Agent-Ansätze zeigen, dass die Gegenüberstellung mehrerer
-Modellinstanzen Reasoning und Ergebnisqualität unter bestimmten Bedingungen
-verbessern kann \cite{Du2024}. Daraus folgt jedoch nicht, dass die
-Mehrheitsmeinung mehrerer Agenten eine Engineering-Entscheidung ersetzen
-kann. Auch Arbeiten zur menschlichen Intervention in LLM-basierten
-Multi-Agent-Verfahren weisen darauf hin, dass die Rolle menschlicher
-Entscheidungskompetenz durch den Einsatz mehrerer Modelle nicht grundsätzlich
-entfällt \cite{TriemDing2024}.
+Die menschliche Bewertung setzt dabei voraus, dass unterschiedliche
+KI-Perspektiven auf denselben fachlichen Gegenstand bezogen werden und dass
+Übereinstimmung nicht mit fachlicher Sicherheit gleichgesetzt wird. Konsens,
+Varianz und gemeinsame Ambiguität dienen deshalb als zusätzliche
+Bewertungsinformation, besitzen jedoch keine eigene Freigabeautorität
+(vgl. Abschnitt~\ref{sec:discussion_human_authority}).
 
-Die Untersuchung führte hier zu zwei wichtigen Präzisierungen. Erstens müssen
-mehrere Interpretationen auf denselben fachlichen Referenzgegenstand bezogen
-sein. Die frühere Persona-first-Verarbeitung erzeugte teilweise voneinander
-abweichende Subject-Populationen. Ein Vergleich dieser Populationen vermischte
-damit die Frage, \emph{welcher} Engineering-Gegenstand erkannt worden war,
-mit der Frage, \emph{wie} dieser Gegenstand interpretiert wird. Durch die
-Bildung gemeinsamer Canonical Engineering Subjects vor der
-Persona-Interpretation wird die Varianz dagegen auf einen gemeinsamen
-Referenzgegenstand bezogen.
+Die Einbindung des Ingenieurs erfolgt deshalb gestuft an solchen Übergängen,
+an denen sich der fachliche Status einer Information verändert. Zunächst
+autorisiert der Ingenieur die aus der maschinellen Interpretation
+hervorgegangene fachliche Bedeutung. Eine weitere Entscheidung ist
+erforderlich, wenn Einordnung oder Repräsentation im Zielmodell nicht
+eindeutig aus den zugelassenen Regeln ableitbar sind. Entsprechendes gilt für
+eine gegebenenfalls notwendige zielmodellspezifische Formulierung. Nach der
+technischen Validierung folgt schließlich eine getrennte menschliche
+Freigabe des konkreten Modellartefakts. Nicht aufgelöste Mehrdeutigkeit
+bleibt dabei explizit bestehen und darf nicht durch eine erneute
+probabilistische Entscheidung verdeckt werden.
 
-Zweitens ist fehlende Persona-Varianz nicht mit fehlender Unsicherheit
-gleichzusetzen. Mehrere Perspektiven können dieselbe eindeutige Interpretation
-liefern. Sie können jedoch ebenso dieselben zwei Alternativen oder dieselbe
-Informationslücke erkennen. In diesem Fall besteht Konsens über eine
-Ambiguität. Ein rein numerisches Mehrheits- oder Agreement-Kriterium wäre
-deshalb kein hinreichender Mechanismus für die automatische Freigabe.
-Consensus und Variance werden im entwickelten Ansatz als Review-Evidence
-verwendet, nicht als Ersatz für Engineering Authority.
-
-Die effektive Einbindung des Ingenieurs besteht folglich nicht darin, jede
-LLM-Ausgabe vollständig manuell nachzuprüfen. Ein solcher Ansatz würde einen
-großen Teil des potenziellen Automatisierungsnutzens wieder aufheben.
-Stattdessen werden Human Decisions an den Stellen eingeführt, an denen sich
-der Status einer Information qualitativ verändert. Besonders relevant ist
-der Übergang von maschineller Interpretation zu autorisierter Engineering
-Information. Der Engineer erhält hierfür Source-Evidence,
-Persona-Interpretationen, Consensus beziehungsweise Variance und erkannte
-Unsicherheiten als Entscheidungsgrundlage. Erst seine Entscheidung erzeugt
-den für die weitere Verarbeitung autorisierten Zustand.
-
-Die Evaluation zeigte jedoch, dass diese erste Human Authority allein nicht
-ausreicht. Die Autorisierung des \emph{Engineering Meaning} beantwortet noch
-nicht zwangsläufig, wie dieser Inhalt im Modell repräsentiert werden soll.
-Deshalb wurde eine weitere Authority-Grenze für Model Placement eingeführt.
-Kann die Zielrepräsentation nicht deterministisch aus den zugelassenen Regeln
-abgeleitet werden, wird die Entscheidung nicht innerhalb der Model Assembly
-erneut an ein LLM delegiert. Sie verbleibt als unresolved State oder wird
-einer Human Decision zugeführt.
-
-Dasselbe Prinzip gilt für die Target-Model Formulation. Eine bereits
-autorisierte Bedeutung und eine akzeptierte Platzierung können noch mehrere
-zulässige konkrete Modellformulierungen erlauben. Wo dieser Schritt
-Engineering-Entscheidungen enthält, muss auch diese Authority von der
-anschließenden deterministischen Serialisierung getrennt bleiben. Am Ende des
-Prozesses folgt zusätzlich ein Final Model Review mit Human Release. Dieser
-entscheidet über das konkrete validierte Modellartefakt und nicht erneut über
-jede einzelne vorgelagerte Source-Aussage.
-
-Die Architektur integriert Human Authority damit \emph{gestuft}. Der Mensch
-ist nicht ein einziges Gate am Ende des Prozesses, sondern besitzt klar
-definierte Entscheidungsverantwortung an unterschiedlichen semantischen und
-modellbezogenen Übergängen. Diese Struktur reduziert zugleich das Risiko,
-dass eine spätere technische Stufe implizit fachliche Authority übernimmt,
-nur weil sie für die Fortsetzung des Workflows einen eindeutigen Wert
-benötigt.
-
-Ein weiterer Bestandteil einer effektiven Human Authority ist die
-Persistierung der Entscheidungen. Reviewer, Outcome, zugrunde liegender
-Informationszustand und gegebenenfalls Rationale bleiben als eigene
-Decision-Artefakte erhalten. Dadurch wird die menschliche Entscheidung nicht
-zu einem transienten Klick in einer Benutzeroberfläche, sondern zu einem
-nachvollziehbaren Bestandteil der Engineering-Provenance. Dies ist
-insbesondere relevant, wenn spätere Modellzustände auf vorherigen
-Entscheidungen aufbauen.
+Die menschlichen Entscheidungen werden als eigene, nachvollziehbare
+Entscheidungszustände persistiert und bleiben dadurch Bestandteil von
+Provenance und Nachverfolgbarkeit.
 
 Die formative Evaluation zeigt gleichzeitig, dass dieser Ansatz noch keine
-optimale Human-Machine Interaction garantiert. Mehrere offene Findings
+optimale Mensch-System-Interaktion garantiert. Mehrere offene Findings
 betreffen den Review-Aufwand, die textlastige Darstellung von
 Entscheidungsgrundlagen, die Visualisierung gemeinsamer Ambiguität und die
 Anzahl erforderlicher Interaktionen. Der Proof of Concept belegt daher nicht,
@@ -1000,24 +669,21 @@ der konkreten Interaktion bleibt Gegenstand weiterer Entwicklung.
 
 \paragraph{Antwort auf Teilforschungsfrage 2.}
 
-Der Ingenieur sollte nicht als nachgelagerter Prüfer eines vollständig
-KI-generierten Modells eingebunden werden, sondern als gestufte
-Engineering- und Model Authority an definierten Übergängen des
-Informationsflusses. Mehrere KI-Perspektiven dienen dazu,
-Interpretationsalternativen, Konsens und Varianz sichtbar zu machen. Diese
-Informationen strukturieren den Review, besitzen jedoch selbst keine
-Freigabeautorität. Der Engineer autorisiert zunächst das Engineering Meaning
-und greift anschließend dort erneut ein, wo Model Placement oder
-Target-Model Formulation nicht eindeutig aus den bereits autorisierten
-Zuständen und Regeln ableitbar sind. Nicht aufgelöste Mehrdeutigkeit bleibt
-explizit unresolved und darf nicht durch einen technischen Default oder eine
-erneute implizite LLM-Entscheidung verdeckt werden. Die menschlichen
-Entscheidungen werden persistiert und bleiben damit Bestandteil der
-Provenance- und Traceability-Kette. Effektive Human Authority bedeutet
-folglich nicht maximale manuelle Kontrolle, sondern gezielte
-Entscheidungsautorität an den Stellen, an denen probabilistische
-Interpretation in einen autorisierten Engineering-Zustand übergeht.
-
+Der Ingenieur wird nicht lediglich als nachgelagerter Prüfer eines
+KI-generierten Modells eingebunden, sondern erhält an definierten Übergängen
+des Informationsflusses eine gestufte fachliche Entscheidungsautorität.
+Mehrere KI-Perspektiven machen Interpretationsalternativen, Konsens, Varianz
+und Ambiguität sichtbar, besitzen jedoch selbst keine Freigabeautorität. Der
+Ingenieur autorisiert zunächst die fachliche Bedeutung einer Information und
+greift anschließend erneut ein, wenn ihre Einordnung, Repräsentation oder
+zielmodellspezifische Formulierung nicht eindeutig aus bereits autorisierten
+Zuständen und Regeln ableitbar ist. Nicht aufgelöste Mehrdeutigkeit bleibt
+explizit bestehen und darf weder durch technische Standardwerte noch durch
+erneute implizite LLM-Entscheidungen verdeckt werden. Die menschlichen
+Entscheidungen werden persistiert und bleiben dadurch Bestandteil von
+Provenance und Nachverfolgbarkeit. Effektive Human Authority bedeutet damit
+nicht maximale manuelle Kontrolle, sondern gezielte menschliche
+Entscheidungsautorität an fachlich relevanten Übergängen.
 
 \subsubsection{Teilforschungsfrage 3: Gestaltung ontologischer Leitplanken}
 \label{sec:discussion_rq3}
@@ -1058,47 +724,43 @@ Engineering Information nicht direkt in eine zulässige Zielrepräsentation
 überführt werden konnte.
 
 Die Leitplanken müssen deshalb auf mehreren Ebenen wirken. Auf der
-\emph{semantischen Ebene} begrenzen sie die zulässigen Information Types,
-Relationship-Semantiken und epistemischen Zustände. Auf der
+\emph{semantischen Ebene} begrenzen sie die zulässigen Informationstypen,
+Beziehungssemantiken und epistemischen Zustände. Auf der
 \emph{architektonischen Ebene} legen sie fest, welche Bereiche des
 Zielmodells existieren, welche Verantwortlichkeiten diese besitzen und welche
-Arten von Information dort grundsätzlich eingeordnet werden dürfen. Die im
-Proof of Concept verwendete RFLP-Struktur stellt hierfür einen
-Modellierungsrahmen bereit. Die Trennung von Requirements, Functional,
-Logical und Physical Perspectives ist als strukturierendes Prinzip auch in
-der MBSE-Literatur etabliert \cite{LiLockettLawson2020}.
+Arten von Information dort grundsätzlich eingeordnet werden dürfen. 
+Die im Prototyp verwendete RFLP-Struktur stellt hierfür einen
+Modellierungsrahmen bereit. Die RFLP-Gliederung ist als strukturierendes
+Prinzip auch in der MBSE-Literatur etabliert
+\cite{LiLockettLawson2020}.
 
-Eine dritte Ebene betrifft die \emph{Target-Model Representation}. Hier muss
-explizit geregelt sein, welche Engineering Information durch welche
+Eine dritte Ebene betrifft die \emph{Repräsentation im Zielmodell}. Hier muss
+explizit geregelt sein, welche Engineering-Information durch welche
 SysML-v2-Konstrukte repräsentiert werden darf. Diese Abbildung kann nicht
 vollständig aus einer allgemeinen Ontologie abgeleitet werden, da sie auch
-vom gewählten Modellierungsprofil, der Modellierungsabsicht und dem
-zugelassenen Scope der Zielarchitektur abhängt. Der Befund, dass
-Engineering Meaning und Target Representation getrennte
-Verantwortungsbereiche darstellen, war deshalb eine zentrale
-Architekturkorrektur der formativen Evaluation.
+vom verwendeten Modellierungsrahmen, der Modellierungsabsicht und dem
+zugelassenen Umfang der Zielarchitektur abhängt. Die formative Evaluation
+bestätigt damit die notwendige Trennung zwischen fachlicher Bedeutung und
+konkreter Zielmodellrepräsentation.
 
-Eine vierte Ebene bildet die \emph{Target-Model Formulation}. Selbst nach der
-Auswahl eines geeigneten Modellkonstrukts muss dessen konkrete
-modellsprachliche Ausprägung bestimmt werden. Die formale Sprachdefinition von
-SysML~v2 stellt hierfür die zulässigen Sprachmittel bereit
-\cite{SysMLv2}. Arbeiten zur automatisierten oder LLM-gestützten
-SysML-v2-Erzeugung zeigen, dass eine maschinelle Generierung formal
-verarbeitbarer Modellartefakte grundsätzlich realisierbar ist
-\cite{Stein2026,Pan.2025,Cibrian.2025}. Die Ergebnisse der vorliegenden
-Arbeit zeigen jedoch, dass die technische Generierbarkeit nicht mit der
-fachlichen Autorisierung der Repräsentation gleichgesetzt werden darf.
+Eine vierte Ebene bildet die \emph{zielmodellspezifische Formulierung}.
+Auch nach der Auswahl eines geeigneten Modellkonstrukts kann eine
+eigenständige Entscheidung über dessen konkrete modellsprachliche Ausprägung
+erforderlich sein. SysML~v2 stellt hierfür die formalen Sprachmittel bereit
+\cite{SysMLv2}. Die technische Generierbarkeit eines Artefakts ist dabei von
+der fachlichen Autorisierung seiner Repräsentation zu unterscheiden
+\cite{Stein2026,Pan.2025,Cibrian.2025}.
 
-Deshalb folgt als weitere Leitplanke eine
-\emph{deterministische Materialisierungsgrenze}. Sobald Engineering Meaning,
-Placement und gegebenenfalls Formulation autorisiert sind, darf die
-nachfolgende Assembly keine neue semantische Interpretation einführen.
-Unvollständige Mappings müssen sichtbar unresolved bleiben, anstatt durch
-einen probabilistischen Fallback geschlossen zu werden. Dies war insbesondere
-eine Konsequenz aus der formativen Beobachtung, dass eine frühere Model
-Assembly für nicht eindeutig abbildbare Relationships erneut
-LLM-Perspektiven aufrief und damit ihre vorgesehene Responsibility Boundary
-überschritt.
+Daran schließt sich eine \emph{deterministische Materialisierungsgrenze} an.
+Sobald fachliche Bedeutung, Modellplatzierung und gegebenenfalls
+zielmodellspezifische Formulierung autorisiert sind, darf die nachfolgende
+Modellbildung keine neue semantische Interpretation einführen. Nicht
+eindeutig abbildbare Zustände müssen explizit ungelöst bleiben, anstatt durch
+eine probabilistische Ersatzentscheidung geschlossen zu werden. Diese Grenze
+wurde während der formativen Evaluation erforderlich, nachdem eine frühere
+Modellbildungsstufe für nicht eindeutig abbildbare Beziehungen erneut
+LLM-basierte Interpretationen aufgerufen und damit ihre vorgesehene
+Verantwortungsgrenze überschritten hatte.
 
 Schließlich muss die resultierende Modellstruktur technisch gegen die
 Zielsprache und die verwendete Werkzeugumgebung validiert werden.
@@ -1110,40 +772,33 @@ Artefakt ist damit innerhalb des geprüften Sprach- und Werkzeugausschnitts
 verarbeitbar. Daraus folgt jedoch noch keine fachliche Korrektheit des
 Engineering-Modells.
 
-Auch der Begriff \emph{Plug \& Play} muss deshalb enger gefasst werden.
-Eine vollständig kontextunabhängige Einsetzbarkeit beliebiger erzeugter
-SysML-v2-Module wurde durch die Arbeit nicht nachgewiesen. Unterstützt werden
-kann vielmehr eine kontrollierte Modularität innerhalb eines definierten
-Target Frameworks. Voraussetzung dafür sind stabile Identitäten,
-klar definierte Modellbereiche, explizite Beziehungen, zulässige
-Target Constructs und deterministische Formulierungs- und
-Validierungsregeln. Textbasierte Engineering- und
-Architecture-as-Code-Ansätze unterstützen eine solche reproduzierbare,
-versionierbare und werkzeuggestützte Modellbildung
-\cite{Stirbu2022,Bucaioni2025}.
-
-Die Evaluation zeigt gleichzeitig die Grenze dieses Ergebnisses. Die
-implementierte Construct-Abdeckung umfasst nur einen definierten
-Proof-of-Concept-Scope. Bestimmte SysML-v2-Konstrukte, darunter weitergehende
-Ports, Interfaces, Parts, Actions, States und Occurrences, sind noch nicht
-allgemein abgedeckt. Eine generelle Plug-\&-Play-Fähigkeit für beliebige
-SysML-v2-Modelle kann daher nicht beansprucht werden.
+Auch der Begriff \emph{Plug \& Play} muss vor diesem Hintergrund enger
+gefasst werden. Die Arbeit weist keine kontextunabhängige Einsetzbarkeit
+beliebiger erzeugter SysML-v2-Module nach. Unterstützt wird vielmehr eine
+kontrollierte Modularität innerhalb eines definierten Modellierungsrahmens
+und des implementierten SysML-v2-Ausschnitts. Voraussetzung dafür sind stabile
+Identitäten, klar definierte Modellbereiche, explizite Beziehungen,
+zulässige Zielkonstrukte sowie deterministische Formulierungs- und
+Validierungsregeln. Die weiterhin begrenzte Abdeckung bestimmter
+SysML-v2-Konstrukte schränkt die Übertragbarkeit dieses Ergebnisses
+entsprechend ein.
 
 \paragraph{Antwort auf Teilforschungsfrage 3.}
 
 Ontologische Regeln müssen die zulässige Semantik der verarbeiteten
-Engineering-Information eindeutig begrenzen, sind für die Modularität der
+Engineering-Information begrenzen, bilden für die Modularität der
 resultierenden SysML-v2-Strukturen jedoch nur eine Ebene der erforderlichen
-Leitplanken. Ergänzend werden Regeln für die Architektur des Zielmodells,
-zulässige Placement- und Representation-Entscheidungen, explizite
-Target-Model-Formulierungen sowie deterministische Assembly- und
-Validierungsgrenzen benötigt. Ontologie beschreibt damit primär,
+Leitplanken. Ergänzend werden Regeln für die Architektur des Zielmodells, die
+zulässige Einordnung und Repräsentation von Informationen, ihre
+zielmodellspezifische Formulierung sowie deterministische Materialisierungs-
+und Validierungsgrenzen benötigt. Ontologie beschreibt damit primär,
 \emph{was eine Information bedeutet}; die weiteren Leitplanken bestimmen,
 \emph{wo und wie sie im Zielmodell repräsentiert werden darf}. Eine
-Plug-\&-Play-Fähigkeit kann auf dieser Grundlage innerhalb eines definierten
-Target Profiles und der implementierten Construct-Abdeckung unterstützt
-werden. Eine allgemeine Modularitätsgarantie allein durch ontologische
-Klassifikation lässt sich aus den Ergebnissen dagegen nicht ableiten.
+kontrollierte Modularität kann auf dieser Grundlage innerhalb eines
+definierten Modellierungsrahmens und des implementierten
+SysML-v2-Ausschnitts unterstützt werden. Eine allgemeine
+Modularitätsgarantie allein durch ontologische Klassifikation lässt sich aus
+den Ergebnissen nicht ableiten.
 
 
 \subsubsection{Hauptforschungsfrage: Gestaltung der Informationsverarbeitungsarchitektur}
@@ -1164,194 +819,98 @@ Gestaltungsaufgabe besteht vielmehr darin, probabilistische
 Informationsverarbeitung in einen kontrollierten Engineering-Prozess
 einzubetten.
 
-Aktuelle Forschung zeigt, dass Large Language Models grundsätzlich in der
-Lage sind, modellierungsnahe beziehungsweise SysML-v2-kompatible Artefakte zu
-erzeugen \cite{Stein2026,Pan.2025,Cibrian.2025}. Gleichzeitig zeigen
-Untersuchungen zu LLM-basierten Engineering- und Softwareaufgaben, dass
-plausible Ausgaben nicht automatisch verlässlich oder fachlich korrekt sind
-\cite{Topcu2025,Barke2023,Sergeyuk2025}. Die zentrale Frage ist deshalb nicht
-nur, ob ein Modell SysML-v2-Text erzeugen kann, sondern wie nachvollziehbar
-begründet wird, welche Engineering-Information in diesen Text gelangen darf.
+Aktuelle Arbeiten zeigen, dass große Sprachmodelle grundsätzlich
+modellierungsnahe beziehungsweise SysML-v2-kompatible Artefakte erzeugen
+können \cite{Stein2026,Pan.2025,Cibrian.2025}. Gleichzeitig sind plausible
+Ausgaben nicht automatisch fachlich korrekt oder hinreichend verlässlich
+\cite{Topcu2025,Barke2023,Sergeyuk2025}. Die zentrale Gestaltungsfrage
+besteht daher nicht allein darin, SysML-v2-Artefakte zu erzeugen, sondern
+kontrolliert festzulegen, welche Engineering-Information in diese Artefakte
+überführt werden darf.
 
-Die entwickelte Architektur beantwortet diese Frage zunächst durch eine
-\emph{kontrollierte Informationsbasis}. Sources werden registriert,
-identifiziert und nach ihrer Informationsrolle unterschieden. Engineering
-Sources können fachliche Evidence liefern, während Context Sources die
-Interpretation unterstützen, ohne selbst unkontrolliert Engineering-Fakten
-zu begründen. Aus den zugelassenen Sources wird source-grounded Evidence
-gebildet, die konkrete Aussagen an ihre Herkunft bindet. Provenance ist damit
-kein nachträgliches Attribut des finalen Modells, sondern Bestandteil der
-Informationsverarbeitung von Beginn an. Dies entspricht der grundlegenden
-Funktion von Provenance, Entstehung und Verarbeitung von Informationen
-rekonstruierbar zu halten \cite{MoreauMissier2013,Simmhan2005}.
+Aus den drei Teilforschungsfragen ergibt sich eine Architektur, die
+probabilistische Interpretation, fachliche Autorisierung und technische
+Modellerzeugung bewusst voneinander trennt. Ausgangspunkt ist eine
+kontrollierte Informationsbasis: Quellen werden eindeutig identifiziert,
+hinsichtlich ihrer Informationsrolle klassifiziert und fachliche Aussagen an
+konkrete Quelleninhalte gebunden. Kontextinformationen können die
+Interpretation unterstützen, dürfen jedoch nicht eigenständig fachliche
+Aussagen autorisieren.
 
-Darauf folgt eine \emph{kontrollierte probabilistische Interpretation}.
-Canonical Engineering Subjects werden vor der Persona-Interpretation
-etabliert. Mehrere Perspektiven beziehen sich dadurch auf denselben
-fachlichen Referenzgegenstand. Consensus und Variance dienen zur
-Charakterisierung des Interpretationszustands, erhalten aber keine eigene
-Engineering Authority. Damit wird die in Multi-Agent-Ansätzen nutzbare
-Perspektivenvielfalt \cite{Du2024} mit einer expliziten
-Human-in-the-Loop-Struktur verbunden
-\cite{MosqueiraRey2023,Lazaros2026,TriemDing2024}.
+Auf dieser Grundlage erfolgt die probabilistische Interpretation. Mehrere
+KI-Perspektiven beziehen sich auf gemeinsame fachliche Referenzgegenstände und
+machen unterschiedliche Interpretationen sowie Ambiguitäten sichtbar. Diese
+Ergebnisse besitzen jedoch keine eigene Freigabeautorität. Der Übergang in
+einen autorisierten Engineering-Zustand erfolgt ausschließlich an expliziten
+Human-Authority-Grenzen.
 
-Der nächste zentrale Bestandteil ist eine \emph{gestufte Human Authority}.
-Der Übergang von maschineller Interpretation zu Approved Engineering
-Information erfordert eine explizite Engineering Decision. Die daraus
-entstehende autorisierte Information bildet die Grundlage der weiteren
-Modellbildung. Für Multi-Source-Projekte bleibt diese Authority zunächst
-source-lokal. Erst ein expliziter Project-Fit- beziehungsweise
-Admission-Schritt erlaubt die Verwendung des konkreten autorisierten
-Source-Zustands in der projektweiten Modellbildung. Source-Provenance bleibt
-damit erhalten, ohne die spätere Synthese in ein gemeinsames Modell künstlich
-an Source-Grenzen zu binden.
+Auch die anschließende Modellbildung bleibt von der fachlichen Autorisierung
+getrennt. Die fachliche Bedeutung einer Information, ihre Einordnung und
+Repräsentation im Zielmodell sowie eine gegebenenfalls erforderliche
+zielmodellspezifische Formulierung stellen unterschiedliche
+Verantwortungsbereiche dar. Erst nach ihrer Klärung erfolgt die
+deterministische Erzeugung und technische Validierung des SysML-v2-Artefakts.
+Nicht eindeutig ableitbare Zustände werden dabei nicht probabilistisch
+ergänzt, sondern bleiben explizit ungelöst oder werden erneut einer
+menschlichen Entscheidung zugeführt.
 
-Die Modellbildung erfordert anschließend eine weitere
-\emph{Trennung von Verantwortlichkeiten}. Die Evaluation zeigte, dass
-Engineering Meaning, Model Placement beziehungsweise Representation,
-Target-Model Formulation und technische Serialisierung nicht dieselbe
-Entscheidung darstellen. Ontologische Regeln und Engineering-Klassifikationen
-begrenzen die fachlich zulässigen Bedeutungen
-\cite{OrellanaMandrick2019,Lu2022,Dong2026}. Die Zielmodellarchitektur und
-SysML-v2-Regeln bestimmen dagegen, wie diese Bedeutung innerhalb eines
-konkreten Modellframeworks repräsentiert werden kann
-\cite{SysMLv2}. Ist diese Abbildung nicht eindeutig, verbleibt die
-Entscheidung bei einer dafür vorgesehenen Human Authority.
-
-Nach diesen Authority-Grenzen wird die Verarbeitung soweit möglich
-\emph{deterministisch}. Das Internal Engineering Model materialisiert die
-autorisierten Informationen und Modellentscheidungen, ohne deren fachliche
-Bedeutung erneut probabilistisch zu verändern. Die anschließende
-SysML-v2-Generierung serialisiert einen definierten Modellzustand. Dieses
-Prinzip steht in Beziehung zu textbasierten Engineering- und
-Architecture-as-Code-Ansätzen, bei denen Artefakte reproduzierbar,
-versionierbar und automatisiert erzeugt werden können
-\cite{Stirbu2022,Bucaioni2025}.
-
-Ein weiterer Bestandteil der Antwort ist das \emph{fail-closed Verhalten}.
-Kann eine Information nicht eindeutig aus der Source abgeleitet, nicht
-autorisiert oder nicht mit den zulässigen Modellierungsregeln repräsentiert
-werden, darf der Verarbeitungspfad den fehlenden Zustand nicht stillschweigend
-ersetzen. Der Zustand bleibt unresolved, die Verarbeitung wird an einer
-Contract-Grenze gestoppt oder die Entscheidung wird an eine Human Authority
-zurückgegeben. Fail-closed bedeutet dabei nicht, dass der KI-Agent keine
-Fehler erzeugen kann. Es bedeutet, dass bestimmte nicht autorisierte oder
-strukturell unzulässige Zustände nicht unbemerkt in den veröffentlichten
-Modellpfad übergehen dürfen.
-
-Die Architektur lässt sich damit als kontrollierte Folge von
-Informations-, Entscheidungs- und Modellzuständen zusammenfassen:
-
-\begin{center}
-Engineering Sources\\
-$\downarrow$\\
-Source-grounded Evidence\\
-$\downarrow$\\
-Canonical Engineering Subjects\\
-$\downarrow$\\
-Persona Interpretations und Consensus/Variance\\
-$\downarrow$\\
-Human Engineering Decisions\\
-$\downarrow$\\
-Approved Engineering Information\\
-$\downarrow$\\
-Project Fit und projektweite Admission\\
-$\downarrow$\\
-Model Candidates und Human Model Placement\\
-$\downarrow$\\
-Internal Engineering Model\\
-$\downarrow$\\
-Target-Model Formulation und Model Quality Authority\\
-$\downarrow$\\
-deterministische SysML-v2-Generierung\\
-$\downarrow$\\
-technische Validierung\\
-$\downarrow$\\
-Final Human Model Review und Release\\
-$\downarrow$\\
-Published Output.
-\end{center}
-
-Diese Verarbeitungskette wird durch einen zweiten, nicht weniger wichtigen
-Mechanismus ergänzt: die durchgängige Persistierung von Evidence,
-Decisions, Provenance und Traceability. Für einen veröffentlichten
-Modellzustand bleibt dadurch nicht nur die ursprüngliche Source
-identifizierbar. Auch probabilistische Zwischenzustände, menschliche
-Entscheidungen, Modellzustände und technische Validierung lassen sich auf
-ihre jeweiligen Vorgänger zurückführen. Die in
-Abschnitt~\ref{sec:results_traceability} exemplarisch dargestellte
-Traceability zeigt, dass für ein finales Modellelement ein Pfad bis zur
-zugrunde liegenden Source-Evidence rekonstruiert werden kann. Umgekehrt kann
-eine autorisierte Information in Richtung ihrer nachfolgenden
-Modellrepräsentation verfolgt werden. Anforderungen an nachvollziehbare
-Beziehungen zwischen Engineering-Artefakten sind im Requirements Engineering
-grundsätzlich etabliert \cite{ISO29148}; die vorliegende Architektur erweitert
-diese Logik auf die probabilistischen und human-autorisierten
-Zwischenzustände der KI-gestützten Transformation.
+Bei der Verarbeitung mehrerer Quellen bleiben deren Identität, Provenance und
+Autorisierungszustände nachvollziehbar erhalten, während zugelassene
+Engineering-Information anschließend projektweit gemeinsam modelliert werden
+kann. Die durchgängige Persistierung von Informations-, Entscheidungs- und
+Modellzuständen ermöglicht dabei die Rekonstruktion des Verarbeitungspfads
+vom zugrunde liegenden Quelleninhalt bis zum veröffentlichten Modellzustand.
 
 Auch die Begriffe \emph{sicher} und \emph{valide} aus der
-Hauptforschungsfrage müssen vor dem Hintergrund der Ergebnisse präzisiert
-werden. ``Sicher'' bezeichnet im Kontext dieser Arbeit keinen Nachweis
-funktionaler Sicherheit und keine Safety-Zertifizierung. Gemeint ist eine
-kontrollierte Verarbeitung, bei der Source-, Provenance- und
-Authority-Grenzen explizit sind und nicht zulässige Zustände fail-closed
-behandelt werden. Ebenso bezeichnet ein ``valides SysML-v2-Modell'' zunächst
-ein Artefakt, das die definierten internen Regeln erfüllt und von der
-verwendeten SysML-v2-Werkzeugkette technisch verarbeitet werden kann.
-SysML~v2 stellt dafür eine formal definierte Zielnotation bereit
-\cite{SysMLv2}; technische Validierung und semantische Konsistenzprüfung sind
-jedoch von der fachlichen Engineering-Korrektheit zu unterscheiden
-\cite{Cibrian.2025b}.
+Hauptforschungsfrage sind vor dem Hintergrund der Ergebnisse zu präzisieren.
+\emph{Sicher} bezeichnet in dieser Arbeit keinen Nachweis funktionaler
+Sicherheit und keine Safety-Zertifizierung, sondern eine kontrollierte
+Verarbeitung mit expliziten Informations-, Provenance- und
+Autorisierungsgrenzen. Nicht zulässige oder nicht auflösbare Zustände dürfen
+nicht stillschweigend in den veröffentlichten Modellpfad übergehen.
 
-Diese Differenzierung erklärt auch die Notwendigkeit des abschließenden Human
-Model Review. Ein technisch valides Modell kann syntaktisch und strukturell
-korrekt sein und dennoch eine fachlich ungeeignete Aussage enthalten.
-Technische Validation beantwortet deshalb die Frage, ob das konkrete
-Artefakt die geprüften technischen Bedingungen erfüllt. Die finale Human
-Release entscheidet dagegen, ob genau dieser validierte Modellzustand als
-Engineering-Output veröffentlicht werden darf.
+Ein \emph{valides SysML-v2-Modell} bezeichnet entsprechend zunächst ein
+Artefakt, das die definierten internen Regeln erfüllt und von der verwendeten
+SysML-v2-Werkzeugkette technisch verarbeitet werden kann
+\cite{SysMLv2,Cibrian.2025b}. Diese technische Validität ist von der
+fachlichen Korrektheit zu unterscheiden. Deshalb erfolgt nach der technischen
+Validierung eine getrennte menschliche Freigabe des konkreten
+Modellzustands.
 
-Die Ergebnisse des Referenzlaufs zeigen, dass die vollständige Kette im
-implementierten Proof-of-Concept-Scope ausgeführt werden konnte. Gemeinsam
-mit der formativen Evaluation und dem Multi-Source-Retest unterstützt dies
-die Schlussfolgerung, dass die einzelnen Architekturgrenzen nicht nur
-konzeptionell beschrieben, sondern in einem verbundenen Verarbeitungspfad
-prototypisch realisierbar sind. Daraus folgt jedoch weder eine allgemeine
-Garantie fachlich korrekter Modellgenerierung noch eine Aussage über
-Produktionsreife. Die Evaluation bezieht sich auf die registrierten und
-zugelassenen Projektinformationen, den implementierten SysML-v2-Ausschnitt
-und die untersuchten Testfälle.
+Die Ergebnisse des Referenzlaufs zeigen, dass die vollständige
+Verarbeitungskette innerhalb des implementierten Prototypumfangs ausgeführt
+werden konnte. Gemeinsam mit der formativen Evaluation und der Erprobung
+mehrerer Quellen zeigt dies, dass die entwickelten Architekturgrenzen in
+einem zusammenhängenden Verarbeitungspfad prototypisch realisierbar sind.
+Daraus folgt jedoch weder eine allgemeine Garantie fachlich korrekter
+Modellgenerierung noch eine Aussage über Produktionsreife. Die Evaluation
+bezieht sich auf die registrierte und zugelassene Informationsbasis, den
+implementierten SysML-v2-Ausschnitt und die untersuchten Testfälle.
 
 \paragraph{Antwort auf die Hauptforschungsfrage.}
 
 Eine Informationsverarbeitungsarchitektur zur KI-gestützten Überführung
-heterogener Bestandsdaten in SysML~v2 muss die probabilistische
-KI-Verarbeitung von den autoritativen Engineering- und
-Modellentscheidungen trennen. Erforderlich sind eine kontrollierte
-Informationsbasis mit expliziten Source-Rollen, source-grounded Evidence und
-durchgängiger Provenance, eine gemeinsame Subject Identity vor
-Multi-Perspektiven-Interpretation, gestufte Human Authority, eine explizite
-Trennung von Engineering Meaning, Model Placement, Target-Model Formulation
-und technischer Serialisierung sowie deterministische und fail-closed
-kontrollierte Übergänge nach den jeweiligen Authority-Grenzen. Bei
-Multi-Source-Verarbeitung müssen Source Identity und Authority lokal erhalten
-bleiben, während autorisierte Informationen nach expliziter Admission
-projektweit synthetisiert werden können. Der erzeugte SysML-v2-Zustand wird
-anschließend technisch validiert und erst durch eine getrennte Human Release
-zur Veröffentlichung autorisiert. Parallel dazu muss ein persistierter
-Evidence-, Decision-, Provenance- und Traceability-Artefaktsatz erhalten
-bleiben, durch den die Herleitung des veröffentlichten Modellzustands
-rekonstruiert werden kann.
+heterogener Bestandsdaten in SysML~v2 muss probabilistische Interpretation,
+fachliche Autorisierung und technische Modellerzeugung als getrennte
+Verantwortungsbereiche behandeln. Erforderlich sind eine kontrollierte
+Informationsbasis mit eindeutigen Quellenrollen und quellengebundener Evidenz,
+durchgängige Provenance, gemeinsame fachliche Referenzgegenstände für
+mehrperspektivische KI-Interpretationen sowie gestufte Human Authority an den
+fachlich relevanten Übergängen. Die fachliche Bedeutung einer Information
+muss dabei von ihrer Einordnung und Repräsentation im Zielmodell sowie von
+ihrer konkreten modellsprachlichen Formulierung getrennt bleiben.
 
-Die zentrale Antwort der Arbeit besteht damit nicht in einem Verfahren, das
-die Unsicherheit probabilistischer KI eliminiert. Sie besteht in einer
-Architektur, die diese Unsicherheit von Engineering Authority trennt,
-sichtbar macht und ihre Wirkung auf das resultierende Modell kontrolliert.
-Das wissenschaftliche Ergebnis ist folglich nicht primär die automatisierte
-Erzeugung von SysML-v2-Code, sondern die Gestaltung eines kontrollierbaren
-Engineering-Prozesses, innerhalb dessen KI-generierte Interpretationen in
-nachvollziehbare, human-autorisierte und technisch validierte Modellzustände
-überführt werden können.
+Nach diesen Entscheidungen soll die weitere Modellbildung soweit möglich
+deterministisch erfolgen. Nicht autorisierte oder nicht eindeutig
+abbildbare Zustände dürfen nicht stillschweigend ergänzt werden. Bei der
+Verarbeitung mehrerer Quellen müssen deren Identität, Provenance und
+Autorisierungszustände erhalten bleiben, während freigegebene
+Engineering-Information projektweit gemeinsam modelliert werden kann. Das
+resultierende SysML-v2-Artefakt wird technisch validiert und anschließend
+getrennt menschlich freigegeben. Die persistierte Verknüpfung der
+Informations-, Entscheidungs- und Modellzustände ermöglicht zugleich die
+Nachverfolgung des veröffentlichten Modellzustands bis zu seiner
+Informationsgrundlage.
 
 \subsection{Limitationen}
 \label{sec:discussion_limitations}
@@ -1362,7 +921,7 @@ interpretieren. Ziel der Untersuchung war die Entwicklung und Evaluation
 eines Architekturkonzepts für eine kontrollierte KI-gestützte Transformation
 heterogener Engineering-Information in SysML~v2. Gegenstand der Evaluation
 war damit primär die Frage, ob die entwickelten Informations-,
-Verantwortungs- und Authority-Grenzen in einem verbundenen
+Verantwortungs- und Autorisierungsgrenzen in einem verbundenen
 Proof-of-Concept-Pfad realisierbar und überprüfbar sind. Eine umfassende
 Bewertung eines produktionsreifen Engineering-Werkzeugs war nicht Gegenstand
 der Arbeit. Diese Abgrenzung entspricht dem gestaltungsorientierten
@@ -1396,14 +955,6 @@ Architekturkonzepts innerhalb des untersuchten Scopes, erlauben jedoch keine
 statistische Aussage über dessen Robustheit bei beliebigen industriellen
 Datenbeständen.
 
-Die bewusste Reduktion der Testdokumente hatte zusätzlich einen praktischen
-Grund. Wiederholte LLM-Verarbeitung über mehrere Persona- und
-Verarbeitungsstufen verursacht mit wachsendem Informationsumfang einen
-zunehmenden Verarbeitungsaufwand. Die Testdaten wurden deshalb so gewählt,
-dass sie hinreichend unterschiedliche Engineering-Information für die
-Untersuchung der Architekturgrenzen enthielten, ohne die einzelnen
-Evaluationsläufe unnötig durch redundante Inhalte zu vergrößern.
-
 \paragraph{Keine unabhängige Evaluation}
 
 Die formative Evaluation und die Human Reviews wurden durch den Entwickler
@@ -1425,10 +976,9 @@ Interaktionsaufwand und Statusdarstellung unterstreichen diese Grenze
 \paragraph{Begrenzte Aussage zur Qualität der KI-Interpretation}
 
 Die Arbeit untersucht keine allgemeine Leistungsfähigkeit eines bestimmten
-Large Language Models. Weder Accuracy, Precision und Recall der
-Engineering-Information-Extraktion noch die Qualität verschiedener
-LLM-Anbieter oder Promptstrategien wurden systematisch vergleichend
-quantifiziert. Die Anzahl erfolgreicher Verarbeitungsschritte,
+Large Language Models. Weder etablierte Qualitätsmetriken der Informationsextraktion noch die
+Leistungsfähigkeit verschiedener Sprachmodelle oder Promptstrategien wurden
+systematisch vergleichend untersucht. Die Anzahl erfolgreicher Verarbeitungsschritte,
 Persona-Übereinstimmungen oder verarbeiteter Tokens stellt daher keinen
 Qualitätsindikator des verwendeten Sprachmodells dar.
 
@@ -1436,64 +986,59 @@ Generative Modelle können plausible, aber sachlich unzutreffende oder
 unzureichend begründete Ergebnisse erzeugen
 \cite{Topcu2025,Barke2023,Sergeyuk2025}. Das entwickelte Architekturkonzept
 versucht deshalb nicht, eine fehlerfreie LLM-Interpretation nachzuweisen.
-Untersucht wurde vielmehr, wie deren Ergebnisse source-grounded,
-überprüfbar und durch explizite Authority-Grenzen kontrolliert
+Untersucht wurde vielmehr, wie deren Ergebnisse quellengebunden,
+überprüfbar und durch explizite Autorisierungsgrenzen kontrolliert
 weiterverarbeitet werden können. Aussagen über die absolute semantische
 Leistungsfähigkeit des eingesetzten Modells liegen außerhalb des
 Untersuchungsumfangs.
 
 \paragraph{Informationsbasis und fachliche Vollständigkeit}
 
-Die Architektur kann die Verarbeitung registrierter und zugelassener Sources
+Die Architektur kann die Verarbeitung registrierter und zugelassener Quellen
 kontrollieren, nicht jedoch die Vollständigkeit der zugrunde liegenden
 Engineering-Informationsbasis garantieren. Ist eine relevante Information
 nicht in den aufgenommenen Quellen enthalten oder wurde eine relevante
-Source nicht registriert, kann der Verarbeitungspfad diese Information nicht
+Quelle nicht registriert, kann der Verarbeitungspfad diese Information nicht
 rekonstruieren.
 
-Source-grounded Evidence und Provenance ermöglichen damit die
-Unterscheidung zwischen tatsächlich vorhandener Evidence, daraus
+Quellengebundene Evidenz und Provenance ermöglichen damit die
+Unterscheidung zwischen tatsächlich vorhandener Evidenz, daraus
 abgeleiteter Interpretation und nicht belegter Information. Sie gewährleisten
 jedoch nicht, dass sämtliche für das reale System relevanten Informationen
 Teil des Ausgangsdatenbestands sind. Die Auswahl geeigneter Engineering
-Sources und die Beurteilung ihrer fachlichen Vollständigkeit bleiben
+Quellen und die Beurteilung ihrer fachlichen Vollständigkeit bleiben
 vorgelagerte Engineering-Aufgaben.
 
-\paragraph{Begrenzter SysML-v2- und Target-Model-Scope}
+\paragraph{Begrenzter SysML-v2- und Zielmodellumfang}
 
 Die prototypische Realisierung unterstützt nur einen definierten Ausschnitt
-der in SysML~v2 verfügbaren Modellierungsmöglichkeiten. Die
-Sprachspezifikation bietet einen wesentlich größeren Umfang an Element-,
-Relationship-, Behavior- und Strukturkonzepten \cite{SysMLv2}. Im Proof of
-Concept wurden gezielt diejenigen Konstrukte implementiert, die für die
-Untersuchung des kontrollierten Informationsflusses erforderlich waren.
-
-Das Findings-Register weist weiterhin eine unvollständige Abdeckung unter
-anderem weitergehender Ports, Interfaces, Parts, Actions, States und
-Occurrences aus
-(vgl. Anhang~\ref{app:findings_register}). Auch die
-Target-Model-Formulation ist deshalb nicht für beliebige
-SysML-v2-Konstrukte generalisiert. Die erfolgreiche technische Validierung
-des Referenzmodells belegt folglich die Verarbeitbarkeit des implementierten
-Modellierungsausschnitts und keine vollständige Abdeckung der Sprache.
+der in SysML~v2 verfügbaren Modellierungsmöglichkeiten. Implementiert wurden
+gezielt diejenigen Konstrukte, die für die Untersuchung des kontrollierten
+Informationsflusses erforderlich waren. Weitergehende Konstrukte,
+beispielsweise bestimmte Ports, Interfaces, Parts, Actions, States und
+Occurrences, sind nicht allgemein abgedeckt
+(vgl. Anhang~\ref{app:findings_register}). Die erfolgreiche technische
+Validierung des Referenzmodells belegt daher die Verarbeitbarkeit des
+implementierten Modellierungsausschnitts und keine vollständige Abdeckung von
+SysML~v2.
 
 Eng damit verbunden ist die Verwendung eines festgelegten
 Modellierungsframeworks. Die im Prototyp verwendete Struktur begrenzt die
-zulässigen Placement- und Representation-Entscheidungen und erleichtert
+zulässigen Einordnungs- und Repräsentationsentscheidungen und erleichtert
 dadurch die kontrollierte Modellbildung. Ob dieselben Leitplanken ohne
 Anpassung auf andere Architekturframeworks, Modellierungsprofile oder
 domänenspezifische SysML-v2-Methoden übertragen werden können, wurde nicht
 untersucht.
 
-\paragraph{Grenzen der semantischen Konsolidierung und Engineering Evolution}
+\paragraph{Grenzen der semantischen Konsolidierung und Modellevolution}
 
-Die Untersuchung zeigt, dass mehrere source-lokale Informationszustände
+Die Untersuchung zeigt, dass mehrere quellenbezogene Informationszustände
 unter Erhalt ihrer Provenance in einen gemeinsamen projektweiten
-Modellbildungsprozess überführt werden können. Eine allgemeine automatische
-semantische Reconciliation wurde jedoch nicht realisiert. Insbesondere
-können semantisch ähnliche Relationships mit unterschiedlichen Prädikaten
-weiterhin getrennt bestehen. Änderungen bereits autorisierter Subjects
-können zudem Folgeentscheidungen über Relationships oder nachgelagerte
+Modellbildungsprozess überführt werden können. Eine allgemeiner automatischer
+semantischer Abgleich wurde jedoch nicht realisiert. Insbesondere
+können semantisch ähnliche Beziehungen mit unterschiedlichen Prädikaten
+weiterhin getrennt bestehen. Änderungen bereits autorisierter Elemente
+können zudem Folgeentscheidungen über Modellbeziehungen oder nachgelagerte
 Modellzustände erforderlich machen.
 
 Die Architektur besitzt bereits explizite Identitäten, Revisionen und
@@ -1512,7 +1057,7 @@ Verarbeitungsschritte insgesamt 35 eindeutige LLM-Aufrufe mit 69\,507 Input
 Tokens und 21\,693 Output Tokens. Der Gesamtumfang von 91\,200 Tokens umfasst
 auch die während des Laufs aufgetretenen fehlgeschlagenen Processing Attempts
 und ihre nachfolgenden Retries
-(vgl. Tabelle~\ref{tab:results_930444_tokens}).
+(vgl. Tabelle~\ref{tab:results_930444_token_usage}).
 
 Die Werte zeigen, dass die mehrstufige Verarbeitung mit mehreren
 Interpretationsperspektiven einen nicht vernachlässigbaren
@@ -1545,18 +1090,13 @@ Zeitgewinns gegenüber manueller Modellierung wurde nicht durchgeführt.
 
 \paragraph{Technische Validierung und fachliche Korrektheit}
 
-Die technische SysML-v2-Validierung stellt eine weitere bewusste
-Ergebnisgrenze dar. Ein erfolgreicher SYSIDE-Lauf zeigt, dass das erzeugte
-Artefakt innerhalb der untersuchten Sprach- und Werkzeugumgebung technisch
-verarbeitet werden kann. Daraus folgt weder, dass jede im Modell enthaltene
-Engineering-Aussage fachlich korrekt ist, noch dass das Modell für einen
-bestimmten späteren Analyse- oder Entwicklungszweck vollständig geeignet ist.
-
-Aus diesem Grund bleibt die technische Validation im Architekturkonzept von
-Engineering Authority und finaler Human Model Authority getrennt. Die
-Evaluation bestätigt diese Trennung im implementierten Prozess, ersetzt aber
-keine domänenspezifische fachliche Validierung durch unabhängige
-Fachexperten.
+Die technische SysML-v2-Validierung stellt eine weitere Ergebnisgrenze dar.
+Ein erfolgreicher SYSIDE-Lauf zeigt, dass das erzeugte Artefakt innerhalb der
+untersuchten Sprach- und Werkzeugumgebung technisch verarbeitet werden kann.
+Daraus folgt weder die fachliche Korrektheit sämtlicher Modellaussagen noch
+die Eignung des Modells für beliebige nachgelagerte Analyse- oder
+Entwicklungszwecke. Die technische Validierung ersetzt daher keine
+domänenspezifische fachliche Prüfung durch unabhängige Fachexperten.
 
 \paragraph{Produktionsreife und technische Systemgrenzen}
 
@@ -1571,134 +1111,66 @@ und UX-Beobachtungen betreffen genau diese Ebene.
 Diese Punkte wurden nach erfolgreichem Abschluss des definierten
 Proof-of-Concept-Pfads bewusst nicht weiter optimiert, sofern sie die
 Untersuchung der Architektur nicht mehr blockierten. Architekturwirksame
-Findings wurden dagegen in Architecture Decisions überführt, implementiert
+Findings wurden dagegen in Architekturentscheidungen überführt, implementiert
 und erneut geprüft. Die verbleibenden nicht blockierenden Findings markieren
 damit die Grenze zwischen dem untersuchten Forschungsartefakt und einer
 möglichen Produktweiterentwicklung.
 
-Zusammenfassend begrenzen diese Aspekte insbesondere die
-Generalisierbarkeit der Ergebnisse. Gezeigt werden konnte ein kontrollierter
-End-to-End-Pfad auf einer aus realen Engineering-Inhalten abgeleiteten,
-gezielt aufbereiteten Informationsbasis mit source-grounded
-Informationsverarbeitung, persistierter Provenance, gestufter Human
-Authority, projektweiter Multi-Source-Integration, deterministischer
-Modellbildung und technischer SysML-v2-Validierung innerhalb des definierten
-Scopes. Nicht gezeigt wurden eine universelle semantische Korrektheit,
-vollständige SysML-v2-Abdeckung, industrielle Skalierbarkeit oder
-Produktionsreife. Die daraus entstehenden Weiterentwicklungsbedarfe werden
-im Ausblick aufgegriffen.
-
 \subsection{Reflexion des KI-gestützten Entwicklungsprozesses}
 \label{sec:discussion_ai_assisted_development}
 
-Neben dem Einsatz von Large Language Models innerhalb des untersuchten
+Neben dem Einsatz großer Sprachmodelle innerhalb des untersuchten
 Turing-Generator-Konzepts wurde generative KI auch als Werkzeug bei der
-Entwicklung des Forschungsartefakts eingesetzt. Beide Rollen sind
-methodisch voneinander zu unterscheiden. Die LLM-basierte Verarbeitung von
+Entwicklung des Forschungsartefakts eingesetzt. Beide Rollen sind methodisch
+voneinander zu unterscheiden. Die KI-gestützte Verarbeitung von
 Engineering-Information ist Bestandteil des Untersuchungsgegenstands und
 wurde durch die in Kapitel~6 beschriebene Evaluation untersucht. Die
-entwicklungsbegleitende KI dagegen unterstützte die Konkretisierung von
-Architekturideen, die Implementierung, die Ableitung von Tests sowie die
-Analyse technischer Zwischenstände. Sie ist damit Teil des
-Entwicklungsprozesses, nicht Teil der Evaluationsevidenz des Artefakts.
+entwicklungsbegleitende KI unterstützte dagegen insbesondere die
+Konkretisierung von Implementierungsschritten, die Erstellung und
+Überarbeitung von Code, die Ableitung von Tests sowie die Analyse technischer
+Zwischenstände. Sie ist damit Bestandteil des Entwicklungsprozesses, nicht der
+Evaluationsevidenz des Artefakts.
 
-Der Einsatz generativer Modelle für Softwareentwicklungsaufgaben kann die
-Erzeugung und Überarbeitung von Code sowie die Exploration technischer
-Lösungen unterstützen. Gleichzeitig verändert er die Interaktion zwischen
-Entwickler und Implementierung. Statt sämtliche Lösungsdetails unmittelbar
-selbst zu formulieren, verschiebt sich ein Teil der Tätigkeit auf die
-Spezifikation des gewünschten Verhaltens, die Bewertung erzeugter Lösungen
-und deren iterative Korrektur. Untersuchungen zur Nutzung codegenerierender
-Modelle beschreiben vergleichbare Interaktionsmuster zwischen
-zielgerichteter Beschleunigung und explorativer Zusammenarbeit
-\cite{Barke2023}. Für Engineering-Anwendungen bleibt dabei relevant, dass
-plausibel erzeugter Code oder Text nicht automatisch fachlich oder technisch
-korrekt ist \cite{Topcu2025,Sergeyuk2025}.
+Die entwicklungsbegleitende KI wurde dabei nicht als autoritative
+Entwicklungsinstanz behandelt. Architekturentscheidungen, fachliche
+Zielzustände und die Freigabe von Änderungen verblieben beim Entwickler.
+Generierte Implementierungsvorschläge wurden in überprüfbare Änderungen
+überführt und anschließend durch fokussierte Tests, Regressionstests und
+verbundene End-to-End-Läufe verifiziert. Dieses Vorgehen entspricht der
+grundsätzlichen Beobachtung, dass generative Modelle
+Softwareentwicklungsaufgaben unterstützen können, ihre plausiblen Ausgaben
+jedoch weiterhin einer fachlichen und technischen Prüfung bedürfen
+\cite{Barke2023}.
 
-Im Entwicklungsprozess dieser Arbeit wurde die KI deshalb nicht als
-autoritative Entwicklungsinstanz behandelt. Architekturentscheidungen,
-fachliche Zielzustände und die Freigabe von Änderungen verblieben beim
-Entwickler. Generierte Implementierungsvorschläge wurden in kleine,
-überprüfbare Änderungen zerlegt und anschließend durch fokussierte Tests,
-Regressionstests oder verbundene End-to-End-Läufe überprüft. Der praktische
-Entwicklungszyklus entsprach damit im Kern einer wiederholten Folge aus
-Spezifikation, KI-gestützter Realisierung, Verifikation und gegebenenfalls
-Korrektur.
+Mit zunehmendem Umfang des Prototyps zeigte sich insbesondere die Bedeutung
+einer vom jeweiligen KI-Dialog unabhängigen Wissensbasis. Akzeptierte
+Architekturentscheidungen, Implementierungszustände und
+Evaluationsergebnisse wurden deshalb in versionierten Projektartefakten,
+Architekturmodellen, Tests und dokumentierten Entscheidungen persistiert.
+Der jeweilige Dialog mit dem KI-System stellte nicht die maßgebliche Quelle
+für den akzeptierten Projektzustand dar. Dies war insbesondere deshalb
+relevant, weil lokale, für sich plausible Änderungen bestehende
+Architekturgrenzen oder Abhängigkeiten des Gesamtsystems verletzen konnten.
+Architekturrelevante Abweichungen wurden daher durch Evaluation,
+Architekturkorrektur, Implementierung und erneute Prüfung bearbeitet. Dieses
+iterative Vorgehen entspricht dem gestaltungsorientierten Charakter der
+Arbeit \cite{Wieringa2014}.
 
-Diese Arbeitsweise erwies sich insbesondere für die Umsetzung eines
-umfangreichen prototypischen Systems als hilfreich. Die KI konnte
-wiederkehrende Implementierungsaufgaben, Testableitungen und die
-Übertragung zuvor definierter Architekturentscheidungen in konkrete
-Softwarestrukturen unterstützen. Dadurch konnte sich die menschliche
-Entwicklungsarbeit stärker auf Verantwortungsgrenzen, Engineering-Semantik
-und die Bewertung des resultierenden Systemverhaltens konzentrieren. Aus
-der vorliegenden Untersuchung lässt sich daraus jedoch keine quantitative
-Produktivitätssteigerung ableiten, da weder Entwicklungszeit noch eine
-vergleichbare Implementierung ohne KI systematisch erhoben wurden.
+Aus dem Einsatz generativer KI im Entwicklungsprozess lässt sich keine
+quantitative Produktivitätssteigerung ableiten. Entwicklungszeit,
+Implementierungsaufwand und eine vergleichbare Realisierung ohne
+KI-Unterstützung wurden nicht systematisch erhoben. Ebenso stellt die
+Verwendung derselben Technologieklasse bei der Entwicklung des Prototyps
+keine unabhängige Bestätigung der Leistungsfähigkeit generativer KI dar. Die
+wissenschaftliche Bewertung des Forschungsartefakts stützt sich deshalb auf
+die explizite Architekturbeschreibung, die technische Verifikation sowie die
+dokumentierten Evaluations- und End-to-End-Ergebnisse und nicht auf die
+Beteiligung generativer KI an seiner Implementierung.
 
-Gleichzeitig zeigte der Entwicklungsprozess Grenzen dieses Vorgehens. Eine
-KI kann lokal plausible Änderungen vorschlagen, ohne sämtliche bereits
-bestehenden Architekturentscheidungen, Authority-Grenzen oder
-Abhängigkeiten des Gesamtsystems konsistent zu berücksichtigen. Mit
-zunehmendem Projektumfang steigt deshalb die Bedeutung einer stabilen,
-außerhalb des Dialogkontexts persistierten Wissensbasis. Im vorliegenden
-Projekt wurden akzeptierte Architekturzustände, Design-Rationale,
-Implementierungszustände und Evaluationsergebnisse deshalb in
-versionierten Projektartefakten, Architecture Decision Records,
-Architekturmodellen und Tests festgehalten. Der jeweilige Dialog mit dem
-KI-System war nicht die maßgebliche Quelle für den akzeptierten
-Projektzustand.
-
-Diese Trennung besitzt eine direkte Parallele zum entwickelten
-Architekturkonzept selbst. Innerhalb des Turing Generators darf eine
-plausible LLM-Interpretation nicht allein deshalb autoritativ werden, weil
-sie technisch verwertbar erscheint. Im Entwicklungsprozess galt entsprechend,
-dass ein KI-generierter Implementierungsvorschlag nicht allein aufgrund
-seiner Plausibilität als akzeptierter Systemzustand behandelt wurde. In
-beiden Fällen entsteht Kontrolle durch explizite Zustände,
-Verantwortungsgrenzen, persistierte Entscheidungen und nachgelagerte
-Verifikation.
-
-Die formative Entwicklung des Prototyps verstärkte diese Notwendigkeit.
-Mehrere architekturrelevante Findings wurden erst während verbundener
-End-to-End-Läufe sichtbar. Ihre Korrektur erforderte teilweise Änderungen
-über mehrere Module und Verarbeitungsschritte hinweg. Ein ausschließlich
-promptbasierter Entwicklungsmodus ohne stabile Architektur- und
-Regressionsevidenz hätte hier das Risiko erhöht, lokale Fehlerkorrekturen
-durch neue Inkonsistenzen an anderen Stellen zu erkaufen. Die
-finding-getriebene Rückkopplung aus Beobachtung, Architekturkorrektur,
-Implementierung und Retest bildete deshalb zugleich einen
-Kontrollmechanismus für die KI-gestützte Entwicklung. Das iterative
-Überarbeiten eines Forschungsartefakts auf Grundlage von
-Evaluationsergebnissen entspricht dabei grundsätzlich dem Charakter
-gestaltungsorientierter Forschung \cite{Wieringa2014}.
-
-Eine weitere methodische Grenze ergibt sich daraus, dass ein Teil des
-Artefakts mit Unterstützung derselben Technologieklasse entwickelt wurde,
-deren Einsatz im Artefakt untersucht wird. Hieraus darf insbesondere keine
-unabhängige Bestätigung der Leistungsfähigkeit generativer KI abgeleitet
-werden. Der wissenschaftliche Nachweis stützt sich deshalb nicht auf die
-Tatsache, dass KI an der Implementierung beteiligt war, sondern auf die
-explizite Architekturbeschreibung, die persistierte Design-Rationale, die
-technische Verifikation sowie die dokumentierten End-to-End- und
-Multi-Source-Ergebnisse. Die entwicklungsbegleitende KI ist damit ein
-Engineering-Werkzeug, nicht die Quelle der wissenschaftlichen Gültigkeit der
-Ergebnisse.
-
-Aus dem Entwicklungsprozess ergibt sich dennoch eine weiterführende
-Beobachtung: Der produktive Einsatz generativer KI verschiebt die benötigte
-menschliche Kompetenz nicht einfach von Softwareentwicklung zu
-Prompt-Erstellung. Mit zunehmender Leistungsfähigkeit der Generierung steigt
-vielmehr die Bedeutung präziser Anforderungen, klarer
-Systemverantwortlichkeiten, nachvollziehbarer Architekturentscheidungen und
-konsequenter Verifikation. Die KI kann die Realisierung solcher Vorgaben
-beschleunigen, sie ersetzt jedoch nicht die Verantwortung für deren
-Definition und Bewertung.
-
-Damit weist die Entwicklungsweise eine strukturelle Ähnlichkeit zur
-zentralen Aussage dieser Arbeit auf. Weder bei der Transformation von
-Engineering-Information noch bei der Entwicklung des transformierenden
-Systems besteht die wesentliche Kontrollaufgabe darin, probabilistische
-Generierung vollständig zu vermeiden. Entscheidend ist vielmehr, ihre
-Ergebnisse in einen Prozess einzubetten, in dem Herkunft, Verantwortung,
-Entscheidung und Verifikation voneinander unterscheidbar bleiben.
+Der Entwicklungsprozess weist damit eine strukturelle Parallele zur zentralen
+Aussage der Arbeit auf: Probabilistisch erzeugte Ergebnisse müssen nicht
+grundsätzlich vermieden werden, dürfen jedoch nicht allein aufgrund ihrer
+Plausibilität autoritativ werden. Sowohl bei der Verarbeitung von
+Engineering-Information als auch bei der KI-gestützten Entwicklung entstehen
+Kontrolle und Nachvollziehbarkeit durch explizite Verantwortlichkeiten,
+persistierte Entscheidungen und nachgelagerte Verifikation.
