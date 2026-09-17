@@ -29,15 +29,21 @@ behandelt. Nach den jeweiligen Authority-Grenzen können nachgelagerte
 Verarbeitungsschritte deterministisch und fail-closed ausgeführt werden.
 
 Der Turing Generator diente zur prototypischen Instanziierung und Untersuchung
-dieses Architekturkonzepts. Die formative Entwicklung und die abschließenden
-End-to-End- und Multi-Source-Erprobungen zeigten, dass die beschriebenen
-Informations-, Provenance- und Authority-Grenzen in einem verbundenen
-Verarbeitungspfad technisch realisiert werden können. Mehrere zunächst
-zusammengefasste Verantwortlichkeiten mussten im Verlauf der Evaluation
-präzisiert oder voneinander getrennt werden. Die daraus hervorgegangene
-Architektur ist damit nicht lediglich das Ergebnis einer initialen
-Konzeption, sondern wurde anhand beobachteter Verarbeitungspfade iterativ
-konsolidiert.
+dieses Architekturkonzepts. Die formative End-to-End-Erprobung, die
+Multi-Source-Verifikation und die abschließende extern begleitete
+Live-Demonstration zeigten, dass die beschriebenen Informations-, Provenance-
+und Authority-Grenzen in einem verbundenen Verarbeitungspfad technisch
+realisierbar sind. Mehrere zunächst zusammengefasste Verantwortlichkeiten
+mussten im Verlauf der Evaluation präzisiert oder voneinander getrennt werden.
+Die daraus hervorgegangene Architektur ist damit nicht lediglich das Ergebnis
+einer initialen Konzeption, sondern wurde anhand beobachteter
+Verarbeitungspfade iterativ konsolidiert.
+
+Die während der Live-Demonstration persistierten Zustände ermöglichten
+darüber hinaus die exemplarische Rekonstruktion eines Informationspfads von
+der ursprünglichen Quellenaussage über maschinelle Zwischenzustände und
+menschliche Autorisierungsentscheidungen bis zum technisch validierten und
+menschlich freigegebenen SysML-v2-Artefakt.
 
 Als zentrale Schlussfolgerung ergibt sich, dass die Unsicherheit
 probabilistischer KI für den betrachteten Anwendungsfall nicht vollständig
@@ -59,18 +65,27 @@ aufbereiteten Engineering-Testdaten, die aus realen Engineering-Inhalten
 abgeleitet wurden, und auf einem begrenzten Ausschnitt der
 SysML-v2-Modellierungsmöglichkeiten. Untersucht wurden die architektonischen
 Bedingungen eines kontrollierten Transformationspfads, nicht die
-Produktionsreife eines Softwareprodukts. Entsprechend werden aus der Arbeit
+Produktionsreife eines Softwareprodukts. Auch die externe Begleitung der abschließenden Live-Demonstration wird dabei
+nicht als unabhängige fachliche Validierung oder Nutzerstudie interpretiert. Entsprechend werden aus der Arbeit
 weder eine allgemeine fachliche Korrektheit KI-generierter Modelle noch eine
 wirtschaftliche, zeitliche oder qualitative Überlegenheit gegenüber
 manueller Modellierung abgeleitet.
 
 Der wissenschaftliche Beitrag der Arbeit liegt damit in der konzeptionellen
 Strukturierung eines kontrollierbaren Übergangs zwischen heterogener
-Bestandsinformation und formaler SysML-v2-Repräsentation. Die
-prototypische Umsetzung zeigt exemplarisch, wie probabilistische
-Informationsverarbeitung, menschliche Engineering Authority,
-nachvollziehbare Provenance und deterministische Modellbildung innerhalb
-einer gemeinsamen Architektur verbunden werden können.
+Bestandsinformation und formaler SysML-v2-Repräsentation. Die prototypische
+Umsetzung zeigt exemplarisch, wie probabilistische Informationsverarbeitung,
+menschliche Engineering Authority, persistierte Provenance und
+deterministische Modellbildung innerhalb einer gemeinsamen Architektur
+verbunden werden können.
+
+Im Unterschied zu einem direkten, unstrukturierten
+Prompt-zu-Output-Vorgehen wird das resultierende Modell dabei nicht als
+isolierter KI-Output behandelt. Innerhalb des untersuchten Prototypumfangs
+bleibt eine explizit persistierte Kette von der Informationsquelle über
+maschinelle Interpretationen und menschliche Autorisierungsentscheidungen bis
+zum Modellzustand, zur technischen Validierung und zur abschließenden
+Freigabe rekonstruierbar.
 
 \subsection{Ausblick}
 \label{sec:ausblick}

@@ -192,7 +192,7 @@ Abschnitt~\ref{sec:discussion_information_basis} diskutiert. Erst auf dieser
 gemeinsamen Bezugsbasis lassen sich Abweichungen zwischen den Perspektiven
 sinnvoll als Interpretationsvarianz interpretieren.
 
-Der Referenzlauf zeigt zusätzlich, dass zwischen
+Der Demonstrationslauf zeigt zusätzlich, dass zwischen
 \emph{Interpretationsvarianz} und \emph{gemeinsamer Ambiguität} unterschieden
 werden muss. Weichen die Persona-Ergebnisse voneinander ab, liegt eine
 beobachtbare Varianz zwischen den Perspektiven vor. Liefern dagegen mehrere
@@ -331,13 +331,13 @@ einer geklärten Platzierung noch eine eigenständige Entscheidung über die
 konkrete modellsprachliche Ausprägung erforderlich sein kann. Dieser
 Verantwortungsbereich wurde deshalb vor die deterministische Serialisierung
 gezogen und als eigener persistierter Authority-Zustand realisiert. Der
-Referenzlauf~930444 zeigt mit der Target-Model-Formulation des
+Demonstrationslauf zeigt mit der Target-Model-Formulation des
 \emph{Microscope Operator} exemplarisch eine solche explizite Entscheidung
 (vgl. Abschnitt~\ref{sec:results_traceability}).
 
 Auch die anschließende technische Validierung bildet eine von der fachlichen
-Autorisierung getrennte Verantwortung. Der im
-Referenzlauf erfolgreich durch SYSIDE verarbeitete Output zeigt, dass das
+Autorisierung getrennte Verantwortung. Der in der Live-Demonstration
+erfolgreich durch SYSIDE verarbeitete Output zeigt, dass das
 erzeugte Artefakt innerhalb der verwendeten Werkzeug- und Sprachumgebung
 technisch verarbeitbar war. Die Validierung ersetzt weder die vorausgehende
 Engineering Authority noch die Model Authority. Entsprechend bleiben
@@ -345,7 +345,7 @@ Generierung, technische Validation und abschließende Human Release im
 Architekturkonzept getrennte Zustände.
 
 Die Aussagekraft dieses Befunds bleibt auf den implementierten
-Proof-of-Concept-Ausschnitt begrenzt. Der erfolgreiche Referenzlauf weist die
+Proof-of-Concept-Ausschnitt begrenzt. Der erfolgreiche Demonstrationslauf weist die
 Funktionsfähigkeit der realisierten Modellierungs- und
 Transformationsmechanismen nach, nicht jedoch eine vollständige Abdeckung von
 SysML~v2 (vgl. Anhang~\ref{app:findings_register}).
@@ -353,16 +353,14 @@ SysML~v2 (vgl. Anhang~\ref{app:findings_register}).
 \subsection{Persistierte Evidenz, Provenance und durchgängige Nachverfolgbarkeit}
 \label{sec:discussion_traceability}
 
-Die Ergebnisse des Referenzlaufs zeigen, dass der kontrollierte
-Engineering-Prozess nicht allein durch das resultierende SysML-v2-Modell
-beschrieben werden kann. Zusätzlich entsteht ein persistierter Evidence-,
-Decision-, Provenance- und Traceability-Artefaktsatz, über den nachvollziehbar
-bleibt, aus welchen Eingangsinformationen ein Modellzustand entstanden ist,
-welche maschinellen Zwischenzustände vorlagen und an welchen Stellen
-menschliche Entscheidungen den weiteren Verarbeitungspfad autorisiert haben.
-Der exemplarische Informationspfad in
-Abschnitt~\ref{sec:results_traceability} zeigt diese Verkettung vom
-Source-Inhalt bis zum publizierten Modellelement.
+Die Live-Demonstration und die anschließende Analyse der persistierten
+Zustände zeigen, dass der kontrollierte Engineering-Prozess nicht allein
+durch das resultierende SysML-v2-Modell beschrieben werden kann. Der in
+Abschnitt~\ref{sec:results_traceability} rekonstruierte Informationspfad
+zeigt vielmehr, dass auch die während der Demonstration entstandenen
+maschinellen Zwischenzustände, menschlichen Entscheidungen und
+Modellzustände bis zu ihrer jeweiligen Informationsgrundlage
+nachvollziehbar bleiben.
 
 Provenance beschreibt allgemein die Herkunft von Daten sowie die Prozesse und
 Transformationen, durch die ein bestimmter Zustand entstanden ist
@@ -378,7 +376,7 @@ Diese Unterscheidung wird insbesondere bei KI-generierten Zwischenzuständen
 relevant. Eine LLM-Antwort besitzt im entwickelten Ansatz zunächst keine
 Engineering Authority. Sie wird als Verarbeitungsergebnis beziehungsweise
 Review-Evidence persistiert und bleibt von einem später autorisierten Zustand
-unterscheidbar. Im Referenzlauf ist dies beispielsweise an den
+unterscheidbar. Im Demonstrationslauf ist dies beispielsweise an den
 Persona-Interpretationen des Subjects \emph{Microscope Workstation}
 nachvollziehbar. Die voneinander abweichenden Klassifikationen bleiben
 erhalten, obwohl der nachfolgende Human Engineering Review einen konkreten
@@ -391,8 +389,8 @@ Model Placement, Model Quality und gegebenenfalls Target-Model Formulation
 werden als eigene Entscheidungen persistiert. Ein freigegebener Nachfolger
 überschreibt den vorherigen Internal-Model-Zustand nicht rückwirkend.
 Dadurch bleibt beispielsweise nachvollziehbar, welche Beschreibung zunächst
-in \texttt{IEM-000001} vorlag und welche human-autorisierte Formulierung
-anschließend in \texttt{IEM-000002} übernommen wurde. Traceability
+in \texttt{IEM-000001} vorlag und welche menschlich autorisierte Benennung
+und Beschreibung anschließend in \texttt{IEM-000002} übernommen wurde. Traceability
 beschreibt damit nicht lediglich statische Beziehungen zwischen Artefakten,
 sondern auch die Entwicklung autorisierter Zustände über den
 Verarbeitungsprozess hinweg.
@@ -877,7 +875,7 @@ fachlichen Korrektheit zu unterscheiden. Deshalb erfolgt nach der technischen
 Validierung eine getrennte menschliche Freigabe des konkreten
 Modellzustands.
 
-Die Ergebnisse des Referenzlaufs zeigen, dass die vollständige
+Die Ergebnisse der Live-Demonstration zeigen, dass die vollständige
 Verarbeitungskette innerhalb des implementierten Prototypumfangs ausgeführt
 werden konnte. Gemeinsam mit der formativen Evaluation und der Erprobung
 mehrerer Quellen zeigt dies, dass die entwickelten Architekturgrenzen in
@@ -929,9 +927,16 @@ Charakter der Untersuchung, bei dem ein Artefakt in Bezug auf definierte
 Ziele und Evaluationsfragen untersucht wird
 \cite{Wieringa2014,ISO42030}.
 
+Die abschließende Live-Demonstration fand in Anwesenheit externer Vertreter
+der vorgesehenen Zielgruppe statt, darunter der externe Betreuer dieser
+Arbeit. Die Bedienung des Prototyps sowie die im System persistierten
+fachlichen und modellbezogenen Entscheidungen erfolgten durch den Autor.
+Die externe Begleitung erweitert damit den Anwendungskontext der Erprobung,
+stellt jedoch keine unabhängige fachliche Validierung oder Nutzerstudie dar.
+
 \paragraph{Datenbasis und empirische Breite}
 
-Die für die formative Evaluation und den abschließenden Referenzlauf
+Die für die formative Evaluation und den abschließenden Demonstrationslauf
 verwendeten Testdaten basieren auf realen Engineering-Inhalten von PreciPoint.
 Sie wurden jedoch nicht als unveränderte Produktivdokumente in die
 Untersuchung übernommen. Umfang, sprachliche Form und Dokumentstruktur wurden
@@ -939,7 +944,7 @@ gezielt reduziert und vereinheitlicht, damit relevante fachliche Aussagen
 eindeutig abgegrenzt und die daraus entstehenden Informationspfade
 reproduzierbar untersucht werden konnten. Die verwendeten Dokumente und ihre
 fachlichen Inhalte sind in
-Anhang~\ref{app:vv_test_data} beziehungsweise für den Referenzlauf zusätzlich
+Anhang~\ref{app:vv_test_data} beziehungsweise für den Demonstrationslauf zusätzlich
 in Anhang~\ref{app:traceability_930444_inputs} dokumentiert.
 
 Diese kontrollierte Aufbereitung erhöht die Nachvollziehbarkeit der einzelnen
@@ -949,7 +954,7 @@ uneinheitlicher und stärker miteinander verflochten sein. Unterschiedliche
 Dokumentversionen, umfangreiche Tabellen, bestehende Modelle,
 disziplinübergreifende Artefakte oder widersprüchliche historische
 Informationsstände wurden nicht in einer groß angelegten industriellen
-Fallstudie untersucht. Der erfolgreiche Referenzlauf und der
+Fallstudie untersucht. Der erfolgreiche Demonstrationslauf und der
 Multi-Source-Retest belegen daher die Ausführbarkeit des entwickelten
 Architekturkonzepts innerhalb des untersuchten Scopes, erlauben jedoch keine
 statistische Aussage über dessen Robustheit bei beliebigen industriellen
@@ -1052,7 +1057,7 @@ Evaluationsumfangs nicht weiter aufgelöst.
 
 \paragraph{Effizienz und Tokenbedarf}
 
-Der Referenzlauf~930444 benötigte für die LLM-gestützten
+Der Live-Demonstrationslauf benötigte für die LLM-gestützten
 Verarbeitungsschritte insgesamt 35 eindeutige LLM-Aufrufe mit 69\,507 Input
 Tokens und 21\,693 Output Tokens. Der Gesamtumfang von 91\,200 Tokens umfasst
 auch die während des Laufs aufgetretenen fehlgeschlagenen Processing Attempts
@@ -1067,7 +1072,7 @@ der erforderlichen LLM-Aufrufe. Dies war ein Grund, spätere
 Verarbeitungsschritte stärker auf abgegrenzte Evidence- und Subject-Einheiten
 zu beziehen. Eine systematische Optimierung von Tokenverbrauch, Laufzeit oder
 Kosten war jedoch nicht Gegenstand der Arbeit. Die gemessenen Werte sind
-daher als deskriptiver Referenzwert für den untersuchten Lauf und nicht als
+daher als deskriptiver Referenzwert für den untersuchten Demonstrationslauf und nicht als
 allgemeine Effizienzaussage zu verstehen.
 
 \paragraph{Human Authority und Skalierbarkeit}
