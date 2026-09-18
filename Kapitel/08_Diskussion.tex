@@ -398,8 +398,8 @@ Verarbeitungsprozess hinweg.
 Auch fehlgeschlagene Verarbeitungsschritte sind Bestandteil dieser
 Prozesshistorie. Der in Abschnitt~\ref{sec:results_traceability}
 dargestellte fehlgeschlagene Verarbeitungsversuch bleibt einschließlich seines
-Fehlerzustands und der Raw Response erhalten, obwohl ein späterer Retry
-erfolgreich weiterverarbeitet wurde. Der erfolgreiche Zustand ersetzt den
+Fehlerzustands und der Rohantwort erhalten, obwohl ein späterer
+Verarbeitungsversuch erfolgreich war. Der erfolgreiche Zustand ersetzt den
 fehlgeschlagenen Attempt nicht. Dadurch kann nicht nur rekonstruiert werden,
 welche Information in das Modell gelangt ist, sondern auch, warum ein
 bestimmter maschineller Zwischenzustand nicht weiterverwendet wurde.
@@ -512,7 +512,7 @@ projektweite Modellbildung.
 
 Eine wesentliche Konsequenz besteht darin, dass die einzelnen
 quellengebundenen Approved-Engineering-Information-Zustände nicht zu einem neuen
-synthetischen Authority-Artefakt verschmolzen werden. Mehrere autorisierte
+neuen zusammengeführten Authority-Artefakt verschmolzen werden. Mehrere autorisierte
 Sources werden gemeinsam als Eingabe für die Modellbildung verwendet, ihre
 jeweilige Provenance und Authority bleiben jedoch getrennt referenzierbar.
 Damit kann eine spätere Modelleigenschaft auf mehrere Quellen zurückgehen,
@@ -530,8 +530,8 @@ Zielmodellbildung bleibt damit projektweit, während die Provenance der
 zugrunde liegenden Engineering Information quellengebunden erhalten wird.
 
 Der Multi-Source-Test bildet zugleich nur einen kontrollierten Ausschnitt
-realer Engineering-Integration ab. Die verwendeten Quellen waren synthetisch,
-inhaltlich überschaubar und auf denselben Projektkontext abgestimmt.
+realer Engineering-Integration ab. Die verwendeten Quellen waren reale 
+Engineering-Informationen, die gezielt reduziert und aufbereitet wurden.
 Automatische Konfliktauflösung zwischen widersprüchlichen autorisierten
 Sources, umfangreiches Change Management, Versionierung sich unabhängig
 ändernder Quellen sowie eine allgemeine semantische Reconciliation wurden
@@ -936,8 +936,9 @@ stellt jedoch keine unabhängige fachliche Validierung oder Nutzerstudie dar.
 
 \paragraph{Datenbasis und empirische Breite}
 
-Die für die formative Evaluation und den abschließenden Demonstrationslauf
-verwendeten Testdaten basieren auf realen Engineering-Inhalten von PreciPoint.
+Die für die formative Evaluation, die Multi-Source-Verifikation und den
+abschließenden Demonstrationslauf verwendeten Testdaten basieren auf realen
+Engineering-Inhalten von PreciPoint.
 Sie wurden jedoch nicht als unveränderte Produktivdokumente in die
 Untersuchung übernommen. Umfang, sprachliche Form und Dokumentstruktur wurden
 gezielt reduziert und vereinheitlicht, damit relevante fachliche Aussagen
@@ -1057,22 +1058,22 @@ Evaluationsumfangs nicht weiter aufgelöst.
 
 \paragraph{Effizienz und Tokenbedarf}
 
-Der Live-Demonstrationslauf benötigte für die LLM-gestützten
+Der Demonstrationslauf benötigte für die LLM-gestützten
 Verarbeitungsschritte insgesamt 35 eindeutige LLM-Aufrufe mit 69\,507 Input
 Tokens und 21\,693 Output Tokens. Der Gesamtumfang von 91\,200 Tokens umfasst
-auch die während des Laufs aufgetretenen fehlgeschlagenen Processing Attempts
-und ihre nachfolgenden Retries
+auch die während des Laufs aufgetretenen fehlgeschlagenen Verarbeitungsversuche
+und ihre nachfolgenden erneuten Versuche
 (vgl. Tabelle~\ref{tab:results_930444_token_usage}).
 
 Die Werte zeigen, dass die mehrstufige Verarbeitung mit mehreren
 Interpretationsperspektiven einen nicht vernachlässigbaren
 Verarbeitungsaufwand erzeugt. Bereits die formative Evaluation zeigte bei
-größer gefassten, source-weiten Verarbeitungsschritten eine starke Zunahme
+größer gefassten Verarbeitungsschritten auf Quellenebene eine starke Zunahme
 der erforderlichen LLM-Aufrufe. Dies war ein Grund, spätere
 Verarbeitungsschritte stärker auf abgegrenzte Evidence- und Subject-Einheiten
 zu beziehen. Eine systematische Optimierung von Tokenverbrauch, Laufzeit oder
-Kosten war jedoch nicht Gegenstand der Arbeit. Die gemessenen Werte sind
-daher als deskriptiver Referenzwert für den untersuchten Demonstrationslauf und nicht als
+Kosten war jedoch nicht Gegenstand der Arbeit. Die gemessenen Werte sind daher als 
+deskriptiver Referenzwert für den untersuchten Demonstrationslauf und nicht als 
 allgemeine Effizienzaussage zu verstehen.
 
 \paragraph{Human Authority und Skalierbarkeit}
