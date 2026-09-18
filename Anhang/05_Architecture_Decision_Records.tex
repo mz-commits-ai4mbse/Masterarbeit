@@ -27,59 +27,80 @@ unterschieden.
 
 \begingroup
 \small
-\begin{xltabular}{\textwidth}{@{}p{1.45cm}p{3.4cm}X p{3.2cm}@{}}
-\caption{Architekturentscheidungen mit expliziter Wirkung im finalen SysML-v2-Modell}
+\begin{xltabular}{\textwidth}{@{}p{1.6cm}X@{}}
+\caption[Architekturentscheidungen mit Modellbezug]{Architekturentscheidungen mit explizitem Bezug zum finalen SysML-v2-Modell}
 \label{tab:adr_decision_overview}\\
 \hline
-\textbf{ADR} & \textbf{Kernentscheidung} & \textbf{Modellwirkung} & \textbf{Technische Instanziierung}\\
+\textbf{ADR} & \textbf{Kernentscheidung}\\
 \hline
 \endfirsthead
 \hline
-\textbf{ADR} & \textbf{Kernentscheidung} & \textbf{Modellwirkung} & \textbf{Technische Instanziierung}\\
+\textbf{ADR} & \textbf{Kernentscheidung}\\
 \hline
 \endhead
 
-\textbf{ADR-005} & Persistenter Projektkontext mit stabiler technischer Identität. & 2 explizit zugeordnete System-Requirements/-Constraints; SF\_001; LC\_02 & \texttt{modules/project\_workspace/}\\
+\textbf{ADR-005} &
+Persistenter Projektkontext mit stabiler technischer Identität.\\
 
-\textbf{ADR-010} & Projektgebundene Registrierung und eindeutige Identität von Quellen. & 1 explizit zugeordnete System-Requirements/-Constraints; SF\_001; LC\_02 & \texttt{modules/project\_sources/}\\
+\textbf{ADR-010} &
+Projektgebundene Registrierung und eindeutige Identität von Quellen.\\
 
-\textbf{ADR-011} & Trennung von verarbeitbarer Quellinformation, semantischen Einheiten und Wissens-/Ontologiebezug. & 1 explizit zugeordnete System-Requirements/-Constraints; SF\_002; LC\_04 & \texttt{modules/information\_units/}, semantische Verarbeitung\\
+\textbf{ADR-011} &
+Trennung von verarbeitbarer Quellinformation, semantischen Einheiten und Wissens-/Ontologiebezug.\\
 
-\textbf{ADR-012} & Persistente Runs, Events, Entscheidungen und run-eigene Artefakte als rekonstruierbarer Verarbeitungszustand. & 6 explizit zugeordnete System-Requirements/-Constraints; SF\_005, SF\_011; LC\_03, LC\_06 & \texttt{modules/project\_processing/}\\
+\textbf{ADR-012} &
+Persistente Runs, Events, Entscheidungen und run-eigene Artefakte als rekonstruierbarer Verarbeitungszustand.\\
 
-\textbf{ADR-013} & Explizite Coverage- und Evidenzbewertung vor nachgelagerter Modellbildung. & 2 explizit zugeordnete System-Requirements/-Constraints; SF\_004, SF\_011; LC\_06 & \texttt{modules/project\_coverage/}\\
+\textbf{ADR-013} &
+Explizite Coverage- und Evidenzbewertung vor nachgelagerter Modellbildung.\\
 
-\textbf{ADR-016} & Human Review als Autorisierungsgrenze und Promotion geprüfter Inhalte in Approved Input. & 1 explizit zugeordnete System-Requirements/-Constraints; SF\_007; LC\_05 & \texttt{modules/review\_workspace/}, \texttt{modules/approved\_input/}\\
+\textbf{ADR-016} &
+Human Review als Autorisierungsgrenze und Promotion geprüfter Inhalte in Approved Input.\\
 
-\textbf{ADR-017} & Einfache Standardansicht bei bedarfsgerechter Offenlegung technischer Details. & 3 explizit zugeordnete System-Requirements/-Constraints; SF\_012; LC\_01 & \texttt{modules/project\_dashboard/}, UI\\
+\textbf{ADR-017} &
+Einfache Standardansicht bei bedarfsgerechter Offenlegung technischer Details.\\
 
-\textbf{ADR-019} & Deterministische Assembly eines autorisierten, repräsentationsneutralen Internal Engineering Model. & 2 explizit zugeordnete System-Requirements/-Constraints; SF\_007, SF\_010; LC\_05, LC\_08 & \texttt{modules/model\_assembly/}, \texttt{modules/internal\_model/}\\
+\textbf{ADR-019} &
+Deterministische Assembly eines autorisierten, repräsentationsneutralen Internal Engineering Model.\\
 
-\textbf{ADR-020} & Deterministic-first Target Projection mit explizitem Umgang mit nicht abbildbaren oder ungeklärten Inhalten. & 4 explizit zugeordnete System-Requirements/-Constraints; SF\_004, SF\_008; LC\_06, LC\_07 & \texttt{modules/target\_model\_formulation/}\\
+\textbf{ADR-020} &
+Deterministic-first Target Projection mit explizitem Umgang mit nicht abbildbaren oder ungeklärten Inhalten.\\
 
-\textbf{ADR-021} & Deterministische SysML-v2-Serialisierung über versionierte Generierungs- und Zielprofile. & 10 explizit zugeordnete System-Requirements/-Constraints; SF\_010, SF\_011; LC\_06, LC\_08 & \texttt{modules/sysml\_generation/}\\
+\textbf{ADR-021} &
+Deterministische SysML-v2-Serialisierung über versionierte Generierungs- und Zielprofile.\\
 
-\textbf{ADR-022} & Nicht-mutierende interne und externe SysML-v2-Validierung mit fail-closed Publication Gate. & 12 explizit zugeordnete System-Requirements/-Constraints; SF\_011, SF\_013; LC\_06, LC\_09 & \texttt{modules/sysml\_validation/}\\
+\textbf{ADR-022} &
+Nicht-mutierende interne und externe SysML-v2-Validierung mit fail-closed Publication Gate.\\
 
-\textbf{ADR-023} & Finale Human Model Review für den exakten validierten Artefaktstand vor Release und Publikation. & 5 explizit zugeordnete System-Requirements/-Constraints; SF\_005, SF\_007, SF\_011; LC\_03, LC\_05, LC\_06 & \texttt{modules/final\_model\_review/}, \texttt{modules/output\_publication/}\\
+\textbf{ADR-023} &
+Finale Human Model Review für den exakten validierten Artefaktstand vor Release und Publikation.\\
 
-\textbf{ADR-024} & Task-orientierter Guided Workflow; UI-Zustand wird aus autoritativen Zuständen abgeleitet. & 11 explizit zugeordnete System-Requirements/-Constraints; SF\_007, SF\_011, SF\_012; LC\_01, LC\_05, LC\_06 & \texttt{modules/guided\_workflow/}, UI\\
+\textbf{ADR-024} &
+Task-orientierter Guided Workflow; der UI-Zustand wird aus autoritativen Zuständen abgeleitet.\\
 
-\textbf{ADR-025} & Semantische Konsolidierung und Persona-Consensus als Review-Evidenz, nicht als Engineering Authority. & 3 explizit zugeordnete System-Requirements/-Constraints; SF\_003, SF\_006, SF\_007; LC\_04, LC\_05 & \texttt{modules/semantic\_consolidation/}, \texttt{modules/subject\_consensus/}\\
+\textbf{ADR-025} &
+Semantische Konsolidierung und Persona-Consensus als Review-Evidenz, nicht als Engineering Authority.\\
 
-\textbf{ADR-027} & Quellengebundene Evidenzdetektion und Persona-Interpretation auf kontrollierter Informationsbasis. & 3 explizit zugeordnete System-Requirements/-Constraints; SF\_002, SF\_006; LC\_04, LC\_05 & \texttt{modules/source\_evidence/}, \texttt{modules/subject\_interpretation/}\\
+\textbf{ADR-027} &
+Quellengebundene Evidenzdetektion und Persona-Interpretation auf kontrollierter Informationsbasis.\\
 
-\textbf{ADR-028a} & Explizite Modellableitungsstrategie und review-getriebene Regeneration. & 2 explizit zugeordnete System-Requirements/-Constraints; SF\_008; LC\_07 & \texttt{modules/model\_candidates/}\\
+\textbf{ADR-028a} &
+Explizite Modellableitungsstrategie und review-getriebene Regeneration.\\
 
-\textbf{ADR-028b} & Kanonische Engineering Subjects als gemeinsame, quellengebundene Vergleichsbasis für Personas. & 3 explizit zugeordnete System-Requirements/-Constraints; SF\_003, SF\_006; LC\_04, LC\_05 & \texttt{modules/engineering\_subjects/}, \texttt{modules/source\_analysis\_units/}\\
+\textbf{ADR-028b} &
+Kanonische Engineering Subjects als gemeinsame, quellengebundene Vergleichsbasis für Personas.\\
 
-\textbf{ADR-029} & Human-autorisierte Modellplatzierung vor Assembly; automatisierte Placement-Vorschläge besitzen keine Modellautorität. & 3 explizit zugeordnete System-Requirements/-Constraints; SF\_007, SF\_008; LC\_05, LC\_07 & \texttt{modules/model\_placement/}\\
+\textbf{ADR-029} &
+Human-autorisierte Modellplatzierung vor Assembly; automatisierte Placement-Vorschläge besitzen keine Modellautorität.\\
 
-\textbf{ADR-030} & Semantische Interpretation wird an kontrollierte Klassifikationsverträge gebunden. & 1 explizit zugeordnete System-Requirements/-Constraints; SF\_003; LC\_04 & \texttt{modules/classification\_alignment/}\\
+\textbf{ADR-030} &
+Semantische Interpretation wird an kontrollierte Klassifikationsverträge gebunden.\\
 
-\textbf{ADR-031} & Konsistenz semantischer Felder wird als eigener kontrollierter Alignment-Schritt behandelt. & 1 explizit zugeordnete System-Requirements/-Constraints; SF\_003; LC\_04 & \texttt{modules/semantic\_consistency\_alignment/}\\
+\textbf{ADR-031} &
+Konsistenz semantischer Felder wird als eigener kontrollierter Alignment-Schritt behandelt.\\
 
-\textbf{ADR-032} & Für den finalen Thesis-MVP: Project Fit als Projektzulässigkeitsgrenze, Erhalt source-lokaler Authority und provenance-gebundener Multi-Source-Handoff in genau ein Model Candidate Set. & 11 explizit zugeordnete System-Requirements/-Constraints; SF\_002, SF\_005, SF\_008, SF\_011; LC\_03, LC\_04, LC\_06, LC\_07 & \texttt{modules/project\_fit/}, source-lokale AEI, Phase-H-Handoff\\
+\textbf{ADR-032} &
+Project Fit als Projektzulässigkeitsgrenze bei Erhalt source-lokaler Authority sowie provenance-gebundener Multi-Source-Handoff in genau ein Model Candidate Set.\\
 
 \hline
 \end{xltabular}
@@ -111,7 +132,7 @@ Architekturmodell zu duplizieren.
 \begingroup
 \scriptsize
 \begin{xltabular}{\textwidth}{@{}p{1.65cm}X p{2.25cm}p{2.0cm}p{1.7cm}@{}}
-\caption{Explizite ADR--Requirement--Function--Logical-Traceability im finalen Architekturmodell}
+\caption[ADR--Requirement--Function--Logical-Traceability]{Explizite ADR--Requirement--Function--Logical-Traceability im finalen Architekturmodell}
 \label{tab:adr_requirement_traceability}\\
 \hline
 \textbf{Requirement} & \textbf{Bezeichnung} & \textbf{ADR} & \textbf{System Function} & \textbf{Logical Component}\\
@@ -344,45 +365,6 @@ Publikationsgrenze öffnen. Die zugehörigen Verantwortlichkeiten liegen
 insbesondere in Human Review/Approval, Processing Governance und
 Traceability; technisch werden sie durch Final Model Review und
 Output Publication instanziiert.
-
-\subsection{R/F/L-Sicht auf die zentralen Authority-Grenzen}
-\label{app:adr_rfl_examples}
-
-Das finale Modell enthält zusätzlich subsystembezogene R/F/L-Sichten. Sie
-machen sichtbar, dass die im Haupttext beschriebenen Authority-Grenzen nicht
-nur als System-Requirements vorliegen, sondern bis in funktionale und logische
-Verantwortlichkeiten weitergeführt wurden. Repräsentative Ketten sind:
-
-\begin{itemize}
-    \item \texttt{SYSR\_119 Assess Project Source Admissibility}
-    $\rightarrow$ \texttt{SBSR\_04\_009}
-    $\rightarrow$ \texttt{SBSF\_04\_002}
-    $\rightarrow$ \texttt{SBSLC\_04\_002 Project Fit Assessment};
-
-    \item \texttt{SYSR\_121 Generate Unified Model Candidate Set}
-    $\rightarrow$ \texttt{SBSR\_07\_008}
-    $\rightarrow$ \texttt{SBSF\_07\_001}
-    $\rightarrow$ \texttt{SBSLC\_07\_001 Project Model Candidate Derivation and Target Projection};
-
-    \item \texttt{SYSR\_124 Require Human-Authorized Model Placement}
-    $\rightarrow$ \texttt{SBSR\_05\_009}
-    $\rightarrow$ \texttt{SBSF\_05\_006}
-    $\rightarrow$ \texttt{SBSLC\_05\_004 Model Placement Authority};
-
-    \item \texttt{SYSR\_125 Require Final Human Model Review}
-    $\rightarrow$ \texttt{SBSR\_05\_013}
-    $\rightarrow$ \texttt{SBSF\_05\_006}
-    $\rightarrow$ \texttt{SBSLC\_05\_005 Final Model Review and Release Authority};
-
-    \item \texttt{SYSR\_072 Validate SysML v2 Textual Conformance}
-    $\rightarrow$ \texttt{SBSR\_09\_007}
-    $\rightarrow$ \texttt{SBSF\_09\_001}
-    $\rightarrow$ interne und externe Logical Components der Generated-Artifact-Validierung.
-\end{itemize}
-
-Diese Beispiele dienen nicht als Ersatz für das vollständige SysML-v2-Modell,
-sondern als kompakte Evidenz dafür, wie zentrale Architekturentscheidungen bis
-in die R/F/L-Struktur des Turing Generators weitergeführt wurden.
 
 \subsection{Abgrenzung der Projektartefakte}
 \label{app:adr_artifact_boundary}

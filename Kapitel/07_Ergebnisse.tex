@@ -49,7 +49,7 @@ zusammen.
 \begin{table}[htbp]
     \centering
     \small
-    \caption{Überblick über die Evaluationsergebnisse}
+    \caption[Überblick über die Evaluationsergebnisse]{Überblick über die Evaluationsergebnisse}
     \label{tab:results_overview}
     \begin{tabular}{p{3.8cm}p{5.0cm}p{4.7cm}}
         \hline
@@ -143,7 +143,7 @@ daher an dieser Stelle nicht erneut begründet.
 \begin{table}[htbp]
     \centering
     \small
-    \caption{Architekturrelevante Befunde der formativen End-to-End-Erprobung}
+    \caption[Architekturrelevante Befunde der End-to-End-Erprobung]{Architekturrelevante Befunde der formativen End-to-End-Erprobung}
     \label{tab:results_architecture_findings}
     \begin{tabular}{p{4.1cm}p{4.8cm}p{4.7cm}}
         \hline
@@ -245,7 +245,7 @@ die im erfolgreichen Retest beobachteten Ergebnisse zusammen.
 \begin{table}[htbp]
     \centering
     \small
-    \caption{Ergebnisse der kontrollierten Multi-Source-Verifikation mit
+    \caption[Ergebnisse der Multi-Source-Verifikation]{Ergebnisse der kontrollierten Multi-Source-Verifikation mit
     mehreren separat registrierten aufbereiteten Engineering-Quellen.
     Dargestellt sind die nach Korrektur einer zunächst blockierenden
     Identitätskollision im erfolgreichen Retest beobachteten Zustände.
@@ -371,7 +371,7 @@ Verteilung auf die verwendeten Modelle.
 \begin{table}[htbp]
     \centering
     \small
-    \caption{Nutzung der angebundenen Sprachmodelle während der
+    \caption[LLM-Nutzung während der Live-Demonstration]{Nutzung der angebundenen Sprachmodelle während der
     Live-Demonstration. Berücksichtigt werden ausschließlich eindeutig
     identifizierbare, im Demonstrationslauf persistierte Modellantworten;
     mehrfach referenzierte Kopien derselben Antwort werden nur einmal
@@ -470,7 +470,7 @@ reason_code:      agentic_ingestion_retry_started
 }
         \end{evidencebox}
     \end{minipage}
-    \caption{Persistierter Fehlerzustand des ersten Verarbeitungsversuchs
+    \caption[Fehlerzustand und erneuter Verarbeitungsversuch]{Persistierter Fehlerzustand des ersten Verarbeitungsversuchs
     \texttt{ATT-000001}, Beginn des erneuten Versuchs
     \texttt{ATT-000002} und Ausschnitt der zugehörigen unveränderten
     Modellantwort. Der allgemeine Fehlerzustand bleibt in der
@@ -507,7 +507,7 @@ entsprechende Aussage aus der verwendeten Architekturquelle.
 The Microscope Workstation provides local session control.
         \end{evidencebox}
     \end{minipage}
-    \caption{Quellenaussage zur \emph{Microscope Workstation} aus der
+    \caption[Quellenevidenz zur Microscope Workstation]{Quellenaussage zur \emph{Microscope Workstation} aus der
     registrierten Architekturquelle. Die Aussage wird als
     \texttt{EVD-000002} mit der konkreten Quelle
     \texttt{SRC-000005}, ihrer Projektion und dem zugehörigen
@@ -558,7 +558,7 @@ uncertainty:
   software, or a combined workstation are not specified.
         \end{evidencebox}
     \end{minipage}
-    \caption{Persistierte Persona-Interpretationen für den gemeinsamen
+    \caption[Persona-Interpretationen zur Microscope Workstation]{Persistierte Persona-Interpretationen für den gemeinsamen
     fachlichen Referenzgegenstand \texttt{SUBJ-000001}. Die drei
     Perspektiven klassifizieren die \emph{Microscope Workstation}
     unterschiedlich als \texttt{function}, \texttt{logical\_element} und
@@ -610,7 +610,7 @@ Human Rationale:
   Logical
         \end{evidencebox}
     \end{minipage}
-    \caption{Finalisierter menschlicher Prüfzustand für
+    \caption[Human Review der Microscope Workstation]{Finalisierter menschlicher Prüfzustand für
     \emph{Microscope Workstation}. Der zuvor divergente Informationstyp
     wird mit \texttt{accepted\_with\_modification} als
     \texttt{logical\_element} autorisiert. Die während der
@@ -671,7 +671,7 @@ reviewer_identity: MZ
 rationale:         Systemlevel
         \end{evidencebox}
     \end{minipage}
-    \caption{Persistierte Modellplatzierungsentscheidung für
+    \caption[Modellplatzierungsentscheidung]{Persistierte Modellplatzierungsentscheidung für
     \texttt{AIN-000011}. Mit \texttt{MPD-000016} wird die bereits
     fachlich autorisierte \emph{Microscope Workstation} über die Regel
     \texttt{ELEMENT\_SYSTEM\_LOGICAL} der logischen Systemebene
@@ -718,7 +718,7 @@ rationale:
   and no explicit Human-attention flag.
         \end{evidencebox}
     \end{minipage}
-    \caption{Persistierte Modellqualitätsentscheidung für
+    \caption[Modellqualitätsentscheidung]{Persistierte Modellqualitätsentscheidung für
     \texttt{IME-000011}. Mit \texttt{MQD-000008} werden Name und
     Beschreibung der \emph{Microscope Workstation} für den nachfolgenden
     Modellzustand freigegeben. Die Entscheidung bestätigt zugleich, dass
@@ -788,7 +788,7 @@ reviewer_identity:
   MZ
         \end{evidencebox}
     \end{minipage}
-    \caption{Ergänzende menschliche Autorisierungsentscheidungen aus der
+    \caption[Ergänzende menschliche Autorisierungsentscheidungen]{Ergänzende menschliche Autorisierungsentscheidungen aus der
     Live-Demonstration. Oben wird mit \texttt{SRD-000001} eine vorgeschlagene
     gerichtete Beziehung verworfen; die fachlich gewünschte Gegenrichtung
     wurde als eigenständiges Beziehungsangebot mit \texttt{SRD-000012}
@@ -840,7 +840,7 @@ generated_location:
   end_line:   77
         \end{evidencebox}
     \end{minipage}
-    \caption{Generiertes SysML-v2-Element und zugehörige
+    \caption[Generiertes SysML-v2-Element und Traceability]{Generiertes SysML-v2-Element und zugehörige
     Nachverfolgbarkeitsinformation für die \emph{Microscope Workstation}.
     Oben ist das aus \texttt{IEM-000002} deterministisch erzeugte
     Modellelement \texttt{IME\_000011} dargestellt. Der darunter
@@ -885,7 +885,7 @@ External validator:
   diagnostics: 0
         \end{evidencebox}
     \end{minipage}
-    \caption{Technischer Validierungszustand des während der
+    \caption[Technischer Validierungszustand]{Technischer Validierungszustand des während der
     Live-Demonstration erzeugten SysML-v2-Artefakts. Der geprüfte
     Modellzustand \texttt{IEM-000002} wurde durch den externen
     SYSIDE Modeler CLI~0.10.3 ohne Findings oder Diagnostics verarbeitet;

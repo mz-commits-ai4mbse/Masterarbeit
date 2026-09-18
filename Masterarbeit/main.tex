@@ -48,29 +48,42 @@
         showstringspaces=false
     }
 }
-
+\newcounter{servicepage}
 \begin{document}
 
-% Formale Seiten (zwingend in Deutsch)
+% Titelseite ohne Seitenzahl
 \input{titelblatt}
-\newpage
+\clearpage
+
+% Vorderer Serviceteil: römische Seitenzahlen
+\pagenumbering{Roman}
 
 \input{selbststaendigkeitserklaerung}
-\newpage
+\clearpage
 
 \input{sperrvermerk}
-\newpage
+\clearpage
 
 \input{abstract}
-\newpage
+\clearpage
 
 \tableofcontents
-\newpage
-\listoffigures % Erzeugt das Abbildungsverzeichnis
-\newpage
-\listoftables  % Erzeugt das Tabellenverzeichnis
-\newpage
-% Hier werden die Inhaltskapitel eingefügt
+\clearpage
+
+\addcontentsline{toc}{section}{Abbildungsverzeichnis}
+\listoffigures
+\clearpage
+
+\addcontentsline{toc}{section}{Tabellenverzeichnis}
+\listoftables
+\clearpage
+
+% Nächste römische Seitenzahl für den späteren Serviceteil merken
+\setcounter{servicepage}{\value{page}}
+
+% Hauptteil beginnt bei Seite 1
+\pagenumbering{arabic}
+
 \input{Kapitel/01_Einleitung}
 \newpage
 \input{Kapitel/02_Grundlagen_StandDerTechnik}
@@ -90,6 +103,9 @@
 \input{Kapitel/09_Fazit}
 \newpage
 
+\clearpage
+\pagenumbering{Roman}
+\setcounter{page}{\value{servicepage}}
 \appendix
 
 \clearpage
