@@ -99,7 +99,8 @@ Kontext verständlich werden. Mehrere Quellen können denselben Systemaspekt aus
 unterschiedlichen Perspektiven beschreiben, sich gegenseitig ergänzen oder
 voneinander abweichende Aussagen enthalten. Die Heterogenität bestehender
 Engineering-Information ist deshalb nicht ausschließlich als technisches
-Formatproblem zu betrachten, sondern umfasst auch eine semantische Dimension.
+Formatproblem zu betrachten, sondern umfasst auch eine semantische Dimension
+\cite{Bressan.2000}.
 
 Eine weitere Herausforderung ergibt sich aus der Veränderlichkeit bestehender
 Systeme und ihrer Dokumentation. Engineering-Artefakte entwickeln sich mit dem
@@ -120,7 +121,7 @@ Information zwischen bereits formal beschriebenen Quell- und Zielmodellen
 beziehungsweise zwischen definierten Metamodellen. Beispiele hierfür sind
 QVT-basierte Transformationen, XMI-basierte Austausch- und
 Transformationsverfahren sowie Transformationen zwischen unterschiedlichen
-SysML-Repräsentationen \cite{Kapos.2014,Li.2022,Zhou.2024,Meyers.2013}.
+SysML-Repräsentationen \cite{Kapos.2014,Li.2022,Zhou.2024,Greenyer.2007}.
 Solche Verfahren können auf expliziten Strukturen und definierten semantischen
 Beziehungen der Ausgangsmodelle aufbauen.
 
@@ -233,7 +234,12 @@ Zwischenrepräsentation von deren anschließender formaler Übersetzung
 Modellerzeugung mit Retrieval und einer iterativen Validierung anhand formaler
 Sprachregeln \cite{Cibrian.2025}. Auch Stein et al. untersuchen die
 LLM-gestützte Erzeugung von SysML-v2-Artefakten unter Einbeziehung von
-Promptstrategien und Syntaxvalidierung \cite{Stein2026}. Gemeinsam zeigen diese
+Promptstrategien und Syntaxvalidierung \cite{Stein2026}. In einem geospatialen
+Anwendungsfall zur semantischen Zuordnung heterogener
+Schemata zeigen Souza und Camboim zudem, dass formale Ontologien als
+strukturierende Referenz für LLM-basierte Zuordnungen dienen können,
+zugleich aber Überspezifikation und syntaktische Instabilität als
+Fehlerbilder verbleiben \cite{Souza.2026}. Gemeinsam zeigen diese
 Arbeiten, dass die KI-gestützte Modellerzeugung nicht auf die unmittelbare
 Generierung einer formalen Zielrepräsentation beschränkt werden muss, sondern
 durch zusätzliche Verarbeitungs- und Prüfmechanismen ergänzt werden kann.
@@ -261,9 +267,11 @@ kuratierte Sammlung von Modellierungsbeispielen für das Retrieval verwendet
 und mit der generativen Verarbeitung kombiniert \cite{Cibrian.2025}.
 Die Bindung an bereitgestellte Information ist jedoch von der
 Nachvollziehbarkeit ihrer Herkunft und Weiterverarbeitung zu unterscheiden.
-Das W3C Provenance Data Model beschreibt Provenance über Entitäten,
-Aktivitäten und beteiligte Akteure sowie deren Ableitungsbeziehungen
-\cite{MoreauMissier2013}. Damit lassen sich die Informationsgrundlage einer
+Provenance beschreibt allgemein die Ableitungshistorie eines Datenprodukts
+aus seinen ursprünglichen Quellen \cite{Simmhan2005}.
+Das W3C Provenance
+Data Model formalisiert entsprechende Beziehungen über Entitäten,
+Aktivitäten und beteiligte Akteure \cite{MoreauMissier2013}. Damit lassen sich die Informationsgrundlage einer
 Verarbeitung und die dokumentierte Entstehung eines Ergebnisses als
 unterschiedliche Kontrollaspekte betrachten. Retrieval beeinflusst, welche
 Information einer Verarbeitung zur Verfügung gestellt wird, während
@@ -280,9 +288,10 @@ Daneben werden Multi-Agent-Ansätze untersucht, bei denen mehrere
 Modellinstanzen unterschiedliche Lösungswege oder Bewertungen erzeugen und
 miteinander abgleichen können \cite{Du2024}. Menschliche Intervention wurde
 auch im Zusammenhang mit solchen Multi-Agent-Debatten untersucht
-\cite{TriemDing2024}. Mehrere übereinstimmende KI-basierte Bewertungen
-stellen dabei jedoch für sich genommen keinen Nachweis fachlicher Richtigkeit
-dar. Mehrperspektivische Verarbeitung und menschliche Kontrolle sind deshalb
+\cite{TriemDing2024}. Mehrere KI-basierte Vorschläge oder Bewertungen stellen dabei für sich
+genommen noch kein hinreichendes Gültigkeitssignal dar; für eine
+zuverlässige agentische Verstärkung sind zusätzliche lokale Prüfsignale
+erforderlich \cite{Sunkaraneni2026}. Mehrperspektivische Verarbeitung und menschliche Kontrolle sind deshalb
 als unterschiedliche Mechanismen zu betrachten, deren Aussagekraft von ihrer
 konkreten Einbindung in den Verarbeitungsprozess abhängt.
 

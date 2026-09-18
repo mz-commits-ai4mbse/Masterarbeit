@@ -13,11 +13,11 @@ Engineering-Information in SysML~v2 nicht primär in der Erzeugung syntaktisch
 plausibler Modellnotation liegt. Entscheidend ist vielmehr, wie aus
 heterogenen und teilweise unvollständigen Ausgangsinformationen ein
 kontrollierter, nachvollziehbarer und autorisierter Engineering-Zustand
-entsteht, der anschließend in ein Zielmodell überführt werden kann. Diese
-Beobachtung entspricht der in der Literatur beschriebenen Herausforderung,
+entsteht, der anschließend in ein Zielmodell überführt werden kann.
+Diese Beobachtung entspricht der in der Literatur beschriebenen Herausforderung,
 LLM-basierte Verfahren trotz probabilistischer Ausgabe, möglicher
 Fehlinterpretationen und begrenzter Verlässlichkeit in kontrollierte
-Engineering-Prozesse einzubetten \cite{Topcu2025,Barke2023,Sergeyuk2025}.
+Engineering-Prozesse einzubetten \cite{Topcu2025,Souza.2026}.
 
 Die Evaluation verdichtet sich dabei zu mehreren miteinander verbundenen
 Befunden. Relevant sind insbesondere die Kontrolle der fachlichen
@@ -94,8 +94,9 @@ System. Context Sources können dagegen Terminologie, Klassifikation,
 Interpretation oder projektbezogene Entscheidungen unterstützen, dürfen jedoch
 nicht eigenständig zur Begründung einer Engineering-Aussage verwendet werden.
 Die entscheidende Randbedingung besteht damit nicht darin, zusätzliches Wissen
-grundsätzlich aus der Verarbeitung auszuschließen, sondern die Rollen
-unterschiedlicher Informationsquellen explizit zu kontrollieren.
+grundsätzlich aus der Verarbeitung auszuschließen, sondern Kontext und Funktion
+unterschiedlicher Informationsquellen explizit zu unterscheiden
+\cite{Bressan.2000}.
 
 Im untersuchten Ansatz wird die begrenzte Verlässlichkeit probabilistischer
 Interpretation daher nicht durch den Anspruch fehlerfreier LLM-Ausgaben
@@ -198,10 +199,10 @@ werden muss. Weichen die Persona-Ergebnisse voneinander ab, liegt eine
 beobachtbare Varianz zwischen den Perspektiven vor. Liefern dagegen mehrere
 Perspektiven dieselben alternativen Möglichkeiten oder weisen sie auf dieselbe
 fehlende Information hin, verschwindet die Unsicherheit nicht dadurch, dass
-kein Inter-Persona-Konflikt besteht. Consensus darf daher nicht grundsätzlich
-mit hoher Sicherheit gleichgesetzt werden. Diese Unterscheidung war ebenfalls
-Gegenstand der formativen Findings und bleibt für die Gestaltung zukünftiger
-Review-Unterstützung relevant.
+kein Inter-Persona-Konflikt besteht. Consensus darf daher nicht grundsätzlich mit hoher Sicherheit oder
+fachlicher Richtigkeit gleichgesetzt werden \cite{Sunkaraneni2026}.
+Diese Unterscheidung war ebenfalls Gegenstand der formativen Findings und
+bleibt für die Gestaltung zukünftiger Review-Unterstützung relevant.
 
 Damit verändert sich auch die Funktion des Human-in-the-Loop. Der Mensch wird
 nicht lediglich als nachgelagerter Korrekturmechanismus eingesetzt, wenn ein
@@ -530,7 +531,7 @@ Zielmodellbildung bleibt damit projektweit, während die Provenance der
 zugrunde liegenden Engineering Information quellengebunden erhalten wird.
 
 Der Multi-Source-Test bildet zugleich nur einen kontrollierten Ausschnitt
-realer Engineering-Integration ab. Die verwendeten Quellen waren reale 
+realer Engineering-Integration ab. Die verwendeten Quellen waren reale
 Engineering-Informationen, die gezielt reduziert und aufbereitet wurden.
 Automatische Konfliktauflösung zwischen widersprüchlichen autorisierten
 Sources, umfangreiches Change Management, Versionierung sich unabhängig
@@ -568,8 +569,7 @@ Im untersuchten Kontext bezeichnet Zuverlässigkeit nicht die fehlerfreie
 Interpretation beliebiger Eingangsdaten durch ein Sprachmodell. Entscheidend
 ist vielmehr, dass die verwendete Informationsbasis kontrolliert ist und
 nachgelagerte Engineering-Zustände nur unter definierten Bedingungen
-autorisiert werden können
-\cite{Topcu2025,Barke2023,Sergeyuk2025}.
+autorisiert werden können \cite{Topcu2025}.
 
 Damit verschiebt sich die Antwort gegenüber einer rein formatbezogenen
 Betrachtung der Eingangsdaten. Die Evaluation hat nicht gezeigt, dass
@@ -726,7 +726,7 @@ Die Leitplanken müssen deshalb auf mehreren Ebenen wirken. Auf der
 Beziehungssemantiken und epistemischen Zustände. Auf der
 \emph{architektonischen Ebene} legen sie fest, welche Bereiche des
 Zielmodells existieren, welche Verantwortlichkeiten diese besitzen und welche
-Arten von Information dort grundsätzlich eingeordnet werden dürfen. 
+Arten von Information dort grundsätzlich eingeordnet werden dürfen.
 Die im Prototyp verwendete RFLP-Struktur stellt hierfür einen
 Modellierungsrahmen bereit. Die RFLP-Gliederung ist als strukturierendes
 Prinzip auch in der MBSE-Literatur etabliert
@@ -821,7 +821,7 @@ Aktuelle Arbeiten zeigen, dass große Sprachmodelle grundsätzlich
 modellierungsnahe beziehungsweise SysML-v2-kompatible Artefakte erzeugen
 können \cite{Stein2026,Pan.2025,Cibrian.2025}. Gleichzeitig sind plausible
 Ausgaben nicht automatisch fachlich korrekt oder hinreichend verlässlich
-\cite{Topcu2025,Barke2023,Sergeyuk2025}. Die zentrale Gestaltungsfrage
+\cite{Topcu2025}. Die zentrale Gestaltungsfrage
 besteht daher nicht allein darin, SysML-v2-Artefakte zu erzeugen, sondern
 kontrolliert festzulegen, welche Engineering-Information in diese Artefakte
 überführt werden darf.
@@ -990,7 +990,7 @@ Qualitätsindikator des verwendeten Sprachmodells dar.
 
 Generative Modelle können plausible, aber sachlich unzutreffende oder
 unzureichend begründete Ergebnisse erzeugen
-\cite{Topcu2025,Barke2023,Sergeyuk2025}. Das entwickelte Architekturkonzept
+\cite{Topcu2025}. Das entwickelte Architekturkonzept
 versucht deshalb nicht, eine fehlerfreie LLM-Interpretation nachzuweisen.
 Untersucht wurde vielmehr, wie deren Ergebnisse quellengebunden,
 überprüfbar und durch explizite Autorisierungsgrenzen kontrolliert
@@ -1072,8 +1072,8 @@ größer gefassten Verarbeitungsschritten auf Quellenebene eine starke Zunahme
 der erforderlichen LLM-Aufrufe. Dies war ein Grund, spätere
 Verarbeitungsschritte stärker auf abgegrenzte Evidence- und Subject-Einheiten
 zu beziehen. Eine systematische Optimierung von Tokenverbrauch, Laufzeit oder
-Kosten war jedoch nicht Gegenstand der Arbeit. Die gemessenen Werte sind daher als 
-deskriptiver Referenzwert für den untersuchten Demonstrationslauf und nicht als 
+Kosten war jedoch nicht Gegenstand der Arbeit. Die gemessenen Werte sind daher als
+deskriptiver Referenzwert für den untersuchten Demonstrationslauf und nicht als
 allgemeine Effizienzaussage zu verstehen.
 
 \paragraph{Human Authority und Skalierbarkeit}
@@ -1146,7 +1146,7 @@ verbundene End-to-End-Läufe verifiziert. Dieses Vorgehen entspricht der
 grundsätzlichen Beobachtung, dass generative Modelle
 Softwareentwicklungsaufgaben unterstützen können, ihre plausiblen Ausgaben
 jedoch weiterhin einer fachlichen und technischen Prüfung bedürfen
-\cite{Barke2023}.
+\cite{Barke2023,Sergeyuk2025}.
 
 Mit zunehmendem Umfang des Prototyps zeigte sich insbesondere die Bedeutung
 einer vom jeweiligen KI-Dialog unabhängigen Wissensbasis. Akzeptierte

@@ -43,7 +43,7 @@ Die textuelle und maschinenverarbeitbare Repräsentation von SysML~v2 bietet
 zugleich eine geeignete Grundlage für einen Architecture-as-Code-Ansatz.
 Maschinenlesbare und versionskontrollierte Architekturartefakte unterstützen
 unter anderem automatisierte Verarbeitung, Versionierung und
-Nachverfolgbarkeit \cite{Bucaioni2025,SysMLv2}. Ein maschinenlesbares
+Nachverfolgbarkeit \cite{Bucaioni2025,Stirbu2022}. Ein maschinenlesbares
 Zielartefakt beantwortet jedoch nicht automatisch die Frage, wie die darin
 enthaltene Engineering-Information kontrolliert aus heterogenen
 Ausgangsinformationen hergeleitet wurde.
@@ -79,6 +79,10 @@ unterstützen \cite{Abonyi.2024,ISO21838_2_2021}. Für die hier betrachtete
 Transformation wäre es daher weder erforderlich noch zweckmäßig, die
 KI-gestützte Verarbeitung ausschließlich auf den unmittelbaren Inhalt eines
 einzelnen Engineering-Dokuments zu beschränken.
+
+Bei der Verarbeitung heterogener Informationsquellen kann zudem explizites
+Kontextwissen erforderlich sein, um semantische Unterschiede zwischen
+Quellinformationen zu berücksichtigen \cite{Bressan.2000}.
 
 Die Nutzung zusätzlicher Information erzeugt jedoch eine
 Architekturaufgabe: Engineering-Dokumente, Terminologie, Domänenwissen,
@@ -196,7 +200,8 @@ Verbesserungen bei Faktentreue und Schlussfolgerungsfähigkeit beobachtet
 \cite{Du2024}. Die Übereinstimmung mehrerer Instanzen ist jedoch kein
 Nachweis fachlicher Richtigkeit. Auch Multi-Agent-Prozesse bleiben von den
 Fähigkeiten und Fehlern der zugrunde liegenden Modelle sowie von ihrer
-Interaktionsgestaltung abhängig \cite{Du2024,TriemDing2024}. Mehrere
+Interaktionsgestaltung abhängig
+\cite{Du2024,TriemDing2024,Sunkaraneni2026}. Mehrere
 KI-Perspektiven werden in dieser Architektur deshalb nicht als
 Mehrheitsverfahren zur fachlichen Autorisierung verwendet.
 
@@ -618,9 +623,9 @@ begrenzte Aussagekraft. Deterministische Transformation ermöglicht die
 reproduzierbare Anwendung definierter Regeln auf denselben autorisierten
 Eingabestand. Eine bestandene technische Validierung zeigt, dass das
 resultierende Artefakt die jeweils geprüften formalen und technischen
-Bedingungen erfüllt. Weder daraus noch aus der Reproduzierbarkeit folgt jedoch
-die fachliche Korrektheit der zugrunde liegenden Engineering-Entscheidungen
-\cite{Topcu2025,Stein2026}.
+Bedingungen erfüllt \cite{Cibrian.2025b}. Weder daraus noch aus der
+Reproduzierbarkeit folgt jedoch die fachliche Korrektheit der zugrunde
+liegenden Engineering-Entscheidungen \cite{Topcu2025}.
 
 Die Architektur kombiniert probabilistische und deterministische Verarbeitung
 damit entlang unterschiedlicher Verantwortungen. Probabilistische Verfahren
@@ -797,10 +802,14 @@ und Autorisierung aufzulösen.
 Semantische Modelle und Ontologien können die Vergleichbarkeit solcher
 Informationen unterstützen, indem sie gemeinsame Begriffe, Relationen und
 Konzeptstrukturen bereitstellen
-\cite{OrellanaMandrick2019,Lu2022,Dong2026}. Eine gemeinsame semantische
-Bezugsbasis bedeutet jedoch weder, dass ähnlich formulierte Informationen
-denselben fachlichen Gegenstand beschreiben, noch dass unterschiedliche
-Terminologie zwangsläufig auf unterschiedliche Gegenstände verweist.
+\cite{OrellanaMandrick2019,Lu2022,Dong2026}. LLM-gestützte semantische
+Zuordnungen können dabei durch formale Taxonomien beziehungsweise
+ontologische Referenzen strukturiert werden, bleiben jedoch gegenüber
+Fehlzuordnungen und Überspezifikation anfällig \cite{Souza.2026}. Eine
+gemeinsame semantische Bezugsbasis bedeutet jedoch weder, dass ähnlich
+formulierte Informationen denselben fachlichen Gegenstand beschreiben, noch
+dass unterschiedliche Terminologie zwangsläufig auf unterschiedliche
+Gegenstände verweist.
 
 Für die Verarbeitung mehrerer Quellen entstehen daher zwei gleichzeitig zu
 erfüllende Anforderungen: Die Provenienz jeder Information muss erhalten

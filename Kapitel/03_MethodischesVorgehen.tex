@@ -95,9 +95,10 @@ Berücksichtigt wurden insbesondere Modellierungssprachen, KI-Technologien,
 MBSE beziehungsweise Architecture as Code sowie Brownfield- und
 Heterogenitätsprobleme. Das PICOC-Schema diente als Hilfsrahmen zur
 Strukturierung von Untersuchungsgegenstand, Intervention,
-Vergleichsperspektive, Zielgrößen und Anwendungskontext. Der vollständige
-Literature Search Plan mit Suchclustern, Suchstrings und Auswahlkriterien ist
-in Anhang~\ref{app:lsp} dokumentiert.
+Vergleichsperspektive, Zielgrößen und Anwendungskontext
+\cite{KitchenhamCharters2007}. Der vollständige Literature Search Plan mit
+Suchclustern, Suchstrings und Auswahlkriterien ist in
+Anhang~\ref{app:lsp} dokumentiert.
 
 Die initiale Suche erfolgte in Scopus, ScienceDirect, IEEE Xplore und der ACM
 Digital Library. Ergänzend wurde Scopus AI explorativ genutzt, um über
@@ -192,7 +193,7 @@ solchen, deren Verhalten durch explizite Regeln beschrieben werden kann.
 Large Language Models ermöglichen die flexible Verarbeitung sprachlich und
 strukturell heterogener Informationen, ihre Ausgaben sind jedoch nicht allein
 aufgrund ihrer Plausibilität als verlässliche Engineering-Information zu
-behandeln \cite{Topcu2025,Barke2023,Sergeyuk2025}. Probabilistische Verfahren
+behandeln \cite{Souza.2026,Topcu2025}. Probabilistische Verfahren
 werden deshalb für semantisch offene Aufgaben eingesetzt, während
 hinreichend bestimmte nachgelagerte Verarbeitungsschritte möglichst
 regelgebunden und reproduzierbar ausgeführt werden. Determinismus wird dabei
@@ -212,10 +213,9 @@ Für semantisch offene Informationen werden zusätzlich mehrere bewusst
 unterschiedliche Interpretationsperspektiven vorgesehen. Untersuchungen mit
 mehreren Modellinstanzen beziehungsweise Agenten zeigen, dass unterschiedliche
 Perspektiven zu voneinander abweichenden Argumentations- und
-Interpretationsergebnissen führen können \cite{Du2024,TriemDing2024}. Diese
-Abweichungen werden nicht durch ein Mehrheitsprinzip aufgelöst.
-Übereinstimmung und Varianz dienen vielmehr als zusätzliche
-Bewertungsinformation für die nachgelagerte fachliche Prüfung. Voraussetzung
+Interpretationsergebnissen führen können \cite{Du2024,TriemDing2024}. Diese Abweichungen werden nicht durch ein Mehrheitsprinzip aufgelöst
+\cite{Sunkaraneni2026}. Übereinstimmung und Varianz dienen vielmehr als
+zusätzliche Bewertungsinformation für die nachgelagerte fachliche Prüfung. Voraussetzung
 für ihre Vergleichbarkeit ist, dass sich die Perspektiven auf dieselbe
 quellengebundene Informationsbasis beziehen.
 
@@ -332,10 +332,12 @@ nicht auf einem nachträglich konstruierten Beispielzustand.
 
 Die erzeugten SysML-v2-Artefakte werden zusätzlich technisch validiert.
 Diese Prüfung adressiert ihre formale Verarbeitbarkeit innerhalb der
-verwendeten SysML-v2-Werkzeugkette \cite{SysMLv2}. Technische Validität wird
-dabei ausdrücklich nicht mit fachlicher Korrektheit gleichgesetzt. Auf die
-technische Validierung folgen daher eine menschliche Prüfung des konkret
-erzeugten Modellzustands und eine davon getrennte Freigabeentscheidung.
+verwendeten SysML-v2-Werkzeugkette
+\cite{SysMLv2,Cibrian.2025b}. Technische Validität wird
+dabei ausdrücklich nicht mit fachlicher Korrektheit gleichgesetzt
+\cite{Topcu2025}. Auf die technische Validierung folgen daher eine
+menschliche Prüfung des konkret erzeugten Modellzustands und eine davon
+getrennte Freigabeentscheidung.
 
 Die Evaluation unterscheidet somit technische Verifikation, formative
 End-to-End- und Mehrquellenprüfung, Live-Demonstration,
