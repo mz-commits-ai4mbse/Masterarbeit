@@ -1,33 +1,35 @@
-% Neuausrichtung der Masterarbeit ab 12.09.2026
-% Vorheriger Stand: Archive/Thesis_PreRealignment_2026-09-12/Kapitel/
-
 \section{Theoretischer Hintergrund und Stand der Technik}
 \label{sec:grundlagen}
+
+Dieses Kapitel führt die theoretischen Grundlagen und den für die Arbeit
+relevanten Stand der Technik zusammen. Abschnitt~\ref{sec:mbse_sysml}
+behandelt MBSE, SysML~v2 und maschinenverarbeitbare Modelle,
+Abschnitt~\ref{sec:brownfield} die Transformation heterogener
+Brownfield-Information und Abschnitt~\ref{sec:ki_kontrollmechanismen}
+KI-gestützte Verarbeitungs- und Kontrollmechanismen. Die daraus gewonnenen
+Erkenntnisse werden in Abschnitt~\ref{sec:forschungsbedarf} synthetisiert und
+zur Ableitung des Forschungsbedarfs herangezogen.
 
 \subsection{MBSE, SysML v2 und maschinenverarbeitbare Modelle}
 \label{sec:mbse_sysml}
 
 Systems Engineering adressiert die disziplinübergreifende Entwicklung komplexer
 technischer Systeme und verbindet dabei unter anderem Anforderungen,
-Architekturentwicklung, Integration sowie Verifikation und Validierung. Model-Based
-Systems Engineering (MBSE) erweitert diesen Ansatz durch die systematische Nutzung
-von Modellen als zentrale Träger von Engineering-Information. Ziel ist dabei nicht
-lediglich, dokumentbasierte Informationen grafisch abzubilden. Vielmehr sollen
-fachliche Zusammenhänge und Beziehungen zwischen Engineering-Artefakten explizit
-repräsentiert und dadurch konsistenter, nachvollziehbarer und maschinell
-verarbeitbar gemacht werden \cite{Hendriks2022}.
+Architekturentwicklung, Integration sowie Verifikation und Validierung.
+Model-Based Systems Engineering (MBSE) erweitert diesen Ansatz durch die
+systematische Nutzung von Modellen als zentrale Träger von
+Engineering-Information. Ziel ist dabei nicht lediglich, dokumentbasierte
+Informationen grafisch abzubilden. Vielmehr sollen fachliche Zusammenhänge und
+Beziehungen zwischen Engineering-Artefakten explizit repräsentiert und dadurch
+konsistenter, nachvollziehbarer und maschinell verarbeitbar gemacht werden
+\cite{Hendriks2022}.
 
-Diese Verschiebung von überwiegend dokumentenorientierten zu stärker
-modellbasierten Informationsstrukturen bildet eine wesentliche Voraussetzung für
-die in dieser Arbeit untersuchte Transformation. Werden Anforderungen, Funktionen,
-Strukturen und ihre Beziehungen explizit modelliert, entsteht eine
-Informationsrepräsentation, die nicht ausschließlich durch ihre Darstellung,
-sondern auch durch ihre definierte Struktur und Semantik verarbeitet werden kann.
-MBSE ist dabei nicht als vollständige Ablösung sämtlicher bestehender
-Informationsquellen zu verstehen. Gerade in Brownfield-Situationen können
-unterschiedliche Dokumente, Datenquellen und Modelle parallel bestehen. Die
-Überführung dieser bestehenden Information in einen modellbasierten Kontext wird
-in Abschnitt~\ref{sec:brownfield} näher betrachtet.
+Der Übergang von überwiegend dokumentenorientierten zu modellbasierten
+Informationsstrukturen ist die Grundlage für die in dieser Arbeit untersuchte
+Transformation. Werden Anforderungen, Funktionen, Strukturen und ihre
+Beziehungen formal modelliert, entsteht eine Informationsrepräsentation mit
+einer eindeutig definierten Darstellung, Struktur und Semantik, die sich als
+Basis für eine automatische Weiterverarbeitung eignet.
 
 Als formale Modellierungssprache wird in dieser Arbeit SysML~v2 verwendet.
 SysML~v2 wurde für die Beschreibung komplexer Systeme entwickelt und ermöglicht
@@ -40,7 +42,7 @@ verwendet werden, ohne dass die grafische Darstellung selbst zum alleinigen
 Informationsträger wird.
 
 Für die vorliegende Arbeit ist insbesondere die textuelle Repräsentation von
-SysML~v2 relevant. Formal strukturierte Modellinformation kann dadurch als
+SysML~v2 relevant. Deren formal strukturierte Modellinformation kann als
 maschinenverarbeitbares Artefakt erzeugt, gespeichert, verglichen und technisch
 geprüft werden. Aktuelle Arbeiten zu SysML~v2 greifen diese Eigenschaften
 insbesondere im Zusammenhang mit ausführbaren, überprüfbaren und navigierbaren
@@ -49,11 +51,11 @@ grafische Sichten dabei nicht. Beide dienen unterschiedlichen Formen der
 Interaktion mit demselben Modell und können sich insbesondere bei menschlicher
 Analyse und automatisierter Verarbeitung ergänzen.
 
-Die Behandlung von Engineering-Artefakten als formal beschriebene und
-maschinenverarbeitbare Repräsentationen weist zugleich Bezüge zu
+Die Behandlung von Engineering-Artefakten als formale und
+maschinenverarbeitbare Repräsentationen weist Bezüge zu
 \emph{Everything as Code} auf. Dieses Paradigma überträgt Eigenschaften
-codezentrierter Entwicklungspraktiken, beispielsweise textuelle
-Repräsentation, Versionsverwaltung und automatisierte Verarbeitung, auf weitere
+codezentrierter Entwicklungspraktiken, beispielsweise textuelle Repräsentation,
+Versionsverwaltung oder automatisierte Verarbeitung, auf weitere
 Entwicklungsartefakte \cite{Stirbu2022}. Für Architekturbeschreibungen wird
 dieser Gedanke unter dem Begriff \emph{Architecture as Code} aufgegriffen.
 Architektur wird dabei als explizites, versionierbares und automatisiert
@@ -69,33 +71,30 @@ Architekturkonzepts verwendet. Zum anderen bildet sie die Zielrepräsentation
 für Engineering-Information, die aus bestehenden Quellen in einen formalen
 Modellkontext überführt werden soll. Diese doppelte Verwendung verbindet die
 modellbasierte Architekturentwicklung mit der später untersuchten
-KI-gestützten Informationsverarbeitung. Bevor diese näher betrachtet wird,
-ist zunächst zu untersuchen, welche besonderen Herausforderungen sich aus der
-Transformation bereits bestehender Engineering-Information ergeben.
+KI-gestützten Informationsverarbeitung.
 
 \subsection{Brownfield Engineering und heterogene Bestandsinformation}
 \label{sec:brownfield}
 
 Die Einführung modellbasierter Arbeitsweisen erfolgt in bestehenden
-Entwicklungsumgebungen häufig unter Brownfield-Bedingungen. Im Gegensatz zu
-einer Greenfield-Situation existieren bereits technische Systeme,
-Engineering-Artefakte, historische Entscheidungen und gewachsene
-Informationsbestände. Relevante Systeminformation kann dabei in
-Spezifikationen, Tabellen, technischen Dokumenten, bestehenden Modellen oder
-weiteren Datenquellen verteilt sein. Für eine Transformation zu MBSE besteht
-die Aufgabe daher nicht ausschließlich darin, neue Modelle zu erstellen,
-sondern vorhandene Engineering-Information zu erschließen und in einen
-modellbasierten Zusammenhang zu überführen. Die ineffiziente Übertragung
-bestehender Informationen in modellbasierte Repräsentationen wird in diesem
-Zusammenhang ausdrücklich als eine Herausforderung der MBSE-Einführung
-beschrieben \cite{Maheshwari2018,Henderson2024}.
+Entwicklungsumgebungen meist unter Brownfield-Bedingungen, d.\,h. auf Basis
+bereits existierender technischer Systeme, von Engineering-Artefakten,
+historischen Entscheidungen und gewachsenen Informationsbeständen. Relevante
+Systeminformation kann dabei in Spezifikationen, Tabellen, technischen
+Dokumenten, bestehenden Modellen oder weiteren Datenquellen vorliegen. Die
+Transformation zu MBSE besteht daher nicht nur darin, Modelle grundlegend neu
+zu erstellen, sondern vorhandene Engineering-Information zu erschließen und in
+einen modellbasierten Zusammenhang zu überführen. Die Übertragung bestehender
+Informationen in modellbasierte Repräsentationen wird ausdrücklich als eine
+Herausforderung der MBSE-Einführung beschrieben
+\cite{Maheshwari2018,Henderson2024}.
 
-Die vorhandenen Informationsbestände bilden dabei keine notwendigerweise
-einheitliche oder vollständig formalisierte Ausgangsbasis. Quellen können sich
-hinsichtlich Format, Strukturierungsgrad, Terminologie, Granularität,
-Abstraktionsebene und Aktualität unterscheiden. Zusätzlich können Informationen
-über mehrere Artefakte verteilt sein oder nur aus ihrem jeweiligen fachlichen
-Kontext verständlich werden. Mehrere Quellen können denselben Systemaspekt aus
+Die vorhandenen Informationsbestände bilden in aller Regel keine einheitliche
+oder vollständig formalisierte Ausgangsbasis. Quellen können sich hinsichtlich
+Format, Strukturierungsgrad, Terminologie, Granularität, Abstraktionsebene und
+Aktualität unterscheiden. Zusätzlich können Informationen über mehrere
+Artefakte verteilt sein oder nur aus ihrem jeweiligen fachlichen Kontext
+verständlich werden. Mehrere Quellen können denselben Systemaspekt aus
 unterschiedlichen Perspektiven beschreiben, sich gegenseitig ergänzen oder
 voneinander abweichende Aussagen enthalten. Die Heterogenität bestehender
 Engineering-Information ist deshalb nicht ausschließlich als technisches
@@ -106,52 +105,49 @@ Eine weitere Herausforderung ergibt sich aus der Veränderlichkeit bestehender
 Systeme und ihrer Dokumentation. Engineering-Artefakte entwickeln sich mit dem
 System weiter und können während seines Lebenszyklus angepasst, erweitert oder
 ersetzt werden. Arbeiten zur Co-Evolution technischer Entwicklungsartefakte
-zeigen entsprechend die Notwendigkeit, zusammengehörige Engineering-Information
-bei Änderungen konsistent weiterzuentwickeln \cite{Legat2014}. Für eine
+zeigen die Notwendigkeit, zusammengehörige Engineering-Information bei
+Änderungen konsistent weiterzuentwickeln \cite{Legat2014}. Für eine
 Brownfield-Transformation bedeutet dies, dass die Beziehung zwischen einer
 bestehenden Informationsquelle und daraus abgeleiteter Modellinformation
 langfristig relevant bleiben kann. Eine einmalige Übertragung ohne
-nachvollziehbare Herkunft erschwert dagegen die spätere Bewertung, welche
-Modellanteile durch eine Änderung ihrer Ausgangsinformation betroffen sein
-könnten.
+nachvollziehbare Herkunft erschwert die spätere Bewertung, welche Modellanteile
+durch eine Änderung ihrer Ausgangsinformation betroffen sein können.
 
 Von dieser Problemklasse sind klassische Modelltransformationen zu
-unterscheiden. Modellgetriebene Transformationsverfahren überführen
-Information zwischen bereits formal beschriebenen Quell- und Zielmodellen
-beziehungsweise zwischen definierten Metamodellen. Beispiele hierfür sind
-QVT-basierte Transformationen, XMI-basierte Austausch- und
-Transformationsverfahren sowie Transformationen zwischen unterschiedlichen
-SysML-Repräsentationen \cite{Kapos.2014,Li.2022,Zhou.2024,Greenyer.2007}.
-Solche Verfahren können auf expliziten Strukturen und definierten semantischen
-Beziehungen der Ausgangsmodelle aufbauen.
+unterscheiden. Modellgetriebene Transformationsverfahren überführen Information
+zwischen bereits formal beschriebenen Quell- und Zielmodellen beziehungsweise
+zwischen definierten Metamodellen. Beispiele hierfür sind QVT-basierte
+Transformationen, XMI-basierte Austausch- und Transformationsverfahren sowie
+Transformationen zwischen unterschiedlichen SysML-Repräsentationen
+\cite{Kapos.2014,Li.2022,Zhou.2024,Greenyer.2007}. Solche Verfahren können auf
+expliziten Strukturen und eindeutig definierten semantischen Beziehungen der
+Ausgangsmodelle aufbauen.
 
 Bei natürlichsprachlichen oder nur teilweise strukturierten
 Bestandsinformationen ist eine solche formale Ausgangsbasis dagegen nicht
 vollständig gegeben. Bevor ein Inhalt in eine Zielstruktur überführt werden
-kann, muss zunächst bestimmt werden, welche Engineering-Bedeutung er besitzt,
-auf welchen Systemgegenstand er sich bezieht und welche Beziehung zu bereits
-vorhandener Information besteht. Die Überführung heterogener
-Legacy-Information in ein Systemmodell umfasst daher zusätzlich zur formalen
-Transformation eine vorgelagerte Interpretations- und Einordnungsaufgabe.
+kann, muss zunächst bestimmt werden, welche Bedeutung er besitzt, auf welchen
+Systemgegenstand er sich bezieht und welche Beziehung zu bereits vorhandener
+Information besteht. Die Überführung heterogener Legacy-Information in ein
+Systemmodell umfasst daher zusätzlich zur formalen Transformation eine
+vorgelagerte Interpretations- und Einordnungsaufgabe.
 
 Aus dieser Unterscheidung ergeben sich grundlegende Anforderungen an eine
 automatisiert unterstützte Verarbeitung. Eingangsinformation muss so
 bereitgestellt werden, dass ihre Identität, Herkunft und ihr relevanter Kontext
 während der weiteren Verarbeitung erhalten bleiben können. Gleichzeitig darf
-eine fehlende oder nicht eindeutig ableitbare Information nicht allein zur
-Vervollständigung einer erwarteten Modellstruktur ergänzt werden. Die Qualität
-einer späteren Modellrepräsentation hängt damit nicht nur von deren formaler
-Gültigkeit ab, sondern bereits davon, wie die zugrunde liegende
-Engineering-Information erschlossen und kontrolliert weiterverarbeitet wird.
+eine fehlende oder nicht eindeutig ableitbare Information nicht automatisch
+zur Vervollständigung einer erwarteten Modellstruktur ergänzt werden. Die
+Qualität einer darauf aufbauenden Modellrepräsentation hängt nicht nur von deren
+formaler Gültigkeit ab, sondern auch davon, wie die zugrunde liegende
+Engineering-Information erschlossen und kontrolliert weiterverarbeitet wurde.
 
-Die beschriebenen Herausforderungen betreffen damit unterschiedliche Aspekte
+Die beschriebenen Herausforderungen betreffen unterschiedliche Aspekte
 derselben Transformationsaufgabe. Neben den Eigenschaften und der Herkunft der
-Eingangsinformation sind sowohl die Verarbeitungsschritte als auch die fachlichen
-Grundlagen ihrer Interpretation relevant. Bevor einzelne technische
-Unterstützungsmechanismen betrachtet werden, ist daher zunächst zu strukturieren,
-welche Aufgabenbereiche bei der Überführung heterogener
-Engineering-Bestandsinformation in eine formale Modellrepräsentation
-zusammenwirken.
+Eingangsinformation sind auch die fachlichen Grundlagen ihrer Interpretation
+sowie die durchgeführten Verarbeitungsschritte für eine sinnvolle Überführung
+heterogener Engineering-Bestandsinformation in eine formale
+Modellrepräsentation relevant.
 
 \subsection{Literaturbasierte Strukturierung der Informationsverarbeitung}
 \label{sec:dreischichtenmodell}
@@ -175,18 +171,20 @@ Format beschränkt sind, sondern auch unterschiedliche Schemata und
 Informationsstrukturen betreffen können
 \cite{Maheshwari2018,Tian.2025,Chis.2025}.
 
-Die \emph{Prozessebene} beschreibt die Verarbeitungsschritte, durch die
-Information aus ihrem Ausgangszustand in eine formale Zielrepräsentation
-überführt wird. Hierzu zählen beispielsweise Transformation, Zuordnung,
+Die \emph{Prozessebene} umfasst die Verarbeitungsschritte, durch die
+Informationen aus ihrem Ausgangszustand in eine formale Zielrepräsentation
+überführt werden. Hierzu zählen beispielsweise Transformation, Zuordnung,
 Zusammenführung und Validierung von Engineering-Information. Bestehende
 modellgetriebene Transformationsansätze zeigen, dass solche Übergänge bei
 formal beschriebenen Quell- und Zielmodellen durch explizite Regeln und
 Metamodelle gesteuert werden können
-\cite{Kapos.2014,Li.2022,Zhou.2024}. Für heterogene Brownfield-Information
-reicht eine solche rein strukturelle Transformation jedoch nicht aus, da die
-fachliche Bedeutung der Ausgangsinformation zunächst erschlossen werden muss.
+\cite{Kapos.2014,Li.2022,Zhou.2024}. Für eine automatische
+Brownfield-Transformation reicht eine solche rein strukturelle
+Betrachtungsweise jedoch nicht aus, da dafür auch die fachliche Bedeutung der
+Ausgangsinformation eine zentrale Rolle spielt und entsprechend erschlossen
+werden muss.
 
-Die hierfür erforderliche fachliche Einordnung bildet die
+Die hierfür erforderliche fachliche Dimension ist die
 \emph{Wissensebene}. Sie umfasst Begriffe, semantische Beziehungen,
 Domänenwissen und Regeln, anhand derer Informationen interpretiert und in einen
 gemeinsamen fachlichen Kontext eingeordnet werden können. Ontologien und andere
@@ -200,26 +198,24 @@ fachlichen Bedeutung im späteren Systemmodell her.
 Die drei Ebenen sind nicht als voneinander unabhängige Verarbeitungsschichten
 zu verstehen. Entscheidungen auf der Wissensebene können beispielsweise
 beeinflussen, wie Informationen auf der Prozessebene zusammengeführt werden,
-während Eigenschaften der Datenebene begrenzen können, welche
-Interpretationen überhaupt belastbar möglich sind. Die Qualität des
-resultierenden Modells hängt deshalb nicht ausschließlich von einem einzelnen
-Transformationsalgorithmus ab, sondern vom kontrollierten Zusammenspiel von
-Informationsgrundlage, Verarbeitung und fachlicher Einordnung.
+während Eigenschaften der Datenebene begrenzen können, welche Interpretationen
+überhaupt belastbar möglich sind. Die Qualität des resultierenden Modells hängt
+deshalb nicht ausschließlich von einem einzelnen Transformationsalgorithmus ab,
+sondern vom kontrollierten Zusammenspiel von Informationsgrundlage,
+Verarbeitung und fachlicher Einordnung.
 
-Das Drei-Ebenen-Modell dient damit als Strukturierungsrahmen für die betrachtete
+Das Drei-Ebenen-Modell dient als Strukturierungsrahmen für die betrachtete
 Informationsverarbeitung. Es beschreibt, welche Bereiche innerhalb einer
 Brownfield-Transformation berücksichtigt werden müssen, ohne bereits eine
 konkrete technische Architektur oder Implementierung vorzugeben. KI-basierte
 Verfahren und menschliche Kontrolle werden dabei nicht als eigenständige weitere
 Ebene aufgefasst, sondern können innerhalb der drei Ebenen beziehungsweise an
-deren Übergängen wirksam werden. Welche bestehenden Ansätze hierfür eingesetzt
-werden und welche Grenzen sich daraus ergeben, wird im folgenden Abschnitt
-untersucht.
+deren Übergängen wirksam eingesetzt werden. Welche bestehenden Ansätze hierfür
+angewandt werden und welche Konsequenzen sich daraus ergeben, wird im folgenden
+Abschnitt untersucht.
 
-% =============================================================================
 \subsection{KI-gestützte Verarbeitung und Kontrollmechanismen}
 \label{sec:ki_kontrollmechanismen}
-% =============================================================================
 
 Für die in Abschnitt~\ref{sec:dreischichtenmodell} beschriebene
 Informationsverarbeitung sind KI-basierte Verfahren insbesondere dort relevant,
@@ -235,64 +231,62 @@ Modellerzeugung mit Retrieval und einer iterativen Validierung anhand formaler
 Sprachregeln \cite{Cibrian.2025}. Auch Stein et al. untersuchen die
 LLM-gestützte Erzeugung von SysML-v2-Artefakten unter Einbeziehung von
 Promptstrategien und Syntaxvalidierung \cite{Stein2026}. In einem geospatialen
-Anwendungsfall zur semantischen Zuordnung heterogener
-Schemata zeigen Souza und Camboim zudem, dass formale Ontologien als
-strukturierende Referenz für LLM-basierte Zuordnungen dienen können,
-zugleich aber Überspezifikation und syntaktische Instabilität als
-Fehlerbilder verbleiben \cite{Souza.2026}. Gemeinsam zeigen diese
-Arbeiten, dass die KI-gestützte Modellerzeugung nicht auf die unmittelbare
-Generierung einer formalen Zielrepräsentation beschränkt werden muss, sondern
-durch zusätzliche Verarbeitungs- und Prüfmechanismen ergänzt werden kann.
+Anwendungsfall zur semantischen Zuordnung heterogener Schemata zeigen Souza und
+Camboim zudem, dass formale Ontologien als strukturierende Referenz für
+LLM-basierte Zuordnungen dienen können, zugleich aber Überspezifikation und
+syntaktische Instabilität als Fehlerbilder verbleiben \cite{Souza.2026}. Ein
+Ergebnis all dieser Arbeiten ist, dass die KI-gestützte Modellerzeugung nicht
+allein auf die unmittelbare Generierung einer formalen Zielrepräsentation
+beschränkt werden kann, sondern durch zusätzliche Verarbeitungs- und
+Prüfmechanismen ergänzt werden sollte.
 
 Die formale oder sprachliche Plausibilität eines erzeugten Artefakts erlaubt
-jedoch keinen unmittelbaren Rückschluss auf dessen fachliche Richtigkeit.
-Topcu et al. vergleichen LLM-generierte Systems-Engineering-Artefakte mit
-Expertenartefakten und zeigen, dass äußerlich ähnliche Ergebnisse dennoch
-fachlich relevante Fehler enthalten können. Zu den identifizierten
-Fehlerbildern gehören unter anderem verfrühte Festlegungen von Anforderungen,
-nicht belegte numerische Angaben und eine Tendenz zur Überspezifikation
-\cite{Topcu2025}. Für die Transformation bestehender Engineering-Information
-ist diese Unterscheidung wesentlich. Eine formal gültige oder plausibel
-formulierte Ausgabe belegt nicht, dass die darin repräsentierte Information
-korrekt aus den zugrunde liegenden Quellen abgeleitet wurde. Neben der
-Generierung selbst sind deshalb Mechanismen erforderlich, die die verwendete
-Informationsgrundlage, die Interpretation und die formale Zielrepräsentation
-kontrollierbar machen.
+keinen unmittelbaren Rückschluss auf dessen fachliche Richtigkeit. Topcu et al.
+vergleichen LLM-generierte Systems-Engineering-Artefakte mit Expertenartefakten
+und zeigen, dass äußerlich ähnliche Ergebnisse dennoch fachlich relevante
+Fehler enthalten können. Zu den identifizierten Fehlerbildern gehören unter
+anderem verfrühte Festlegungen von Anforderungen, nicht belegte numerische
+Angaben und eine Tendenz zur Überspezifikation \cite{Topcu2025}. Für die
+Transformation bestehender Engineering-Information ist diese Unterscheidung
+wesentlich. Eine formal gültige oder plausibel formulierte Ausgabe belegt
+nicht, dass die darin repräsentierte Information korrekt aus den zugrunde
+liegenden Quellen abgeleitet wurde. Neben der Generierung selbst sind deshalb
+Mechanismen erforderlich, die die verwendete Informationsgrundlage, die
+Interpretation und die formale Zielrepräsentation kontrollierbar machen.
 
 Eine Möglichkeit zur Begrenzung der Informationsgrundlage besteht in der
 gezielten Bereitstellung relevanter Kontextinformation. Retrieval-Augmented
 Generation bindet hierzu ausgewählte externe Informationen in den
 Generierungsprozess ein. Im SysML-v2-Ansatz von Cibrian et al. wird eine
 kuratierte Sammlung von Modellierungsbeispielen für das Retrieval verwendet
-und mit der generativen Verarbeitung kombiniert \cite{Cibrian.2025}.
-Die Bindung an bereitgestellte Information ist jedoch von der
+und mit der generativen Verarbeitung kombiniert \cite{Cibrian.2025}. Die
+Bindung an bereitgestellte Information ist in diesem Zusammenhang von der
 Nachvollziehbarkeit ihrer Herkunft und Weiterverarbeitung zu unterscheiden.
-Provenance beschreibt allgemein die Ableitungshistorie eines Datenprodukts
-aus seinen ursprünglichen Quellen \cite{Simmhan2005}.
-Das W3C Provenance
-Data Model formalisiert entsprechende Beziehungen über Entitäten,
-Aktivitäten und beteiligte Akteure \cite{MoreauMissier2013}. Damit lassen sich die Informationsgrundlage einer
-Verarbeitung und die dokumentierte Entstehung eines Ergebnisses als
-unterschiedliche Kontrollaspekte betrachten. Retrieval beeinflusst, welche
-Information einer Verarbeitung zur Verfügung gestellt wird, während
-Provenance die Herkunft und Ableitung verwendeter beziehungsweise erzeugter
-Information nachvollziehbar machen kann.
+Provenance beschreibt allgemein die Ableitungshistorie eines Datenprodukts aus
+seinen ursprünglichen Quellen \cite{Simmhan2005}. Das W3C Provenance Data
+Model formalisiert entsprechende Beziehungen über Entitäten, Aktivitäten und
+beteiligte Akteure \cite{MoreauMissier2013}. Damit lassen sich die
+Informationsgrundlage einer Verarbeitung und die dokumentierte Entstehung
+eines Ergebnisses als unterschiedliche Kontrollaspekte betrachten. Retrieval
+beeinflusst, welche Information einer Verarbeitung zur Verfügung gestellt
+wird, während Provenance die Herkunft und Ableitung verwendeter beziehungsweise
+erzeugter Information nachvollziehbar machen kann.
 
 Kontrolle betrifft darüber hinaus die Interpretation von Information.
 Human-in-the-Loop-Ansätze integrieren menschliche Interaktion an
 unterschiedlichen Stellen maschineller Lern- und Entscheidungsprozesse.
 Mosqueira-Rey et al. unterscheiden hierbei unter anderem Active Learning,
 Interactive Machine Learning und Machine Teaching anhand der jeweiligen Rolle
-und Kontrolle des Menschen im Lernprozess \cite{MosqueiraRey2023}.
-Daneben werden Multi-Agent-Ansätze untersucht, bei denen mehrere
-Modellinstanzen unterschiedliche Lösungswege oder Bewertungen erzeugen und
-miteinander abgleichen können \cite{Du2024}. Menschliche Intervention wurde
-auch im Zusammenhang mit solchen Multi-Agent-Debatten untersucht
-\cite{TriemDing2024}. Mehrere KI-basierte Vorschläge oder Bewertungen stellen dabei für sich
-genommen noch kein hinreichendes Gültigkeitssignal dar; für eine
-zuverlässige agentische Verstärkung sind zusätzliche lokale Prüfsignale
-erforderlich \cite{Sunkaraneni2026}. Mehrperspektivische Verarbeitung und menschliche Kontrolle sind deshalb
-als unterschiedliche Mechanismen zu betrachten, deren Aussagekraft von ihrer
+und Kontrolle des Menschen im Lernprozess \cite{MosqueiraRey2023}. Daneben
+werden Multi-Agent-Ansätze untersucht, bei denen mehrere Modellinstanzen
+unterschiedliche Lösungswege oder Bewertungen erzeugen und miteinander
+abgleichen können \cite{Du2024}. Menschliche Intervention wurde auch im
+Zusammenhang mit Multi-Agent-Debatten untersucht \cite{TriemDing2024}. Mehrere
+KI-basierte Vorschläge oder Bewertungen stellen dabei für sich genommen noch
+kein hinreichendes Gültigkeitssignal dar; für eine zuverlässige Einordnung sind
+zusätzliche lokale Prüfsignale erforderlich \cite{Sunkaraneni2026}.
+Mehrperspektivische Verarbeitung und menschliche Kontrolle sind als
+unterschiedliche Mechanismen zu betrachten, deren Aussagekraft von ihrer
 konkreten Einbindung in den Verarbeitungsprozess abhängt.
 
 Neben der Kontrolle der Informationsbasis und des Interpretationsprozesses
@@ -302,32 +296,32 @@ Beziehungen einer Domäne formal und werden im Systems Engineering unter
 anderem zur semantischen Integration unterschiedlicher Modelle und
 Informationsrepräsentationen eingesetzt
 \cite{OrellanaMandrick2019,Lu2022}. Sie können damit eine explizite
-Referenzbasis für die fachliche Einordnung heterogener Information bereitstellen.
-Eine solche semantische Struktur ersetzt jedoch weder die Bewertung der
-Ausgangsinformation noch die Prüfung eines erzeugten Zielmodells.
+Referenzbasis für die fachliche Einordnung heterogener Information
+bereitstellen. Eine solche semantische Struktur ersetzt jedoch weder die
+Bewertung der Ausgangsinformation noch die Prüfung eines erzeugten Zielmodells.
 
 Auf Ebene der formalen Zielrepräsentation können zusätzliche
 Validierungsmechanismen eingesetzt werden. Cibrian et al. verwenden das
 SysML-v2-Metamodell als formale Grundlage für automatisierte Prüfregeln, mit
 denen strukturelle und semantische Inkonsistenzen in SysML-v2-Modellen erkannt
 werden können \cite{Cibrian.2025b}. Diese Form der Modellvalidierung adressiert
-damit eine andere Fragestellung als die fachliche Bewertung der zuvor
-interpretierten Engineering-Information. Ein Modell kann den formalen Regeln
-der Modellierungssprache entsprechen, ohne dass damit zugleich nachgewiesen
-ist, dass seine Inhalte fachlich korrekt aus den ursprünglichen
-Engineering-Quellen abgeleitet wurden.
+eine andere Fragestellung als die fachliche Bewertung der zuvor interpretierten
+Engineering-Information. Ein Modell kann den formalen Regeln der
+Modellierungssprache entsprechen, ohne dass damit zugleich nachgewiesen ist,
+dass seine Inhalte fachlich korrekt aus den ursprünglichen Engineering-Quellen
+abgeleitet wurden.
 
-Der Forschungsstand stellt somit unterschiedliche Mechanismen für verschiedene
-Kontrollpunkte einer KI-gestützten Informationsverarbeitung bereit.
-Kontextbindung und Provenance adressieren die verwendete Informationsgrundlage
-und deren Nachvollziehbarkeit. Human-in-the-Loop- und Multi-Agent-Ansätze
-betreffen die Interpretation und Bewertung von Information. Ontologien können
-eine explizite semantische Referenzbasis bereitstellen, während
-metamodellbasierte Validierung die formale Zielrepräsentation prüft. Diese
-Mechanismen adressieren jeweils Teilaspekte der zuvor strukturierten
-Transformationsaufgabe. Im folgenden Abschnitt wird daher zusammengeführt,
-welche Teile des Transformationsproblems durch bestehende Ansätze abgedeckt
-werden und welcher Forschungsbedarf für die vorliegende Arbeit verbleibt.
+Zusammenfassend lässt sich sagen, dass der Forschungsstand unterschiedliche
+Mechanismen für verschiedene Kontrollpunkte bei einer KI-gestützten
+Informationsverarbeitung bereitstellt. Kontextbindung und Provenance
+adressieren die verwendete Informationsgrundlage und deren Nachvollziehbarkeit.
+Human-in-the-Loop- und Multi-Agent-Ansätze fokussieren sich auf die
+Interpretation und Bewertung von Information. Ontologien können eine explizite
+semantische Referenzbasis für die Generierung einer Zielrepräsentation
+bereitstellen, die durch metamodellbasierte Validierung formal überprüft werden
+kann. Alle diese Mechanismen adressieren jeweils Teilaspekte einer
+strukturierten Transformationsaufgabe. Wie diese Bestandteile sinnvoll
+zusammengefügt werden können, wird im folgenden Abschnitt erläutert.
 
 \subsection{Synthese des Forschungsstands und Forschungsbedarf}
 \label{sec:forschungsbedarf}
@@ -342,78 +336,79 @@ formal beschriebene Modelle existieren zudem etablierte Ansätze zur
 modellgetriebenen Transformation zwischen unterschiedlichen Repräsentationen
 \cite{Kapos.2014,Li.2022,Zhou.2024}.
 
-Die Brownfield-Situation erweitert diese Transformationsaufgabe jedoch um die
-Erschließung heterogener Bestandsinformation. Ausgangsinformation kann über
-unterschiedliche Artefakte verteilt, verschieden strukturiert und nur unter
-Berücksichtigung ihres fachlichen Kontextes interpretierbar sein
-\cite{Maheshwari2018,Henderson2024,Legat2014}. Die Transformation beginnt damit
-nicht erst bei der Erzeugung eines formalen Zielmodells. Zuvor müssen
-relevante Informationen identifiziert, interpretiert, zueinander in Beziehung
-gesetzt und hinsichtlich ihrer fachlichen Bedeutung eingeordnet werden. Das in
+In Brownfield-Situationen müssen diese Transformationsaufgaben jedoch um die
+Erschließung heterogener Bestandsinformationen erweitert werden.
+Ausgangsinformation kann über unterschiedliche Artefakte verteilt, verschieden
+strukturiert und nur unter Berücksichtigung ihres fachlichen Kontextes
+interpretierbar sein \cite{Maheshwari2018,Henderson2024,Legat2014}. Bevor ein
+formales Zielmodell erzeugt werden kann, müssen zuerst relevante Informationen
+identifiziert, interpretiert, zueinander in Beziehung gesetzt und hinsichtlich
+ihrer fachlichen Bedeutung eingeordnet werden. Das in
 Abschnitt~\ref{sec:dreischichtenmodell} eingeführte Drei-Ebenen-Modell
 strukturiert diese Aufgabe entsprechend in Informationsgrundlage,
 Verarbeitungsprozess und fachliche Wissensbasis.
 
-Für einzelne Teile dieser Aufgabe existieren bereits unterschiedliche
-technische und methodische Ansätze. LLM-basierte Verfahren werden zur
-Generierung formaler Modellartefakte untersucht und dabei unter anderem mit
-Retrieval und nachgelagerter Validierung kombiniert
-\cite{Pan.2025,Cibrian.2025,Stein2026}. Gleichzeitig zeigen Untersuchungen,
-dass die Plausibilität generierter Engineering-Artefakte nicht mit deren
-fachlicher Korrektheit gleichgesetzt werden kann \cite{Topcu2025}.
-Human-in-the-Loop-Verfahren adressieren die Einbindung menschlicher Bewertung
-\cite{MosqueiraRey2023}, Provenance-Modelle die nachvollziehbare Herkunft und
-Ableitung von Information \cite{MoreauMissier2013}, Ontologien die explizite
-Repräsentation semantischer Zusammenhänge
-\cite{OrellanaMandrick2019,Lu2022} und metamodellbasierte Verfahren die
-formale Validierung erzeugter SysML-v2-Modelle \cite{Cibrian.2025b}.
+Für einzelne Teile dieser Aufgabe existieren unterschiedliche technische und
+methodische Ansätze. LLM-basierte Verfahren eignen sich zur Generierung
+formaler Modellartefakte und können u.\,a. mit Retrieval und nachgelagerter
+Validierung kombiniert werden \cite{Pan.2025,Cibrian.2025,Stein2026}.
+Untersuchungen zeigen auch, dass die Plausibilität generierter
+Engineering-Artefakte nicht mit deren fachlicher Korrektheit gleichgesetzt
+werden kann \cite{Topcu2025}. Human-in-the-Loop-Verfahren adressieren die
+Einbindung menschlicher Bewertung \cite{MosqueiraRey2023}, Provenance-Modelle
+die nachvollziehbare Herkunft und Ableitung von Information
+\cite{MoreauMissier2013}, Ontologien die explizite Repräsentation semantischer
+Zusammenhänge \cite{OrellanaMandrick2019,Lu2022}, und metamodellbasierte
+Verfahren die formale Validierung erzeugter SysML-v2-Modelle
+\cite{Cibrian.2025b}.
 
-Die betrachteten Arbeiten adressieren damit wesentliche Teilprobleme der
+Die betrachteten Arbeiten adressieren wesentliche Teilprobleme der
 Transformation, jedoch nicht in der für die vorliegende Problemstellung
-benötigten Verbindung. Insbesondere die gemeinsame Betrachtung heterogener
+benötigten Verbindung. Die gemeinsame Betrachtung heterogener
 Brownfield-Information, KI-basierter Interpretation, nachvollziehbarer
 Informationsherkunft, expliziter menschlicher Entscheidungsgrenzen sowie einer
 kontrollierten Überführung in eine formal prüfbare SysML-v2-Repräsentation
-bleibt als Integrationsaufgabe bestehen. Der Forschungsbedarf liegt daher
-nicht primär in einem weiteren Verfahren zur unmittelbaren Erzeugung von
-SysML-v2-Code, sondern in der Gestaltung einer Informationsverarbeitungsarchitektur,
-die diese unterschiedlichen Kontrollmechanismen zu einem nachvollziehbaren
+bleibt als Integrationsaufgabe bestehen. Die vorliegende Arbeit widmet sich der
+Frage, wie eine Informationsverarbeitungsarchitektur gestaltet werden kann, die
+diese unterschiedlichen Kontrollmechanismen zu einem nachvollziehbaren
 Transformationsprozess verbindet.
 
-Für eine solche Architektur sind insbesondere drei Fragestellungen relevant.
-Erstens ist zu klären, unter welchen Bedingungen heterogene
-Eingangsinformation für eine KI-gestützte Verarbeitung geeignet ist und wie
-ihre Herkunft und ihr Kontext erhalten werden können. Zweitens muss bestimmt
-werden, an welchen Stellen probabilistische Interpretation durch menschliche
-Entscheidung und fachliche Autorisierung begrenzt werden muss. Drittens ist zu
-untersuchen, wie semantische und formale Leitplanken so eingebunden werden
-können, dass aus akzeptierter Engineering-Information kontrolliert eine
-valide SysML-v2-Struktur entsteht. Aus diesen drei Aspekten werden im folgenden
-Abschnitt die Forschungsfragen der Arbeit abgeleitet.
+Dazu sind i.\,W. drei Fragestellungen relevant. Erstens ist zu klären, unter
+welchen Bedingungen heterogene Eingangsinformationen für eine KI-gestützte
+Verarbeitung geeignet sind und wie ihre Herkunft und ihr Kontext erhalten
+werden können. Zweitens muss bestimmt werden, an welchen Stellen eine
+probabilistische Interpretation durch menschliche Entscheidung und fachliche
+Autorisierung begrenzt werden muss. Und drittens ist zu untersuchen, wie
+semantische und formale Richtlinien so eingebunden werden können, dass aus
+akzeptierter Engineering-Information kontrolliert eine valide
+SysML-v2-Struktur entsteht. Die Forschungsfragen dieser Arbeit leiten sich
+direkt daraus ab.
 
 \subsection{Forschungsfragen}
 \label{sec:forschungsfragen}
 
-Aus dem in Abschnitt~\ref{sec:forschungsbedarf} identifizierten Forschungsbedarf
-ergibt sich die Frage, wie die unterschiedlichen Anforderungen an
-Informationsgrundlage, Interpretation, menschliche Kontrolle und formale
-Zielrepräsentation innerhalb einer gemeinsamen Informationsverarbeitungsarchitektur
-verbunden werden können. Daraus wird folgende Hauptforschungsfrage abgeleitet:
+Wie die unterschiedlichen Anforderungen an die Informationsgrundlagen, deren
+Interpretation, die erforderliche menschliche Kontrolle und die formale
+Zielrepräsentation innerhalb einer gemeinsamen
+Informationsverarbeitungsarchitektur verbunden werden können, ist das
+Kernthema dieser Arbeit.
+
+Oder als Hauptforschungsfrage anders ausgedrückt:
 
 \begin{quote}
 \textbf{Hauptforschungsfrage:}
 
 Wie muss eine Informationsverarbeitungsarchitektur gestaltet sein, um
 heterogene Bestandsdaten durch ein systematisches Bewertungs- und
-Synthese-Framework sicher in valide SysML v2 Strukturen zu überführen?
+Synthese-Framework sicher in valide SysML~v2-Strukturen zu überführen?
 \end{quote}
 
-Die Hauptforschungsfrage wird durch drei Teilforschungsfragen konkretisiert.
-Die erste Teilforschungsfrage adressiert die in den vorangehenden Abschnitten
-herausgearbeitete Bedeutung der Informationsgrundlage. Insbesondere
-Heterogenität, Informationsqualität, Kontext und Herkunft der Eingangsdaten
-begrenzen, welche Aussagen durch eine KI-gestützte Verarbeitung belastbar
-abgeleitet werden können:
+Die Hauptforschungsfrage kann in drei Teilbereiche zerlegt werden.
+
+Der erste adressiert die Informationsgrundlage, insbesondere Heterogenität,
+Informationsqualität, Kontext und Herkunft der Eingangsdaten, und welche
+Aussagen durch eine KI-gestützte Verarbeitung belastbar daraus abgeleitet
+werden können:
 
 \begin{quote}
 \textbf{TF1:}
@@ -422,33 +417,33 @@ Welche Anforderungen (Constraints) müssen an die Eingangsdaten gestellt
 werden, damit ein KI-Agent zuverlässig arbeiten kann?
 \end{quote}
 
-Die zweite Teilforschungsfrage betrifft den Umgang mit Unsicherheit und
-Mehrdeutigkeit innerhalb der Interpretation. Da KI-basierte Bewertungen nicht
-mit fachlicher Richtigkeit gleichgesetzt werden können, ist zu untersuchen,
-wie menschliche Entscheidungskompetenz gezielt in die Verarbeitung eingebunden
-werden kann:
+Der zweite Bereich adressiert den Umgang mit Unsicherheit und Mehrdeutigkeit
+innerhalb der Interpretation. Da KI-basierte Bewertungen nicht automatisch
+auch immer fachlich korrekt sind, ist zu untersuchen, wie menschliche
+Entscheidungskompetenz gezielt in die Verarbeitung eingebunden werden kann:
 
 \begin{quote}
 \textbf{TF2:}
 
 Wie wird der Ingenieur als Kontrollorgan in die Architektur eingebunden,
-um bei detektierten Mehrdeutigkeiten effektiv einzugreifen?
+um bei detektierten Mehrdeutigkeiten oder Inkonsistenzen effektiv
+einzugreifen?
 \end{quote}
 
-Die dritte Teilforschungsfrage adressiert die semantischen und strukturellen
-Leitplanken der Transformation. Sie untersucht, wie die fachliche Einordnung
-der Eingangsinformation mit den Anforderungen an eine modular nutzbare
-SysML-v2-Zielrepräsentation verbunden werden kann:
+Der dritte Bereich adressiert die semantischen und strukturellen
+Rahmenbedingungen der Transformation, d.\,h. wie die fachliche Einordnung der
+Eingangsinformation mit den Anforderungen an eine modular nutzbare
+SysML~v2-Zielrepräsentation verbunden werden kann:
 
 \begin{quote}
 \textbf{TF3:}
 
 Wie müssen die ontologischen Regeln („Leitplanken“) gestaltet sein, gegen
-die die Eingangsdaten geprüft werden, um die Plug & Play-Fähigkeit der
-resultierenden SysML v2 Modelle (Modularität) zu gewährleisten?
+die die Eingangsdaten geprüft werden, um die Plug \& Play-Fähigkeit der
+resultierenden SysML~v2-Modelle (Modularität) zu gewährleisten?
 \end{quote}
 
-Die Forschungsfragen bilden damit den Bezugsrahmen für das weitere Vorgehen.
-Das folgende Kapitel beschreibt die Methodik, mit der das
+Die Forschungsfragen TF1--TF3 bilden den Bezugsrahmen für das weitere
+Vorgehen. Das folgende Kapitel beschreibt die Methodik, mit der das
 Informationsverarbeitungsproblem untersucht und ein entsprechendes
-Architekturkonzept entwickelt und prototypisch betrachtet wird.
+Architekturkonzept entwickelt und prototypisch betrachtet wurde.

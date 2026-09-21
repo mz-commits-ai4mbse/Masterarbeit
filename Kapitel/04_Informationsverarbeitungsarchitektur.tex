@@ -1,8 +1,19 @@
 \section{Konzeption der Informationsverarbeitungsarchitektur}
 \label{sec:architecture}
 
+Dieses Kapitel entwickelt die Informationsverarbeitungsarchitektur für die
+kontrollierte KI-gestützte Transformation heterogener
+Engineering-Information in SysML~v2. Ausgehend von den Anforderungen an
+Informationsgrundlage, Interpretation und menschliche Autorisierung werden
+die Zielmodellbildung, die regelgebundene Transformation sowie die
+durchgängige Provenienz und Nachverfolgbarkeit schrittweise hergeleitet.
+Anschließend wird die Verarbeitung mehrerer Quellen als projektweiter
+Anwendungsfall betrachtet und die entwickelten Mechanismen zu einem
+integrierten Architekturkonzept zusammengeführt.
 
-\subsection{Architekturproblem und Gestaltungsziel}
+\subsection{Architektur und Gestaltungsziel}
+
+\subsection{Architektur und Gestaltungsziel}
 \label{sec:architecture_problem}
 
 Large Language Models ermöglichen die KI-gestützte Erzeugung von
@@ -11,218 +22,204 @@ im Systems Engineering zeigen, dass dabei Artefakte entstehen können, die
 menschlich erstellten Ergebnissen in ihrer sprachlichen und semantischen
 Erscheinung teilweise stark ähneln \cite{Topcu2025}. Auch die Erzeugung
 textueller SysML-v2-Artefakte durch LLMs ist grundsätzlich möglich
-\cite{Stein2026}. Die technische Möglichkeit einer solchen Transformation
-bildet damit eine Voraussetzung für den in dieser Arbeit betrachteten
-Anwendungsfall.
+\cite{Stein2026}. Allgemeine LLMs verfügen jedoch ohne zusätzlich
+bereitgestellten Kontext nur begrenzt über projektspezifische
+Detailinformationen. Die erzeugten Ergebnisse können daher textuell plausibel
+erscheinen, ohne das zu modellierende System fachlich beziehungsweise
+semantisch adäquat zu beschreiben. LLM-generierte
+Systems-Engineering-Artefakte können trotz hoher Ähnlichkeit zu
+Expertenlösungen fachliche Defizite, unbelegte Annahmen oder
+Überspezifikationen enthalten \cite{Topcu2025}. Deshalb müssen bei der
+SysML-v2-Generierung erzeugte Artefakte zusätzlich fachlich geprüft
+und bewertet werden \cite{Stein2026}.
 
-Die Plausibilität oder technische Verarbeitbarkeit eines generierten
-Artefakts erlaubt jedoch noch keine Aussage über dessen fachliche
-Belastbarkeit. LLM-generierte Systems-Engineering-Artefakte können trotz
-hoher Ähnlichkeit zu Expertenlösungen fachliche Defizite, unbelegte Annahmen
-oder Überspezifikationen enthalten \cite{Topcu2025}. Auch bei der
-SysML-v2-Generierung sind Artefakterzeugung, technische Validierung und
-fachliche Qualitätsbewertung voneinander zu unterscheiden
-\cite{Stein2026}.
-
-Für den betrachteten Engineering-Prozess entsteht daraus ein Problem, das
-über die reine Erzeugung syntaktisch verwendbarer Modellnotation hinausgeht.
-Eine direkte Transformation von Eingangsinformation zu einem generierten
-Modell kann Entscheidungen über Informationsbasis, fachliche Interpretation
-und Zielmodellrepräsentation innerhalb eines probabilistischen
-Verarbeitungsschritts miteinander verbinden. Am resultierenden Modell allein
-ist dann nicht mehr nachvollziehbar, auf welcher konkreten Information eine
-Modellaussage beruht, welche Verarbeitungsschritte zu ihr geführt haben und
-an welchen Stellen fachliche Entscheidungen getroffen wurden. Die
-Notwendigkeit, solche Ableitungszusammenhänge explizit abzubilden, entspricht
+Für den Transformationsprozess ergibt sich daraus die Anforderung, die
+fachlichen und interpretationsbasierten Entscheidungen zwischen
+Eingangsinformation und generiertem Modell nachvollziehbar abzubilden. Die
+Notwendigkeit, solche Ableitungszusammenhänge explizit zu erfassen, entspricht
 dem grundlegenden Provenienzgedanken, Informationsobjekte,
 Verarbeitungsaktivitäten und beteiligte Akteure in ihren
 Entstehungsbeziehungen nachvollziehbar zu verbinden
 \cite{MoreauMissier2013}.
 
 Die textuelle und maschinenverarbeitbare Repräsentation von SysML~v2 bietet
-zugleich eine geeignete Grundlage für einen Architecture-as-Code-Ansatz.
+eine geeignete Grundlage für einen \emph{Architecture as Code-Ansatz}.
 Maschinenlesbare und versionskontrollierte Architekturartefakte unterstützen
 unter anderem automatisierte Verarbeitung, Versionierung und
-Nachverfolgbarkeit \cite{Bucaioni2025,Stirbu2022}. Ein maschinenlesbares
-Zielartefakt beantwortet jedoch nicht automatisch die Frage, wie die darin
-enthaltene Engineering-Information kontrolliert aus heterogenen
-Ausgangsinformationen hergeleitet wurde.
+Nachverfolgbarkeit \cite{Bucaioni2025,Stirbu2022}. Das in dieser Arbeit
+vorgestellte Transformationskonzept nutzt diese Eigenschaften, um die
+resultierende Modellrepräsentation nachvollziehbar mit den für ihre Herleitung
+relevanten Quellen, Verarbeitungszuständen und Entscheidungen zu verknüpfen.
+Das Transformationsergebnis umfasst damit neben der formalen
+SysML-v2-Repräsentation auch die für ihre Herleitung erforderlichen
+Traceability-Beziehungen.
 
-Das Gestaltungsziel dieser Arbeit ist deshalb nicht die unmittelbare
-Generierung von SysML-v2-Code, sondern die kontrollierte Herleitung der darin
-repräsentierten Engineering-Information. Die Architektur muss unterscheiden,
-welche Informationen fachliche Aussagen begründen dürfen, wo
-probabilistische Interpretation stattfindet, welche Ergebnisse lediglich
-Vorschlags- oder Evidenzcharakter besitzen, an welchen Übergängen eine
-explizite menschliche Autorisierung erforderlich ist und wie nachgelagerte
-Modellierungs- und Transformationsentscheidungen nachvollziehbar an bereits
-autorisierte Informationszustände gebunden werden.
+Die Architektur des Transformationssystems unterscheidet, welche Informationen
+fachliche Aussagen begründen, wo probabilistische Interpretation stattfindet,
+welche Ergebnisse Vorschlags- oder Evidenzcharakter besitzen, an welchen
+Übergängen eine explizite menschliche Autorisierung erfolgt und wie
+nachgelagerte Modellierungs- und Transformationsentscheidungen nachvollziehbar
+an bereits autorisierte Informationszustände gebunden werden.
 
-Probabilistische KI-Verarbeitung wird damit nicht aus dem
-Engineering-Prozess entfernt. Sie wird gezielt dort eingesetzt, wo
-heterogene oder semantisch offene Information interpretiert werden muss, und
-durch explizite Informations-, Autorisierungs-, Provenienz- und
-Validierungsgrenzen in einen kontrollierbaren Engineering-Prozess
-eingebettet. Die folgenden Abschnitte leiten die hierfür erforderlichen
-Architekturverantwortungen schrittweise her.
+Probabilistische KI-Verarbeitung wird gezielt dort eingesetzt, wo heterogene
+oder semantisch offene Information interpretiert wird. Explizite Informations-,
+Autorisierungs-, Provenienz- und Validierungsgrenzen binden diese Verarbeitung
+in einen kontrollierbaren Transformationsprozess ein. Die
+folgenden Abschnitte beschreiben die hierfür erforderlichen
+Architekturmechanismen.
 
 \subsection{Kontrollierte Informationsbasis und Informationsautorität}
 \label{sec:architecture_information_authority}
 
-Die Interpretation heterogener Engineering-Information kann von zusätzlichem
-Kontext profitieren. Retrieval-Augmented-Generation-Ansätze ermöglichen die
-Einbindung externer Wissensbestände in die Verarbeitung eines Sprachmodells
-\cite{Chis.2025}. Semantische Technologien und Ontologien können ergänzend
-Begriffe, Relationen und gemeinsame Konzeptstrukturen explizit
-repräsentieren und dadurch die Einordnung heterogener Informationen
-unterstützen \cite{Abonyi.2024,ISO21838_2_2021}. Für die hier betrachtete
-Transformation wäre es daher weder erforderlich noch zweckmäßig, die
-KI-gestützte Verarbeitung ausschließlich auf den unmittelbaren Inhalt eines
-einzelnen Engineering-Dokuments zu beschränken.
+Die Interpretation heterogener Engineering-Information profitiert in der Regel
+von zusätzlichem Kontext. Retrieval-Augmented-Generation-Ansätze ermöglichen
+die Einbindung solcher externer Wissensbestände in die Verarbeitung eines
+Sprachmodells \cite{Chis.2025}. Semantische Klarstellungen und Ontologien
+können ergänzend Begriffe, Relationen und gemeinsame Konzeptstrukturen
+repräsentieren und dadurch die korrekte Interpretation der vorliegenden
+Informationen unterstützen \cite{Abonyi.2024,ISO21838_2_2021}. Zudem kann bei
+der Verarbeitung heterogener Informationsquellen zusätzliches Kontextwissen
+erforderlich sein, um semantische Unterschiede zwischen Quellinformationen zu
+berücksichtigen \cite{Bressan.2000}.
 
-Bei der Verarbeitung heterogener Informationsquellen kann zudem explizites
-Kontextwissen erforderlich sein, um semantische Unterschiede zwischen
-Quellinformationen zu berücksichtigen \cite{Bressan.2000}.
-
-Die Nutzung zusätzlicher Information erzeugt jedoch eine
-Architekturaufgabe: Engineering-Dokumente, Terminologie, Domänenwissen,
-ontologische Referenzen, Modellierungsregeln und technische
-Verarbeitungsanweisungen besitzen unterschiedliche Funktionen. Werden diese
-Rollen nicht explizit getrennt, ist aus einem Verarbeitungsergebnis nicht
-mehr eindeutig nachvollziehbar, welche Information eine fachliche Aussage
-über das betrachtete System begründet und welche lediglich zu ihrer
-Interpretation oder technischen Verarbeitung beigetragen hat.
-
+Die Nutzung zusätzlicher Information führt dazu, dass Engineering-Dokumente,
+Terminologie, Domänenwissen, Ontologien, Modellierungsregeln und technische
+Verarbeitungsanweisungen unterschiedliche Rollen einnehmen. Eine explizite
+Trennung dieser Rollen macht nachvollziehbar, welche Information eine
+fachliche Aussage über das betrachtete System begründet und welche
+Information zu ihrer Interpretation oder technischen Verarbeitung beiträgt.
 Aus dem Provenienzgedanken, Herkunft und Ableitungsbeziehungen von
-Informationsobjekten nachvollziehbar zu erhalten
-\cite{MoreauMissier2013}, wird deshalb für diese Arbeit eine zusätzliche
-Anforderung abgeleitet: Neben der Herkunft einer Information muss auch ihre
-zulässige fachliche Rolle innerhalb der Modellableitung explizit bestimmt
-sein.
+Informationsobjekten nachvollziehbar zu erhalten \cite{MoreauMissier2013},
+wird deshalb für diese Arbeit eine zusätzliche Anforderung abgeleitet: Neben
+der Herkunft einer Information wird auch ihre Rolle innerhalb der
+Modellableitung explizit bestimmt.
 
-Die entwickelte Architektur unterscheidet hierzu drei Informationsrollen.
-\emph{Engineering Sources} werden im Folgenden als Engineering-Quellen
-bezeichnet. Sie bilden die fachliche Ausgangsbasis des zu modellierenden
-Systems und dürfen quellengebundene Evidenz
-(\emph{source-grounded Evidence}) begründen.
-\emph{Context Sources} werden als Kontextquellen bezeichnet und stellen
-zusätzliche Information für Interpretation und Einordnung bereit. Eine dritte
-Rolle bildet der Verarbeitungs- und Orchestrierungskontext, der die technische
-Konfiguration und Steuerung des Verarbeitungsvorgangs umfasst
-(Tabelle~\ref{tab:information_authority_roles}).
+Die entwickelte Architektur unterscheidet hierzu drei Informationsrollen:
+
+\begin{itemize}
+    \item \emph{Engineering Sources} werden im Folgenden als
+    Engineering-Quellen bezeichnet. Sie bilden die fachliche Ausgangsbasis des
+    zu modellierenden Systems und begründen quellengebundene Evidenz
+    (\emph{source-grounded Evidence}).
+
+    \item \emph{Context Sources} werden als Kontextquellen bezeichnet und
+    stellen zusätzliche Information für Interpretation und Einordnung bereit.
+
+    \item Der Verarbeitungs- und Orchestrierungskontext umfasst die technische
+    Konfiguration und Steuerung des Verarbeitungsvorgangs.
+\end{itemize}
+
+Tabelle~\ref{tab:information_authority_roles} fasst Funktion und fachliche
+Reichweite dieser Informationsrollen zusammen.‚
 
 \begin{table}[htbp]
 \centering
-\caption[Informationsrollen der Informationsverarbeitungsarchitektur]{Informationsrollen und ihre zulässige Funktion innerhalb der
-Informationsverarbeitungsarchitektur. Nur Engineering-Quellen dürfen
-fachliche Evidenz über das betrachtete System begründen. Kontextquellen und
-Verarbeitungskontext können Interpretation beziehungsweise Verarbeitung
-unterstützen, besitzen jedoch keine eigenständige fachliche
-Informationsautorität.}
+\caption[Informationsrollen der Informationsverarbeitungsarchitektur]{
+Informationsrollen und ihre Funktion innerhalb der
+Informationsverarbeitungsarchitektur. Engineering-Quellen bilden die
+fachliche Evidenzbasis, Kontextquellen unterstützen deren Interpretation und
+der Verarbeitungs- und Orchestrierungskontext bestimmt die technische
+Durchführung.}
 \label{tab:information_authority_roles}
 \small
 \begin{tabular}{p{0.23\textwidth} p{0.34\textwidth} p{0.34\textwidth}}
 \hline
 \textbf{Informationsrolle} &
 \textbf{Funktion} &
-\textbf{Autorisierungsgrenze} \\
+\textbf{Fachliche Reichweite} \\
 \hline
 
 Engineering-Quelle
 (\emph{Engineering Source}) &
 Fachliche Informationsbasis über das betrachtete System und Ursprung
 quellengebundener Evidenz &
-Darf fachliche Evidenz begründen, erzeugt dadurch jedoch noch keine
-automatische fachliche Freigabe \\
+Begründet fachliche Evidenz als Grundlage nachgelagerter
+Interpretations- und Autorisierungsentscheidungen \\
 
 Kontextquelle
 (\emph{Context Source}) &
 Unterstützung von Interpretation, Terminologie, Klassifikation und
 semantischer Einordnung &
-Darf die Interpretation fachlicher Evidenz unterstützen, aber keine
-eigenständige fachliche Evidenz erzeugen \\
+Erweitert die Interpretationsgrundlage; fachliche Aussagen bleiben an die
+zugrunde liegende Engineering-Evidenz gebunden \\
 
 Verarbeitungs- und
 Orchestrierungskontext &
 Steuerung und Konfiguration des technischen Verarbeitungsprozesses &
-Darf die Verarbeitung steuern, aber keine fachliche Aussage über das
-betrachtete System begründen \\
+Bestimmt die technische Durchführung und wird als Bestandteil der
+Verarbeitungsprovenienz erfasst \\
 \hline
 \end{tabular}
 \end{table}
 
-Diese Trennung schließt zusätzlichen Kontext ausdrücklich nicht aus.
-Terminologie, Domänenwissen oder ontologische Referenzen dürfen eine
-Interpretation unterstützen und dadurch ihre Entscheidungsgrundlage
-erweitern. Die daraus hervorgehende fachliche Aussage muss jedoch weiterhin
+Zusätzlicher Kontext kann damit gezielt in die Interpretation einbezogen
+werden. Terminologie, Domänenwissen oder Ontologien erweitern die
+Interpretationsgrundlage, während die daraus hervorgehende fachliche Aussage
 auf die zugrunde liegende Engineering-Quelle und die daraus abgeleitete
-Evidenz zurückführbar bleiben. Semantische Referenzinformation unterstützt
-damit die Interpretation, ersetzt aber nicht deren fachliche Evidenzbasis
+Evidenz zurückführbar bleibt. Semantische Referenzinformation unterstützt
+damit die fachliche Einordnung auf Basis quellengebundener Evidenz
 \cite{Abonyi.2024,Chis.2025}.
 
 Dasselbe Prinzip gilt für den technischen Verarbeitungskontext. Prompts,
 Agentenrollen oder Ablaufkonfigurationen beeinflussen, wie eine
-Engineering-Quelle verarbeitet und wie ein Ergebnis erzeugt wird. Sie sind
-deshalb Bestandteil der Verarbeitungsprovenienz, begründen selbst jedoch
-keine Eigenschaften des betrachteten Systems.
+Engineering-Quelle verarbeitet und wie ein Ergebnis erzeugt wird. Sie werden
+deshalb als Bestandteil der Verarbeitungsprovenienz erfasst und machen die
+technischen Bedingungen nachvollziehbar, unter denen ein
+Verarbeitungsergebnis entstanden ist.
 
-Auch die Einstufung als Engineering-Quelle erzeugt noch keine fachliche
-Autorisierung. Sie legt lediglich fest, dass ihr Inhalt als zulässige
-fachliche Evidenzbasis verwendet werden darf. Ob eine daraus abgeleitete
-Information relevant, widerspruchsfrei oder für die weitere Modellbildung
-geeignet ist, wird erst in nachgelagerten Interpretations- und
-Entscheidungsschritten bewertet. Die Informationsrolle bestimmt damit die
-zulässige Herkunft einer fachlichen Aussage, nicht deren endgültige
-Autorisierung.
+Die Einstufung als Engineering-Quelle legt fest, dass ihr Inhalt als
+fachliche Evidenzbasis für die weitere Verarbeitung verwendet werden kann.
+Nachgelagerte Interpretations- und Entscheidungsschritte bewerten darauf
+aufbauend Relevanz, Konsistenz und Eignung für die weitere Modellbildung. Die
+Informationsrolle bestimmt damit die zulässige Herkunft einer fachlichen
+Aussage, während ihre Autorisierung in den nachfolgenden
+Entscheidungsschritten erfolgt.
 
-Auf dieser kontrollierten Informationsbasis kann anschließend eine
-probabilistische Interpretation erfolgen. Damit mehrere
-Interpretationsergebnisse sinnvoll miteinander verglichen werden können,
-müssen sie jedoch auf denselben quellengebundenen fachlichen Gegenstand
-bezogen sein. Diese zusätzliche Kontrollanforderung bildet den Ausgangspunkt
-des folgenden Abschnitts.
+Auf dieser kontrollierten Informationsbasis erfolgt die weitere
+quellengebundene Interpretation, die im folgenden Abschnitt betrachtet wird.
 
 \subsection{Quellengebundene Interpretation und Interpretationsvarianz}
 \label{sec:architecture_grounded_interpretation}
 
-Die kontrollierte Informationsbasis aus
+Die Einordnung von Quellen aus
 Abschnitt~\ref{sec:architecture_information_authority} legt fest, welche
 Informationen innerhalb der Verarbeitung welche fachliche Rolle besitzen.
-Damit ist jedoch noch nicht bestimmt, wie eine probabilistische
-Interpretation dieser Information erfolgen soll. Insbesondere bei
-mehrdeutigen oder unvollständig formalisierten Bestandsinformationen kann
-eine einzelne Interpretation mehrere fachlich plausible Lesarten verdecken.
+Darauf aufbauend ist zu bestimmen, wie diese Informationen interpretiert
+werden. Insbesondere bei mehrdeutigen oder unvollständig formalisierten
+Bestandsinformationen können mehrere fachlich plausible Lesarten bestehen.
 
 Multi-Agent-Ansätze nutzen mehrere Modellinstanzen, um unterschiedliche
 Lösungs- oder Argumentationspfade zu erzeugen und miteinander in Beziehung
 zu setzen. Für die jeweils untersuchten Aufgaben wurden dadurch unter anderem
 Verbesserungen bei Faktentreue und Schlussfolgerungsfähigkeit beobachtet
-\cite{Du2024}. Die Übereinstimmung mehrerer Instanzen ist jedoch kein
-Nachweis fachlicher Richtigkeit. Auch Multi-Agent-Prozesse bleiben von den
-Fähigkeiten und Fehlern der zugrunde liegenden Modelle sowie von ihrer
-Interaktionsgestaltung abhängig
-\cite{Du2024,TriemDing2024,Sunkaraneni2026}. Mehrere
-KI-Perspektiven werden in dieser Architektur deshalb nicht als
-Mehrheitsverfahren zur fachlichen Autorisierung verwendet.
+\cite{Du2024}. Die Übereinstimmung mehrerer Instanzen liefert dabei ein
+zusätzliches Bewertungssignal, dessen fachliche Aussagekraft weiterhin von
+den Fähigkeiten der zugrunde liegenden Modelle und von der Gestaltung ihrer
+Interaktion abhängt \cite{Du2024,TriemDing2024,Sunkaraneni2026}.
 
-Ihr Zweck besteht vielmehr darin, unterschiedliche Interpretationen
-desselben fachlichen Gegenstands vergleichbar zu machen. Diese
-Vergleichbarkeit setzt voraus, dass die Perspektiven auf dieselbe
-Informationsgrundlage angewendet werden. Würden verschiedene Personas
-unabhängig relevante Quellenausschnitte auswählen, segmentieren und daraus
-eigene fachliche Gegenstände bilden, könnte eine beobachtete Abweichung
-sowohl aus unterschiedlicher Interpretation als auch aus unterschiedlichen
-Ausgangsinformationen entstehen.
+Mehrere KI-Perspektiven dienen in der Architektur des in dieser Arbeit
+vorgestellten Transformationssystems dazu, unterschiedliche Interpretationen
+desselben fachlichen Gegenstands sichtbar und vergleichbar zu machen. Hierzu
+werden die verschiedenen Perspektiven auf dieselbe Informationsgrundlage
+angewendet. Abweichungen zwischen ihren Ergebnissen können dadurch als
+Interpretationsvarianz desselben Ausgangsgegenstands betrachtet werden.
 
-Die Architektur trennt deshalb die Identifikation der gemeinsamen
+Die Architektur trennt hierzu die Identifikation der gemeinsamen
 Informationsgrundlage von ihrer multiperspektivischen Interpretation.
 Innerhalb einer registrierten Engineering-Quelle wird zunächst
-quellengebundene Evidenz identifiziert und über konkrete Quellenbezüge an
-ihre Herkunft gebunden. Darauf aufbauend werden fachliche
-Referenzgegenstände (\emph{Engineering Subjects}) gebildet, auf die
-anschließend mehrere konfigurierte Persona-Perspektiven angewendet werden.
+quellengebundene Evidenz identifiziert und über konkrete Quellenbezüge an ihre
+Herkunft gebunden. Darauf aufbauend werden fachliche Referenzgegenstände
+(\emph{Engineering Subjects}) gebildet, auf die anschließend mehrere
+konfigurierte Persona-Perspektiven angewendet werden.
 
-Die grundlegende Verantwortungstrennung folgt damit der Sequenz
+Eine \emph{Persona} bezeichnet in dieser Arbeit die konfigurierte fachliche
+Perspektive, aus der eine Agentenrolle eine definierte Verarbeitungsaufgabe
+bearbeitet. Die Agentenrolle legt damit die Aufgabe fest, während die Persona
+die Perspektive ihrer Bearbeitung bestimmt. Die im Prototyp eingesetzten
+Persona-Definitionen sind in Anhang~\ref{app:persona_definitions}
+dokumentiert.
+
+Der Verarbeitungspfad folgt damit der Sequenz
 
 \begin{center}
 Engineering-Quelle\\
@@ -234,423 +231,395 @@ $\downarrow$\\
 mehrere Persona-Interpretationen.
 \end{center}
 
-Die Personas entscheiden damit nicht unabhängig, welche
-Engineering-Information in einer Quelle vorhanden ist. Sie interpretieren
-denselben bereits quellengebunden identifizierten fachlichen Gegenstand aus
-unterschiedlichen Perspektiven. Erst dadurch lassen sich Abweichungen
-zwischen ihren Ergebnissen als Interpretationsvarianz desselben Gegenstands
-betrachten.
+Alle Persona-Interpretationen beziehen sich auf denselben quellengebunden
+identifizierten fachlichen Gegenstand. Dadurch lassen sich Abweichungen
+zwischen ihren Ergebnissen gezielt als Interpretationsvarianz dieses
+Gegenstands auswerten.
 
 Auf dieser gemeinsamen Grundlage unterscheidet die Architektur mehrere für
-die nachgelagerte Bewertung relevante Zustände. \emph{Übereinstimmung}
-(\emph{Consensus}) bezeichnet eine inhaltlich stabile Übereinstimmung
-unterschiedlicher Persona-Perspektiven. \emph{Varianz}
-(\emph{Variance}) bezeichnet fachlich relevante Abweichungen zwischen diesen
-Perspektiven. Eine \emph{gemeinsame Mehrdeutigkeit}
-(\emph{Shared Ambiguity}) liegt vor, wenn mehrere Perspektiven zu ähnlichen
-Interpretationen gelangen, zugleich aber dieselbe Unsicherheit, fehlende
-Information oder Mehrdeutigkeit erkennen.
+die nachgelagerte Bewertung relevante Zustände:
 
-Diese Zustände besitzen unterschiedliche Informationswerte, aber keine
-eigene fachliche Autorität. Consensus kann auf eine stabile gemeinsame
-Interpretation hinweisen, stellt jedoch keinen Wahrheitsnachweis dar.
-Variance wird umgekehrt nicht automatisch als Fehler behandelt. Sie kann
-anzeigen, dass unterschiedliche fachliche Lesarten bestehen oder die
-Informationsbasis für eine eindeutige Einordnung nicht ausreicht.
-Gemeinsame Mehrdeutigkeit macht dagegen sichtbar, dass die Perspektiven zwar
-nicht gegeneinander variieren, aber gemeinsam eine unaufgelöste
-Informationslage erkennen. Die Persona-Verzweigung dient damit nicht der
-automatischen Auflösung solcher Zustände, sondern ihrer Sichtbarmachung als
-zusätzliche Bewertungsinformation für die nachgelagerte menschliche Prüfung.
+\begin{itemize}
+    \item \emph{Übereinstimmung} (\emph{Consensus}) bezeichnet eine
+    inhaltlich stabile Übereinstimmung unterschiedlicher
+    Persona-Perspektiven.
+
+    \item \emph{Varianz} (\emph{Variance}) bezeichnet fachlich relevante
+    Abweichungen zwischen diesen Perspektiven.
+
+    \item \emph{Gemeinsame Mehrdeutigkeit} (\emph{Shared Ambiguity})
+    bezeichnet den Zustand, in dem mehrere Perspektiven zu ähnlichen
+    Interpretationen gelangen und zugleich dieselbe Unsicherheit, fehlende
+    Information oder Mehrdeutigkeit erkennen.
+\end{itemize}
+
+Diese Zustände stellen unterschiedliche Bewertungsinformationen bereit.
+Consensus weist auf eine stabile gemeinsame Interpretation hin, deren
+fachliche Richtigkeit anschließend bewertet werden kann. Variance macht
+unterschiedliche fachliche Lesarten oder eine für eine eindeutige Einordnung
+unzureichende Informationsbasis sichtbar. Gemeinsame Mehrdeutigkeit zeigt,
+dass mehrere Perspektiven dieselbe unaufgelöste Informationslage erkennen.
+Die multiperspektivische Verarbeitung stellt diese Zustände damit als
+zusätzliche Entscheidungsgrundlage für die nachgelagerte menschliche Prüfung
+bereit.
 
 Davon zu unterscheiden ist die \emph{Stabilität} einer einzelnen Persona.
-Wiederholte Ausführungen derselben Perspektive werden nicht als zusätzliche
-unabhängige Stimmen gewertet. Sie können lediglich zeigen, ob dieselbe
-interpretative Perspektive bei wiederholter Verarbeitung desselben
-Evidenzgegenstands zu vergleichbaren Ergebnissen gelangt. Die Anzahl
-technischer LLM-Aufrufe erhöht dadurch nicht das fachliche Gewicht einer
-Perspektive.
+Wiederholte Ausführungen derselben Perspektive zeigen, inwieweit die
+Interpretation desselben Evidenzgegenstands zu vergleichbaren Ergebnissen
+führt. Die Stabilität beschreibt damit die Reproduzierbarkeit einer
+Perspektive; ihr fachliches Gewicht ergibt sich aus der Perspektive selbst und
+nicht aus der Anzahl technischer LLM-Aufrufe.
 
-Consensus, Variance, gemeinsame Mehrdeutigkeit und Stabilität bleiben somit
-Bestandteil der maschinell erzeugten Bewertungsinformation. Sie können die
-menschliche Aufmerksamkeit auf stabile, divergierende oder unaufgelöste
-Gegenstände lenken, autorisieren jedoch keinen Engineering-Inhalt. Die
+Consensus, Variance, gemeinsame Mehrdeutigkeit und Stabilität bilden somit
+maschinell erzeugte Bewertungsinformationen. Sie lenken die menschliche
+Aufmerksamkeit auf stabile, divergierende oder unaufgelöste Gegenstände und
+bilden die Grundlage für die anschließende fachliche Entscheidung. Die
 Architektur trennt damit die probabilistische Interpretation eines
-quellengebundenen Gegenstands von der Entscheidung darüber, ob und in
-welcher Form dieser Inhalt für die weitere Engineering-Verarbeitung
-autorisiert wird.
+quellengebundenen Gegenstands von seiner fachlichen Autorisierung.
 
-Diese Entscheidung bildet die nächste Kontrollgrenze. Wenn weder eine
-einzelne KI-Interpretation noch die Übereinstimmung mehrerer Perspektiven
-eine fachliche Autorisierung begründen kann, muss die Autorisierung eines
-interpretierten Informationszustands als eigenständige Verantwortung
-behandelt werden. Diese wird im folgenden Abschnitt als
-\emph{Human Authority} eingeführt.
+Die fachliche Autorisierung bildet den nächsten Entscheidungsschritt im
+Verarbeitungspfad und wird im folgenden Abschnitt als
+\emph{Human Authority} betrachtet.
 
 \subsection{Human Authority als kontrollierte Engineering-Grenze}
 \label{sec:architecture_human_authority}
 
 Die in Abschnitt~\ref{sec:architecture_grounded_interpretation}
 beschriebenen Interpretationsperspektiven erzeugen zusätzliche
-Bewertungsinformation über einen quellengebundenen fachlichen Gegenstand.
-Weder eine einzelne Interpretation noch die Übereinstimmung mehrerer
-Perspektiven entscheidet jedoch darüber, ob ein Inhalt als autorisierte
-Engineering-Information weiterverwendet werden darf. Dieser Übergang
-erfordert eine eigenständige Entscheidungsverantwortung.
+Bewertungsinformationen über einen quellengebundenen fachlichen Gegenstand.
+Die fachliche Autorisierung dieser Information erfolgt in einem gesonderten
+menschlichen Entscheidungsschritt. Damit wird festgelegt, welche
+interpretierten Inhalte für die weitere fachliche Verwendung im
+Transformationsprozess autorisiert werden.
 
 Human-in-the-Loop-Ansätze umfassen unterschiedliche Formen menschlicher
 Einbindung, von Überwachung und Rückmeldung bis zur aktiven Bewertung und
 Entscheidung \cite{MosqueiraRey2023,Lazaros2026}. Auch bei der
-LLM-gestützten Erzeugung von Systems-Engineering- und SysML-v2-Artefakten
-ersetzt die technische Erzeugung plausibler Ergebnisse keine fachliche
-Prüfung \cite{Topcu2025,Stein2026}. Für die entwickelte Architektur reicht
-die bloße Anwesenheit eines Menschen im Prozess deshalb nicht als
-Kontrollmechanismus aus.
+LLM-gestützten Erzeugung von Systems-Engineering- und SysML-v2-Artefakten ist
+die fachliche Prüfung ein eigener Bestandteil der Bewertung generierter
+Ergebnisse \cite{Topcu2025,Stein2026}. Die entwickelte Architektur bildet
+diese menschliche Einbindung deshalb als explizite Entscheidungsbefugnis an
+definierten Übergängen des Verarbeitungsprozesses ab.
 
 Der Begriff \emph{Human Authority} bezeichnet in dieser Arbeit die explizite
 menschliche Entscheidungsbefugnis an einem definierten fachlichen oder
-modellbezogenen Übergang. Entscheidend ist nicht allein, dass ein Mensch mit
-dem System interagiert, sondern dass seine konkrete Entscheidung darüber
-bestimmt, ob ein zuvor nicht autoritativer Zustand für die nachgelagerte
-Engineering-Verwendung zugelassen wird. Human Authority wird damit von
-allgemeiner Mensch-System-Interaktion unterschieden und als eigenständige
-Architekturverantwortung behandelt.
+modellbezogenen Übergang. Eine solche Entscheidung legt fest, welcher
+Informations- oder Modellzustand für nachgelagerte Engineering-Schritte
+autorisiert wird. Human Authority beschreibt damit eine konkrete
+Entscheidungsfunktion innerhalb des Verarbeitungsprozesses.
 
-Die erste solche Autorisierungsgrenze liegt zwischen maschinell erzeugter
+Die erste Autorisierungsgrenze liegt zwischen maschinell erzeugter
 Bewertungsinformation und autorisierter Engineering-Information.
 Quellengebundene Evidenz, Persona-Interpretationen sowie Informationen über
-Consensus, Variance und gemeinsame Mehrdeutigkeit bilden die
-Entscheidungsgrundlage. Sie besitzen selbst jedoch keine fachliche
-Autorität. Erst eine explizite menschliche Engineering-Entscheidung kann
-einen geeigneten Inhalt für die weitere fachliche Verwendung autorisieren.
-Diese Entscheidungsbefugnis wird im weiteren Verlauf als
+Consensus, Variance und gemeinsame Mehrdeutigkeit bilden hierfür die
+Entscheidungsgrundlage. Eine explizite menschliche Engineering-Entscheidung
+autorisiert den ausgewählten Inhalt für die weitere fachliche Verwendung.
+Diese Entscheidungsbefugnis wird im Folgenden als
 \emph{Human Engineering Authority} bezeichnet.
 
-Eine solche Entscheidung muss an den tatsächlich geprüften
-Informationszustand gebunden bleiben. Würde sich eine Autorisierung lediglich
-auf eine Bezeichnung oder einen veränderbaren Arbeitszustand beziehen, könnte
-sie unbemerkt auf später veränderte Inhalte übertragen werden. Entscheidungen
-der Human Authority referenzieren deshalb einen identifizierten und
-unveränderlich bestimmbaren Prüfzustand. Ändert sich der
-entscheidungsrelevante Inhalt materiell, muss auch die zugehörige
-Autorisierung erneut hergestellt werden. Der maschinell erzeugte
-Ausgangszustand bleibt dabei als eigener Provenienz- und Evidenzzustand
-erhalten.
+Die Autorisierung wird an den tatsächlich geprüften Informationszustand
+gebunden. Entscheidungen der Human Engineering Authority referenzieren
+deshalb einen eindeutig identifizierten und unveränderlich bestimmbaren
+Prüfzustand. Eine materielle Änderung des entscheidungsrelevanten Inhalts
+führt zu einem neuen Prüfzustand und einer darauf bezogenen erneuten
+Autorisierung. Der maschinell erzeugte Ausgangszustand bleibt dabei als
+eigener Provenienz- und Evidenzzustand erhalten.
 
-Human Authority wird nicht auf einen einzigen Freigabepunkt reduziert.
-Innerhalb des Informationsflusses entstehen mehrere materielle
-Entscheidungsgrenzen mit unterschiedlichen Gegenständen. Die Architektur
-unterscheidet deshalb zwischen der fachlichen Autorisierung von
-Engineering-Information, modellbezogenen Entscheidungen und der
-abschließenden Prüfung und Freigabe des resultierenden Modellzustands.
+Das gestufte Authority-Konzept umfasst mehrere menschliche
+Entscheidungsgrenzen mit unterschiedlichen Entscheidungsgegenständen. Die
+\emph{Human Engineering Authority} autorisiert die fachliche Verwendung von
+Engineering-Information. Weitere Entscheidungen betreffen die strukturelle
+Einordnung und Repräsentation dieser Information im Zielmodell sowie die
+abschließende Prüfung und Freigabe des erzeugten Modellzustands.
 
-Eine modellbezogene Autorisierungsgrenze entsteht beispielsweise bei der
-Modellplatzierung. Eine fachlich autorisierte Information beantwortet noch
-nicht zwingend die Frage, an welcher Stelle des vorgesehenen Modellrahmens
-sie repräsentiert werden soll. Auch hierfür können maschinell erzeugte oder
-multiperspektivische Vorschläge die Entscheidung unterstützen. Ihre
-Übereinstimmung erzeugt jedoch keine \emph{Model Authority}. Erst eine
-explizite menschliche Modellplatzierungsentscheidung autorisiert die
-gewählte strukturelle Einordnung. Die nachgelagerte Modellbildung erhält
-damit einen bereits autorisierten Zustand und muss eine offene
-Modellierungsentscheidung nicht implizit selbst treffen.
+Für die strukturelle Einordnung im Zielmodell können maschinell erzeugte oder
+multiperspektivische Vorschläge als Entscheidungsgrundlage dienen. Die
+explizite menschliche Entscheidung legt anschließend fest, als welcher
+Modellgegenstand und an welcher Stelle des vorgesehenen Modellrahmens die
+autorisierte Engineering-Information repräsentiert wird. Diese
+Entscheidungsbefugnis wird als \emph{Model Authority} bezeichnet. Die
+nachgelagerte Modellbildung verarbeitet damit einen bereits fachlich und
+strukturell autorisierten Zustand.
 
-Eine weitere Autorisierungsgrenze liegt am Ende der Modellerzeugung.
-Technische Validierung, abschließende menschliche Modellprüfung und
-Freigabe adressieren unterschiedliche Fragestellungen. Eine erfolgreiche
-technische Validierung zeigt lediglich, dass der erzeugte Modellzustand die
-jeweils geprüften formalen und technischen Bedingungen erfüllt. Die
-anschließende menschliche Modellprüfung bewertet dagegen den konkret
-erzeugten Modellzustand gegenüber den zuvor autorisierten Engineering- und
-Modellentscheidungen. Erst eine davon getrennte Freigabeentscheidung
-autorisiert genau diesen geprüften und validierten Zustand zur
-Veröffentlichung.
+Eine weitere Entscheidungsgrenze liegt am Ende der Modellerzeugung.
+Validierung, menschliche Modellprüfung und Freigabe adressieren dabei
+aufeinander aufbauende Prüfgegenstände. Die Validierung bewertet den konkret
+erzeugten Artefaktzustand anhand der vorgesehenen Invarianten und seiner
+Verarbeitbarkeit in der SysML-v2-Zielumgebung. Die anschließende menschliche
+Modellprüfung vergleicht den erzeugten Modellzustand mit den zuvor
+autorisierten Engineering- und Modellentscheidungen. Die
+Freigabeentscheidung autorisiert schließlich genau diesen geprüften und
+validierten Zustand zur Veröffentlichung.
 
-Das gestufte Authority-Konzept bedeutet damit nicht, dass jeder
-Verarbeitungsschritt manuell bestätigt werden muss. Menschliche
-Entscheidungsbefugnis wird dort vorgesehen, wo ein Übergang die fachliche
-Bedeutung, die zulässige Verwendung oder die Modellrepräsentation materiell
-beeinflusst. Regelgebundene technische Transformationen benötigen dagegen
-keine zusätzliche menschliche Bestätigung, sofern ihre Voraussetzungen
-bereits autorisiert und ihre Transformationsregeln eindeutig bestimmt sind.
+Menschliche Entscheidungsbefugnis wird damit gezielt an Übergängen
+eingesetzt, die die fachliche Bedeutung, die weitere Verwendung oder die
+Modellrepräsentation materiell beeinflussen. Regelgebundene Transformationen
+können anschließend auf Basis bereits autorisierter Voraussetzungen und
+eindeutig bestimmter Transformationsregeln ausgeführt werden.
 Human-in-the-Loop wird damit als gezielte Zuweisung fachlicher
-Entscheidungsverantwortung und nicht als flächendeckende manuelle Kontrolle
-verstanden \cite{MosqueiraRey2023,Lazaros2026}.
+Entscheidungsbefugnis innerhalb des Transformationsprozesses ausgestaltet
+\cite{MosqueiraRey2023,Lazaros2026}.
 
-Human Authority garantiert keine fachliche Fehlerfreiheit. Ihr
-architektonischer Zweck besteht darin, explizit und nachvollziehbar
-festzulegen, wer auf welcher Informationsbasis einen fachlich oder
-modellbezogen relevanten Zustandsübergang autorisiert hat. Probabilistische
-Interpretation, Übereinstimmung mehrerer Perspektiven oder technische
-Validierung können diese Entscheidungen vorbereiten und unterstützen, ihre
-Autorität jedoch nicht ersetzen.
+Der architektonische Zweck der Human Authority besteht darin, explizit und
+nachvollziehbar festzuhalten, wer auf welcher Informationsbasis einen
+fachlich oder modellbezogen relevanten Zustandsübergang autorisiert hat.
+Probabilistische Interpretationen und deren Bewertungsinformationen bilden
+hierfür Entscheidungsgrundlagen, während die nachgelagerte Validierung und
+Modellprüfung den konkret erzeugten Artefaktzustand adressieren.
 
-Mit der Autorisierung eines Engineering-Inhalts ist weiterhin nicht
-festgelegt, wie dieser Inhalt im Zielmodell repräsentiert werden soll.
-Fachliche Bedeutung, strukturelle Einordnung und konkrete
-Zielmodellformulierung sind unterschiedliche Entscheidungsgegenstände. Diese
-Trennung wird im folgenden Abschnitt betrachtet.
+Auf die fachliche Autorisierung folgt die Entscheidung, wie der autorisierte
+Engineering-Inhalt im Zielmodell strukturell eingeordnet und repräsentiert
+wird. Fachliche Bedeutung, strukturelle Einordnung und konkrete
+Zielmodellformulierung bilden dabei unterschiedliche Entscheidungsgegenstände,
+die im folgenden Abschnitt betrachtet werden.
 
 \subsection{Trennung von Engineering Meaning und Zielmodellbildung}
 \label{sec:architecture_meaning_representation}
 
 Mit der Human Engineering Authority aus
 Abschnitt~\ref{sec:architecture_human_authority} liegt ein fachlich
-autorisierter Informationszustand vor. Damit ist entschieden, welche
-Engineering-Aussage für die weitere Verarbeitung verwendet werden darf.
-Noch nicht entschieden ist jedoch, wie diese Aussage innerhalb eines
-Systemmodells repräsentiert werden soll.
+autorisierter Informationszustand vor. Er legt fest, welche
+Engineering-Aussage für die weitere Verarbeitung verwendet wird. Darauf
+aufbauend erfolgt die Entscheidung, wie diese Aussage innerhalb des
+Systemmodells eingeordnet und repräsentiert wird.
 
-Diese Unterscheidung ist insbesondere für die Rolle semantischer und
-ontologischer Leitplanken relevant. Ontologien können Begriffe, Relationen
-und gemeinsame Bedeutungsstrukturen explizit beschreiben und dadurch die
-Formalisierung und semantische Integration von Engineering-Wissen
-unterstützen \cite{OrellanaMandrick2019,Lu2022}. Auch domänenspezifische und
-ontologiebasierte MBSE-Ansätze verdeutlichen die Bedeutung gemeinsamer
-semantischer Bezugssysteme für die strukturierte Nutzung von
-Engineering-Information \cite{Liu2025SysDO,Dong2026}.
+Diese Unterscheidung ist insbesondere für semantische und ontologische
+Vorgaben relevant. Wie in
+Abschnitt~\ref{sec:ki_kontrollmechanismen} beschrieben, stellen Ontologien
+eine formalisierte Referenzbasis für Begriffe und Relationen einer Domäne
+bereit und unterstützen damit die semantische Integration von
+Engineering-Information \cite{OrellanaMandrick2019,Lu2022}.
+Domänenspezifische und ontologiebasierte MBSE-Ansätze verdeutlichen darüber
+hinaus die Bedeutung gemeinsamer semantischer Bezugssysteme für die
+strukturierte Nutzung von Engineering-Information
+\cite{Liu2025SysDO,Dong2026}.
 
-Eine semantische Einordnung beantwortet jedoch nicht automatisch die Fragen
-der Zielmodellbildung. Aus der fachlichen Bedeutung einer Information folgt
-weder eindeutig, an welcher Stelle eines konkreten Modellrahmens sie
-anzuordnen ist, noch durch welchen Modellelementtyp oder welche
-Zielnotation sie zweckmäßig repräsentiert werden soll. Diese Entscheidungen
-hängen zusätzlich vom Modellierungsrahmen, seinen strukturellen Konventionen,
-den vorgesehenen Sichten und dem jeweiligen Modellierungszweck ab.
-Semantische und ontologische Leitplanken unterstützen deshalb die
-Bedeutungsbestimmung und Konsistenz, ersetzen aber keine
-Modellierungsentscheidung.
+Für die Zielmodellbildung wird diese semantische Einordnung um
+modellbezogene Entscheidungen ergänzt. Der Modellierungsrahmen, seine
+strukturellen Konventionen, die vorgesehenen Sichten und der jeweilige
+Modellierungszweck bestimmen, an welcher Stelle und durch welchen
+Modellelementtyp eine fachlich autorisierte Information im Zielmodell
+repräsentiert wird. Semantische und ontologische Vorgaben strukturieren
+damit die fachliche Bedeutung und Konsistenz, während die
+modellbezogene Entscheidung deren konkrete Repräsentation festlegt.
 
-Die Architektur trennt daraus drei aufeinander bezogene
-Verantwortungsbereiche. Die \emph{fachliche Bedeutung}
-(\emph{Engineering Meaning}) beschreibt, welche Aussage durch die
-autorisierte Engineering-Information getragen wird. Die
-\emph{Einordnung und Repräsentation im Zielmodell} bestimmt anschließend,
-als welcher Modellgegenstand und an welcher Stelle des vorgesehenen
-Modellrahmens diese Information repräsentiert werden soll. Die
-\emph{zielmodellspezifische Formulierung} legt schließlich fest, wie der
-autorisierte Modellinhalt innerhalb der unterstützten Zielnotation
-ausgedrückt wird.
+Die Architektur des in dieser Arbeit vorgestellten Transformationssystems
+unterscheidet hierzu drei aufeinander aufbauende Entscheidungs- und
+Verarbeitungsebenen:
 
-Konzeptionell entsteht damit die Trennung
+\begin{itemize}
+    \item Die \emph{fachliche Bedeutung} (\emph{Engineering Meaning})
+    beschreibt die durch die autorisierte Engineering-Information getragene
+    Aussage.
 
-\begin{center}
-fachlich autorisierte Bedeutung\\
-$\downarrow$\\
-Einordnung und Repräsentation im Zielmodell\\
-$\downarrow$\\
-Internal Engineering Model\\
-$\downarrow$\\
-zielmodellspezifische Formulierung\\
-$\downarrow$\\
-SysML-v2-Repräsentation.
-\end{center}
+    \item Die \emph{Einordnung und Repräsentation im Zielmodell} legt fest,
+    als welcher Modellgegenstand und an welcher Stelle des vorgesehenen
+    Modellrahmens diese Information repräsentiert wird.
 
-Diese Übergänge besitzen unterschiedliche Entscheidungscharaktere. Eine
-Information kann beispielsweise fachlich eindeutig als Anforderung,
-Funktion, logische Komponente oder Beziehung interpretiert sein, ohne dass
-damit bereits ihre konkrete Einordnung in eine projektspezifische
-Modellstruktur feststeht. Ebenso kann eine Beziehung eine autorisierte
-fachliche Bedeutung besitzen, während ihre spätere Abbildung auf einen
-konkreten SysML-v2-Konstrukttyp noch eine eigenständige
-Repräsentationsentscheidung erfordert. Die SysML-v2-Spezifikation definiert
-die verfügbaren sprachlichen Konzepte und deren formale Bedeutung
-\cite{SysMLv2}; sie entscheidet jedoch nicht projektbezogen, welches
-Konstrukt für eine konkrete Engineering-Aussage auszuwählen ist.
+    \item Die \emph{zielmodellspezifische Formulierung} bestimmt, wie der
+    autorisierte Modellinhalt innerhalb der unterstützten Zielnotation
+    ausgedrückt wird.
+\end{itemize}
 
-Für die Zielmodellbildung wird deshalb zunächst eine von der finalen
+Abbildung~\ref{fig:architecture_target_model_formation} stellt den daraus
+resultierenden Übergang von fachlich autorisierter Engineering-Information
+zur SysML-v2-Repräsentation zusammenfassend dar.
+
+\begin{wrapfigure}{r}{0.47\textwidth}
+    \centering
+    \vspace{-0.8\baselineskip}
+    \includegraphics[
+        width=\linewidth,
+        keepaspectratio
+    ]{Graphiken/4.5_Zielmodellbildung_halbseite_v5.pdf}
+    \caption[Kontrollierte Zielmodellbildung]{
+        Kontrollierte Zielmodellbildung von fachlich autorisierter
+        Engineering-Information bis zur SysML-v2-Repräsentation.
+        Semantische und ontologische Vorgaben, Modellierungsrahmen und
+        strukturelle Konventionen sowie Vorgaben der Zielnotation unterstützen
+        die jeweils zugehörigen Verarbeitungsschritte.
+        Eigene Darstellung.}
+    \label{fig:architecture_target_model_formation}
+    \vspace{-0.6\baselineskip}
+\end{wrapfigure}
+
+Die einzelnen Übergänge adressieren unterschiedliche
+Entscheidungsgegenstände. Eine Engineering-Information kann beispielsweise
+fachlich als Anforderung, Funktion, logische Komponente oder Beziehung
+eingeordnet werden. Die nachfolgende modellbezogene Entscheidung bestimmt
+darauf aufbauend ihre konkrete Position innerhalb einer projektspezifischen
+Modellstruktur und ihre geeignete Repräsentationsform. Die
+SysML-v2-Spezifikation definiert hierfür die verfügbaren sprachlichen
+Konzepte und deren formale Bedeutung \cite{SysMLv2}. Die Auswahl des für
+eine konkrete Engineering-Aussage geeigneten Konstrukts erfolgt innerhalb
+des projektspezifischen Modellierungsprozesses.
+
+Für die Zielmodellbildung wird zunächst eine von der finalen
 SysML-v2-Formulierung getrennte Modellrepräsentation aufgebaut. Aus
-autorisierter Engineering-Information können \emph{Model Candidates}
-abgeleitet werden, die mögliche Modellelemente, Beziehungen und strukturelle
-Zuordnungen beschreiben. Dadurch wird der Übergang von fachlicher Bedeutung
-zu Modellstruktur als eigener prüfbarer Verarbeitungsschritt sichtbar,
-anstatt implizit während der späteren Codegenerierung zu erfolgen.
+autorisierter Engineering-Information werden \emph{Model Candidates}
+abgeleitet, die mögliche Modellelemente, Beziehungen und strukturelle
+Zuordnungen beschreiben. Der Übergang von fachlicher Bedeutung zu
+Modellstruktur wird dadurch als eigener prüfbarer Verarbeitungsschritt
+abgebildet.
 
-Ein Model Candidate besitzt dabei noch keine Model Authority. Insbesondere
-die Platzierung eines fachlich akzeptierten Gegenstands innerhalb eines
-vorgegebenen Modellrahmens stellt eine materielle Modellierungsentscheidung
-dar. Unterschiedliche Modellierungsperspektiven können hierfür Vorschläge
-bereitstellen, ohne dass deren Übereinstimmung oder Mehrheit selbst
-autoritativ wird. Erst eine explizite menschliche
-Modellplatzierungsentscheidung legt fest, welche zulässige Repräsentation
-und Position für den betrachteten Engineering-Gegenstand verwendet werden
-darf.
+Die Model Candidates bilden die Entscheidungsgrundlage für die
+\emph{Model Authority}. Unterschiedliche Modellierungsperspektiven können
+hierzu Vorschläge für die strukturelle Einordnung bereitstellen. Die
+explizite menschliche Entscheidung legt anschließend fest, welche
+Repräsentation und Position für den betrachteten Engineering-Gegenstand
+verwendet wird.
 
-Damit wirken fachliche Engineering Authority und Model Authority auf
-unterschiedlichen Ebenen. Die erste autorisiert die fachliche Bedeutung und
-Verwendung einer Information. Die zweite autorisiert deren strukturelle
-Einordnung und Repräsentation im Zielmodell. Beide Entscheidungen sind
-getrennt zu behandeln, da sie unterschiedliche Fragestellungen beantworten.
+Human Engineering Authority und Model Authority adressieren damit
+unterschiedliche Ebenen. Die Human Engineering Authority autorisiert die
+fachliche Bedeutung und Verwendung einer Information. Die Model Authority
+autorisiert deren strukturelle Einordnung und Repräsentation im Zielmodell.
 
-Nach der autorisierten Modellplatzierung können die freigegebenen Inhalte zu
-einem gemeinsamen \emph{Internal Engineering Model} (IEM) zusammengeführt
-werden. Das IEM bildet einen kontrollierten Modellzustand zwischen
-autorisierter Engineering-Information und konkreter Zielnotation. Es
-konsumiert ausschließlich bereits autorisierte Modellinhalte, erhält deren
-fachliche Bedeutung und führt keine erneute probabilistische
-Reinterpretation durch. Gleichzeitig bleibt es zunächst unabhängig von
-konkreten SysML-v2-Textkonstrukten.
+Nach dieser modellbezogenen Autorisierung werden die freigegebenen Inhalte
+zu einem gemeinsamen \emph{Internal Engineering Model} (IEM)
+zusammengeführt. Das IEM bildet, wie in
+Abbildung~\ref{fig:architecture_target_model_formation} dargestellt, einen
+kontrollierten Modellzustand zwischen autorisierter Engineering-Information
+und konkreter Zielnotation. Es bündelt die autorisierten Modellinhalte unter
+Erhalt ihrer fachlichen Bedeutung und stellt sie auf einer internen
+Repräsentationsebene für die anschließende zielmodellspezifische Formulierung bereit.
 
-Diese Trennung verhindert, dass fachliche Bedeutung, Modellorganisation und
-textuelle Serialisierung innerhalb eines einzelnen Generierungsschritts
-verschmelzen. Erst auf Basis des autorisierten internen Modellzustands wird
-festgelegt, wie Elemente und Beziehungen innerhalb des unterstützten
-Ausschnitts der SysML-v2-Zielnotation formuliert werden. Die konkrete
-Notation ist damit Ergebnis einer nachgelagerten Transformation und keine
-neue Quelle fachlicher Bedeutung.
+Auf Basis dieses internen Modellzustands wird anschließend festgelegt, wie
+Elemente und Beziehungen innerhalb des unterstützten Ausschnitts der
+SysML-v2-Zielnotation formuliert werden. Fachliche Bedeutung,
+Modellorganisation und die Erzeugung der SysML-v2-Repräsentation bleiben
+dadurch als explizite und nachvollziehbare Verarbeitungsebenen erhalten.
 
-Für die dritte Teilforschungsfrage ist diese Trennung besonders relevant.
-Ontologische und semantische Leitplanken können Bedeutungsräume,
-Terminologie und Relationen strukturieren
-\cite{OrellanaMandrick2019,Lu2022,Dong2026}. Semantische Konsistenz allein
-bestimmt jedoch weder eine eindeutige Modellplatzierung noch eine
-vollständige Zielmodellformulierung. Eine kontrollierte Transformation
-erfordert deshalb die getrennte Behandlung von fachlicher Bedeutung,
-Model Authority und zielmodellspezifischer Formulierung sowie explizite
-Übergänge zwischen diesen Verantwortungen.
+Für die dritte Teilforschungsfrage ist diese Struktur besonders relevant.
+Ontologische und semantische Vorgaben strukturieren Bedeutungsräume,
+Terminologie und Relationen \cite{OrellanaMandrick2019,Lu2022,Dong2026}.
+Die Human Engineering Authority autorisiert die fachliche Bedeutung, die
+Model Authority deren strukturelle Repräsentation und die
+zielmodellspezifische Formulierung überführt den autorisierten Modellzustand
+in die unterstützte SysML-v2-Notation. Die expliziten Übergänge zwischen
+diesen Ebenen bilden damit die Leitplanken für die kontrollierte
+Zielmodellbildung.
 
-Damit ist festgelegt, welche fachlichen und modellbezogenen Entscheidungen
-vor der eigentlichen Modellerzeugung autorisiert sein müssen. Der folgende
-Abschnitt betrachtet darauf aufbauend, welche nachgelagerten
-Transformationen regelgebunden und reproduzierbar ausgeführt werden können
-und an welchen Stellen eine Verarbeitung blockieren muss, wenn die
-erforderliche Autorisierung oder Transformationsregel fehlt.
+Der folgende Abschnitt betrachtet darauf aufbauend die regelgebundene und
+reproduzierbare Ausführung der nachgelagerten Transformation.
 
-\subsection{Deterministische und fail-closed kontrollierte Transformation}
+\subsection{Deterministische und kontrollierte Transformation}
 \label{sec:architecture_controlled_transformation}
 
 Die in Abschnitt~\ref{sec:architecture_meaning_representation}
-beschriebenen Autorisierungsgrenzen führen zu einem Modellzustand, dessen
-fachliche Bedeutung und strukturelle Einordnung bereits explizit entschieden
-wurden. Für die nachgelagerte Verarbeitung stellt sich damit eine andere
-Aufgabe als während der vorausgehenden Interpretation: Wo keine neue
-fachliche Entscheidung erforderlich ist, soll auch keine neue
-probabilistische Interpretation eingeführt werden.
+beschriebene Model Authority führt zu einem Modellzustand, dessen fachliche
+Bedeutung sowie strukturelle Einordnung und Repräsentation autorisiert sind.
+Die nachgelagerte Transformation verarbeitet damit bereits entschiedene
+Engineering- und Modellinhalte. Ihre Aufgabe besteht darin, diese Inhalte
+regelgebunden und reproduzierbar in die unterstützte
+SysML-v2-Zielrepräsentation zu überführen.
 
-Maschinenlesbare und versionskontrollierte Entwicklungsartefakte schaffen
-eine Grundlage dafür, definierte Transformationen automatisiert und
-nachvollziehbar auszuführen. Architecture-as-Code- und
-Everything-as-Code-Ansätze verbinden solche Repräsentationen unter anderem
-mit Versionierung, Automatisierung und reproduzierbarer Weiterverarbeitung
-\cite{Bucaioni2025,Stirbu2022}. Für die entwickelte Architektur folgt daraus
-das Prinzip, bereits autorisierte Engineering- und Modellentscheidungen über
-explizite Transformationsregeln in nachgelagerte Zustände zu überführen.
+Maschinenlesbare und versionskontrollierte Architekturartefakte bilden eine
+geeignete Grundlage für solche automatisierten Transformationen.
+\emph{Architecture as Code}- und \emph{Everything as Code}-Ansätze verbinden
+maschinenlesbare Repräsentationen unter anderem mit Versionierung,
+Automatisierung und reproduzierbarer Weiterverarbeitung
+\cite{Bucaioni2025,Stirbu2022}. Das entwickelte Transformationssystem nutzt
+diese Eigenschaften, indem nach erfolgter Autorisierung explizite und
+versionierte Transformationsregeln auf den jeweiligen Modellzustand
+angewendet werden.
 
-Dies betrifft zunächst die Bildung des \emph{Internal Engineering Model}.
-Die Modellassemblierung führt autorisierte Modellinhalte zu einem gemeinsamen
-internen Modellzustand zusammen, ohne deren fachliche Bedeutung erneut zu
-interpretieren. Eine erneute probabilistische Klassifikation oder Auswahl
-würde an dieser Stelle eine bereits abgeschlossene Engineering- oder
-Modellentscheidung wieder öffnen.
+Die regelgebundene Verarbeitung beginnt mit der Bildung des
+\emph{Internal Engineering Model} (IEM). Autorisierte Modellinhalte werden
+hierzu zu einem gemeinsamen internen Modellzustand zusammengeführt. Das IEM
+bewahrt die zuvor autorisierte fachliche Bedeutung und strukturelle
+Einordnung und stellt diese in einer einheitlichen internen Repräsentation
+für die anschließende Zielabbildung bereit. Die in
+Abbildung~\ref{fig:architecture_target_model_formation} dargestellte
+zielmodellspezifische Formulierung überführt diesen Modellzustand anschließend
+in die unterstützte SysML-v2-Repräsentation.
 
-Dasselbe Prinzip gilt für die Überführung des Internal Engineering Model in
-SysML~v2. Sobald die zulässige Abbildung eines internen Modellkonzepts auf
-den unterstützten Ausschnitt der formal spezifizierten Zielsprache
-\cite{SysMLv2} festgelegt ist, stellt die textuelle Erzeugung keine neue
-Engineering-Interpretation mehr dar. Sie wird als regelgebundene
-Transformation des autorisierten Modellzustands behandelt.
+Die hierfür erforderlichen Regeln adressieren unterschiedliche Aspekte der
+Transformation. Ein \emph{Target Notation Profile} bestimmt den unterstützten
+Ausschnitt der Zielnotation. Ein \emph{Generation Profile} definiert die
+Zuordnung der internen Modellkonzepte zu den vorgesehenen Konstrukten der
+Zielnotation. Ein \emph{Artifact Structure Profile} legt die Organisation des
+erzeugten Artefakts fest, beispielsweise hinsichtlich Packages, Dateien oder
+Reihenfolge. Die verwendeten Profile werden versioniert und mit dem
+verarbeiteten Modellzustand verknüpft. Dadurch bleibt nachvollziehbar, unter
+welchen Transformationsbedingungen ein konkretes SysML-v2-Artefakt erzeugt
+wurde.
 
-Die dafür erforderlichen Regeln betreffen unterschiedliche Aspekte der
-Zieltransformation. Ein \emph{Target Notation Profile} begrenzt die
-unterstützten Konstrukte der Zielsprache. Ein \emph{Generation Profile}
-beschreibt deren Zuordnung zu den unterstützten internen Modellkonzepten.
-Ein \emph{Artifact Structure Profile} bestimmt die Organisation des erzeugten
-Artefakts, beispielsweise hinsichtlich Packages, Dateien oder Reihenfolge.
-Diese Regeln werden versioniert und an den verarbeiteten Modellzustand
-gebunden, sodass nachvollziehbar bleibt, unter welchen
-Transformationsbedingungen ein konkretes SysML-v2-Artefakt entstanden ist.
+Deterministische Verarbeitung setzt voraus, dass die erforderlichen
+Autorisierungsentscheidungen vorliegen und für den jeweiligen Übergang eine
+eindeutig anwendbare Transformationsregel verfügbar ist. Für Fälle, in denen
+diese Voraussetzungen nicht vollständig erfüllt sind, verwendet das
+Transformationssystem das Prinzip des \emph{fail-closed processing}. Darunter
+wird in dieser Arbeit eine Verarbeitung verstanden, bei der ein
+Zustandsübergang nur bei vollständig erfüllten Voraussetzungen ausgeführt
+wird. Andernfalls entsteht ein expliziter blockierender Zustand, der die
+erforderliche Klärung sichtbar macht.
 
-Konzeptionell ergibt sich damit die Verarbeitungskette
-
-\begin{center}
-autorisierter Modellzustand\\
-$\downarrow$\\
-deterministische Modellassemblierung\\
-$\downarrow$\\
-Internal Engineering Model\\
-$\downarrow$\\
-regelgebundene Zielabbildung und Serialisierung\\
-$\downarrow$\\
-generiertes SysML-v2-Artefakt\\
-$\downarrow$\\
-technische Validierung.
-\end{center}
-
-Deterministische Verarbeitung setzt dabei voraus, dass die erforderlichen
-Entscheidungen bereits autorisiert oder die zulässigen Transformationen durch
-explizite Regeln eindeutig bestimmt sind. Fehlt eine solche Voraussetzung
-oder würde die Weiterverarbeitung eine neue fachliche Entscheidung erfordern,
-darf diese Lücke nicht durch eine plausible Standardannahme geschlossen
-werden.
-
-Daraus folgt das Prinzip des \emph{fail-closed processing}. Fehlende
+Ein solcher blockierender Zustand kann beispielsweise durch eine fehlende
 Autorisierung, widersprüchliche Identitäten oder Provenienzbindungen,
-nicht aufgelöste Referenzen sowie fehlende, mehrdeutige oder nicht
-unterstützte Zielabbildungen führen zu einem expliziten blockierenden
-Zustand. Ein unbekannter Beziehungstyp darf beispielsweise nicht allein
-deshalb auf eine generische SysML-v2-Beziehung abgebildet werden, weil eine
-solche Serialisierung technisch möglich wäre. Die Ersatzabbildung würde eine
-neue semantische Entscheidung einführen, für die keine Autorisierung
-vorliegt.
+nicht aufgelöste Referenzen oder eine fehlende beziehungsweise mehrdeutige
+Zielabbildung ausgelöst werden. Für einen unbekannten Beziehungstyp wird
+beispielsweise nur dann eine SysML-v2-Repräsentation erzeugt, wenn eine dafür
+definierte und anwendbare Abbildungsregel vorliegt. Ist eine zusätzliche
+semantische oder modellbezogene Entscheidung erforderlich, wird diese an die
+dafür vorgesehene Autorisierungsgrenze zurückgeführt.
 
-Dasselbe gilt bereits bei der internen Modellassemblierung. Kann ein
-autorisierter Modellinhalt nicht integriert werden, ohne zusätzliche
-Engineering-Semantik einzuführen oder eine offene Auswahl implizit zu
-entscheiden, wird der Verarbeitungspfad blockiert und die erforderliche
-Klärung an die zuständige vorgelagerte Autorisierungsgrenze zurückgegeben.
-Der Architekturanspruch besteht damit nicht darin, unter allen Umständen ein
-vollständiges Modellartefakt zu erzeugen. Ein kontrollierter Abbruch ist
-vorzuziehen, wenn eine Fortsetzung nur durch eine bislang nicht autorisierte
-Entscheidung möglich wäre.
+Dasselbe Prinzip gilt für die Bildung des internen Modellzustands. Die
+Modellassemblierung erfolgt auf Basis bereits autorisierter Modellinhalte und
+definierter struktureller Regeln. Erfordert die Integration eines
+Modellinhalts eine zusätzliche fachliche oder modellbezogene Entscheidung,
+wird der Verarbeitungspfad an dieser Stelle unterbrochen und der offene
+Entscheidungsgegenstand der zuständigen Autorisierungsgrenze zugeführt.
 
-Von der Generierung wird die technische Validierung als eigene Verantwortung
-getrennt. Auch LLM-gestützte Ansätze zur SysML-v2-Erzeugung unterscheiden
-zwischen Artefakterzeugung und nachgelagerter Prüfung \cite{Stein2026}. Die
-Validierung betrachtet das konkret erzeugte Artefakt und prüft definierte
-interne Invarianten sowie dessen Verarbeitbarkeit in der vorgesehenen
-externen SysML-v2-Werkzeugumgebung. Sie darf das zu prüfende Artefakt weder
-stillschweigend verändern noch selbst regenerieren.
+Das Transformationssystem priorisiert damit einen nachvollziehbaren
+Verarbeitungszustand gegenüber der vollständigen Erzeugung eines
+Modellartefakts. Ein SysML-v2-Artefakt wird nur für diejenigen Inhalte
+erzeugt, deren erforderliche Autorisierungen und Transformationsregeln
+vorliegen. Ein blockierender Zustand ist damit ein vorgesehener Bestandteil
+der Informationsverarbeitungsarchitektur und kennzeichnet eine noch
+ausstehende Entscheidung oder Transformationsvoraussetzung.
 
-Ein Validierungsfehler führt deshalb nicht zu einer automatischen Reparatur
-innerhalb der Validierungsstufe, sondern blockiert den betreffenden
-Artefaktzustand für die weitere Freigabe. Ebenso wird eine erforderliche,
-aber nicht ausführbare technische Prüfung nicht als erfolgreich
-interpretiert. Damit bleiben sowohl ein nachweislich ungültiger Zustand als
-auch ein Zustand mit unvollständiger Validierung fail-closed.
+An die Generierung schließt sich die Validierung des konkret erzeugten
+Artefaktzustands an. Auch Arbeiten zur LLM-gestützten
+SysML-v2-Erzeugung unterscheiden zwischen der Erzeugung eines Artefakts und
+seiner nachgelagerten Prüfung \cite{Stein2026}. Die Validierung bewertet den
+erzeugten Zustand anhand definierter Invarianten und der vorgesehenen
+Verarbeitbarkeit in der SysML-v2-Zielumgebung. Das Ergebnis der Validierung
+wird an genau den geprüften Artefaktzustand gebunden.
 
-Determinismus und technische Validierung besitzen zugleich eine klar
-begrenzte Aussagekraft. Deterministische Transformation ermöglicht die
-reproduzierbare Anwendung definierter Regeln auf denselben autorisierten
-Eingabestand. Eine bestandene technische Validierung zeigt, dass das
-resultierende Artefakt die jeweils geprüften formalen und technischen
-Bedingungen erfüllt \cite{Cibrian.2025b}. Weder daraus noch aus der
-Reproduzierbarkeit folgt jedoch die fachliche Korrektheit der zugrunde
-liegenden Engineering-Entscheidungen \cite{Topcu2025}.
+Ein erfolgreich validierter Artefaktzustand kann anschließend in die
+nachgelagerten Prüf- und Freigabeschritte übergehen. Festgestellte
+Validierungsabweichungen oder eine nicht vollständig ausführbare Validierung
+führen dagegen zu einem blockierenden Zustand. Erforderliche Änderungen
+werden dabei als neuer Modell- beziehungsweise Artefaktzustand erzeugt und
+anschließend erneut validiert. Dadurch bleiben Generierung, Validierung und
+die daraus gegebenenfalls entstehende Überarbeitung als getrennte und
+nachvollziehbare Verarbeitungsschritte erhalten.
 
-Die Architektur kombiniert probabilistische und deterministische Verarbeitung
-damit entlang unterschiedlicher Verantwortungen. Probabilistische Verfahren
-unterstützen Interpretation, Vergleich und Vorschlagserzeugung.
-Nach expliziter Autorisierung werden regelgebundene Transformationen
-bevorzugt, solange keine neue Engineering-Entscheidung erforderlich ist.
-Kann diese Voraussetzung nicht eingehalten werden, stoppt der Prozess an der
-entsprechenden Kontrollgrenze.
+Das entwickelte Transformationssystem verbindet damit probabilistische und
+deterministische Verarbeitung an unterschiedlichen Stellen des
+Verarbeitungspfads. Probabilistische Verfahren unterstützen die
+Interpretation, den Vergleich und die Erzeugung von Entscheidungsalternativen.
+Nach der erforderlichen menschlichen Autorisierung erfolgt die weitere
+Transformation regelgebunden, solange die für den jeweiligen Übergang
+definierten Voraussetzungen erfüllt sind. Offene Entscheidungen werden durch
+explizite blockierende Zustände sichtbar und an die zuständige
+Autorisierungsgrenze zurückgeführt.
 
-Damit ist festgelegt, wie autorisierte Engineering-Information kontrolliert
-bis zu einem technisch prüfbaren Modellartefakt weiterverarbeitet wird. Damit
-diese Trennung über den gesamten Informationsfluss nachvollziehbar bleibt,
-müssen zugleich die Beziehungen zwischen Quellen, Interpretationen,
-Autorisierungsentscheidungen, Modellzuständen und Zielartefakten erhalten
-werden. Diese querschnittliche Verantwortung wird im folgenden Abschnitt
-durch Provenienz und Traceability adressiert.
+Damit autorisierte Engineering-Information bis zum validierten
+Modellartefakt nachvollziehbar weiterverarbeitet werden kann, müssen die
+Beziehungen zwischen Quellen, Interpretationen, Autorisierungsentscheidungen,
+Modellzuständen und Zielartefakten über den gesamten Transformationsprozess
+erhalten bleiben. Diese querschnittliche Funktion wird im folgenden Abschnitt
+durch Provenienz und Traceability betrachtet.
 
 \subsection{Durchgängige Provenienz und Nachverfolgbarkeit}
 \label{sec:architecture_traceability}
 
-Die bisher beschriebenen Architekturgrenzen kontrollieren unterschiedliche
-Aspekte der Informationsverarbeitung. Diese Trennungen sind jedoch nur dann
-über den gesamten Engineering-Prozess wirksam nachvollziehbar, wenn auch die
+Die bisher beschriebenen Architekturmechanismen kontrollieren
+unterschiedliche Aspekte des Transformationsprozesses. Ihre Wirkung bleibt
+über den gesamten Verarbeitungspfad nachvollziehbar, wenn auch die
 Beziehungen zwischen den entstehenden Informations-, Entscheidungs- und
-Modellzuständen erhalten bleiben.
+Modellzuständen erhalten werden.
 
 Provenienz beschreibt grundsätzlich die Herkunft und
 Entstehungszusammenhänge von Information. Das W3C PROV Data Model modelliert
@@ -661,132 +630,130 @@ Herkunft und Transformation von Daten über mehrere Verarbeitungsschritte
 hinweg \cite{Simmhan2005}. Im Systems Engineering ergänzt
 Nachverfolgbarkeit diese Perspektive durch explizite Beziehungen zwischen
 Engineering-Artefakten und deren Entwicklung. Dies ist insbesondere im
-Requirements Engineering etabliert \cite{ISO29148}; auch im
-Architecture-as-Code-Kontext werden Versionierung und Traceability als
+Requirements Engineering etabliert \cite{ISO29148}. Auch im
+\emph{Architecture as Code}-Kontext werden Versionierung und Traceability als
 wesentliche Eigenschaften maschinenlesbarer Architekturartefakte
 hervorgehoben \cite{Bucaioni2025}.
 
-Für den hier untersuchten Transformationsprozess reicht eine unmittelbare
-Verknüpfung zwischen Quelldokument und resultierendem SysML-v2-Element jedoch
-nicht aus. Zwischen beiden liegen fachlich relevante Interpretations-,
-Autorisierungs-, Modellierungs- und Transformationsentscheidungen. Würden nur
-Anfangs- und Endzustand miteinander verbunden, blieben gerade diejenigen
-Entscheidungen unsichtbar, deren explizite Kontrolle das Architekturkonzept
-sicherstellen soll.
+Für den in dieser Arbeit betrachteten Transformationsprozess umfasst
+Nachverfolgbarkeit mehr als die direkte Beziehung zwischen einer
+Engineering-Quelle und der resultierenden SysML-v2-Repräsentation. Zwischen
+beiden liegen quellengebundene Evidenz, maschinelle Interpretationen,
+menschliche Autorisierungsentscheidungen, Modellentscheidungen und
+regelgebundene Transformationen. Die Beziehungen zwischen diesen Zuständen
+bilden deshalb einen wesentlichen Bestandteil der
+Informationsverarbeitungsarchitektur.
 
-Provenienz und Nachverfolgbarkeit werden deshalb nicht als nachgelagerte
-Dokumentationsfunktion, sondern als querschnittliche
-Architekturverantwortung behandelt. Jeder materielle Informationsübergang
-muss auf die Zustände zurückgeführt werden können, auf deren Grundlage er
-entstanden ist. Dies betrifft sowohl automatisierte Transformationen als auch
-menschliche Autorisierungsentscheidungen.
+Provenienz und Nachverfolgbarkeit werden hierzu als querschnittliche Funktion
+des Transformationssystems behandelt. Jeder für die Modellbildung relevante
+Zustandsübergang bleibt mit den Informations- und Entscheidungszuständen
+verbunden, auf deren Grundlage er entstanden ist. Dies betrifft sowohl
+automatisierte Verarbeitungsschritte als auch menschliche
+Autorisierungsentscheidungen.
 
-Die konzeptionelle Herleitungskette lässt sich vereinfacht wie folgt
-darstellen:
+Abbildung~\ref{fig:architecture_traceability} veranschaulicht diese
+querschnittliche Funktion entlang der in
+Abschnitt~\ref{sec:architecture_meaning_representation} eingeführten
+Zielmodellbildung. Den wesentlichen Informations-, Entscheidungs- und
+Modellzuständen sind jeweils die Provenienz- und
+Nachverfolgbarkeitsinformationen zugeordnet, die ihre Herkunft, Ableitung
+und weitere Verarbeitung rekonstruierbar machen.
 
-\begin{center}
-Engineering Source\\
-$\downarrow$\\
-quellengebundene Evidenz\\
-$\downarrow$\\
-Engineering Subject\\
-$\downarrow$\\
-Persona-Interpretationen\\
-$\downarrow$\\
-menschliche Engineering-Entscheidung\\
-$\downarrow$\\
-autorisierte Engineering-Information\\
-$\downarrow$\\
-Projektzulassung und Modellentscheidungen\\
-$\downarrow$\\
-Internal Engineering Model\\
-$\downarrow$\\
-generiertes SysML-v2-Artefakt\\
-$\downarrow$\\
-technische Validierung\\
-$\downarrow$\\
-abschließende menschliche Modellprüfung\\
-$\downarrow$\\
-menschliche Freigabe\\
-$\downarrow$\\
-publizierter Modellzustand.
-\end{center}
+\begin{wrapfigure}{r}{0.48\textwidth}
+    \centering
+    \vspace{-0.6\baselineskip}
+    \includegraphics[
+        width=\linewidth,
+        keepaspectratio
+    ]{Graphiken/4.7_Provenienz_und_Nachverfolgbarkeit_halbseite_v4.pdf}
+    \caption[Durchgängige Provenienz und Nachverfolgbarkeit]{
+            Durchgängige Provenienz- und Traceability-Beziehungen entlang der
+            Zielmodellbildung. Die linke Hauptkette zeigt die wesentlichen
+            Informations-, Entscheidungs- und Modellzustände. Die rechts
+            zugeordneten Informationsgruppen repräsentieren die an die jeweiligen
+            Zustände gebundenen Herkunfts-, Ableitungs-, Entscheidungs-, Zustands-,
+            Transformations- und Prüfbezüge. Vorgelagerte Quellen-, Evidenz- und
+            Interpretationszustände sind in den Bezügen der autorisierten
+            Engineering-Information zusammengefasst. Eigene Darstellung.}
+    \label{fig:architecture_traceability}
+    \vspace{-0.5\baselineskip}
+\end{wrapfigure}
 
-Die Zustände dieser Kette besitzen unterschiedliche fachliche Bedeutung und
-unterschiedliche Autorität. Nachverfolgbarkeit darf sie deshalb nicht zu
-einer einzigen undifferenzierten Ableitungsbeziehung reduzieren. Ein
-generiertes Modellelement muss nicht nur auf seine ursprüngliche Quelle,
-sondern ebenso auf die autorisierte Engineering-Information und die
-Modellentscheidungen zurückgeführt werden können, durch die seine Aufnahme
-in den Modellzustand legitimiert wurde.
+Die in Abbildung~\ref{fig:architecture_traceability} dargestellten
+Zuordnungen erhalten die Beziehungen zwischen den einzelnen Zuständen.
+Ein erzeugtes Modellelement kann dadurch sowohl auf seine fachliche
+Ausgangsinformation als auch auf die für seine weitere Verarbeitung
+relevanten Autorisierungs- und Modellentscheidungen zurückgeführt werden.
+Die verschiedenen Informations-, Entscheidungs- und Modellzustände bleiben
+dabei als eigenständige referenzierbare Zustände erhalten und werden über
+explizite Beziehungen miteinander verbunden.
 
-Hierfür verwendet die Architektur stabile Identitäten, explizite
-Vorgängerreferenzen, unveränderliche Artefaktzustände und an konkrete
-Prüfzustände gebundene Entscheidungsreferenzen. Eine menschliche Entscheidung
-überschreibt den vorausgehenden maschinellen Zustand nicht, sondern erzeugt
-einen zusätzlichen referenzierbaren Autorisierungszustand. Dieselbe Logik
-setzt sich über Modellentscheidungen und interne Modellzustände bis zur
-Zielrepräsentation fort.
+Hierfür verwendet das Transformationssystem stabile Identitäten, explizite
+Vorgängerreferenzen und an konkrete Informationszustände gebundene
+Entscheidungsreferenzen. Eine menschliche Autorisierung erzeugt damit einen
+eigenen referenzierbaren Entscheidungszustand, der mit dem geprüften
+Informationszustand verbunden bleibt. Dieselbe Logik setzt sich über
+Modellentscheidungen und interne Modellzustände bis zur Zielrepräsentation
+fort.
 
-Dadurch entstehen zwei komplementäre Richtungen der Nachverfolgbarkeit. Die
-Vorwärtsrichtung zeigt, welche nachgelagerten Informationen, Entscheidungen
-und Modellartefakte aus einer gegebenen Quelle oder Evidenz hervorgegangen
-sind. Die Rückwärtsrichtung zeigt, auf welcher Informations- und
-Entscheidungsgrundlage ein konkreter Bestandteil des resultierenden Modells
-beruht. Gerade diese Rückwärtsrichtung ermöglicht es, eine Modellaussage über
-die dazwischenliegenden Autorisierungs- und Modellentscheidungen bis zu ihrer
-fachlichen Grundlage zurückzuverfolgen.
+Die in Abbildung~\ref{fig:architecture_traceability} dargestellten
+Beziehungen können in zwei komplementären Richtungen verfolgt werden.
+Die Vorwärtsrichtung zeigt, welche nachgelagerten Informationen,
+Entscheidungszustände und Modellartefakte aus einer gegebenen Quelle oder
+Evidenz hervorgegangen sind. Die Rückwärtsrichtung zeigt, auf welcher
+Informations- und Entscheidungsgrundlage ein konkreter Bestandteil des
+resultierenden Modells beruht.
 
-Diese Beziehungen müssen auch bei Konsolidierung erhalten bleiben. Ein
-Modellgegenstand kann auf mehreren Evidenzeinheiten oder Engineering Sources
-beruhen. Ein zusammengeführter Zustand darf deren ursprüngliche
-Herkunftsbeziehungen deshalb nicht durch eine neue gemeinsame Identität
-ersetzen, sondern muss auf alle fachlich beitragenden Vorgängerzustände
-verweisen können.
+Diese Beziehungen bleiben auch erhalten, wenn mehrere Informationszustände
+zu einem gemeinsamen Modellgegenstand beitragen. Ein zusammengeführter
+Zustand referenziert deshalb die fachlich beitragenden Vorgängerzustände und
+erhält deren jeweilige Herkunft. Dadurch können Informationen gemeinsam
+weiterverarbeitet werden, während ihre quellenbezogenen
+Provenienzbeziehungen bestehen bleiben.
 
-Die Nachverfolgbarkeit wird bis in die technische Zieltransformation
-fortgeführt. Das Internal Engineering Model bewahrt die Beziehungen seiner
-Elemente und Verbindungen zu den autorisierten Engineering- und
-Modellzuständen. Bei der deterministischen SysML-v2-Generierung werden diese
-Beziehungen auf die erzeugten Zielrepräsentationen weitergeführt. Dadurch
-bleibt auch die textuelle Serialisierung als eigener Transformationsschritt
-nachvollziehbar, ohne selbst zu einer neuen fachlichen Autoritätsquelle zu
+Die Nachverfolgbarkeit wird bis zur SysML-v2-Zielrepräsentation fortgeführt. Das
+Internal Engineering Model erhält die Beziehungen seiner Elemente und
+Verbindungen zu den autorisierten Engineering- und Modellzuständen. Bei der
+deterministischen SysML-v2-Generierung werden diese Beziehungen mit den
+erzeugten Zielrepräsentationen verknüpft. Dadurch bleibt auch die Erzeugung
+der textuellen SysML-v2-Repräsentation als eigener Transformationsschritt
+nachvollziehbar.
+
+Auch die Validierung wird an den konkret geprüften Artefaktzustand gebunden.
+Ein Validierungsergebnis bezieht sich damit auf einen eindeutig
+identifizierten generierten Modellstand. Festgestellte Abweichungen können
+über die bestehenden Provenienz- und Traceability-Beziehungen den
+zugehörigen Modell-, Autorisierungs- und Informationszuständen zugeordnet
 werden.
 
-Ebenso bleibt die technische Validierung an den konkret geprüften
-Artefaktzustand gebunden. Ein Validierungsergebnis beschreibt damit nicht
-einen abstrakten Projektzustand, sondern einen eindeutig identifizierten
-generierten Modellstand. Technische Findings können dadurch über die
-bestehenden Beziehungen bis zu den zugehörigen Modell- und
-Engineering-Zuständen zurückgeführt werden.
+Die anschließende menschliche Modellprüfung und die davon getrennte
+Freigabeentscheidung beziehen sich ebenfalls auf den jeweils konkret
+geprüften Modellzustand. Wird dieser Zustand verändert, entsteht ein neuer
+prüf- und freigabebedürftiger Zustand. Dadurch bleibt der freigegebene
+Modellstand eindeutig mit seiner Validierung, der menschlichen Modellprüfung
+und den zugehörigen Autorisierungsentscheidungen verbunden.
 
-Auch die abschließende menschliche Modellprüfung und die davon getrennte
-Freigabeentscheidung beziehen sich auf genau diesen Modellzustand. Eine
-frühere Prüfung oder Freigabe darf nicht implizit auf eine später veränderte
-Modellrevision übertragen werden. Der publizierte Zustand bleibt dadurch
-eindeutig mit dem geprüften Artefakt, dessen technischer Validierung sowie
-den zugehörigen menschlichen Entscheidungen verbunden.
+Das Ergebnis des Transformationsprozesses umfasst damit neben der
+SysML-v2-Repräsentation auch eine rekonstruierbare Herleitung des
+Modellzustands. Nachvollziehbar bleiben die zugrunde liegenden Quellen und
+Evidenzzustände, maschinelle Interpretationen, menschliche
+Autorisierungsentscheidungen, Modellentscheidungen sowie Validierungs- und
+Freigabezustände.
 
-Das Ergebnis der Architektur ist damit nicht ausschließlich eine
-SysML-v2-Repräsentation, sondern ein Modell mit rekonstruierbarer
-Engineering-Herleitung. Nachvollziehbar bleiben die zugrunde liegenden
-Quellen und Evidenzzustände, maschinelle Interpretationen, menschliche
-Autorisierungsentscheidungen, Modellentscheidungen sowie der technische
-Validierungs- und Freigabezustand.
+Der zentrale Architekturanspruch des entwickelten Transformationssystems
+besteht darin, die fachliche und modellbezogene Herleitung eines
+resultierenden Modellzustands über den gesamten Transformationsprozess
+nachvollziehbar zu erhalten. Provenienz und Nachverfolgbarkeit verbinden
+hierzu die zuvor getrennten Informations-, Interpretations-,
+Autorisierungs-, Modellierungs- und Transformationsschritte zu einem
+durchgängigen Informationsfluss.
 
-Der zentrale Architekturanspruch besteht somit darin, einen Modellinhalt
-nicht nur technisch erzeugen, sondern seine fachliche und modellbezogene
-Herleitung innerhalb des verarbeiteten Informationsbestands nachvollziehen
-zu können. Provenienz und Nachverfolgbarkeit verbinden hierzu die zuvor
-getrennten Informations-, Interpretations-, Autorisierungs-, Modellierungs-
-und Transformationsgrenzen zu einem durchgängigen Informationsfluss.
-
-Diese querschnittliche Verantwortung gewinnt zusätzliche Bedeutung, sobald
-mehrere Engineering Sources gemeinsam zu einem Modell beitragen. Dann müssen
-Informationen projektweit zusammengeführt werden können, ohne ihre
-quellenbezogene Herkunft und die daran gebundenen Entscheidungen zu
-verlieren. Die daraus entstehenden Anforderungen werden im folgenden
-Abschnitt betrachtet.
+Diese querschnittliche Funktion gewinnt zusätzliche Bedeutung, sobald
+mehrere Engineering Sources gemeinsam zu einem Modell beitragen. Dann
+müssen Informationen projektweit zusammengeführt werden können, während ihre
+quellenbezogene Herkunft und die daran gebundenen Entscheidungen erhalten
+bleiben. Die daraus entstehenden Anforderungen werden im folgenden Abschnitt
+betrachtet.
 
 \subsection{Verarbeitung mehrerer Quellen als Bewährungsfall der Informationskontrolle}
 \label{sec:architecture_multisource}
@@ -796,61 +763,59 @@ Verarbeitung einzelner Engineering Sources hergeleitet. In realen
 Engineering-Projekten verteilt sich relevante Information jedoch regelmäßig
 auf mehrere Dokumente, Datenbestände und fachliche Sichten. Für die
 Modellbildung entsteht daraus die Anforderung, Informationen aus mehreren
-Quellen gemeinsam berücksichtigen zu können, ohne ihre jeweilige Herkunft
-und Autorisierung aufzulösen.
+Quellen gemeinsam zu berücksichtigen und gleichzeitig ihre jeweilige
+Herkunft und Autorisierung nachvollziehbar zu erhalten.
 
 Semantische Modelle und Ontologien können die Vergleichbarkeit solcher
 Informationen unterstützen, indem sie gemeinsame Begriffe, Relationen und
 Konzeptstrukturen bereitstellen
 \cite{OrellanaMandrick2019,Lu2022,Dong2026}. LLM-gestützte semantische
-Zuordnungen können dabei durch formale Taxonomien beziehungsweise
-ontologische Referenzen strukturiert werden, bleiben jedoch gegenüber
-Fehlzuordnungen und Überspezifikation anfällig \cite{Souza.2026}. Eine
-gemeinsame semantische Bezugsbasis bedeutet jedoch weder, dass ähnlich
-formulierte Informationen denselben fachlichen Gegenstand beschreiben, noch
-dass unterschiedliche Terminologie zwangsläufig auf unterschiedliche
-Gegenstände verweist.
+Zuordnungen können durch formale Taxonomien beziehungsweise ontologische
+Referenzen strukturiert werden, sind jedoch gegenüber Fehlzuordnungen und
+Überspezifikation anfällig \cite{Souza.2026}. Semantische Ähnlichkeit bildet
+damit einen Hinweis auf mögliche fachliche Zusammenhänge, deren Bedeutung im
+jeweiligen Projektkontext bewertet werden muss.
 
-Für die Verarbeitung mehrerer Quellen entstehen daher zwei gleichzeitig zu
-erfüllende Anforderungen: Die Provenienz jeder Information muss erhalten
-bleiben, während fachlich zusammengehörige Informationen dennoch
-projektweit gemeinsam betrachtet werden können. Quellenbezogene Herkunft darf
-die fachliche Zusammenführung nicht verhindern; umgekehrt darf eine
-Zusammenführung die Herkunft der beteiligten Informationen nicht
-verschleiern.
+Für die Verarbeitung mehrerer Quellen ergeben sich zwei miteinander
+verbundene Anforderungen. Die Provenienz jeder Information bleibt über den
+gesamten Transformationsprozess erhalten, während fachlich zusammengehörige
+Informationen projektweit gemeinsam betrachtet werden können. Dadurch können
+Informationen unterschiedlicher Herkunft zusammengeführt werden, ohne ihre
+quellenbezogenen Beziehungen und Autorisierungszustände aufzulösen.
 
-Die Architektur erhält deshalb zunächst eine quellenbezogene Verarbeitung.
-Registrierung, quellengebundene Evidenz, Interpretation und die daraus
-hervorgehenden menschlich autorisierten Informationszustände bleiben an die
-jeweilige Engineering Source gebunden. Beiträge mehrerer Quellen werden in
-diesen frühen Verarbeitungsschritten nicht stillschweigend vermischt.
+Das Transformationssystem verarbeitet Informationen zunächst
+quellenbezogen. Registrierung, quellengebundene Evidenz, Interpretation und
+die daraus hervorgehenden autorisierten Engineering-Informationen bleiben
+mit der jeweiligen Engineering Source verbunden. Diese quellenbezogene
+Verarbeitung schafft die Grundlage dafür, Beiträge mehrerer Quellen später
+projektweit miteinander in Beziehung zu setzen.
 
-Eine gemeinsame Projektzugehörigkeit reicht zugleich nicht aus, um jede
-registrierte Quelle automatisch für die projektweite Modellbildung
-zuzulassen. Neben relevanten Engineering Sources können auch Context Sources,
-falsch zugeordnete Dokumente oder Informationen mit unklarem Projektbezug
-vorliegen. Vor der projektweiten Zusammenführung ist deshalb eine eigene
-\emph{Projektzulassung} (\emph{Project Fit}) vorgesehen.
+Vor dieser projektweiten Zusammenführung wird geprüft, ob eine Quelle für den
+betrachteten System- und Projektkontext relevant ist. Diese
+\emph{Projektzulassung} (\emph{Project Fit}) bildet eine eigene
+Kontrollgrenze des Transformationsprozesses. Für ihre Bewertung können
+vorhandene Projektinformationen, Terminologie, Context Sources und bereits
+autorisierte Engineering-Informationen herangezogen werden.
 
-Die Projektzulassung bewertet, ob eine Quelle plausibel zum betrachteten
-System- und Projektkontext gehört. Hierfür können vorhandene
-Projektinformationen, Terminologie, Context Sources und bereits autorisierte
-Engineering-Information berücksichtigt werden. Das maschinell erzeugte
-Bewertungsergebnis besitzt jedoch lediglich Evidenzcharakter. Es darf weder
-die Rolle einer Quelle verändern noch selbst Engineering Authority erzeugen.
-Unsichere oder nicht plausibel zugehörige Quellen müssen daher vor ihrer
-weiteren projektweiten Verwendung explizit geklärt werden.
+Das Ergebnis der automatisierten Project-Fit-Bewertung dient als
+Entscheidungsgrundlage für die projektweite Verwendung einer Quelle.
+Eindeutig zuordenbare Quellen können entsprechend der festgelegten
+Projektregeln weiterverarbeitet werden. Bei unklarer oder widersprüchlicher
+Zuordnung wird eine explizite menschliche Entscheidung über die
+Projektzugehörigkeit erforderlich. Die Rolle der Quelle als Engineering
+Source oder Context Source bleibt dabei eine eigenständig kontrollierte
+Eigenschaft.
 
-Nach der Projektzulassung können Beziehungen zwischen autorisierten
-Informationen unterschiedlicher Quellen in einem
-\emph{projektweiten semantischen Abgleich} untersucht werden. Die Architektur
-unterscheidet dabei mehrere mögliche Beziehungsarten:
+Nach der Projektzulassung werden Beziehungen zwischen autorisierten
+Engineering-Informationen unterschiedlicher Quellen in einem
+\emph{projektweiten semantischen Abgleich} untersucht. Das
+Transformationssystem unterscheidet hierfür folgende Beziehungsarten:
 
 \begin{itemize}
     \item \emph{equivalent}: mehrere Beiträge drücken im Wesentlichen
           dieselbe fachliche Bedeutung aus,
     \item \emph{complementary}: Beiträge behandeln denselben fachlichen
-          Zusammenhang und ergänzen sich, ohne unmittelbar zu konkurrieren,
+          Zusammenhang und ergänzen sich,
     \item \emph{potential conflict}: Beiträge enthalten möglicherweise
           unvereinbare Aussagen zum selben Engineering-Gegenstand,
     \item \emph{distinct}: Beiträge behandeln unterschiedliche
@@ -859,108 +824,91 @@ unterscheidet dabei mehrere mögliche Beziehungsarten:
           bestimmt werden.
 \end{itemize}
 
-Diese Kategorien strukturieren den Vergleich, erzeugen jedoch keine
-projektweite Engineering Authority. Semantische Ähnlichkeit darf weder eine
-automatische Verschmelzung noch eine automatische Konfliktentscheidung
-auslösen. Ebenso entscheiden Anzahl, Reihenfolge, Alter oder Typ der
-beteiligten Quellen nicht darüber, welche Aussage fachlich gültig ist.
-Ontologische und terminologische Referenzen können den Vergleich unterstützen
-\cite{OrellanaMandrick2019,Lu2022}, ersetzen aber auch hier keine
-fachliche Entscheidung.
+Diese Kategorien strukturieren die projektweite Gegenüberstellung
+autorisierter Engineering-Informationen. Ontologische und terminologische
+Referenzen unterstützen dabei den semantischen Vergleich
+\cite{OrellanaMandrick2019,Lu2022}. Die daraus abgeleitete Beziehung bildet
+eine Entscheidungsgrundlage für die weitere fachliche Zusammenführung.
 
-Dadurch entsteht eine zusätzliche projektweite
-Human-Authority-Grenze. Die zuvor quellenbezogen autorisierten
-Engineering-Informationen behalten ihre jeweilige Herkunft und ursprüngliche
-Autorisierung. Der semantische Abgleich kann Beziehungen zwischen diesen
-Zuständen sichtbar machen. Erst eine explizite menschliche Entscheidung legt
-fest, ob die betreffenden Informationen unabhängig bestehen bleiben,
-gemeinsam gültig sind, einander ablösen oder zunächst nicht aufgelöst
-bleiben.
+Erfordert die Zusammenführung eine neue oder materiell veränderte
+Engineering-Aussage, erfolgt eine erneute fachliche Autorisierung. Die
+\emph{Human Engineering Authority} entscheidet dabei auf projektweiter Ebene,
+ob Informationen unabhängig fortbestehen, gemeinsam verwendet werden,
+einander ablösen oder zunächst als ungeklärte Beziehung erhalten bleiben.
+Die quellenbezogen autorisierten Ausgangszustände und ihre Provenienz bleiben
+parallel dazu referenzierbar.
 
-Konzeptionell ergibt sich damit:
+Damit wird die Human Engineering Authority auch bei der Verarbeitung
+mehrerer Quellen auf denselben Entscheidungsgegenstand angewendet wie zuvor:
+Sie autorisiert die fachliche Verwendung von Engineering-Information. Der
+Unterschied liegt in der Informationsbasis der Entscheidung, die nun Beiträge
+mehrerer bereits autorisierter Quellen umfasst. Eine zusätzliche
+Authority-Kategorie ist hierfür nicht erforderlich.
 
-\begin{center}
-quellenbezogen autorisierte Engineering-Information\\
-$\downarrow$\\
-Projektzulassung\\
-$\downarrow$\\
-projektweiter semantischer Abgleich\\
-$\downarrow$\\
-menschliche Projektentscheidung\\
-$\downarrow$\\
-autorisierter projektweiter Engineering-Zustand.
-\end{center}
-
-Auch eine als \emph{equivalent} bewertete Beziehung darf somit nicht
-automatisch zu einer neuen zusammengeführten autoritativen Aussage führen.
-Soll aus mehreren Beiträgen eine neue oder materiell veränderte
-Engineering-Aussage entstehen, benötigt auch diese einen expliziten
-menschlichen Review und einen eigenen autorisierten Zustand.
-
-Dasselbe Prinzip gilt für die Wirkung neuer Information auf einen bereits
-bestehenden Modellzustand. Das vorhandene Modell repräsentiert den bisher
-autorisierten Engineering-Zustand, stellt jedoch keine unabhängige
-fachliche Wahrheit dar. Neue Information wird deshalb nicht unmittelbar
-gegen das bestehende Modell aufgelöst. Zunächst ist zu klären, ob und wie
-sie den autorisierten Engineering-Zustand verändert. Erst danach kann in
-einem getrennten \emph{Modellwirkungsabgleich} bewertet werden, welche
-Auswirkungen die fachlich autorisierte Änderung auf den bestehenden
-Modellzustand besitzt.
+Neue projektweit autorisierte Engineering-Information kann anschließend auf
+einen bestehenden Modellzustand wirken. Zunächst wird fachlich entschieden,
+ob und wie sich der bisher autorisierte Engineering-Zustand verändert.
+Darauf aufbauend bewertet ein getrennter \emph{Modellwirkungsabgleich}, welche
+Auswirkungen diese Änderung auf den bestehenden Modellzustand besitzt.
 
 Damit bleibt die in
 Abschnitt~\ref{sec:architecture_meaning_representation} entwickelte Trennung
-zwischen Engineering Authority und Model Authority auch bei inkrementeller
-Informationsaufnahme erhalten. Eine neue Engineering-Aussage kann eine
-bestehende Modellrepräsentation bestätigen, ergänzen, verändern oder
-ersetzen. Die Modellwirkung folgt jedoch aus einer zuvor autorisierten
-fachlichen Änderung und nicht unmittelbar aus einem neuen maschinellen
-Interpretationsergebnis.
+zwischen Human Engineering Authority und Model Authority auch bei
+inkrementeller Informationsaufnahme erhalten. Eine neue Engineering-Aussage
+kann eine bestehende Modellrepräsentation bestätigen, ergänzen, verändern
+oder ersetzen. Die \emph{Model Authority} entscheidet auf Grundlage der
+zuvor autorisierten fachlichen Änderung über die daraus resultierende
+strukturelle Einordnung und Repräsentation im Zielmodell.
 
-Die Verarbeitung mehrerer Quellen bildet damit keinen isolierten zusätzlichen
-Pipeline-Schritt, sondern einen Bewährungsfall der zuvor entwickelten
-Architekturprinzipien. Quellenidentität, Provenienz, Informationsautorität,
-Human Authority und Model Authority müssen auch dann erhalten bleiben, wenn
-Informationen aus mehreren unabhängigen Ursprüngen gemeinsam in einen
-projektweiten Modellbildungsprozess eingehen.
+Die Verarbeitung mehrerer Quellen bildet damit einen Bewährungsfall der
+zuvor entwickelten Architekturprinzipien. Quellenidentität, Provenienz,
+Informationsautorität, Human Engineering Authority und Model Authority
+bleiben auch bei der projektweiten Zusammenführung von Informationen
+unterschiedlicher Herkunft erhalten. Das Transformationssystem verbindet
+dadurch quellenbezogene Nachvollziehbarkeit mit projektweiter fachlicher
+Synthese.
 
-Die Architektur verbindet damit quellenbezogene Nachvollziehbarkeit mit
-projektweiter fachlicher Synthese. Genau diese Kombination bildet die
-Grundlage für das im folgenden Abschnitt zusammengeführte integrierte
-Architekturkonzept.
+Diese Kombination bildet die Grundlage für das im folgenden Abschnitt
+zusammengeführte integrierte Architekturkonzept.
 
 \subsection{Integriertes Architekturkonzept}
 \label{sec:architecture_integrated_concept}
 
-Die vorangegangenen Abschnitte haben die erforderlichen
-Architekturverantwortungen getrennt hergeleitet. In ihrer Gesamtheit bilden
-sie eine Informationsverarbeitungsarchitektur, deren zentrale Aufgabe nicht
-in der unmittelbaren Erzeugung von SysML-v2-Code, sondern in der
-kontrollierten Überführung heterogener Engineering-Information in einen
-nachvollziehbaren, autorisierten und technisch prüfbaren Modellzustand
-besteht.
+Die vorangegangenen Abschnitte haben die zentralen Mechanismen des
+Architekturkonzepts schrittweise hergeleitet. In ihrer Gesamtheit bilden sie
+eine Informationsverarbeitungsarchitektur zur nachvollziehbaren Überführung
+heterogener Engineering-Information in einen autorisierten und validierbaren
+SysML-v2-Modellzustand.
 
-Die Architektur verbindet dazu probabilistische und regelgebundene
-Verarbeitung entlang unterschiedlicher Verantwortungen. Probabilistische
-Verfahren werden dort eingesetzt, wo semantische Interpretation, Vergleich
-oder die Erzeugung von Entscheidungsalternativen erforderlich ist. Ihre
-Ergebnisse besitzen jedoch keine implizite Engineering Authority
-\cite{Topcu2025,Stein2026}. Fachlich oder modellbezogen relevante
-Zustandsübergänge werden durch explizite menschliche Entscheidungen
-autorisiert. Sind die erforderlichen Entscheidungen getroffen und die
-zulässigen Transformationen eindeutig festgelegt, erfolgt die weitere
-Verarbeitung regelgebunden und bei fehlenden Voraussetzungen fail-closed.
+Das Architekturkonzept verbindet probabilistische und regelgebundene
+Verarbeitung entsprechend dem jeweiligen Entscheidungsgegenstand.
+Probabilistische Verfahren unterstützen semantische Interpretation, Vergleich
+und die Erzeugung von Entscheidungsalternativen. Fachlich oder modellbezogen
+relevante Zustandsübergänge werden durch explizite menschliche
+Autorisierungsentscheidungen kontrolliert
+\cite{Topcu2025,Stein2026}. Die Human Engineering Authority autorisiert die
+fachliche Verwendung von Engineering-Information, während die Model Authority
+deren strukturelle Einordnung und Repräsentation im Zielmodell festlegt.
+Liegen die erforderlichen Autorisierungen und eindeutige
+Transformationsregeln vor, erfolgt die weitere Verarbeitung regelgebunden.
+Für unvollständige oder nicht eindeutig erfüllte
+Transformationsvoraussetzungen greift das in
+Abschnitt~\ref{sec:architecture_controlled_transformation} eingeführte
+\emph{fail-closed processing}.
 
-Abbildung~\ref{fig:integrated_architecture} führt diese Verantwortungen zu
-einem Gesamtbild zusammen. Der Informationsfluss beginnt mit einer
-kontrollierten Informationsbasis, in der fachlich evidenzbegründende Quellen
-von interpretativem und technischem Kontext getrennt werden. Auf
-quellengebundener Evidenz aufbauende probabilistische Interpretationen
-bereiten menschliche Engineering-Entscheidungen vor. Autorisierte
-Engineering-Information wird anschließend getrennt hinsichtlich ihrer
-fachlichen Bedeutung, ihrer Einordnung und Repräsentation im Zielmodell sowie
-ihrer zielmodellspezifischen Formulierung verarbeitet. Erst danach erfolgt die
-regelgebundene Realisierung des Zielartefakts mit technischer Validierung,
-abschließender menschlicher Modellprüfung und davon getrennter Freigabe.
+Abbildung~\ref{fig:integrated_architecture} führt diese Mechanismen zu einem
+Gesamtbild zusammen. Der Informationsfluss beginnt mit einer kontrollierten
+Informationsbasis, in der Engineering Sources und Context Sources
+unterschiedliche Informationsrollen einnehmen. Quellengebundene Evidenz und
+probabilistische Interpretationen bilden die Entscheidungsgrundlage für die
+Human Engineering Authority. Die autorisierte Engineering-Information wird
+anschließend hinsichtlich ihrer fachlichen Bedeutung, ihrer strukturellen
+Einordnung und Repräsentation im Zielmodell sowie ihrer
+zielmodellspezifischen Formulierung weiterverarbeitet. Nach der Model
+Authority erfolgt die regelgebundene Modellbildung über das Internal
+Engineering Model bis zur SysML-v2-Repräsentation. Daran schließen sich
+Validierung, menschliche Modellprüfung und Freigabe des konkreten
+Modellzustands an.
 
 \begin{figure}[p]
     \centering
@@ -968,63 +916,54 @@ abschließender menschlicher Modellprüfung und davon getrennter Freigabe.
         width=\textwidth,
         height=0.82\textheight,
         keepaspectratio
-    ]{Graphiken/4.9_Integriertes_Architekturkonzept.pdf}
+    ]{Graphiken/4.9_Integriertes_Architekturkonzept.png}
     \caption[Integriertes Architekturkonzept]{
-    Integriertes Architekturkonzept der kontrollierten KI-gestützten
-    Transformation von Engineering-Information. Die Verarbeitung führt von
-    einer kontrollierten Informationsbasis über quellengebundene Evidenz und
-    probabilistische Interpretation zu expliziter menschlicher Engineering
-    Authority. Fachliche Bedeutung, Einordnung und Repräsentation im
-    Zielmodell sowie zielmodellspezifische Formulierung bleiben getrennte
-    Verantwortungen. Nach den erforderlichen Engineering- und
-    Modellentscheidungen erfolgt die weitere Modellrealisierung
-    regelgebunden und fail-closed. Technische Validierung, abschließende
-    menschliche Modellprüfung und Freigabe bilden getrennte Kontrollgrenzen.
-    Provenienz und Nachverfolgbarkeit verbinden die Informations-,
-    Entscheidungs- und Modellzustände über den gesamten Verarbeitungsweg.
-    Zusätzlicher Kontext darf die Interpretation unterstützen, ohne selbst
-    fachliche Evidenz über das betrachtete System zu begründen.
-    Eigene Darstellung.}
+        Integriertes Architekturkonzept der kontrollierten KI-gestützten
+        Transformation von Engineering-Information. Die Verarbeitung führt
+        von einer kontrollierten Informationsbasis über quellengebundene
+        Evidenz und probabilistische Interpretation zur Human Engineering
+        Authority. Fachliche Bedeutung, strukturelle Einordnung und
+        Repräsentation im Zielmodell sowie zielmodellspezifische Formulierung
+        bleiben getrennte Verarbeitungsebenen. Nach Human Engineering
+        Authority und Model Authority erfolgt die weitere Modellbildung
+        regelgebunden und bei fehlenden Voraussetzungen fail-closed.
+        Validierung, menschliche Modellprüfung und Freigabe bilden
+        nachgelagerte Kontrollgrenzen. Provenienz und Nachverfolgbarkeit
+        verbinden die Informations-, Entscheidungs- und Modellzustände über
+        den gesamten Transformationsprozess. Eigene Darstellung.}
     \label{fig:integrated_architecture}
 \end{figure}
 
-Provenienz und Nachverfolgbarkeit bilden dabei keine zusätzliche sequenzielle
-Verarbeitungsstufe. Sie wirken als querschnittliche Verantwortung über die
-gesamte Architektur und erhalten die Beziehungen zwischen Quellen,
-maschinellen Verarbeitungsergebnissen, menschlichen Entscheidungen,
-Modellzuständen und Zielartefakten. Dadurch bleibt nicht nur das resultierende
-Modell, sondern auch dessen Engineering-Herleitung rekonstruierbar
+Provenienz und Nachverfolgbarkeit wirken als Querschnittsfunktion über den
+gesamten Transformationsprozess. Sie erhalten die Beziehungen zwischen
+Quellen, maschinellen Verarbeitungsergebnissen, menschlichen
+Autorisierungsentscheidungen, Modellzuständen und Zielartefakten. Dadurch
+bleibt die Herleitung eines resultierenden Modellzustands über seine
+fachlichen und modellbezogenen Vorgängerzustände rekonstruierbar
 \cite{MoreauMissier2013}.
 
-Auch die Verarbeitung mehrerer Engineering Sources verändert diese
-grundlegenden Verantwortungsgrenzen nicht. Quellenbezogene Identität,
-Provenienz und Autorisierung bleiben erhalten, während zugelassene
-Informationen projektweit semantisch abgeglichen und durch zusätzliche
-menschliche Entscheidungen in einen gemeinsamen Engineering-Zustand
-überführt werden können. Neue Information kann dadurch bestehende
-Engineering- und Modellzustände kontrolliert weiterentwickeln, ohne deren
-historische Herkunft oder frühere Autorisierungszustände zu überschreiben.
+Die Verarbeitung mehrerer Engineering Sources erweitert diesen
+Informationsfluss auf projektweiter Ebene. Quellenbezogene Identität,
+Provenienz und Autorisierungszustände bleiben erhalten, während zugelassene
+Informationen semantisch miteinander in Beziehung gesetzt werden. Erfordert
+ihre Zusammenführung eine neue oder materiell veränderte
+Engineering-Aussage, erfolgt eine projektweite Anwendung der Human
+Engineering Authority. Die daraus autorisierte Engineering-Information kann
+anschließend über die Model Authority in den bestehenden Modellzustand
+integriert werden. Frühere Informations-, Entscheidungs- und Modellzustände
+bleiben dabei als Teil der Provenienzkette referenzierbar.
 
-Der wissenschaftliche Beitrag des Architekturkonzepts liegt damit nicht in
-einem einzelnen Algorithmus oder einer bestimmten Agentenkonfiguration.
-Er besteht in der Verbindung einer kontrollierten Informationsbasis,
-quellengebundener multiperspektivischer Interpretation, expliziter und
-gestufter menschlicher Autorisierung, der Trennung von fachlicher Bedeutung
-und Zielmodellbildung, regelgebundener fail-closed Transformation sowie
-durchgängiger Provenienz und Nachverfolgbarkeit zu einer konsistenten
-Informationsverarbeitungsarchitektur.
-
-Die Architektur garantiert weder die Vollständigkeit der bereitgestellten
-Engineering Sources noch die fachliche Fehlerfreiheit menschlicher oder
-maschineller Entscheidungen. Auch technische Validität ist nicht mit
-fachlicher Korrektheit gleichzusetzen. Ihr Anspruch besteht vielmehr darin,
-Informationsgrundlage, probabilistische Interpretation, fachliche und
-modellbezogene Entscheidungen sowie technische Transformation und
-Validierung explizit voneinander abzugrenzen und ihre Beziehungen
-nachvollziehbar zu erhalten.
+Der wissenschaftliche Beitrag des Architekturkonzepts liegt in der
+systematischen Verbindung einer kontrollierten Informationsbasis,
+quellengebundener multiperspektivischer Interpretation, expliziter
+menschlicher Autorisierung, der Trennung von Engineering Meaning und
+Zielmodellbildung, regelgebundener und fail-closed kontrollierter
+Transformation sowie durchgängiger Provenienz und Nachverfolgbarkeit. Diese
+Mechanismen bilden gemeinsam eine konsistente
+Informationsverarbeitungsarchitektur für die KI-gestützte Transformation
+heterogener Engineering-Information in SysML~v2.
 
 Kapitel~\ref{sec:implementation} beschreibt anschließend die prototypische
-Instanziierung dieser konzeptionellen Verantwortungen im Turing Generator.
-Der Prototyp definiert das Architekturkonzept dabei nicht, sondern dient als
-technische Realisierung, anhand derer die entwickelten Verantwortungsgrenzen
-operationalisiert und untersucht werden.
+Realisierung dieses Architekturkonzepts im Turing Generator. Der Prototyp
+operationalisiert die entwickelten Mechanismen und ermöglicht deren
+anschließende Untersuchung anhand konkreter Transformationsabläufe.

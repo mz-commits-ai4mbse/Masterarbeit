@@ -14,6 +14,7 @@
   \renewcommand{\listfigurename}{Abbildungsverzeichnis}}
 \usepackage{graphicx}
 \usepackage{geometry}
+\usepackage{wrapfig}
 \usepackage{setspace}
 \usepackage{titlesec}
 \usepackage{tabularx}
@@ -55,16 +56,17 @@
 \input{titelblatt}
 \clearpage
 
+% Zitatseite ohne Seitenzahl
+\input{zitat}
+\clearpage
+
 % Vorderer Serviceteil: römische Seitenzahlen
 \pagenumbering{Roman}
 
-\input{selbststaendigkeitserklaerung}
-\clearpage
-
-\input{sperrvermerk}
-\clearpage
-
 \input{abstract}
+\clearpage
+
+\input{danksagung}
 \clearpage
 
 \tableofcontents
@@ -76,6 +78,9 @@
 
 \addcontentsline{toc}{section}{Tabellenverzeichnis}
 \listoftables
+\clearpage
+
+\input{abkuerzungen_begriffe}
 \clearpage
 
 % Nächste römische Seitenzahl für den späteren Serviceteil merken
@@ -101,14 +106,36 @@
 \input{Kapitel/08_Diskussion}
 \newpage
 \input{Kapitel/09_Fazit}
-\newpage
+
+% ============================================================================
+% Literaturverzeichnis und nachgelagerter Serviceteil
+% ============================================================================
 
 \clearpage
 \pagenumbering{Roman}
 \setcounter{page}{\value{servicepage}}
-\appendix
+
+\printbibliography[
+    heading=bibintoc,
+    title={Literaturverzeichnis}
+]
 
 \clearpage
+
+\input{selbststaendigkeitserklaerung}
+
+\clearpage
+
+\input{sperrvermerk}
+
+\clearpage
+
+% ============================================================================
+% Anhang
+% ============================================================================
+
+\appendix
+
 \part*{Anhang}
 \addcontentsline{toc}{part}{Anhang}
 
@@ -131,12 +158,5 @@
 
 \newpage
 \input{Anhang/07_Referenzlauf_930444_Evidenz}
-
-\newpage
-
-\printbibliography[
-    heading=bibintoc,
-    title={Literaturverzeichnis}
-]
 
 \end{document}
