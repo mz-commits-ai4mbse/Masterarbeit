@@ -18,10 +18,16 @@
 \usepackage{setspace}
 \usepackage{titlesec}
 \usepackage{tabularx}
+\usepackage{microtype}
 \usepackage{float}
 \usepackage{xltabular}
 \usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
 \usepackage{listings}
+\lstset{
+    inputencoding=utf8,
+    extendedchars=true,
+    literate={—}{{\textemdash}}1
+}
 \usepackage{csquotes}
 \AtBeginDocument{\counterwithin{lstlisting}{section}}
 
@@ -50,6 +56,21 @@
     }
 }
 \newcounter{servicepage}
+
+% Vermeidung von Schusterjungen und Hurenkindern
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.8}
+
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{5}
+
 \begin{document}
 
 % Titelseite ohne Seitenzahl

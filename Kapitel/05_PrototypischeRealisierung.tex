@@ -40,7 +40,7 @@ Aufgaben des Systems zu gruppieren. Abbildung~\ref{fig:implementation_three_laye
 zeigt, wie diese frühe Struktur in die spätere logische Systemarchitektur
 überführt wurde.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[
         width=\textwidth,
@@ -71,7 +71,7 @@ welche Systemkomponenten dafür vorgesehen sind, wie sie Informationen
 untereinander austauschen und welche Beteiligten oder Informationsquellen
 außerhalb des eigentlichen Prototyps angebunden sind.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[
         width=\textwidth,
@@ -129,7 +129,7 @@ nachfolgende Modellierung und technische Umsetzung. Die folgenden Abschnitte
 geben nicht die vollständige Modellhierarchie wieder, sondern konzentrieren
 sich auf den tatsächlichen Verarbeitungsablauf des Prototyps.
 
-\subsection{Durchgängige Realisierung des Informationsflusses}
+\subsection{Durchgängiger Informationsfluss}
 \label{sec:implementation_e2e_flow}
 
 Die in Abschnitt~\ref{sec:implementation_system_architecture}
@@ -155,7 +155,7 @@ fasst die wesentlichen Verarbeitungsschritte und ihre Informationsübergänge
 zusammen. Die englischen Bezeichnungen in der Abbildung entsprechen dabei
 den Namen der Funktionen und Informationsobjekte im SysML-v2-Modell.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[
         width=\textwidth,
@@ -271,7 +271,7 @@ Vertragsverifikation untersucht. Eine Übersicht der für die prototypische
 Realisierung wesentlichen Verträge ist in
 Anhang~\ref{app:implementation_contracts} dokumentiert.
 
-\subsection{Quellenbezogene Verarbeitung von Engineering-Information}
+\subsection{Verarbeitung von Engineering-Quellen}
 \label{sec:implementation_information_processing}
 
 Der erste Teil des in
@@ -284,7 +284,7 @@ die dem menschlichen Reviewer für seine Entscheidung bereitgestellt werden.
 Abbildung~\ref{fig:implementation_information_processing} zeigt die dafür
 realisierte Verarbeitungskette.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[
         width=\textwidth,
@@ -388,7 +388,7 @@ Modellelemente erfolgen in den nachgelagerten Verarbeitungsschritten.
 Der folgende Abschnitt beschreibt zunächst die menschlichen Entscheidungen
 über die fachliche Information und ihre Verwendung im Modell.
 
-\subsection{Realisierung der menschlichen Autorisierungsgrenzen}
+\subsection{Menschliche Autorisierung im Prototyp}
 \label{sec:implementation_authority}
 
 Die in Abschnitt~\ref{sec:implementation_information_processing}
@@ -415,7 +415,7 @@ dieser Modellierung und stellt die Verbindung zwischen ausgewählten
 Anforderungen, den daraus abgeleiteten Funktionen und den zugehörigen
 logischen Systemelementen dar.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[
         width=\textwidth,
@@ -470,7 +470,7 @@ als \emph{Model Placement} bezeichnet.
 
 Auch diese Vorschläge können durch mehrere Modellierungsperspektiven
 unterstützt werden. Im Prototyp werden dafür die in
-Anhang~\ref{app:personas_modeling} dokumentierten Personas
+Anhang~\ref{app:personas_model_placement} dokumentierten Personas
 \emph{SysML Profile Modeler}, \emph{System Architecture Modeler} und
 \emph{Conservative Modeling Reviewer} eingesetzt. Sie arbeiten auf
 derselben autorisierten Engineering-Information und denselben zulässigen
@@ -511,7 +511,7 @@ verknüpft. Wie diese Zustände und ihre Beziehungen dauerhaft gespeichert
 und nachvollziehbar gehalten werden, beschreibt
 Abschnitt~\ref{sec:implementation_persistence_limits}.
 
-\subsection{Modellbildung und SysML-v2-Realisierung}
+\subsection{Modellbildung und SysML-v2-Erzeugung}
 \label{sec:implementation_model_realization}
 
 Nach der fachlichen Autorisierung der Engineering-Information und der
@@ -543,7 +543,7 @@ Abbildung~\ref{fig:implementation_model_realization} zeigt die wesentlichen
 Übergänge von der autorisierten Modellplatzierung über den Aufbau des IEM
 bis zur SysML-v2-Erzeugung und anschließenden Validierung.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[
         width=\textwidth,
@@ -732,7 +732,7 @@ erhalten. Auf diese Weise kann nachvollzogen werden, welche neuen oder
 geänderten Engineering-Informationen zu einer Weiterentwicklung des Modells
 geführt haben.
 
-\subsection{Persistenz, Provenienz und Grenzen}
+\subsection{Persistenz, Provenienz und technische Grenzen}
 \label{sec:implementation_persistence_limits}
 
 Die prototypische Realisierung speichert die für den Transformationsprozess
@@ -889,4 +889,4 @@ die für die weitere Bewertung wesentlichen technischen Grenzen zusammen.
 Diese Grenzen bestimmen den technischen Untersuchungsrahmen der
 prototypischen Realisierung. Ihre Auswirkungen auf die Aussagekraft,
 Übertragbarkeit und Generalisierbarkeit der Ergebnisse werden in
-Kapitel~\ref{chap:discussion} diskutiert.
+Kapitel~\ref{sec:discussion} diskutiert.

@@ -66,7 +66,7 @@ in einen kontrollierbaren Transformationsprozess ein. Die
 folgenden Abschnitte beschreiben die hierfür erforderlichen
 Architekturmechanismen.
 
-\subsection{Kontrollierte Informationsbasis und Informationsautorität}
+\subsection{Informationsgrundlage und Kontext}
 \label{sec:architecture_information_authority}
 
 Die Interpretation heterogener Engineering-Information profitiert in der Regel
@@ -108,7 +108,7 @@ Die entwickelte Architektur unterscheidet hierzu drei Informationsrollen:
 \end{itemize}
 
 Tabelle~\ref{tab:information_authority_roles} fasst Funktion und fachliche
-Reichweite dieser Informationsrollen zusammen.‚
+Reichweite dieser Informationsrollen zusammen.
 
 \begin{table}[htbp]
 \centering
@@ -176,7 +176,7 @@ Entscheidungsschritten erfolgt.
 Auf dieser kontrollierten Informationsbasis erfolgt die weitere
 quellengebundene Interpretation, die im folgenden Abschnitt betrachtet wird.
 
-\subsection{Quellengebundene Interpretation und Interpretationsvarianz}
+\subsection{Interpretation von Engineering-Information}
 \label{sec:architecture_grounded_interpretation}
 
 Die Einordnung von Quellen aus
@@ -279,7 +279,7 @@ Die fachliche Autorisierung bildet den nächsten Entscheidungsschritt im
 Verarbeitungspfad und wird im folgenden Abschnitt als
 \emph{Human Authority} betrachtet.
 
-\subsection{Human Authority als kontrollierte Engineering-Grenze}
+\subsection{Menschliche Entscheidungen im Transformationsprozess}
 \label{sec:architecture_human_authority}
 
 Die in Abschnitt~\ref{sec:architecture_grounded_interpretation}
@@ -371,7 +371,7 @@ wird. Fachliche Bedeutung, strukturelle Einordnung und konkrete
 Zielmodellformulierung bilden dabei unterschiedliche Entscheidungsgegenstände,
 die im folgenden Abschnitt betrachtet werden.
 
-\subsection{Trennung von Engineering Meaning und Zielmodellbildung}
+\subsection{Von fachlicher Bedeutung zur Modellrepräsentation}
 \label{sec:architecture_meaning_representation}
 
 Mit der Human Engineering Authority aus
@@ -500,7 +500,7 @@ Zielmodellbildung.
 Der folgende Abschnitt betrachtet darauf aufbauend die regelgebundene und
 reproduzierbare Ausführung der nachgelagerten Transformation.
 
-\subsection{Deterministische und kontrollierte Transformation}
+\subsection{Regelgebundene Transformation}
 \label{sec:architecture_controlled_transformation}
 
 Die in Abschnitt~\ref{sec:architecture_meaning_representation}
@@ -657,25 +657,18 @@ Modellzuständen sind jeweils die Provenienz- und
 Nachverfolgbarkeitsinformationen zugeordnet, die ihre Herkunft, Ableitung
 und weitere Verarbeitung rekonstruierbar machen.
 
-\begin{wrapfigure}{r}{0.48\textwidth}
+\begin{figure}[htbp]
     \centering
-    \vspace{-0.6\baselineskip}
     \includegraphics[
-        width=\linewidth,
+        width=0.78\textwidth,
         keepaspectratio
     ]{Graphiken/4.7_Provenienz_und_Nachverfolgbarkeit_halbseite_v4.pdf}
     \caption[Durchgängige Provenienz und Nachverfolgbarkeit]{
-            Durchgängige Provenienz- und Traceability-Beziehungen entlang der
-            Zielmodellbildung. Die linke Hauptkette zeigt die wesentlichen
-            Informations-, Entscheidungs- und Modellzustände. Die rechts
-            zugeordneten Informationsgruppen repräsentieren die an die jeweiligen
-            Zustände gebundenen Herkunfts-, Ableitungs-, Entscheidungs-, Zustands-,
-            Transformations- und Prüfbezüge. Vorgelagerte Quellen-, Evidenz- und
-            Interpretationszustände sind in den Bezügen der autorisierten
-            Engineering-Information zusammengefasst. Eigene Darstellung.}
+        Durchgängige Provenienz- und Traceability-Beziehungen entlang der
+        Zielmodellbildung. Eigene Darstellung.
+    }
     \label{fig:architecture_traceability}
-    \vspace{-0.5\baselineskip}
-\end{wrapfigure}
+\end{figure}
 
 Die in Abbildung~\ref{fig:architecture_traceability} dargestellten
 Zuordnungen erhalten die Beziehungen zwischen den einzelnen Zuständen.
@@ -753,7 +746,7 @@ quellenbezogene Herkunft und die daran gebundenen Entscheidungen erhalten
 bleiben. Die daraus entstehenden Anforderungen werden im folgenden Abschnitt
 betrachtet.
 
-\subsection{Verarbeitung mehrerer Quellen als Bewährungsfall der Informationskontrolle}
+\subsection{Verarbeitung mehrerer Quellen}
 \label{sec:architecture_multisource}
 
 Die bisher entwickelten Architekturprinzipien wurden zunächst entlang der
@@ -869,7 +862,7 @@ Synthese.
 Diese Kombination bildet die Grundlage für das im folgenden Abschnitt
 zusammengeführte integrierte Architekturkonzept.
 
-\subsection{Integriertes Architekturkonzept}
+\subsection{Zusammenführung zum Architekturkonzept}
 \label{sec:architecture_integrated_concept}
 
 Die vorangegangenen Abschnitte haben die zentralen Mechanismen des
