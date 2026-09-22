@@ -1,43 +1,44 @@
 \section{Prototypische Realisierung}
 \label{sec:implementation}
 
-\subsection{Rolle und Ziel der prototypischen Realisierung}
-\label{sec:implementation_role}
+Das in Kapitel~\ref{sec:architecture} entwickelte Architekturkonzept wird
+zur technischen Konkretisierung und Untersuchung prototypisch realisiert.
+Der im Entwicklungsprojekt als \emph{Turing Generator} bezeichnete Prototyp
+setzt die zuvor beschriebenen Verarbeitungsschritte und menschlichen
+Entscheidungen technisch um. Im weiteren Verlauf wird er daher verkürzt als
+\emph{Prototyp} bezeichnet.
 
-Das in Kapitel~\ref{sec:architecture} entwickelte Architekturkonzept wurde
-zur technischen Konkretisierung und Untersuchung als \emph{Turing Generator}
-prototypisch instanziiert. Entsprechend dem in
-Abschnitt~\ref{sec:forschungsdesign} beschriebenen Forschungsdesign dient der
-Prototyp als Untersuchungsinstrument und nicht als eigenständiger
-wissenschaftlicher Beitrag oder produktionsreifer Modellgenerator.
+Das in CATIA Magic entwickelte SysML-v2-Modell beschreibt hierzu die
+Anforderungen an das System, die dafür erforderlichen Funktionen und deren
+Zuordnung zu logischen Systemelementen. Die Softwareimplementierung setzt
+diese für die Untersuchung erforderlichen Funktionen ausführbar um.
 
-Die Realisierung überführt die konzeptionell hergeleiteten
-Architekturverantwortungen in ausführbare Systembausteine, persistierte
-Informations- und Entscheidungszustände sowie kontrollierte Übergänge. Das in
-CATIA Magic entwickelte SysML-v2-Modell beschreibt hierfür die
-Engineering-Architektur auf Requirements-, Functional- und Logical-Ebene,
-während die Softwareimplementierung die für den Proof of Concept erforderlichen
-Verantwortungen ausführbar realisiert. Eine unmittelbare Eins-zu-eins-Abbildung
-zwischen Engineering-Architektur und Repository-Struktur ist dabei nicht
-vorgesehen.
+Auf hoher Ebene verarbeitet der Prototyp zunächst Engineering-Quellen, also
+die als Eingang verwendeten Engineering-Dokumente und -daten, und bereitet
+deren Inhalte für die fachliche Prüfung auf. Fachlich geprüfte und
+autorisierte Engineering-Information wird anschließend in eine interne
+Repräsentation des entstehenden Modells überführt und schließlich in
+SysML~v2 dargestellt und validiert. Menschliche Entscheidungen steuern dabei
+die fachliche Autorisierung, die Einordnung in das Modell sowie die
+abschließende Modellprüfung und Freigabe. Bei der Verarbeitung mehrerer
+Quellen werden deren Informationen zusätzlich auf Projektebene gemeinsam
+betrachtet, ohne ihre Herkunft und frühere Entscheidungen zu verlieren.
 
-Die folgende Darstellung orientiert sich deshalb nicht an der Struktur des
-Quellcodes, sondern an dem in
-Abschnitt~\ref{sec:architecture_integrated_concept} entwickelten Engineering
-Information Flow. Beschrieben werden zunächst die Systemarchitektur und
-anschließend die konkrete Realisierung von Informationsverarbeitung,
-Human-Authority-Grenzen, Modellbildung, SysML-v2-Transformation,
-Multi-Source-Verarbeitung und Persistenz.
+Die folgenden Abschnitte erläutern zunächst die Systemarchitektur und danach
+die einzelnen Verarbeitungsschritte bis zum erzeugten SysML-v2-Modell.
+Abschließend werden die Verarbeitung mehrerer Quellen sowie die dauerhafte
+Speicherung und Nachverfolgbarkeit der entstehenden Zustände beschrieben.
 
-\subsection{Systemarchitektur des Turing Generators}
+\subsection{Systemarchitektur des Prototyps}
 \label{sec:implementation_system_architecture}
 
-Eine frühe Strukturierungsdimension der Arbeit war die Unterscheidung zwischen
-\emph{Data Layer}, \emph{Process Layer} und \emph{Knowledge Layer}. Diese
-Dreiteilung wurde im weiteren Projektverlauf nicht als lineare
-Verarbeitungskette umgesetzt, sondern in konkrete Systemverantwortungen
-überführt. Abbildung~\ref{fig:implementation_three_layer_mapping} zeigt diese
-Operationalisierung im CATIA-Modell.
+Ein früher Strukturierungsansatz unterschied drei Bereiche, die im
+Architekturmodell als \emph{Data Layer}, \emph{Process Layer} und
+\emph{Knowledge Layer} bezeichnet wurden. Diese Dreiteilung stellt keine
+lineare Verarbeitungskette dar. Sie diente zunächst dazu, unterschiedliche
+Aufgaben des Systems zu gruppieren. Abbildung~\ref{fig:implementation_three_layer_mapping}
+zeigt, wie diese frühe Struktur in die spätere logische Systemarchitektur
+überführt wurde.
 
 \begin{figure}[H]
     \centering
@@ -46,45 +47,29 @@ Operationalisierung im CATIA-Modell.
         height=0.76\textheight,
         keepaspectratio
     ]{Graphiken/5.2a_Three_Layer_Architecture_Mapping.pdf}
-    \caption[Operationalisierung der Drei-Schichten-Struktur]{
-    Operationalisierung der ursprünglichen Drei-Schichten-Struktur im
-    logischen Systemmodell des Turing Generators. Der Data Layer bündelt
-    Verantwortungen für Project- und Source-Kontext, Engineering Information
-    Processing sowie Evidence und Traceability. Der Process Layer umfasst
-    Workflow-Steuerung, Human Review, Architektursynthese sowie SysML-v2-
-    Erzeugung und -Validierung. Der Knowledge Layer ist nicht als isoliertes
-    Subsystem realisiert, sondern wirkt querschnittlich auf Verarbeitung,
-    Review, Evidence und Architektursynthese. Die Schichten beschreiben damit
-    Verantwortungsbereiche und keine sequenzielle Verarbeitungskette.
-    Eigene Darstellung auf Basis des entwickelten SysML-v2-Architekturmodells.}
+    \caption[Überführung der ursprünglichen Drei-Schichten-Struktur]{
+        Überführung der ursprünglichen Drei-Schichten-Struktur in das
+        logische Systemmodell. Der \emph{Data Layer} umfasst die Verarbeitung
+        und Nachverfolgbarkeit von Engineering-Information sowie den Projekt-
+        und Quellenkontext. Der \emph{Process Layer} umfasst die Steuerung des
+        Verarbeitungsablaufs, menschliche Entscheidungen, Modellbildung sowie
+        SysML-v2-Erzeugung und Validierung. Der \emph{Knowledge Layer} stellt
+        unterstützende Informationen für mehrere dieser Funktionen bereit und
+        wirkt daher querschnittlich. Eigene Darstellung auf Basis des
+        entwickelten SysML-v2-Architekturmodells.}
     \label{fig:implementation_three_layer_mapping}
 \end{figure}
 
-Die querschnittliche Ausprägung des Knowledge Layers operationalisiert dabei
-die in Abschnitt~\ref{sec:architecture_information_authority} entwickelte
-Trennung zwischen fachlicher Informationsbasis und unterstützendem Kontext.
+Die querschnittliche Ausprägung des \emph{Knowledge Layer} greift die in
+Abschnitt~\ref{sec:architecture_information_authority} entwickelte Trennung
+zwischen den fachlich maßgeblichen Engineering-Informationen und
+unterstützenden Kontextinformationen auf.
 
-Für die Systemarchitektur wurden die zunächst grob gebündelten
-Verantwortungen auf logischer Ebene in neun zentrale Systemkomponenten
-differenziert:
-
-\begin{itemize}
-
-    \item \emph{User Interaction and Status Presentation},
-    \item \emph{Project and Source Context Management},
-    \item \emph{Processing Orchestration and State Control},
-    \item \emph{Engineering Information Processing},
-    \item \emph{Candidate and Review Governance},
-    \item \emph{Coverage Evidence and Traceability Management},
-    \item \emph{Architecture Synthesis and Validation},
-    \item \emph{SysML v2 Artifact Generation},
-    \item \emph{Generated SysML v2 Validation}.
-
-\end{itemize}
-
-Abbildung~\ref{fig:implementation_logical_architecture} zeigt diese
-System-Level Logical Architecture einschließlich der wesentlichen internen
-Informationsbeziehungen und externen Kontexte.
+Auf dieser Grundlage wurde die Systemarchitektur auf logischer Ebene weiter
+konkretisiert. Abbildung~\ref{fig:implementation_logical_architecture} zeigt,
+welche Systemkomponenten dafür vorgesehen sind, wie sie Informationen
+untereinander austauschen und welche Beteiligten oder Informationsquellen
+außerhalb des eigentlichen Prototyps angebunden sind.
 
 \begin{figure}[H]
     \centering
@@ -93,88 +78,82 @@ Informationsbeziehungen und externen Kontexte.
         height=0.82\textheight,
         keepaspectratio
     ]{Graphiken/5.2b_Logical_Architecture.pdf}
-    \caption[Logische Systemarchitektur des Turing Generators]{
-    Logische Systemarchitektur des Turing Generators. Neun interne Logical
-    Components trennen Benutzerinteraktion, Project- und Source-Kontext,
-    Orchestrierung, Engineering Information Processing, Review und Authority,
-    Evidence und Traceability, Architektursynthese, SysML-v2-Erzeugung sowie
-    die separate Validierung der generierten Artefakte. Human Reviewer,
-    LLM Inference sowie semantische, Target-Model- und SysML-v2-Referenzen
-    sind als externe Kontexte dargestellt. Dadurch bleiben probabilistische
-    Verarbeitung, Engineering Authority, Modellbildung, Zielrepräsentation
-    und technische Validierung strukturell voneinander getrennt.
-    Eigene Darstellung auf Basis des entwickelten SysML-v2-Architekturmodells.}
+    \caption[Logische Systemarchitektur des Prototyps]{
+            Logische Systemarchitektur des Prototyps. Die internen Komponenten
+            trennen Benutzerinteraktion, Projekt- und Quellenverwaltung,
+            Ablaufsteuerung, Verarbeitung von Engineering-Information,
+            menschliche Prüfung und Autorisierung, Herkunft und Nachverfolgbarkeit,
+            Modellbildung, SysML-v2-Erzeugung sowie Validierung. Das Sprachmodell,
+            der menschliche Reviewer und unterstützende Referenzinformationen liegen
+            außerhalb des eigentlichen Prototyps und sind über definierte
+            Schnittstellen angebunden. Eigene Darstellung auf Basis des entwickelten
+            SysML-v2-Architekturmodells.}
     \label{fig:implementation_logical_architecture}
 \end{figure}
 
-Die logische Zerlegung überführt die in Kapitel~\ref{sec:architecture}
-hergeleiteten Verantwortungsgrenzen in konkrete Systemkomponenten.
-Insbesondere bleiben Engineering Information Processing, Human Review,
-Architektursynthese, SysML-v2-Erzeugung und technische Validierung als
-getrennte Verantwortungen erhalten. Human Reviewer und LLM Inference sowie
-die semantischen und modellbezogenen Referenzkontexte sind als externe
-Systemkontexte angebunden. Damit bildet die Systemarchitektur die zuvor
-entwickelte Trennung von Informationsbasis, Engineering Authority,
-Modellbildung und Zielrepräsentation strukturell ab.
+Die logische Zerlegung überführt die in
+Kapitel~\ref{sec:architecture} entwickelten Architekturmechanismen in
+konkrete Systemkomponenten. Die Verarbeitung von Engineering-Information,
+menschliche Autorisierung, Modellbildung, SysML-v2-Erzeugung und Validierung
+bleiben dabei strukturell getrennt. Das Sprachmodell und die menschliche
+Prüfung sind ebenso wie die semantischen und modellbezogenen
+Referenzinformationen über definierte Schnittstellen in diese Struktur
+eingebunden.
 
-Für die detailliertere R/F/L-Modellierung wurde die Systemarchitektur
-anschließend in neun thesis-relevante Subsysteme zerlegt. Die finale
-Subsystemstruktur unterscheidet:
+Für die detailliertere Modellierung wurde die Systemarchitektur anschließend
+weiter untergliedert. Dabei wurden Anforderungen, erforderliche Funktionen
+und die zugehörigen logischen Systemelemente miteinander verknüpft
+(R/F/L-Modellierung). Hierfür ist das System im Modell in neun Subsysteme,
+also neun funktional abgegrenzte Teilbereiche, gegliedert. Die im Modell
+verwendeten Bezeichnungen lauten:
 
 \begin{enumerate}
-    \item User Interaction and Guided Workflow,
-    \item Project and Source Context Management,
-    \item Processing Orchestration and State Control,
-    \item Engineering Information Processing,
-    \item Human Review and Engineering Authority,
-    \item Evidence Coverage and Traceability,
-    \item Architecture Derivation and Model Assembly,
-    \item SysML v2 Artifact Generation,
-    \item Generated Artifact Validation and Publication.
+    \item \emph{User Interaction and Guided Workflow},
+    \item \emph{Project and Source Context Management},
+    \item \emph{Processing Orchestration and State Control},
+    \item \emph{Engineering Information Processing},
+    \item \emph{Human Review and Engineering Authority},
+    \item \emph{Evidence Coverage and Traceability},
+    \item \emph{Architecture Derivation and Model Assembly},
+    \item \emph{SysML v2 Artifact Generation},
+    \item \emph{Generated Artifact Validation and Publication}.
 \end{enumerate}
 
-Die Subsystemzerlegung verfeinert damit die System-Level Logical Architecture
-für die funktionale und technische Realisierung, ohne den übergeordneten
-Engineering Information Flow zu verändern. Sie folgt
-Engineering-Verantwortungen und bildet bewusst nicht die Modulstruktur der
-Softwareimplementierung nach. Die folgenden Abschnitte geben deshalb nicht
-die vollständige R/F/L-Hierarchie wieder, sondern beschreiben die
-prototypische Realisierung entlang des durchgängigen Informationsflusses.
+Diese Bezeichnungen dienen der Strukturierung des SysML-v2-Modells. Inhaltlich
+decken die Subsysteme die zuvor beschriebenen Funktionen von der
+Quellenverarbeitung über menschliche Autorisierung und Modellbildung bis zur
+Erzeugung, Validierung und Freigabe des SysML-v2-Artefakts ab.
 
-\subsection{End-to-End-Realisierung des Engineering Information Flow}
+Diese Untergliederung verfeinert die logische Systemarchitektur für die
+nachfolgende Modellierung und technische Umsetzung. Die folgenden Abschnitte
+geben nicht die vollständige Modellhierarchie wieder, sondern konzentrieren
+sich auf den tatsächlichen Verarbeitungsablauf des Prototyps.
+
+\subsection{Durchgängige Realisierung des Informationsflusses}
 \label{sec:implementation_e2e_flow}
 
-% ABBILDUNG CATIA:
-% "SFB_004 Engineering Data Transformation Flow"
-%
-% Inhalt:
-% - Source Registration
-% - Processing
-% - Human Engineering Review
-% - Approved Engineering Information
-% - Project / Model Processing
-% - IEM / Target Model
-% - SysML v2
-% - Validation / Final Release
-%
-% Nur Realisierung erklären.
-% Verification und beobachtete Resultate erst Kap. 6/7.
-%\subsection{End-to-End-Realisierung des Engineering Information Flow}
-%\label{sec:implementation_e2e_flow}
-
 Die in Abschnitt~\ref{sec:implementation_system_architecture}
-beschriebenen Systemverantwortungen wirken nicht unabhängig voneinander,
-sondern bilden gemeinsam einen durchgängigen Engineering Information Flow.
-Dieser beginnt mit registrierter Engineering-Information und endet mit einem
-technisch validierten und explizit freigegebenen SysML-v2-Artefakt. Die
-prototypische Realisierung orientiert sich damit nicht an einer unmittelbaren
-Transformation von Eingangsdokumenten zu Modellcode, sondern an einer Folge
-expliziter Informations-, Entscheidungs- und Modellzustände.
+beschriebenen Systemkomponenten wirken gemeinsam in einem durchgängigen
+Verarbeitungsablauf. Dieser beginnt mit der Registrierung einer
+Engineering-Quelle und endet mit einem validierten und explizit
+freigegebenen SysML-v2-Artefakt.
+
+Zwischen Eingabe und Ergebnis entstehen mehrere klar voneinander getrennte
+Zwischenzustände. Der Inhalt einer Quelle wird zunächst aufbereitet und auf
+relevante Engineering-Information untersucht. Diese Information wird
+anschließend fachlich geprüft und autorisiert. Erst danach wird entschieden,
+wie sie in das interne Modell eingeordnet werden kann. Auf dieser Grundlage
+entsteht schrittweise ein interner Modellzustand, aus dem schließlich die
+SysML-v2-Repräsentation erzeugt, validiert und abschließend menschlich
+geprüft und freigegeben wird. Der Prototyp wandelt Eingangsdokumente damit
+nicht unmittelbar in SysML-v2-Code um.
 
 Abbildung~\ref{fig:implementation_e2e_flow} zeigt diesen Ablauf auf
-Systemebene. Die CATIA-Sicht \emph{SFB\_004 Engineering Data Transformation
-Flow} fasst die wesentlichen Verarbeitungsschritte und Informationsübergänge
-des Turing Generators zu einem End-to-End-Workflow zusammen.
+Systemebene. Die im CATIA-Modell als
+\emph{SFB\_004 Engineering Data Transformation Flow} bezeichnete Sicht
+fasst die wesentlichen Verarbeitungsschritte und ihre Informationsübergänge
+zusammen. Die englischen Bezeichnungen in der Abbildung entsprechen dabei
+den Namen der Funktionen und Informationsobjekte im SysML-v2-Modell.
 
 \begin{figure}[H]
     \centering
@@ -183,76 +162,126 @@ des Turing Generators zu einem End-to-End-Workflow zusammen.
         height=0.82\textheight,
         keepaspectratio
     ]{Graphiken/5.3_End_to_End_Engineering_Information_Flow.pdf}
-    \caption[End-to-End Engineering Information Flow]{
-    End-to-End Engineering Information Flow des Turing Generators. Die
-    Darstellung verfolgt die fachlichen Informationszustände von der
-    registrierten Engineering Source über Processing und Human Engineering
-    Review, Project Fit und projektweite Modellbildung bis zum validierten
-    SysML-v2-Artefakt und dessen finaler menschlicher Freigabe. Die beschrifteten
-    Item Flows machen dabei die Übergänge unter anderem über Review Package,
-    Approved Engineering Information, Project-Admitted Engineering Information,
-    Internal Engineering Model, Generated SysML Artifact Set und
-    SysML Validation Result sichtbar. LLM Service und Human Reviewer liegen
-    außerhalb des eigentlichen Verarbeitungspfads und übernehmen
-    unterschiedliche, ausdrücklich getrennte Rollen.
-    Eigene Darstellung auf Basis des entwickelten SysML-v2-Architekturmodells.}
+    \caption[Durchgängiger Informationsfluss des Prototyps]{
+        Durchgängiger Informationsfluss von der registrierten
+        Engineering-Quelle bis zum freigegebenen SysML-v2-Artefakt.
+        Nach der Aufbereitung und fachlichen Prüfung der Quellinformation
+        wird deren Eignung für die projektweite Verarbeitung bewertet.
+        Anschließend werden daraus Modellinhalte abgeleitet, menschlich
+        autorisiert und in einem internen Modellzustand zusammengeführt.
+        Dieser bildet die Grundlage für die SysML-v2-Erzeugung, deren
+        Validierung sowie die abschließende menschliche Modellprüfung und
+        Freigabe. Sprachmodell und menschlicher Reviewer sind als externe
+        Beteiligte dargestellt. Eigene Darstellung auf Basis des
+        entwickelten SysML-v2-Architekturmodells.}
     \label{fig:implementation_e2e_flow}
 \end{figure}
 
-Der Ablauf beginnt mit der Registrierung einer Source innerhalb eines
-definierten Project- und Source-Kontexts. Dabei werden Source-Identität,
-Processing-Kontext und Provenance so gebunden, dass nachgelagerte Artefakte
-auf den konkreten Verarbeitungslauf zurückgeführt werden können. Die
-technische Persistenz dieser Bindungen wird in
+Der Ablauf beginnt mit der Registrierung einer Engineering-Quelle. Dabei
+wird festgehalten, welchem Projekt die Quelle zugeordnet ist, um welche
+konkrete Quelle es sich handelt und unter welchen Bedingungen sie verarbeitet
+wird. Diese Angaben bilden den Projekt-, Quellen- und Verarbeitungskontext.
+Sie stellen sicher, dass später erzeugte Informationen und Modellartefakte
+auf die jeweilige Quelle und den zugehörigen Verarbeitungslauf
+zurückgeführt werden können. Die technische Speicherung dieser Informationen und
+ihrer Verknüpfungen wird in
 Abschnitt~\ref{sec:implementation_persistence_limits} beschrieben.
 
-Die anschließenden Verarbeitungsschritte instanziieren den in
-Abschnitt~\ref{sec:architecture_integrated_concept} hergeleiteten Engineering
-Information Flow. Source-lokale Informationsverarbeitung, Human Engineering
-Review, projektweite Zulassung, Model Authority, interne Modellbildung,
-SysML-v2-Generierung, technische Validierung und finale menschliche Freigabe
-bleiben dabei als getrennte Zustände und Verantwortungen erhalten.
+Anschließend wird der Inhalt der Quelle verarbeitet und in eine Form
+überführt, in der relevante Engineering-Information gezielt geprüft werden
+kann. Die Verarbeitung selbst autorisiert noch keine fachlichen Aussagen.
+Diese Autorisierung erfolgt erst durch eine menschliche Prüfung
+(\emph{Human Engineering Authority}). Dadurch bleibt nachvollziehbar,
+welche Information lediglich aus der Quelle abgeleitet wurde und welche
+Information anschließend fachlich bestätigt wurde.
 
-Die konkrete Realisierung dieser Verantwortungen wird in den folgenden
-Abschnitten detailliert. Abschnitt~\ref{sec:implementation_information_processing}
-beschreibt die source-lokale Informationsverarbeitung,
-Abschnitt~\ref{sec:implementation_authority} die Human- und
-Model-Authority-Grenzen und
-Abschnitt~\ref{sec:implementation_model_realization} die nachgelagerte
-Modellbildung und SysML-v2-Realisierung. Die projektweite Verarbeitung mehrerer
-Sources wird in Abschnitt~\ref{sec:implementation_multisource} ergänzt.
+Bevor autorisierte Information gemeinsam mit weiteren Quellen auf
+Projektebene verarbeitet wird, wird ihre Eignung für den betrachteten
+Projektkontext geprüft. Dieser Schritt wird im Modell als
+\emph{Project Fit} bezeichnet. Er beantwortet damit nicht die Frage, ob
+eine Aussage fachlich richtig ist, sondern ob sie für das betrachtete
+Projekt in die weitere Verarbeitung einbezogen werden soll.
 
-Neben dem dargestellten Hauptpfad implementiert der Prototyp kontrollierte
-Retry-, Rework- und blockierende Übergänge entsprechend dem in
-Abschnitt~\ref{sec:architecture_controlled_transformation} entwickelten
-Fail-Closed-Prinzip. Provenance und Traceability werden nicht als eigener
-sequenzieller Verarbeitungsschritt behandelt, sondern begleiten die
-persistierten Informations- und Entscheidungszustände über den gesamten Flow.
+Aus den zugelassenen Engineering-Informationen werden anschließend mögliche
+Modellelemente und Beziehungen abgeleitet. Diese Vorschläge werden nicht
+unmittelbar in das Modell übernommen. Die menschliche
+\emph{Model Authority} entscheidet zunächst über ihre strukturelle
+Einordnung. Erst auf Grundlage dieser Entscheidung wird der interne
+Modellzustand aufgebaut.
 
-\subsection{Realisierung der Engineering Information Processing}
+Dieser interne Modellzustand wird anschließend für die Zielrepräsentation
+aufbereitet und deterministisch in SysML~v2 überführt. Das erzeugte
+SysML-v2-Artefakt wird validiert und danach einer abschließenden
+menschlichen Modellprüfung unterzogen. Erst nach dieser Freigabe gilt der
+Verarbeitungspfad als abgeschlossen.
+
+Die folgenden Abschnitte erläutern die einzelnen Teile dieses Ablaufs
+detaillierter. Abschnitt~\ref{sec:implementation_information_processing}
+beschreibt die Verarbeitung der Engineering-Quellen bis zur fachlichen
+Prüfung. Abschnitt~\ref{sec:implementation_authority} behandelt die
+menschlichen Entscheidungen über fachliche Information und Modellbildung.
+Abschnitt~\ref{sec:implementation_model_realization} beschreibt den Aufbau
+des internen Modells sowie dessen Überführung in SysML~v2. Die Verarbeitung
+mehrerer Engineering-Quellen wird in
+Abschnitt~\ref{sec:implementation_multisource} ergänzt.
+
+Der dargestellte Ablauf enthält außerdem kontrollierte Rücksprünge und
+Abbruchbedingungen. Fehlen beispielsweise erforderliche Informationen oder
+eine notwendige menschliche Entscheidung, wird der nachfolgende
+Verarbeitungsschritt nicht ausgeführt. Damit wird das in
+Abschnitt~\ref{sec:architecture_controlled_transformation} eingeführte
+\emph{fail-closed}-Prinzip umgesetzt.
+
+Informationen über Herkunft, Verarbeitung und getroffene Entscheidungen
+werden während des gesamten Ablaufs mitgeführt und dauerhaft gespeichert.
+Dadurch bleiben die in Kapitel~\ref{sec:architecture} beschriebenen
+Provenienz- und Nachverfolgbarkeitsbeziehungen auch in der prototypischen
+Realisierung erhalten.
+
+\paragraph{Technische Verträge zwischen Verarbeitungsschritten}
+
+Die Übergänge zwischen den einzelnen Verarbeitungsschritten werden in der
+prototypischen Realisierung durch explizite technische Verträge
+konkretisiert. Ein solcher Vertrag legt fest, welche Eingangszustände ein
+Verarbeitungsschritt verwenden darf, welche Identitäten und Referenzen
+erhalten bleiben müssen, welche Bedingungen für eine gültige Verarbeitung
+gelten und welche Ergebniszustände für die nachfolgende Verarbeitung
+bereitgestellt werden können.
+
+Die Verträge übertragen damit die im Architekturkonzept definierten
+Informations-, Provenienz- und Autorisierungsgrenzen in überprüfbare
+Bedingungen der Implementierung. Sie verhindern beispielsweise, dass
+Persona-Interpretationen auf unterschiedlichen fachlichen
+Referenzgegenständen beruhen, dass menschliche Entscheidungen von dem
+tatsächlich geprüften Informationszustand gelöst werden oder dass ein
+Modellzustand ohne die erforderliche fachliche und strukturelle
+Autorisierung weiterverarbeitet wird.
+
+Solche Verträge werden im Prototyp unter anderem für die Bildung der
+fachlichen Referenzgegenstände (\emph{Engineering Subjects}), die
+Persona-basierte Interpretation, den Vergleich der
+Interpretationsergebnisse, die menschliche fachliche Autorisierung und die
+Modellplatzierung verwendet. In der Implementierung werden diese
+Festlegungen als \emph{Contracts} bezeichnet.
+
+Die technischen Verträge bilden zugleich eine Grundlage der automatisierten
+Verifikation. Ihre regelbasiert überprüfbaren Bedingungen werden in
+Abschnitt~\ref{sec:validation_software} als Bestandteil der Software- und
+Vertragsverifikation untersucht. Eine Übersicht der für die prototypische
+Realisierung wesentlichen Verträge ist in
+Anhang~\ref{app:implementation_contracts} dokumentiert.
+
+\subsection{Quellenbezogene Verarbeitung von Engineering-Information}
 \label{sec:implementation_information_processing}
 
-% ABBILDUNG CATIA:
-% "SFB_005 Engineering Information Processing Flow"
-%
-% Inhalt:
-% - deterministic Source Projection / preparation
-% - Source-grounded Evidence
-% - Engineering Subjects
-% - Persona Interpretation
-% - Consensus / Variance / Ambiguity
-% - Semantic Consolidation
-% - Review Package
-% - LLM als Processing Capability ohne Engineering Authority
-%\subsection{Realisierung der Engineering Information Processing}
-%\label{sec:implementation_information_processing}
-
-Die \emph{Engineering Information Processing} konkretisiert die
-source-lokale Verarbeitung des End-to-End-Flows und ist im CATIA-Modell als
-\emph{SFB\_005 Engineering Information Processing Flow} ausmodelliert.
-Ihre Systemgrenze reicht von der registrierten Engineering Source bis zum
-persistierten Review-Kontext für den nachfolgenden Human Engineering Review.
-Abbildung~\ref{fig:implementation_information_processing} zeigt die hierfür
+Der erste Teil des in
+Abschnitt~\ref{sec:implementation_e2e_flow} beschriebenen
+Verarbeitungsablaufs bereitet den Inhalt einer einzelnen Engineering-Quelle
+für die nachfolgende fachliche Prüfung auf. Im CATIA-Modell ist dieser
+Bereich als \emph{SFB\_005 Engineering Information Processing Flow}
+bezeichnet. Er reicht von der registrierten Quelle bis zu den Informationen,
+die dem menschlichen Reviewer für seine Entscheidung bereitgestellt werden.
+Abbildung~\ref{fig:implementation_information_processing} zeigt die dafür
 realisierte Verarbeitungskette.
 
 \begin{figure}[H]
@@ -262,99 +291,129 @@ realisierte Verarbeitungskette.
         height=0.84\textheight,
         keepaspectratio
     ]{Graphiken/5.4_Engineering_Information_Processing_Flow.pdf}
-    \caption[Source-lokale Engineering Information Processing]{
-    Source-lokale Engineering Information Processing bis zur
-    Human-Engineering-Review-Grenze. Aus einer deterministischen Source
-    Projection werden zunächst Source Analysis Units und source-grounded
-    Evidence abgeleitet. Darauf aufbauend werden Canonical Engineering
-    Subjects gebildet und durch konfigurierte Personas unabhängig
-    interpretiert. Consensus, Varianz und Unsicherheit dienen als
-    Review-Evidence und stellen selbst keine fachliche Authority dar.
-    Nach kontrollierter semantischer Governance sowie der Bewertung von
-    Coverage und Evidence Sufficiency entsteht das Review Package für die
-    nachfolgende menschliche Entscheidung. Der LLM Service unterstützt
-    ausgewählte interpretative Verarbeitungsschritte, besitzt jedoch keine
-    Engineering Authority.
-    Eigene Darstellung auf Basis des entwickelten SysML-v2-Architekturmodells.}
+    \caption[Quellenbezogene Verarbeitung von Engineering-Information]{
+        Quellenbezogene Verarbeitung von Engineering-Information bis zur
+        menschlichen fachlichen Prüfung. Der Inhalt einer registrierten
+        Quelle wird zunächst technisch aufbereitet und in eindeutig
+        referenzierbare Abschnitte gegliedert. Daraus werden quellengebundene
+        Evidenz und gemeinsame fachliche Referenzgegenstände für mehrere
+        Persona-Interpretationen abgeleitet. Übereinstimmungen, Abweichungen,
+        mögliche Mehrdeutigkeiten und Informationslücken werden anschließend
+        für die menschliche Prüfung zusammengeführt. Der LLM-Service
+        unterstützt einzelne Interpretationsschritte, trifft jedoch keine
+        fachliche Autorisierungsentscheidung. Die englischen Bezeichnungen
+        in der Abbildung entsprechen den Element- und Funktionsnamen des
+        SysML-v2-Modells. Eigene Darstellung auf Basis des entwickelten
+        SysML-v2-Architekturmodells.}
     \label{fig:implementation_information_processing}
 \end{figure}
 
-Am Beginn der Verarbeitung steht eine deterministische
-\emph{Source Projection}. Sie überführt den registrierten Source-Inhalt in
-eine interne Repräsentation, ohne zusätzliche fachliche Interpretation
-einzuführen. Die Projektion bleibt an Source-Identität und Processing-Kontext
-gebunden.
+Zu Beginn wird der Inhalt der registrierten Engineering-Quelle in eine
+einheitliche interne Darstellung überführt. Dieser reproduzierbare
+Aufbereitungsschritt wird im Modell als \emph{Source Projection} bezeichnet.
+Er verändert die fachliche Aussage der Quelle nicht und fügt keine neue
+fachliche Interpretation hinzu. Gleichzeitig bleibt festgehalten, aus
+welcher Quelle und aus welchem konkreten Verarbeitungslauf die aufbereiteten
+Informationen stammen.
 
-Darauf werden \emph{Source Analysis Units} als eindeutig referenzierbare
-Bereiche gebildet. Auf dieser Grundlage identifiziert die
-\emph{source-grounded Evidence Detection} potenziell relevante
-Engineering-Information und bindet sie weiterhin an konkrete
-Source-Ausschnitte und deren Provenance.
+Die aufbereitete Quelle wird anschließend in eindeutig referenzierbare
+Abschnitte gegliedert, die im Modell als \emph{Source Analysis Units}
+bezeichnet werden. Innerhalb dieser Abschnitte werden potenziell relevante
+Engineering-Informationen identifiziert und weiterhin mit ihren konkreten
+Fundstellen in der Ausgangsquelle verknüpft. Diese quellengebundenen
+Beleginformationen entsprechen der in
+Abschnitt~\ref{sec:architecture_grounded_interpretation} eingeführten
+quellengebundenen Evidenz. In der Modellansicht wird hierfür die Bezeichnung
+\emph{source-grounded Evidence} verwendet.
 
-Aus dieser Evidence werden anschließend \emph{Canonical Engineering Subjects}
-gebildet. Sie stellen die gemeinsame fachliche Bezugsbasis für die
-nachfolgenden Persona-Interpretationen dar. Alle konfigurierten Perspektiven
-arbeiten damit auf denselben Engineering Subjects, entsprechend dem in
-Abschnitt~\ref{sec:architecture_grounded_interpretation} entwickelten
-Prinzip der source-grounded multiperspektivischen Interpretation.
+Aus der quellengebundenen Evidenz werden anschließend fachliche
+Referenzgegenstände (\emph{Engineering Subjects}) gebildet. Sie sorgen dafür,
+dass die nachfolgenden Interpretationen jeweils denselben fachlichen
+Gegenstand betrachten und ihre Ergebnisse miteinander verglichen werden
+können. Damit wird die in
+Abschnitt~\ref{sec:architecture_grounded_interpretation} entwickelte
+Trennung zwischen der Identifikation einer gemeinsamen quellengebundenen
+Informationsgrundlage und ihrer multiperspektivischen Interpretation
+umgesetzt.
 
-Die technische Realisierung trennt Agentenrolle und Persona-Perspektive.
-Für die Interpretation werden die drei in
-Anhang~\ref{app:personas_interpretation} dokumentierten Perspektiven
-\emph{Literal Interpreter}, \emph{Systems Engineering Interpreter} und
-\emph{Skeptical Ambiguity Interpreter} eingesetzt. Sie unterscheiden sich
-hinsichtlich Source-Treue, Systems-Engineering-Fokus und gezielter
-Ambiguitätsprüfung, arbeiten jedoch auf derselben source-grounded
-Informationsbasis. Ihre Ergebnisse werden als Processing Evidence persistiert.
+Für die Interpretation werden drei konfigurierte Personas eingesetzt.
+Sie betrachten jeweils denselben fachlichen Referenzgegenstand, setzen jedoch
+unterschiedliche Schwerpunkte: Eine Persona orientiert sich möglichst eng
+an der vorliegenden Quelle, eine zweite betrachtet den Inhalt aus
+Systems-Engineering-Sicht und eine dritte prüft gezielt auf
+Mehrdeutigkeiten und fehlende Informationen. Im Prototyp werden diese
+Personas als \emph{Literal Interpreter},
+\emph{Systems Engineering Interpreter} und
+\emph{Skeptical Ambiguity Interpreter} bezeichnet. Die vollständigen
+Persona-Konfigurationen sind in
+Anhang~\ref{app:personas_interpretation} dokumentiert.
 
-Die Persona-Ergebnisse werden anschließend subject-bezogen verglichen und als
-Consensus-, Variance- und Ambiguity-Evidence persistiert. Dabei wird die Anzahl
-technischer LLM-Aufrufe nicht als fachliches Stimmengewicht verwendet.
-Entsprechend Abschnitt~\ref{sec:architecture_grounded_interpretation} bleiben
-Übereinstimmungen und Abweichungen Review-Evidence und erzeugen keine
-Engineering Authority.
+Die Persona-Interpretationen werden anschließend jeweils für denselben
+fachlichen Referenzgegenstand miteinander verglichen. Dabei werden die in
+Abschnitt~\ref{sec:architecture_grounded_interpretation} beschriebenen
+Zustände Übereinstimmung (\emph{Consensus}), Varianz
+(\emph{Variance}) und gemeinsame Mehrdeutigkeit
+(\emph{Shared Ambiguity}) bestimmt. Sie zeigen, wo die Perspektiven zu
+vergleichbaren Ergebnissen gelangen, voneinander abweichen oder dieselbe
+Unsicherheit erkennen. Diese Informationen unterstützen die spätere
+menschliche Prüfung, stellen selbst jedoch noch keine fachliche
+Autorisierung dar.
 
-Die Interpretationsergebnisse werden anschließend um Semantic-Governance-,
-Coverage- und Evidence-Sufficiency-Informationen ergänzt. Semantische
-Referenzen und Terminologie unterstützen dabei die Einordnung, ohne die in
-Abschnitt~\ref{sec:architecture_information_authority} festgelegte Provenance
-und Informationsautorität der Engineering Evidence zu verändern. Coverage und
-Evidence Sufficiency machen zusätzlich sichtbar, auf welcher Source-Grundlage
-eine Interpretation beruht und ob relevante Informationslücken bestehen.
+Zusätzlich werden Informationen zur verwendeten Beleggrundlage und zu
+möglichen Informationslücken ermittelt. Die im Modell als
+\emph{Coverage} bezeichnete Information macht sichtbar, auf welche Bereiche
+der Quelle sich die Verarbeitung stützt. \emph{Evidence Sufficiency}
+beschreibt, ob für den betrachteten Gegenstand eine ausreichende
+Beleggrundlage vorliegt oder relevante Informationslücken bestehen.
+Semantische Referenzen und festgelegte Terminologie unterstützen darüber
+hinaus eine konsistente Einordnung der Inhalte. Sie ergänzen die
+quellengebundene Evidenz, ersetzen jedoch weder die ursprüngliche
+Informationsgrundlage noch die nachfolgende menschliche Bewertung.
 
-Diese Zustände werden zu einem persistierten \emph{Human Review Package}
-zusammengeführt. Es enthält den source-grounded Engineering-Gegenstand
-gemeinsam mit den zugehörigen Interpretations-, Consensus-, Variance-,
-Semantic- und Coverage-Informationen und bildet damit den technischen Handoff
-an den nachfolgenden Human Engineering Review.
+Die für die fachliche Prüfung relevanten Informationen werden anschließend
+zu einem gemeinsamen Prüfzustand zusammengeführt, der im Modell als
+\emph{Human Review Package} bezeichnet wird. Er enthält den betrachteten
+fachlichen Referenzgegenstand, die zugehörige quellengebundene Evidenz, die
+Persona-Interpretationen sowie Informationen zu Übereinstimmungen,
+Abweichungen, Mehrdeutigkeiten und möglichen Informationslücken. Dieser
+Zustand wird dauerhaft gespeichert und bildet die Grundlage für die
+nachfolgende menschliche Prüfung.
 
-Die Verarbeitung bleibt bis zu diesem Punkt source-lokal und erzeugt
-Processing- und Review-Evidence, jedoch keine autorisierte
-Engineering-Information. Project Fit, projektweite Verarbeitung und
-Model Derivation liegen außerhalb dieser Systemgrenze. Der Übergang zur
-autorisierten Engineering-Information erfolgt über die im folgenden Abschnitt
-beschriebenen Human- und Model-Authority-Grenzen.
+Bis zu diesem Punkt wird jede Engineering-Quelle für sich verarbeitet.
+Die Verarbeitung erzeugt damit eine nachvollziehbare Grundlage für die
+fachliche Entscheidung, autorisiert die abgeleiteten Engineering-Informationen
+aber noch nicht selbst. Die menschliche Autorisierung, die spätere
+projektweite Zusammenführung mehrerer Quellen und die Ableitung konkreter
+Modellelemente erfolgen in den nachgelagerten Verarbeitungsschritten.
+Der folgende Abschnitt beschreibt zunächst die menschlichen Entscheidungen
+über die fachliche Information und ihre Verwendung im Modell.
 
-\subsection{Realisierung der Human- und Model-Authority-Grenzen}
+\subsection{Realisierung der menschlichen Autorisierungsgrenzen}
 \label{sec:implementation_authority}
 
-Die Engineering Information Processing aus
-Abschnitt~\ref{sec:implementation_information_processing} endet bewusst vor
-der fachlichen Autorisierung ihrer Ergebnisse. Die prototypische Realisierung
-behandelt Human Authority deshalb nicht als einzelnen abschließenden
-Review-Schritt, sondern verteilt sie auf mehrere voneinander getrennte
-Entscheidungsgrenzen. Diese Grenzen betreffen unterschiedliche
-Informationszustände und erzeugen jeweils eine für den nachfolgenden
-Verarbeitungsschritt erforderliche Authority.
+Die in Abschnitt~\ref{sec:implementation_information_processing}
+beschriebene Verarbeitung bereitet Engineering-Information für eine
+fachliche Prüfung auf, autorisiert die erzeugten Ergebnisse jedoch noch
+nicht. Der Prototyp setzt deshalb das in
+Abschnitt~\ref{sec:architecture_human_authority} entwickelte Konzept der
+\emph{Human Authority} an mehreren Stellen des Verarbeitungsablaufs um.
+Dabei entscheidet ein Mensch jeweils über einen konkret vorliegenden
+Informations- oder Modellzustand, bevor dieser für den nächsten fachlich
+relevanten Verarbeitungsschritt verwendet werden darf.
 
-Im finalen CATIA-Modell ist diese Verantwortung im Subsystem
-\emph{SBS\_05 Human Review and Engineering Authority} zusammengefasst.
-Abbildung~\ref{fig:implementation_authority_rfl} zeigt einen fokussierten
-Ausschnitt der zugehörigen R/F/L-Traceability. Dargestellt sind diejenigen
-Requirements, Functions und Logical Components, die die Bindung menschlicher
-Entscheidungen an den geprüften Inhalt, die Autorisierung von
-Engineering-Information, die Modellplatzierung und die abschließende
-Modellfreigabe realisieren.
+Die erste dieser Autorisierungsgrenzen betrifft die fachliche Verwendung
+aufbereiteter Engineering-Information. Eine zweite betrifft deren
+strukturelle Einordnung in das Modell. Eine weitere menschliche Entscheidung
+erfolgt am Ende des Verarbeitungspfads vor der Freigabe des erzeugten
+SysML-v2-Modells. Damit werden unterschiedliche Entscheidungsgegenstände
+nicht in einem einzigen abschließenden Review zusammengefasst.
+
+Im CATIA-Modell sind die dafür erforderlichen Funktionen im Subsystem
+\emph{SBS\_05 Human Review and Engineering Authority} zusammengeführt.
+Abbildung~\ref{fig:implementation_authority_rfl} zeigt einen Ausschnitt
+dieser Modellierung und stellt die Verbindung zwischen ausgewählten
+Anforderungen, den daraus abgeleiteten Funktionen und den zugehörigen
+logischen Systemelementen dar.
 
 \begin{figure}[H]
     \centering
@@ -363,112 +422,126 @@ Modellfreigabe realisieren.
         height=0.82\textheight,
         keepaspectratio
     ]{Graphiken/5.5_Human_Authority_RFL.pdf}
-    \caption[Fokussierte R/F/L-Traceability der Human Authority]{
-    Fokussierte R/F/L-Traceability der Human- und Model-Authority im
-    Subsystem \emph{SBS\_05 Human Review and Engineering Authority}.
-    Ausgewählte Subsystem Requirements werden über die zugehörigen Functions
-    auf die verantwortlichen Logical Components zurückgeführt. Sichtbar sind
-    insbesondere die Bindung einer Human Review Decision an den exakt geprüften
-    Inhalt, die Promotion zu autorisierter Engineering-Information, die
-    menschlich autorisierte Modellplatzierung sowie der abschließende Human
-    Model Review. Die Darstellung bildet bewusst nur den für die
-    Authority-Grenzen relevanten Ausschnitt der vollständigen
-    SBS\_05-Traceability ab.
-    Eigene Darstellung auf Basis des entwickelten SysML-v2-Architekturmodells.}
+    \caption[R/F/L-Zusammenhang der menschlichen Autorisierungsgrenzen]{
+        Ausschnitt der R/F/L-Modellierung für die menschlichen
+        Autorisierungsgrenzen. Dargestellt sind ausgewählte Anforderungen,
+        Funktionen und logische Systemelemente für die fachliche
+        Autorisierung von Engineering-Information, die menschlich
+        autorisierte Modellplatzierung sowie die abschließende Modellprüfung
+        und Freigabe. Die englischen Bezeichnungen entsprechen den Namen der
+        Elemente im SysML-v2-Modell. Eigene Darstellung auf Basis des
+        entwickelten SysML-v2-Architekturmodells.}
     \label{fig:implementation_authority_rfl}
 \end{figure}
 
-Die erste Authority-Grenze liegt zwischen Processing Evidence und
-autorisierter Engineering-Information. Hierfür stellt der Prototyp einen
-versionierten \emph{Human Review Workspace} bereit, der die zuvor erzeugten
-Review Items einschließlich Source-Evidence, Persona-Interpretationen und
-Vergleichsinformationen übernimmt. Die maschinell erzeugte Evidence bleibt
-dabei unverändert; menschliche Bearbeitungen werden als eigene Revisionen mit
-Herkunftsbezug und Content-Fingerprint persistiert.
+Die erste Autorisierungsgrenze liegt zwischen den in
+Abschnitt~\ref{sec:implementation_information_processing} erzeugten
+Bewertungsinformationen und der fachlich autorisierten
+Engineering-Information. Für die menschliche Prüfung stellt der Prototyp
+den zuvor aufbereiteten fachlichen Gegenstand gemeinsam mit seinen
+Quellenbezügen, Persona-Interpretationen sowie den festgestellten
+Übereinstimmungen, Abweichungen und Mehrdeutigkeiten bereit. Der konkret
+geprüfte Inhalt wird dabei als eigener versionierter Zustand gespeichert.
 
-Eine Review-Version erhält erst durch explizite Finalisierung einen
-unveränderlichen Zustand. Die zugehörige Human Review Decision wird an den
-konkret geprüften Inhalt gebunden. Ändert sich dieser materiell, ist eine neue
-Review-Entscheidung erforderlich; eine bestehende Freigabe wird nicht auf den
-veränderten Zustand übertragen.
+Die menschliche Entscheidung wird genau an diesen geprüften Zustand
+gebunden. Wird der entscheidungsrelevante Inhalt anschließend verändert,
+ist deshalb eine erneute Prüfung und Autorisierung erforderlich. Eine
+bestehende Entscheidung wird nicht automatisch auf einen veränderten
+Inhalt übertragen. Damit wird die in
+Abschnitt~\ref{sec:architecture_human_authority} entwickelte Bindung einer
+menschlichen Entscheidung an den tatsächlich geprüften Zustand technisch
+umgesetzt.
 
-Aus akzeptierten Review Items können anschließend über \emph{Approved Input}
-autorisierte \emph{Approved Engineering Information}-Objekte hervorgehen.
-Confidence-, Consensus-, Variance- und Statusinformationen bleiben dagegen
-Review-Evidence. Damit operationalisiert die Implementierung die in
-Abschnitt~\ref{sec:architecture_human_authority} entwickelte Trennung zwischen
-Entscheidungsevidence und Engineering Authority.
+Erst durch diese Entscheidung entsteht fachlich autorisierte
+Engineering-Information. Im Modell wird der entsprechende Zustand als
+\emph{Approved Engineering Information} bezeichnet. Die zuvor erzeugten
+Persona-Interpretationen sowie Informationen über Übereinstimmungen,
+Varianz und Mehrdeutigkeiten bleiben dagegen Bestandteile der
+Entscheidungsgrundlage. Sie unterstützen die menschliche Bewertung, besitzen
+aber selbst keine fachliche Autorität. Die hierfür zuständige
+Entscheidungsbefugnis entspricht der in Kapitel~\ref{sec:architecture}
+eingeführten \emph{Human Engineering Authority}.
 
-Mit der Freigabe als \emph{Approved Engineering Information} ist noch keine
-Model Authority verbunden. Für modellrelevante Informationen erzeugt der
-Prototyp deshalb vor der Assembly explizite Placement-Vorschläge. Diese können
-profilbasiert oder durch LLM-gestützte Modellierungsperspektiven erzeugt werden.
+Mit der fachlichen Autorisierung ist noch nicht entschieden, an welcher
+Stelle des vorgesehenen Modellrahmens die Information repräsentiert werden
+soll. Für modellrelevante Inhalte erzeugt der Prototyp deshalb zunächst
+Vorschläge für diese strukturelle Einordnung. Im Modell wird dieser Schritt
+als \emph{Model Placement} bezeichnet.
 
-Im LLM-unterstützten Pfad arbeiten die drei in
-Anhang~\ref{app:personas_model_placement} dokumentierten Perspektiven
+Auch diese Vorschläge können durch mehrere Modellierungsperspektiven
+unterstützt werden. Im Prototyp werden dafür die in
+Anhang~\ref{app:personas_modeling} dokumentierten Personas
 \emph{SysML Profile Modeler}, \emph{System Architecture Modeler} und
-\emph{Conservative Modeling Reviewer} auf derselben Approved Engineering
-Information und denselben zulässigen Placement-Optionen. Ihre Vorschläge
-werden in einem \emph{Model Placement Review Bundle} zusammengeführt und
-bleiben entsprechend dem in
-Abschnitt~\ref{sec:architecture_human_authority} entwickelten Authority-Prinzip
-nicht-autoritative Review-Evidence.
+\emph{Conservative Modeling Reviewer} eingesetzt. Sie arbeiten auf
+derselben autorisierten Engineering-Information und denselben zulässigen
+Positionen innerhalb des Modellrahmens. Ihre Ergebnisse werden für die
+menschliche Entscheidung zusammengeführt, autorisieren die
+Modellplatzierung jedoch nicht selbst.
 
-Die eigentliche Placement Authority entsteht durch eine explizite Human
-Placement Decision. Diese wird an den betreffenden Engineering-Gegenstand und
-das versionierte \emph{Model Structure Profile} gebunden. Aus den
-autorisierten Einzelentscheidungen entsteht ein
-\emph{Approved Model Placement Set}, das die verbindliche Eingabe für die
-nachfolgende Model Assembly bildet. Deren Realisierung wird in
+Die strukturelle Einordnung wird erst durch eine explizite menschliche
+Modellentscheidung autorisiert. Diese Entscheidung wird an den betreffenden
+Engineering-Inhalt sowie an die verwendete Version der zulässigen
+Modellstruktur gebunden. Diese Modellstruktur ist im Prototyp in einem
+versionierten \emph{Model Structure Profile} beschrieben. Die daraus
+entstehenden autorisierten Platzierungsentscheidungen bilden anschließend
+die Grundlage für den Aufbau des internen Modells. Diese
+Entscheidungsbefugnis entspricht der in
+Abschnitt~\ref{sec:architecture_human_authority} eingeführten
+\emph{Model Authority}. Die nachgelagerte Modellbildung wird in
 Abschnitt~\ref{sec:implementation_model_realization} beschrieben.
 
-Eine weitere Authority-Grenze liegt am Ende der Modellverarbeitung. Der
-\emph{Final Model Review} betrachtet das erzeugte SysML-v2-Artefakt gemeinsam
-mit dem daran gebundenen Validation Result. Erst eine explizite
-\emph{Human Release Decision} autorisiert diesen konkreten Modellzustand für
-die anschließende Publication.
+Eine weitere menschliche Entscheidungsgrenze liegt am Ende der
+Modellerzeugung. Dort wird das erzeugte SysML-v2-Artefakt gemeinsam mit dem
+Ergebnis seiner Validierung betrachtet. Die Validierung prüft die dafür
+festgelegten formalen und technischen Bedingungen, gibt das Modell aber
+nicht selbst frei. Erst die anschließende menschliche Modellprüfung und
+Freigabe autorisiert den konkret geprüften Modellzustand für die
+Veröffentlichung.
 
-Dabei bleiben fachliche Release Authority und technische Workflow-Steuerung
-getrennt. Die Human-Authority-Komponente stellt die Freigabeentscheidung
-bereit, während die Orchestrierung prüft, ob die hierfür erforderlichen
-technischen Zustände vorliegen und der Publication-Pfad fortgesetzt werden
-darf. Die Generated Artifact Validation besitzt selbst keine
-Publication Authority.
+Die technische Ablaufsteuerung prüft anschließend lediglich, ob die für
+eine Veröffentlichung erforderlichen Zustände und Entscheidungen vorliegen.
+Sie trifft selbst keine fachliche Freigabeentscheidung.
 
-Die in diesem Abschnitt betrachteten Authority-Grenzen erzeugen damit drei
-voneinander unterscheidbare autorisierte Zustände: \emph{Approved Engineering Information}
-für die weitere fachliche Verarbeitung, das \emph{Approved Model Placement Set}
-für die strukturelle Modellbildung und einen durch den finalen Human Review
-freigegebenen Modellzustand für die Publication. Die jeweils zugrunde liegenden
-Human Decisions werden an den konkret geprüften Zustand gebunden und als
-Bestandteil seiner technischen Herleitung persistiert. Die hierfür verwendeten
-Persistenz- und Traceability-Mechanismen werden in
-Abschnitt~\ref{sec:implementation_persistence_limits} zusammengeführt.
-
-Nach der Autorisierung von Engineering Information und Model Placement kann
-die eigentliche Modellbildung weitgehend regelgebunden erfolgen. Der folgende
-Abschnitt beschreibt deren Realisierung vom Internal Engineering Model über
-Target-Model-Formulation und SysML-v2-Generierung bis zur technischen
-Validierung.
+Die prototypische Realisierung unterscheidet damit drei menschlich
+autorisierte Übergänge: die fachliche Autorisierung von
+Engineering-Information, die Autorisierung ihrer strukturellen Einordnung
+in das Modell sowie die abschließende Prüfung und Freigabe des erzeugten
+Modellzustands. Jede Entscheidung bleibt mit dem jeweils geprüften Zustand
+verknüpft. Wie diese Zustände und ihre Beziehungen dauerhaft gespeichert
+und nachvollziehbar gehalten werden, beschreibt
+Abschnitt~\ref{sec:implementation_persistence_limits}.
 
 \subsection{Modellbildung und SysML-v2-Realisierung}
 \label{sec:implementation_model_realization}
 
-Nach der Autorisierung von Engineering Information und Model Placement
-beginnt die technische Modellbildung. Die Model Assembly verarbeitet
-ausschließlich die explizit freigegebenen Model Candidates und deren
-autorisierten Placement-Zustand. Nicht ausgewählte, zurückgestellte oder
-nicht autorisierte Candidates werden nicht erneut für die Modellbildung
-herangezogen.
+Nach der fachlichen Autorisierung der Engineering-Information und der
+Entscheidung über ihre strukturelle Einordnung kann der eigentliche
+Modellaufbau erfolgen. Die nachfolgenden Schritte verändern die zuvor
+autorisierten fachlichen und modellbezogenen Entscheidungen nicht mehr,
+sondern führen sie nach festgelegten Regeln zu einem internen Modell und
+anschließend zu einer SysML-v2-Repräsentation zusammen.
 
-Das Ergebnis ist ein \emph{Internal Engineering Model} (IEM), das den
-zusammengeführten Engineering-Modellzustand unabhängig von der späteren
-SysML-v2-Textserialisierung repräsentiert. Elemente und Beziehungen erhalten
-stabile interne Identitäten und bleiben mit den zugrunde liegenden
-Engineering-, Placement- und Review-Zuständen sowie deren Provenance
-verknüpft. Abbildung~\ref{fig:implementation_model_realization} zeigt die
-wesentlichen subsystemübergreifenden Übergänge von der Modellplatzierung bis
-zur technischen Validierung.
+Aus der autorisierten Engineering-Information werden zunächst
+\emph{Model Candidates} abgeleitet. Wie in
+Abschnitt~\ref{sec:architecture_meaning_representation} beschrieben,
+repräsentieren sie mögliche Modellelemente und Beziehungen. Für den
+Modellaufbau werden ausschließlich diejenigen Model Candidates verwendet,
+deren strukturelle Einordnung zuvor durch die Model Authority autorisiert
+wurde. Nicht autorisierte oder zurückgestellte Vorschläge werden nicht in
+das Modell übernommen.
+
+Die autorisierten Modellinhalte werden anschließend zu einem
+\emph{Internal Engineering Model} (IEM) zusammengeführt. Das IEM bildet,
+wie in Abschnitt~\ref{sec:architecture_meaning_representation} eingeführt,
+eine interne Modellrepräsentation zwischen den autorisierten
+Engineering-Informationen und ihrer späteren Darstellung in SysML~v2.
+Elemente und Beziehungen erhalten darin stabile interne Identitäten und
+bleiben mit den fachlichen Informationen und Modellentscheidungen
+verknüpft, aus denen sie hervorgegangen sind.
+
+Abbildung~\ref{fig:implementation_model_realization} zeigt die wesentlichen
+Übergänge von der autorisierten Modellplatzierung über den Aufbau des IEM
+bis zur SysML-v2-Erzeugung und anschließenden Validierung.
 
 \begin{figure}[H]
     \centering
@@ -477,379 +550,343 @@ zur technischen Validierung.
         height=0.82\textheight,
         keepaspectratio
     ]{Graphiken/5.6_Model_Realization_Cross_Subsystem.pdf}
-    \caption[Subsystemübergreifende Modellbildung und SysML-v2-Realisierung]{
-            Subsystemübergreifende Modellbildung, SysML-v2-Erzeugung und Validierung.
-            Die Architecture-Derivation-Verantwortung übergibt Model Candidates und
-            Placement Proposals an die Human-Authority-Grenze und erhält autorisierte
-            Placement-Entscheidungen zurück. Auf dieser Grundlage wird das Internal
-            Engineering Model aufgebaut und anschließend an die deterministische
-            SysML-v2-Erzeugung übergeben. Das erzeugte Artifact Set wird getrennt
-            validiert und gemeinsam mit dem Validation Result der finalen menschlichen
-            Modellprüfung zugeführt. Die Darstellung zeigt damit die Trennung von
-            Model Placement, Model Assembly, SysML-v2-Erzeugung, technischer Validierung
-            und Human Authority.
-            Eigene Darstellung auf Basis des entwickelten SysML-v2-Architekturmodells.}
+    \caption[Modellbildung und SysML-v2-Realisierung]{
+        Modellbildung und SysML-v2-Realisierung über mehrere Subsysteme.
+        Aus fachlich autorisierter Engineering-Information werden zunächst
+        Vorschläge für Modellelemente und deren strukturelle Einordnung
+        abgeleitet. Nach der menschlichen Autorisierung der Modellplatzierung
+        werden die freigegebenen Inhalte im Internal Engineering Model
+        zusammengeführt und anschließend regelgebunden in SysML~v2
+        überführt. Das erzeugte Artefakt wird getrennt validiert und danach
+        der abschließenden menschlichen Modellprüfung und Freigabe
+        bereitgestellt. Die englischen Bezeichnungen entsprechen den
+        Element- und Funktionsnamen des SysML-v2-Modells.
+        Eigene Darstellung auf Basis des entwickelten
+        SysML-v2-Architekturmodells.}
     \label{fig:implementation_model_realization}
 \end{figure}
 
-Die Model Assembly folgt deterministischen Regeln. Das ausgewählte
-\emph{Framework Template} wird als strukturelles Gerüst materialisiert und
-die autorisierten Model Candidates werden anhand ihrer freigegebenen
-Placement-Informationen eingeordnet. Eine erneute fachliche Klassifikation
-findet dabei nicht statt; zusätzliche Hierarchien, Beziehungen oder
-Ownership-Strukturen werden nicht aus Bezeichnungen, Ähnlichkeiten oder
-struktureller Zweckmäßigkeit abgeleitet.
+Der Aufbau des IEM erfolgt nach festgelegten Regeln. Als strukturelles
+Grundgerüst dient eine versionierte Vorlage, die im Prototyp als
+\emph{Framework Template} bezeichnet wird. Sie legt die vorgesehene
+Grundstruktur des Modells fest. Die autorisierten Model Candidates werden
+entsprechend ihrer zuvor freigegebenen Platzierungsentscheidungen in diese
+Struktur eingeordnet. Dabei wird ihre fachliche Bedeutung nicht erneut
+interpretiert.
 
-Kann ein autorisierter Candidate nicht ohne eine zusätzliche
-Engineering-Entscheidung integriert werden, blockiert die Assembly und erzeugt
-ein explizites Finding für die zuständige vorgelagerte Authority-Grenze.
-Jeder materiell unterschiedliche autorisierte Assembly-Zustand wird
-anschließend als unveränderlicher IEM-Snapshot persistiert. Dieser bindet die
-zugrunde liegenden Candidate- und Review-Zustände, das Framework Template,
-das Model Structure Profile sowie die verwendeten Assembly-Regeln über stabile
-Referenzen und Fingerprints.
+Kann ein autorisierter Model Candidate nicht eindeutig entsprechend der
+vorliegenden Entscheidung eingeordnet werden, wird der Modellaufbau an
+dieser Stelle unterbrochen. Die offene Frage muss dann durch eine erneute
+menschliche Modellentscheidung geklärt werden. Der Prototyp ergänzt in
+diesem Fall nicht selbstständig zusätzliche Hierarchien, Beziehungen oder
+strukturelle Zuordnungen.
 
-Das IEM bleibt von der konkreten SysML-v2-Textserialisierung getrennt.
-Interne Engineering-Elemente und Relationships repräsentieren zunächst den
-autorisierten Modellinhalt, ohne damit bereits einen konkreten textuellen
-SysML-v2-Construct festzulegen. Zwischen IEM und Serialisierung liegt deshalb
-eine eigenständige \emph{Target-Model-Formulation}.
+Jede inhaltlich unterschiedliche autorisierte Fassung des IEM wird als
+eigener unveränderlicher Stand gespeichert. Dadurch bleibt nachvollziehbar,
+welche Model Candidates, Platzierungsentscheidungen, Modellstruktur und
+Regeln zu einer konkreten Fassung des internen Modells geführt haben.
 
-Für diese Stufe wird der IEM-Zustand mit einem versionierten
-Model-Quality-Kontext verarbeitet. Innerhalb des unterstützten Scopes kann
-die Persona \emph{Conservative Engineering Model Editor} einen fokussierten
-LLM-gestützten Refinement-Vorschlag erzeugen. Ihr Auftrag ist auf
-modellbezogene Formulierungsqualität wie Klarheit, Prägnanz,
-Anforderungsqualität sowie Funktions- und Aktionsbenennung begrenzt.
-Zusätzliche Engineering-Information darf dabei nicht ergänzt werden. Die
-vollständige Persona-Definition ist in
-Anhang~\ref{app:persona_model_quality} dokumentiert.
+Das IEM ist noch keine SysML-v2-Repräsentation. Es enthält die autorisierten
+Modellelemente und Beziehungen zunächst unabhängig von ihrer konkreten
+textuellen Darstellung in SysML~v2. Damit bleibt die bereits in
+Abschnitt~\ref{sec:architecture_meaning_representation} entwickelte
+Trennung zwischen internem Modellinhalt und zielmodellspezifischer
+Formulierung erhalten.
 
-Die Vorschläge werden anschließend in einem
-\emph{Human Model Quality Review} geprüft und können akzeptiert, verändert
-oder zurückgewiesen werden. Erst ein autorisierter Review-Zustand darf in
-einen entsprechenden Nachfolger des IEM materialisiert werden. Damit bleibt
-die Target-Model-Formulation sowohl von der vorausgehenden Engineering- und
-Placement-Authority als auch von der nachfolgenden SysML-v2-Serialisierung
-getrennt.
+Vor der eigentlichen SysML-v2-Erzeugung kann die Formulierung des
+Modellinhalts hinsichtlich seiner Darstellungsqualität überprüft werden.
+Dafür wird ein versionierter Satz von Qualitätskriterien verwendet. Die in
+Anhang~\ref{app:persona_model_quality} dokumentierte Persona
+\emph{Conservative Engineering Model Editor} kann auf dieser Grundlage
+einen LLM-gestützten Verbesserungsvorschlag erzeugen. Dabei dürfen
+beispielsweise Bezeichnungen oder Formulierungen präzisiert werden, jedoch
+keine zusätzlichen Engineering-Informationen entstehen.
 
-Erst der autorisierte Modellzustand wird an die deterministische
-SysML-v2-Generierung übergeben. Der Prototyp trennt die dabei erforderlichen
-Entscheidungen über drei versionierte Policy-Artefakte: Das
-\emph{Target Notation Profile} definiert den unterstützten SysML-v2-Umfang,
-das \emph{Generation Profile} die Abbildung interner Engineering-Semantik auf
-zulässige SysML-v2-Konstrukte und das \emph{Artifact Structure Profile} die
-Organisation der erzeugten Packages und Output Units. Gemeinsam mit dem
-ausgewählten IEM bilden sie den gebundenen Generation Context.
+Diese Vorschläge werden anschließend menschlich geprüft und können
+akzeptiert, verändert oder verworfen werden. Nur ein entsprechend
+autorisierter Stand wird in das IEM übernommen. Dadurch bleibt die
+zielmodellspezifische Formulierung von der vorausgehenden fachlichen
+Autorisierung und Modellplatzierung getrennt.
 
-Vor der Serialisierung prüft ein deterministischer Preflight, ob für alle zu
-materialisierenden Elemente und Relationships eindeutige, unterstützte
-Mapping-Regeln vorliegen. Nicht unterstützte Semantik wird dabei nicht durch
-generische Ersatzkonstrukte ergänzt. Fehlt beispielsweise eine zulässige
-Abbildung für einen Relationship-Typ oder dessen Directionality, blockiert die
-Generierung mit einem expliziten Finding.
+Für die anschließende SysML-v2-Erzeugung verwendet der Prototyp drei
+versionierte Regelwerke, die bereits in
+Abschnitt~\ref{sec:architecture_controlled_transformation} eingeführt
+wurden. Das \emph{Target Notation Profile} legt fest, welche
+SysML-v2-Konstrukte vom Prototyp unterstützt werden. Das
+\emph{Generation Profile} beschreibt, wie die internen Modellkonzepte auf
+diese Konstrukte abgebildet werden. Das
+\emph{Artifact Structure Profile} legt fest, wie die erzeugten Inhalte
+beispielsweise in Packages und Dateien organisiert werden.
 
-Das Ergebnis ist ein unveränderliches \emph{Generated SysML Artifact Set}.
-Neben dem erzeugten SysML-v2-Text enthält es die gebundenen Generation- und
-Traceability-Informationen, sodass das Artefakt auf den verwendeten
-IEM-Zustand und Generation Context zurückgeführt werden kann.
+Vor der Erzeugung des SysML-v2-Artefakts prüft der Prototyp, ob für alle
+zu überführenden Modellelemente und Beziehungen eine eindeutige und
+unterstützte Abbildungsregel vorhanden ist. Fehlt eine solche Regel, wird
+die Erzeugung unterbrochen. Der Prototyp ersetzt nicht unterstützte
+Modellinhalte damit nicht automatisch durch andere SysML-v2-Konstrukte.
 
-Die technische Prüfung des erzeugten
-\emph{Generated SysML Artifact Set} ist als eigene
-Validation-Verantwortung realisiert und von der Generierung getrennt.
-Die Validierung arbeitet auf dem unveränderten Artefakt und liefert einen
-gebundenen Validation-Zustand zurück. Damit bleiben SysML-v2-Erzeugung,
-technische Prüfung und abschließende Human Release getrennte
-Systemverantwortungen.
+Auf Grundlage des IEM und der festgelegten Transformationsregeln wird
+anschließend das SysML-v2-Artefakt erzeugt. Zusammen mit dem eigentlichen
+SysML-v2-Text werden die Informationen gespeichert, die eine
+Rückverfolgung auf das verwendete IEM und die angewendeten
+Transformationsregeln ermöglichen.
 
-Im Proof of Concept umfasst diese Verantwortung sowohl interne
-deterministische Prüfungen als auch eine externe Prüfung des erzeugten
-SysML-v2-Artefakts gegen die vorgesehene Werkzeugumgebung. Die konkrete
-Ausgestaltung der Prüfungen, die verwendeten Validierungszustände sowie deren
-Durchführung und Bewertung werden in Kapitel~\ref{sec:validation}
-beschrieben.
+Die Validierung des erzeugten SysML-v2-Artefakts erfolgt getrennt von seiner
+Erzeugung. Zunächst führt der Prototyp interne regelbasierte Prüfungen durch.
+Zusätzlich wird das erzeugte Artefakt mit der \emph{SYSIDE Modeler CLI} in
+einer externen SysML-v2-Toolumgebung geprüft. Die konkrete Durchführung
+und Bewertung dieser Prüfungen wird in
+Kapitel~\ref{sec:validation} beschrieben.
 
-Ein technisch geprüfter Modellzustand stellt dabei noch keine abschließende
-Engineering-Freigabe dar. Die in
-Abschnitt~\ref{sec:implementation_authority} beschriebene Final Human Review
-and Release Authority bleibt der nachgelagerte Freigabeschritt vor der
-Publication.
+Eine erfolgreiche Validierung stellt noch keine abschließende Freigabe des
+Modells dar. Das erzeugte und validierte SysML-v2-Artefakt wird anschließend
+der in Abschnitt~\ref{sec:implementation_authority} beschriebenen
+menschlichen Modellprüfung und Freigabe vorgelegt.
 
-Die prototypische Realisierung hält damit Model Placement, Model Assembly,
-Target-Model-Formulation, SysML-v2-Serialisierung und technische Validierung
-als getrennte Verantwortungen aufrecht. Der folgende Abschnitt erweitert
-diesen Verarbeitungspfad auf die projektweite Verarbeitung mehrerer
-Engineering Sources.
+Die prototypische Realisierung hält damit die Autorisierung der
+Modellplatzierung, den Aufbau des IEM, die zielmodellspezifische
+Formulierung, die SysML-v2-Erzeugung und die Validierung als voneinander
+getrennte Verarbeitungsschritte aufrecht.
 
-\subsection{Multi-Source-Realisierung und kontrollierte Modellevolution}
+\subsection{Verarbeitung mehrerer Quellen und Modellevolution}
 \label{sec:implementation_multisource}
 
-Die Multi-Source-Realisierung erweitert den source-lokalen
-Verarbeitungspfad um eine projektweite Reconciliation und eine kontrollierte
-Evolution bestehender Modellzustände.
-Abbildung~\ref{fig:implementation_multisource} zeigt den implementierten
-Ablauf von getrennt verarbeiteten Engineering Sources über die projektweite
-Engineering Authority bis zum autorisierten Nachfolger eines bestehenden
-Modellzustands.
+Die bisher beschriebenen Verarbeitungsschritte beziehen sich zunächst auf
+einzelne Engineering-Quellen. Für die gemeinsame Modellbildung müssen jedoch
+auch Informationen aus mehreren Quellen projektweit berücksichtigt werden
+können. Der Prototyp realisiert dafür die in
+Abschnitt~\ref{sec:architecture_multisource} entwickelte Abfolge aus
+quellenbezogener Verarbeitung, Projektzulassung, projektweitem semantischem
+Abgleich und menschlicher Projektentscheidung.
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[
-        width=\textwidth,
-        keepaspectratio
-    ]{Graphiken/5.7_Multi_Source_Model_Evolution.pdf}
-    \caption[Multi-Source-Reconciliation und kontrollierte Modellevolution]{
-    Implementierter Multi-Source-Pfad von der source-lokalen Verarbeitung bis
-    zur kontrollierten Modellevolution. Mehrere Engineering Sources werden
-    zunächst unabhängig verarbeitet und durch eine Human Engineering Review in
-    source-lokal autorisierte Engineering-Information überführt. Nach dem
-    Project Fit Assessment werden ihre Engineering Subjects in
-    Reconciliation Cases zusammengeführt und durch die Human Project
-    Engineering Authority in einen autorisierten
-    \emph{Project Engineering State} überführt. Dieser bildet die Grundlage
-    für die Model Candidate Derivation. Besteht bereits ein autorisierter
-    Modellzustand, wird dessen Änderungsbedarf durch die Model Impact
-    Reconciliation bewertet. Erst eine nachgelagerte Human Model Decision
-    autorisiert einen \emph{Successor Model State}. Vorherige autorisierte
-    Engineering- und Modellzustände bleiben erhalten; Änderungen werden als
-    nachvollziehbare Nachfolgerzustände persistiert.
-    Eigene Darstellung auf Basis der prototypischen Realisierung des
-    Turing Generators.}
-    \label{fig:implementation_multisource}
-\end{figure}
+Auch bei der gemeinsamen Verarbeitung bleibt nachvollziehbar, aus welcher
+Engineering-Quelle eine Information stammt und in welchem Verarbeitungslauf
+sie erzeugt wurde. Informationen verschiedener Quellen werden daher nicht
+bereits während der quellenbezogenen Verarbeitung zusammengeführt. Erst
+fachlich autorisierte Engineering-Information wird für die nachfolgenden
+projektweiten Verarbeitungsschritte berücksichtigt. Die technische
+Speicherung der hierfür erforderlichen Herkunfts- und
+Verarbeitungsinformationen wird in
+Abschnitt~\ref{sec:implementation_persistence_limits} beschrieben.
 
-An projektweiten Aggregationsgrenzen wird die Identität source-lokaler
-Artefakte zusätzlich durch den zugehörigen Processing Run qualifiziert.
-Dadurch bleiben Source-, Run- und Attempt-Provenance auch bei der gemeinsamen
-Verarbeitung mehrerer Sources erhalten.
+Vor der projektweiten Zusammenführung wird zunächst geprüft, ob eine
+Engineering-Quelle für das betrachtete Projekt berücksichtigt werden soll.
+Diese in Abschnitt~\ref{sec:architecture_multisource} als
+\emph{Projektzulassung} (\emph{Project Fit}) eingeführte Prüfung verwendet
+Informationen über das Projekt, die registrierten Quellen und bereits
+autorisierte Engineering-Information. Das Ergebnis unterscheidet zwischen
+einer plausiblen Projektzugehörigkeit, einer unklaren Zuordnung und einer
+wahrscheinlich fehlenden Projektzugehörigkeit. Bei einem unklaren oder
+wahrscheinlich nicht passenden Ergebnis ist eine menschliche Entscheidung
+erforderlich, bevor die Quelle projektweit weiterverarbeitet werden darf.
 
-Vor der projektweiten semantischen Reconciliation steht ein
-\emph{Project Fit Assessment}. Es bewertet anhand des Project Context, der
-registrierten Sources und bereits autorisierter Engineering-Information, ob
-eine Source zum betrachteten Engineering-Kontext gehört. Das Ergebnis wird als
-\emph{plausible in scope}, \emph{uncertain} oder
-\emph{likely out of scope} festgehalten. Unsichere oder wahrscheinlich
-projektfremde Sources werden nur nach einer expliziten Human Processing
-Decision für die weitere projektweite Verarbeitung zugelassen.
+Nach der Projektzulassung werden die fachlich autorisierten Informationen
+unterschiedlicher Quellen miteinander verglichen. Als gemeinsame
+Bezugspunkte dienen die bereits in
+Abschnitt~\ref{sec:implementation_information_processing} beschriebenen
+fachlichen Referenzgegenstände (\emph{Engineering Subjects}). Der Prototyp
+gruppiert solche Referenzgegenstände, die sich möglicherweise auf denselben
+fachlichen Zusammenhang beziehen. Anschließend wird automatisch geprüft, ob
+jeder bereitgestellte Referenzgegenstand genau einmal berücksichtigt wurde
+und keine unbekannten Referenzen hinzugekommen sind.
 
-Für die zugelassenen Sources werden die source-lokalen Engineering Subjects
-in einem gemeinsamen semantischen Index zusammengeführt und LLM-gestützt nach
-gemeinsamem Engineering Concern gruppiert. Die Anwendung prüft anschließend
-deterministisch, dass jedes bereitgestellte Subject genau einmal berücksichtigt
-wurde und keine unbekannten Referenzen eingeführt wurden.
+Für die daraus entstehenden Vergleichsfälle wird untersucht, in welcher
+fachlichen Beziehung die beteiligten Informationen zueinander stehen.
+Entsprechend Abschnitt~\ref{sec:architecture_multisource} unterscheidet der
+Prototyp zwischen gleichbedeutenden (\emph{equivalent}), sich ergänzenden
+(\emph{complementary}), möglicherweise widersprüchlichen
+(\emph{potential conflict}), voneinander unabhängigen (\emph{distinct}) und
+nicht eindeutig einzuordnenden (\emph{uncertain}) Beziehungen. Liegt für
+einen fachlichen Referenzgegenstand kein entsprechender Beitrag aus einer
+anderen Quelle vor, bleibt er als eigenständiger Fall erhalten.
 
-Aus den geprüften Gruppierungen werden stabile
-\emph{Reconciliation Cases} erzeugt. Ihre technische Identität wird
-deterministisch aus Project, Input-Zustand und konkreter
-Subject-Mitgliedschaft abgeleitet; LLM-generierte Bezeichnungen dienen
-lediglich der Beschreibung. Subjects ohne Cross-Source-Gegenstück bleiben als
-Singleton Cases erhalten.
+Diese maschinell unterstützte Einordnung entscheidet noch nicht darüber,
+welche Information projektweit verwendet werden soll. Sie bereitet vielmehr
+die menschliche Projektentscheidung vor. Dabei kann entschieden werden, dass
+Informationen unabhängig voneinander bestehen bleiben, gemeinsam gültig
+sind, einander ablösen oder zunächst ungeklärt bleiben. Die bereits
+quellenbezogen autorisierten Engineering-Informationen werden durch diese
+Entscheidung nicht überschrieben.
 
-Cases mit Beiträgen aus mehreren Sources werden hinsichtlich ihrer
-semantischen Beziehung als \emph{equivalent}, \emph{complementary},
-\emph{potential conflict}, \emph{distinct} oder \emph{uncertain}
-klassifiziert. Für Singleton Cases wird der Zustand \emph{unique}
-deterministisch vergeben. Die Bewertung erfolgt auf Ebene des gemeinsamen
-Engineering Concerns, sodass unterschiedliche Aussagen oder Varianten
-innerhalb eines Cases als getrennte Claim Groups erhalten bleiben.
+Entsteht durch die projektweite Zusammenführung eine neue oder wesentlich
+veränderte Engineering-Aussage, muss auch diese erneut fachlich geprüft und
+autorisiert werden. Aus den anschließend für das Projekt gültigen
+Engineering-Informationen entsteht ein autorisierter projektweiter
+Engineering-Zustand. Im Modell wird dieser als
+\emph{Project Engineering State} bezeichnet. Er bildet die fachliche
+Grundlage für die weitere Modellbildung.
 
-Die Cross-Source-Reconciliation erzeugt ausschließlich Review-Evidence.
-Projektweite Engineering Authority entsteht erst durch eine explizite
-Human Decision. Source-lokale Engineering-Information kann dabei unabhängig
-aktiv bleiben, mit anderen Informationen koexistieren, explizit superseded
-werden oder zunächst ungelöst bleiben. Die zugrunde liegende
-source-lokale Approved Engineering Information wird nicht überschrieben;
-die projektweite Authority wird als eigener Zustand mit den betroffenen
-Reconciliation Cases sowie den zugehörigen Source- und Review-Zuständen
-persistiert.
+Aus diesem projektweiten Engineering-Zustand werden die für die
+Modellbildung erforderlichen \emph{Model Candidates} abgeleitet. Besteht
+bereits ein autorisierter Modellzustand, wird zusätzlich geprüft, welche
+Auswirkungen die neuen oder geänderten Engineering-Informationen auf dieses
+Modell haben. Dieser in
+Abschnitt~\ref{sec:architecture_multisource} als
+\emph{Modellwirkungsabgleich} beschriebene Schritt wird im Prototyp als
+\emph{Model Impact Reconciliation} bezeichnet.
 
-Erfordert die Reconciliation eine neue oder materiell veränderte
-Engineering-Aussage, muss diese erneut eine Human Engineering Review
-durchlaufen. Aus den aktiven Engineering-Inhalten, den Reconciliation Cases
-und den zugehörigen Human Project Decisions entsteht anschließend der
-\emph{Project Engineering State} als autorisierte Grundlage für die
-projektweite Model Derivation.
+Der Modellwirkungsabgleich erzeugt Vorschläge für erforderliche
+Modelländerungen, autorisiert diese jedoch nicht selbst. Erst eine
+anschließende menschliche Modellentscheidung kann einen neuen
+Modellzustand autorisieren. Der bisherige autorisierte Zustand bleibt dabei
+erhalten. Auf diese Weise kann nachvollzogen werden, welche neuen oder
+geänderten Engineering-Informationen zu einer Weiterentwicklung des Modells
+geführt haben.
 
-Aus diesem Zustand wird ein kohärenter \emph{Model Candidate Set} abgeleitet,
-der die für den unterstützten Scope erforderlichen Elemente, Relationships,
-Properties, Constraints und Allocations gemeinsam beschreibt. Besteht bereits
-ein autorisierter Modellzustand, vergleicht eine
-\emph{Model Impact Reconciliation} diesen mit der neu etablierten Engineering
-Authority und erzeugt Vorschläge für erforderliche Modelländerungen. Diese
-Vorschläge besitzen keine eigene Model Authority; erst eine nachgelagerte
-Human Model Decision darf einen neuen autorisierten Modellzustand begründen.
-
-\subsection{Persistenz, Provenance und Grenzen des Prototyps}
+\subsection{Persistenz, Provenienz und Grenzen}
 \label{sec:implementation_persistence_limits}
 
-% Ggf. eigene kompakte Tabelle statt weiterem CATIA-Großdiagramm:
-% Artifact Class | Persisted State | Identity / Binding | Funktion
-%
-% Inhalt:
-% - immutable Artifacts / Manifests
-% - IDs / Fingerprints
-% - Provenance- und Traceability-Kette
-% - versionierte Policy-/Context-Artefakte
-%
-% Prototype Boundaries knapp:
-% - textorientierte Inputs
-% - Turing-RFLP als gebundener Target Framework
-% - begrenzter SysML-v2-Subset
-% - SYSIDE für vollständigen externen Validation-Pfad
-% - Human Authority zwingender Bestandteil
-%
-% Keine Interpretation der Grenzen -> Kap. 8
-%\subsection{Persistenz, Provenance und Grenzen des Prototyps}
-%\label{sec:implementation_persistence_limits}
+Die prototypische Realisierung speichert die für den Transformationsprozess
+relevanten Informations-, Entscheidungs- und Modellstände dauerhaft. Diese
+dauerhafte Speicherung wird im Folgenden als \emph{Persistenz} bezeichnet.
+Gespeicherte Zustände werden nicht durch spätere Bearbeitungen überschrieben,
+sondern bleiben als frühere Stände erhalten. Dadurch kann nachvollzogen
+werden, aus welchen Quellen, Verarbeitungsschritten und menschlichen
+Entscheidungen ein späteres Modell entstanden ist.
 
-Die für die Verarbeitung relevanten Informations-, Entscheidungs- und
-Modellzustände werden im Turing Generator explizit persistiert und über stabile
-Identitäten, Referenzen und Fingerprints miteinander verknüpft. Zustände mit
-fachlicher oder technischer Bedeutung werden dabei nicht durch nachfolgende
-Bearbeitungen überschrieben, sondern bleiben als Bestandteil ihrer jeweiligen
-Historie erhalten.
+Bereits bei der Verarbeitung einer Engineering-Quelle wird deshalb
+festgehalten, welche konkrete Quelle verarbeitet wurde, zu welchem Projekt
+sie gehört und unter welcher Verarbeitungskonfiguration der jeweilige Lauf
+durchgeführt wurde. Jeder Verarbeitungslauf erhält eine eindeutige Identität.
+Technische Wiederholungen innerhalb desselben Laufs werden separat
+gespeichert. Ändert sich dagegen die zugrunde liegende Quelle oder eine für
+die Verarbeitung wesentliche Konfiguration, entsteht ein neuer
+Verarbeitungslauf.
 
-Auf Processing-Ebene erhält jeder Source Processing Run eine projektlokale
-Identität und wird über ein Run Manifest unter anderem an Project, Source,
-Source-Fingerprint, Workflow-Konfiguration und relevante Kontextartefakte
-gebunden. Zustandsänderungen werden als Events einer nachvollziehbaren Historie
-persistiert. Technische Wiederholungen erzeugen neue Attempts; ändern sich
-dagegen materielle Bindings wie Source-Inhalt oder Verarbeitungskonfiguration,
-entsteht ein neuer Processing Run als expliziter Nachfolger.
+Für die technische Umsetzung verwendet der Prototyp hierfür unter anderem
+Manifeste, Referenzen und inhaltsgebundene Prüfwerte
+(\emph{Fingerprints}). Diese ermöglichen es, gespeicherte Zustände eindeutig
+miteinander zu verknüpfen und spätere Änderungen festzustellen.
 
-Dieses Persistenzprinzip setzt sich über die nachfolgenden Review-, Authority-,
-Modell- und Generierungszustände fort. Entscheidungen und Nachfolgerzustände
-bleiben jeweils mit den für ihre Entstehung relevanten Vorgängern verknüpft.
-Tabelle~\ref{tab:implementation_persisted_artifacts} fasst die zentralen
-persistierten Artefaktklassen und ihre Funktion zusammen.
+Dieses Prinzip wird über die weiteren Verarbeitungsschritte fortgeführt.
+Auch menschliche Prüfentscheidungen, autorisierte Engineering-Information,
+Modellentscheidungen, interne Modellstände, erzeugte SysML-v2-Artefakte und
+Validierungsergebnisse bleiben jeweils mit den Zuständen verknüpft, aus denen
+sie hervorgegangen sind. Tabelle~\ref{tab:implementation_persisted_artifacts}
+fasst die wichtigsten gespeicherten Informationen zusammen.
 
 \begin{table}[htbp]
     \centering
     \small
-    \caption[Persistierte Zustände und Artefaktklassen]{Zentrale persistierte Zustände und Artefaktklassen des Turing Generators}
+    \caption[Persistierte Informationen des Prototyps]{
+        Zentrale persistierte Informationen und ihre Funktion}
     \label{tab:implementation_persisted_artifacts}
-    \begin{tabular}{p{3.1cm}p{4.8cm}p{5.8cm}}
+    \begin{tabular}{p{3.2cm}p{5.0cm}p{5.7cm}}
         \hline
         \textbf{Bereich} &
-        \textbf{Persistierte Zustände / Artefakte} &
+        \textbf{Gespeicherte Informationen} &
         \textbf{Funktion} \\
         \hline
 
-        Source und Processing &
-        Source Manifest, Source Projection,
-        Processing Run, Attempt, Event History &
-        Bindung von Eingangsinformation und Verarbeitungskontext sowie
-        nachvollziehbare Zustands- und Retry-Historie \\
+        Quelle und Verarbeitung &
+        Quelle, aufbereitete Quellenrepräsentation,
+        Verarbeitungslauf, technische Wiederholungen und Verlauf &
+        Nachvollziehbare Zuordnung von Eingangsinformation,
+        Verarbeitungskonfiguration und Verarbeitungshistorie \\
 
-        Processing Evidence &
-        Evidence, Engineering Subjects,
-        Persona Results, Consensus / Variance &
-        Source-grounded Grundlage für nachgelagerte Review- und
-        Engineering-Entscheidungen \\
+        Interpretation &
+        quellengebundene Evidenz, Engineering Subjects,
+        Persona-Interpretationen, Übereinstimmungen,
+        Abweichungen und Mehrdeutigkeiten &
+        Nachvollziehbare Grundlage für die anschließende
+        menschliche Prüfung \\
 
-        Engineering Authority &
-        Human Review Decision,
-        Approved Engineering Information &
-        Explizite Autorisierung fachlicher Information und Bindung an den
-        konkret geprüften Zustand \\
+        Fachliche Autorisierung &
+        geprüfter Informationsstand und menschliche
+        Autorisierungsentscheidung &
+        Bindung der fachlichen Freigabe an genau den Zustand,
+        der tatsächlich geprüft wurde \\
 
-        Project Reconciliation und Authority &
-        Project Fit, Reconciliation Cases,
-        Human Project Decisions, Project Engineering State &
-        Kontrollierte projektweite Zusammenführung unter Erhalt
-        source-lokaler Provenance und Authority \\
+        Projektweite Verarbeitung &
+        Projektzulassung, quellenübergreifende Vergleichsfälle,
+        menschliche Projektentscheidungen und projektweiter
+        Engineering-Zustand &
+        Nachvollziehbare Zusammenführung mehrerer Quellen unter
+        Erhalt ihrer jeweiligen Herkunft \\
 
-        Model Authority und Formulation &
-        Model Placement Decisions,
-        Model Quality Review Decisions,
-        Model Impact Reconciliation,
-        Human Model Decision &
-        Bewertung von Modelländerungen sowie explizite Autorisierung von
-        Modellplatzierung, Zielmodellformulierung und Nachfolgerzuständen \\
+        Modellbildung &
+        Model Candidates, Platzierungsentscheidungen,
+        Modellwirkungsabgleich und Internal Engineering Model &
+        Nachvollziehbarer Aufbau und Weiterentwicklung des
+        internen Modells \\
 
-        Model State &
-        Model Candidate Set,
-        Internal Engineering Model &
-        Persistierte interne Modellzustände als Grundlage der
-        deterministischen SysML-v2-Generierung \\
-
-        Generation, Validation und Release &
-        Generated SysML Artifact Set,
-        Validation Result, Final Human Release Decision,
-        Published Output &
-        Bindung von erzeugtem Artefakt, technischer Prüfung und
-        abschließender Freigabe \\
+        SysML-v2-Erzeugung und Freigabe &
+        erzeugtes SysML-v2-Artefakt, Validierungsergebnis
+        und abschließende Freigabeentscheidung &
+        Rückverfolgbarkeit vom freigegebenen Artefakt bis zu
+        Modell-, Engineering- und Quellenzuständen \\
         \hline
     \end{tabular}
 \end{table}
 
-Die Traceability entsteht durch die fortlaufende Bindung jedes relevanten
-Zustands an seine Vorgänger. Dadurch können erzeugte Modellartefakte über
-Internal Engineering Model, Authority- und Review-Zustände sowie die
-Processing Evidence bis zu den zugrunde liegenden Sources zurückgeführt
-werden.
+Die Provenienz ergibt sich aus diesen fortlaufenden Verknüpfungen. Ein
+erzeugtes SysML-v2-Artefakt kann dadurch auf das verwendete IEM, die
+zugrunde liegenden Modell- und Engineering-Entscheidungen sowie schließlich
+auf die beteiligten Engineering-Quellen zurückgeführt werden. Gleichzeitig
+bleibt sichtbar, welche Zwischenstände und menschlichen Entscheidungen an
+seiner Entstehung beteiligt waren.
 
-\paragraph{Technische Grenzen des Proof of Concept}
+\paragraph{Technische Grenzen des Prototyps}
 
-Die prototypische Realisierung ist bewusst auf einen abgegrenzten
-Funktionsumfang beschränkt. Die wesentlichen technischen Grenzen sind in
-Tabelle~\ref{tab:implementation_limits} zusammengefasst.
+Die prototypische Realisierung ist auf einen bewusst abgegrenzten
+Funktionsumfang beschränkt. Tabelle~\ref{tab:implementation_limits} fasst
+die für die weitere Bewertung wesentlichen technischen Grenzen zusammen.
 
 \begin{table}[htbp]
     \centering
     \small
-    \caption[Technische Grenzen des Proof of Concept]{Technische Grenzen des implementierten Proof of Concept}
+    \caption[Technische Grenzen des Prototyps]{
+        Wesentliche technische Grenzen der prototypischen Realisierung}
     \label{tab:implementation_limits}
     \begin{tabular}{p{3.3cm}p{4.2cm}p{6.2cm}}
         \hline
-        \textbf{Grenze / Constraint} &
+        \textbf{Bereich} &
         \textbf{Aktueller Stand} &
-        \textbf{Konsequenz} \\
+        \textbf{Auswirkung} \\
         \hline
 
-        Incremental Multi-Source Integration &
-        Innerhalb eines gemeinsamen Processing-Kontexts unterstützt &
-        Mehrere Sources können projektbezogen geprüft und gemeinsam
-        reconciliert werden. Neu hinzukommende Informationen werden jedoch
-        nicht automatisch gegen sämtliches bereits bestehendes Projektwissen
-        neu bewertet. \\
+        Verarbeitung mehrerer Quellen &
+        Mehrere Quellen können innerhalb eines gemeinsamen
+        Projektkontexts verarbeitet und zusammengeführt werden &
+        Neu hinzukommende Informationen führen nicht automatisch
+        zu einer vollständigen Neubewertung sämtlicher bereits
+        vorhandener Projektinformationen \\
 
-        Input Boundary &
+        Eingabeformate &
         Textorientierte Engineering-Information &
-        Unterstützt werden Text, Markdown, JSON, CSV/TSV, deterministische
-        Textprojektionen und PDF-Textlayer. OCR, image-only Dokumente,
-        Zeichnungsinterpretation und allgemeines multimodales Verständnis
-        sind nicht Bestandteil des Proof of Concept. \\
+        Unterstützt werden Text, Markdown, JSON, CSV/TSV,
+        deterministische Textrepräsentationen und PDF-Textlayer.
+        OCR, rein bildbasierte Dokumente, Zeichnungsinterpretation
+        und allgemeine multimodale Verarbeitung sind nicht
+        Bestandteil des Prototyps \\
 
-        Target Framework &
-        Turing-RFLP fest vorgegeben &
-        Model Derivation und Placement erfolgen innerhalb des definierten
-        Stakeholder-/System-/Subsystem-RFLP und der zugehörigen Profile;
-        beliebige Ziel-Frameworks werden nicht unterstützt. \\
+        Modellierungsrahmen &
+        Vorgegebene RFLP-Struktur &
+        Modellableitung und strukturelle Einordnung erfolgen
+        innerhalb des für den Prototyp definierten
+        Stakeholder-, System- und Subsystemrahmens. Beliebige
+        Zielstrukturen werden nicht unterstützt \\
 
-        SysML-v2 Coverage &
-        Begrenzte Construct- und Notation-Coverage &
-        Nur explizit unterstützte und im Generation Profile abgebildete
-        SysML-v2-Konstrukte und Relationship-Semantiken können deterministisch
-        materialisiert werden. \\
+        SysML-v2-Umfang &
+        Begrenzter unterstützter Ausschnitt der Zielsprache &
+        Nur ausdrücklich unterstützte SysML-v2-Konstrukte und
+        Beziehungen können regelgebunden erzeugt werden \\
 
-        External Validation &
+        Externe Validierung &
         SYSIDE Modeler CLI erforderlich &
-        Für den vollständigen externen Validierungspfad muss eine kompatible
-        SYSIDE-Umgebung verfügbar sein. Ist sie nicht verfügbar, kann der
-        entsprechende technische Prüfpfad nicht vollständig abgeschlossen
-        werden. \\
+        Für die vollständige externe Prüfung muss eine kompatible
+        SYSIDE-Toolumgebung verfügbar sein \\
 
-        Human Authority &
-        Zwingender Bestandteil des Workflows &
-        Relevante Engineering-, Model- und Release-Entscheidungen erfordern
-        explizite persistierte Human Decisions; der Prototyp ist kein
-        autonomer Modellgenerator. \\
+        Menschliche Autorisierung &
+        Bestandteil des vorgesehenen Verarbeitungsablaufs &
+        Fachlich oder modellbezogen relevante Entscheidungen sowie
+        die abschließende Freigabe erfordern explizite menschliche
+        Entscheidungen; der Prototyp arbeitet daher nicht als
+        autonomer Modellgenerator \\
         \hline
     \end{tabular}
 \end{table}
 
-Diese Grenzen definieren den technischen Untersuchungsrahmen des
-Proof of Concept. Ihre Auswirkungen auf Validität, Übertragbarkeit und
-Generalisierbarkeit der Ergebnisse werden in Kapitel~\ref{chap:discussion}
-diskutiert.
+Diese Grenzen bestimmen den technischen Untersuchungsrahmen der
+prototypischen Realisierung. Ihre Auswirkungen auf die Aussagekraft,
+Übertragbarkeit und Generalisierbarkeit der Ergebnisse werden in
+Kapitel~\ref{chap:discussion} diskutiert.

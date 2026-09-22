@@ -1,0 +1,73 @@
+\section{Technische Verträge der prototypischen Realisierung}
+\label{app:implementation_contracts}
+
+Die prototypische Realisierung verwendet explizite technische Verträge, um
+die im Architekturkonzept definierten Informations-, Provenienz- und
+Autorisierungsgrenzen in überprüfbare Bedingungen der Implementierung zu
+überführen. Die Verträge beschreiben insbesondere zulässige
+Eingangszustände, erforderliche Identitäts- und Referenzbindungen,
+Invarianten eines Verarbeitungsschritts sowie die Bedingungen für die
+Weitergabe eines Ergebniszustands.
+
+Tabelle~\ref{tab:implementation_contracts} fasst die für den
+Transformationsprozess wesentlichen Verträge zusammen. Die Bezeichnungen
+entsprechen den im Entwicklungsrepository verwendeten Contract-Namen.
+
+\begin{longtable}{p{4.5cm}p{8.5cm}}
+\caption{Wesentliche technische Verträge der prototypischen Realisierung}
+\label{tab:implementation_contracts}\\
+\hline
+\textbf{Vertrag} & \textbf{Zentrale Festlegung} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{Vertrag} & \textbf{Zentrale Festlegung} \\
+\hline
+\endhead
+
+Canonical Engineering Subject Contract &
+Legt vor der Persona-basierten Interpretation eine eindeutige Menge
+fachlicher Referenzgegenstände fest. Jeder Referenzgegenstand bleibt mit
+seinen konkreten Vorkommen in der Engineering-Quelle verbunden. \\
+
+Persona Subject Interpretation Contract &
+Legt fest, dass jede konfigurierte Persona jeden festgelegten
+Engineering Subject genau einmal interpretiert. Die Personas dürfen die
+Menge der Referenzgegenstände dabei nicht eigenständig verändern. \\
+
+Field-Level Subject Consensus Contract &
+Definiert den regelbasierten Vergleich der Persona-Interpretationen für
+strukturierte Merkmale und erhält abweichende Interpretationen sowie
+Unsicherheiten für die nachfolgende menschliche Prüfung. \\
+
+Subject-Centric Human Engineering Review Contract &
+Legt fest, welche quellengebundenen Informationen, Persona-Ergebnisse und
+Vergleichszustände der menschlichen fachlichen Prüfung für einen
+Engineering Subject bereitgestellt werden. \\
+
+Relationship Review Decision Persistence Contract &
+Bindet menschliche Entscheidungen über vorgeschlagene fachliche Beziehungen
+an die beteiligten Engineering Subjects und erhält frühere Entscheidungen
+als nachvollziehbare Vorgängerzustände. \\
+
+Finalization and Approved Engineering Information Contract &
+Legt fest, unter welchen Bedingungen geprüfte Informationen als
+autorisierte Engineering-Information für nachfolgende
+Verarbeitungsschritte bereitgestellt werden dürfen. \\
+
+Model Placement Review Contract &
+Definiert die Entscheidungsgrenze zwischen fachlich autorisierter
+Engineering-Information und ihrer strukturellen Einordnung in den
+vorgegebenen Modellierungsrahmen. Die Entscheidung über die Platzierung ist
+von der anschließenden Modellbildung getrennt. \\
+
+\hline
+\end{longtable}
+
+Ergänzende Verträge regeln die Persistenz der dabei entstehenden
+Zwischenzustände, ihre Einbindung in die menschliche Prüfoberfläche sowie
+die Auswahl des jeweils gültigen Verarbeitungspfads. Diese Verträge dienen
+vor allem der technischen Integration der beschriebenen
+Architekturmechanismen und verändern deren fachliche Entscheidungsgrenzen
+nicht.

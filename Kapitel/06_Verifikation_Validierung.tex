@@ -1,388 +1,513 @@
-% Neuausrichtung der Masterarbeit ab 12.09.2026
-% Vorheriger Stand: Archive/Thesis_PreRealignment_2026-09-12/Kapitel/
-
 \section{Verifikation und Validierung}
 \label{sec:validation}
+
+Dieses Kapitel beschreibt die Verifikation und Validierung der
+prototypischen Realisierung. Untersucht werden die regelbasiert prüfbaren
+Implementierungseigenschaften, das Zusammenspiel der Verarbeitungsschritte,
+die durchgängige Nachverfolgbarkeit sowie die Validierung und menschliche
+Freigabe des erzeugten SysML-v2-Artefakts. Die Ergebnisse dieser Prüfungen
+werden in Kapitel~\ref{sec:results} dargestellt.
+
 \subsection{Ziel und Prüfgegenstände}
 \label{sec:validation_objectives}
 
 Die in Kapitel~\ref{sec:architecture} entwickelte
 Informationsverarbeitungsarchitektur wurde in
-Kapitel~\ref{sec:implementation} als ausführbarer Proof of Concept
-instanziiert. Die technische Realisierung allein beantwortet jedoch noch
-nicht, ob die vorgesehenen Verantwortungs- und Autorisierungsgrenzen
-eingehalten werden und der verbundene Verarbeitungspfad innerhalb des
-untersuchten Anwendungsrahmens ausführbar ist. Die prototypische
-Instanziierung wurde deshalb einer mehrstufigen Verifikation und Validierung
-unterzogen. Die systematische Untersuchung von Eigenschaften, Verhalten und
-Grenzen eines entwickelten Artefakts entspricht dem gestaltungsorientierten
-Forschungsansatz dieser Arbeit \cite{Wieringa2014,ISO42030}.
-
-Die Evaluation unterscheidet vier Prüfgegenstände. Die
-\emph{Software- und Contract-Verifikation} prüft deterministisch
-überprüfbare Eigenschaften wie Datenstrukturen, Identitäten,
-Persistenzregeln, Zustandsübergänge, Provenance-Bindungen und
-fail-closed Grenzen. Die \emph{End-to-End-Verifikation} untersucht, ob diese
-Mechanismen im Zusammenspiel einen durchgängigen Informationsfluss bilden,
-ohne vorgesehene Authority-Grenzen zu umgehen oder Herkunftsinformationen zu
-verlieren. Davon getrennt wird das erzeugte SysML-v2-Artefakt auf seine
-technische Gültigkeit und Verarbeitbarkeit geprüft. Schließlich wird
-untersucht, ob die vorgesehenen menschlichen Review- und
-Autorisierungsschritte innerhalb des verbundenen Workflows praktisch
-ausführbar sind.
-
-Die Prüfungen liefern bewusst unterschiedliche Evidenz. Ein bestandener
-Softwaretest weist nur die jeweils geprüfte Implementierungseigenschaft nach.
-Eine erfolgreiche SysML-v2-Validierung belegt die technische
-Verarbeitbarkeit des erzeugten Artefakts, nicht dessen fachliche Korrektheit.
-Ebenso ersetzt eine menschliche Freigabe weder die technische Verifikation
-der Software noch die Validierung des serialisierten Modells. Die
-Prüfverfahren und Akzeptanzkriterien werden deshalb getrennt beschrieben und
-erst in der späteren Auswertung gemeinsam betrachtet. Die beobachteten
-Ergebnisse werden in Kapitel~\ref{sec:results} dargestellt.
-
-\subsection{Evaluationsdesign und Evidenzbasis}
-\label{sec:validation_design}
-
-Die Verifikation und Validierung wurde nicht als einzelner abschließender Test
-angelegt, sondern kombiniert mehrere komplementäre Prüfverfahren. Dadurch
-werden unterschiedliche Eigenschaften des Architekturkonzepts und seiner
-prototypischen Instanziierung getrennt untersucht. Dieses Vorgehen entspricht
-der Evaluation von Design-Artefakten anhand unterschiedlicher
-Evaluationsmethoden \cite{Wieringa2014,Peffers2007,ISO42030}.
-
-Die Evidenzbasis umfasst vier miteinander verbundene Stränge. Eine
-\emph{formative End-to-End-Erprobung} untersucht den verbundenen
-Verarbeitungspfad während der Prototypentwicklung und dient zugleich der
-Identifikation, Korrektur und erneuten Prüfung beobachteter
-Architektur- und Implementierungsprobleme. Eine
-\emph{Multi-Source-Verifikation} prüft ergänzend die getrennte Verarbeitung
-mehrerer Engineering Sources sowie den Erhalt ihrer Identität, Provenance und
-Authority bei der projektweiten Zusammenführung.
-
-Nach Abschluss dieser formativen Prüfungen wurde der konsolidierte
-Verarbeitungspfad in einer \emph{extern begleiteten Live-Demonstration}
-ausgeführt. Die Bedienung des Prototyps und die im System persistierten
-fachlichen und modellbezogenen Entscheidungen erfolgten dabei durch den
-Autor. Die Demonstration diente damit der zusammenhängenden Ausführung des
-finalen Prototypstands, nicht einer unabhängigen fachlichen Validierung oder
-Nutzerstudie. Die anschließend analysierten persistierten Zustände bilden die
-Grundlage für die Prüfung der durchgängigen Nachverfolgbarkeit.
-
-Quer zu diesen verbundenen Prüfungen werden automatisierte Unit-, Contract-,
-Integrations- und Regressionstests sowie die externe technische Validierung
-der erzeugten SysML-v2-Artefakte eingesetzt. Die automatisierten Tests prüfen
-deterministische Implementierungsverträge; die externe Validierung adressiert
-die technische Verarbeitbarkeit des serialisierten Modells. Beide liefern
-damit andere Evidenz als die fachlichen und menschlichen
-Autorisierungsentscheidungen innerhalb der End-to-End-Erprobung.
-
-Die folgenden Abschnitte beschreiben Durchführung und Akzeptanzkriterien der
-einzelnen Prüfverfahren. Beobachtete Findings, Retests und Ergebnisse werden
-davon getrennt in Kapitel~\ref{sec:results} dargestellt.
-
-\subsection{Software- und Contract-Verifikation}
-\label{sec:validation_software}
-
-Die automatisierte Softwareverifikation prüft deterministisch überprüfbare
-Eigenschaften des Turing Generators unabhängig von der fachlichen Bewertung
-konkreter Engineering-Inhalte. Gegenstand sind insbesondere Datenstrukturen,
-Identitäten, Persistenzregeln, Zustandsübergänge sowie die Verträge zwischen
-aufeinanderfolgenden Verarbeitungsstufen. Bewertet wird damit, ob die
-prototypische Implementierung die vorgesehenen Verantwortungs- und
-Authority-Grenzen entsprechend ihrer Spezifikation technisch einhält
+Kapitel~\ref{sec:implementation} prototypisch realisiert. Die technische
+Realisierung allein zeigt jedoch noch nicht, ob die vorgesehenen
+Verarbeitungs- und Autorisierungsgrenzen eingehalten werden und der
+entwickelte Transformationsprozess innerhalb des untersuchten
+Anwendungsrahmens durchgängig ausführbar ist. Als Autorisierungsgrenzen
+werden dabei diejenigen Übergänge bezeichnet, an denen eine explizite
+menschliche Entscheidung für die weitere fachliche oder modellbezogene
+Verarbeitung erforderlich ist. Der Prototyp wurde deshalb einer
+mehrstufigen Verifikation und Validierung unterzogen. Die systematische
+Untersuchung der Eigenschaften, des Verhaltens und der Grenzen eines
+entwickelten Artefakts entspricht dem gestaltungsorientierten
+Forschungsansatz dieser Arbeit
 \cite{Wieringa2014,ISO42030}.
 
-Die Prüfungen wurden auf drei Ebenen durchgeführt
-(Tabelle~\ref{tab:validation_software_levels}). Unit- und Contract-Tests
-adressieren einzelne deterministische Mechanismen. Integrations- und
-Boundary-Tests prüfen, ob Zustände nur unter den vorgesehenen Voraussetzungen
-zwischen Architekturverantwortungen weitergegeben werden. Die vollständige
-Repository-Regression dient nach Änderungen dazu, unbeabsichtigte
-Auswirkungen auf bereits implementierte Verarbeitungs- und Authority-Pfade
-zu erkennen.
+Die Untersuchung umfasst vier miteinander verbundene Prüfgegenstände.
+Die automatisierte Softwareverifikation prüft regelbasiert überprüfbare
+Eigenschaften der Implementierung, beispielsweise Datenstrukturen,
+Identitäten, Persistenzregeln, Zustandsübergänge und
+Provenienzbeziehungen. Persistenz bezeichnet dabei die dauerhafte
+Speicherung relevanter Informations-, Entscheidungs- und Modellzustände,
+während Provenienz deren nachvollziehbare Herkunft und Entstehung beschreibt.
+Zusätzlich wird geprüft, ob das in
+Abschnitt~\ref{sec:architecture_controlled_transformation} eingeführte
+\emph{fail-closed}-Prinzip eingehalten wird. Danach darf ein
+Verarbeitungsschritt nur ausgeführt werden, wenn die dafür erforderlichen
+Voraussetzungen erfüllt sind.
+
+Die End-to-End-Verifikation untersucht anschließend den durchgängigen
+Verarbeitungspfad von den eingebrachten Engineering-Informationen bis zum
+erzeugten SysML-v2-Artefakt. Dabei wird geprüft, ob die zuvor einzeln
+betrachteten Mechanismen im Zusammenspiel funktionieren, ohne vorgesehene
+Autorisierungsgrenzen zu umgehen oder Herkunftsinformationen zu verlieren.
+
+Davon getrennt wird das erzeugte SysML-v2-Artefakt hinsichtlich seiner
+formalen und technischen Verarbeitbarkeit geprüft. Ergänzend wird untersucht,
+ob die im Architekturkonzept vorgesehenen menschlichen
+Autorisierungsentscheidungen sowie die abschließende Modellprüfung und
+Freigabe innerhalb des durchgängigen Verarbeitungspfads praktisch
+durchgeführt werden können.
+
+Die einzelnen Prüfverfahren adressieren damit unterschiedliche Eigenschaften
+des Prototyps. Ein bestandener Softwaretest bestätigt ausschließlich die
+jeweils geprüfte Implementierungseigenschaft. Eine erfolgreiche
+SysML-v2-Validierung bestätigt die formale und technische Verarbeitbarkeit
+des erzeugten Artefakts, während die fachliche Bewertung durch die
+vorgesehenen menschlichen Entscheidungen erfolgt. Die Prüfverfahren und ihre
+Akzeptanzkriterien werden deshalb getrennt beschrieben und erst in der
+späteren Auswertung gemeinsam betrachtet. Die beobachteten Ergebnisse werden
+in Kapitel~\ref{sec:results} dargestellt.
+
+\subsection{Evaluationsdesign und Prüfgrundlage}
+\label{sec:validation_design}
+
+Die Verifikation und Validierung wurde nicht als einzelne abschließende
+Prüfung angelegt, sondern verbindet mehrere einander ergänzende
+Prüfverfahren. Dadurch können unterschiedliche Eigenschaften des
+Architekturkonzepts und seiner prototypischen Realisierung gezielt untersucht
+werden. Dieses Vorgehen entspricht der Evaluation entwickelter Artefakte
+anhand unterschiedlicher Evaluationsmethoden
+\cite{Wieringa2014,Peffers2007,ISO42030}.
+
+Die Untersuchung umfasst zunächst eine formative Erprobung des durchgängigen
+Verarbeitungspfads. Dabei wird während der Entwicklung geprüft, ob die
+einzelnen Verarbeitungsschritte und Autorisierungsgrenzen im Zusammenspiel
+wie vorgesehen funktionieren. Beobachtete Architektur- oder
+Implementierungsprobleme werden einem konkreten Verarbeitungsschritt
+zugeordnet, korrigiert und anschließend erneut geprüft. Die formative
+Erprobung dient damit sowohl der Untersuchung als auch der schrittweisen
+Konsolidierung des Prototyps.
+
+Ergänzend wird die Verarbeitung mehrerer Engineering-Quellen untersucht.
+Dabei steht im Mittelpunkt, ob die Quellen zunächst getrennt verarbeitet
+werden können und ihre jeweilige Identität, Provenienz und fachliche
+Autorisierung auch bei der späteren projektweiten Zusammenführung erhalten
+bleiben. Diese Prüfung greift damit unmittelbar die in
+Abschnitt~\ref{sec:architecture_multisource} entwickelte Verarbeitung
+mehrerer Quellen auf.
+
+Nach Abschluss dieser formativen Prüfungen wurde der konsolidierte Prototyp
+in einer extern begleiteten Demonstration über seinen regulären
+Verarbeitungspfad ausgeführt. Die Bedienung des Prototyps sowie die
+erforderlichen fachlichen und modellbezogenen Entscheidungen erfolgten dabei
+durch den Autor. Ziel dieser Demonstration war die zusammenhängende
+Ausführung des erreichten Entwicklungsstands unter den vorgesehenen
+Verarbeitungsbedingungen. Die dabei dauerhaft gespeicherten Informations-,
+Entscheidungs- und Modellzustände bilden anschließend die Grundlage für die
+Prüfung der durchgängigen Nachverfolgbarkeit.
+
+Über diese verbundenen Prüfungen hinweg werden zusätzlich automatisierte
+Modul-, Vertrags-, Integrations- und Regressionstests eingesetzt. Sie prüfen
+regelbasiert überprüfbare Eigenschaften der Implementierung und die
+definierten Übergänge zwischen den Verarbeitungsschritten. Davon getrennt
+wird das erzeugte SysML-v2-Artefakt hinsichtlich seiner formalen und
+technischen Verarbeitbarkeit in der verwendeten SysML-v2-Toolumgebung
+validiert.
+
+Die einzelnen Prüfverfahren liefern damit unterschiedliche Prüfergebnisse:
+Die formative Erprobung untersucht das Zusammenspiel der
+Architekturmechanismen, die Verarbeitung mehrerer Quellen deren Verhalten im
+projektweiten Kontext, die abschließende Demonstration den zusammenhängenden
+Verarbeitungspfad und die automatisierten beziehungsweise
+artefaktbezogenen Prüfungen die technisch überprüfbaren Eigenschaften der
+Realisierung. Die folgenden Abschnitte beschreiben Durchführung und
+Akzeptanzkriterien dieser Prüfverfahren. Die beobachteten Befunde,
+Korrekturen, Wiederholungsprüfungen und Ergebnisse werden getrennt davon in
+Kapitel~\ref{sec:results} dargestellt.
+
+\subsection{Automatisierte Software- und Vertragsverifikation}
+\label{sec:validation_software}
+
+Die automatisierte Softwareverifikation untersucht die regelbasiert
+überprüfbaren Eigenschaften des Prototyps. Im Mittelpunkt stehen
+Eigenschaften, für die ein erwarteter technischer Zustand eindeutig
+spezifiziert und automatisiert geprüft werden kann. Dazu gehören
+beispielsweise Datenstrukturen, eindeutige Identitäten, Persistenzregeln,
+zulässige Zustandsübergänge und die Verknüpfung aufeinanderfolgender
+Verarbeitungsschritte. Die gezielte Prüfung solcher spezifizierten
+Eigenschaften bildet einen Bestandteil der systematischen Evaluation des
+entwickelten Prototyps \cite{Wieringa2014,ISO42030}.
+
+Zu diesen überprüfbaren Eigenschaften gehören auch die in
+Kapitel~\ref{sec:implementation} eingeführten technischen Verträge zwischen
+den Verarbeitungsschritten. Ein solcher Vertrag legt fest, welche
+Eingangszustände ein Verarbeitungsschritt verwenden darf, welche Identitäten
+und Referenzen erhalten bleiben müssen, welche Bedingungen für eine gültige
+Verarbeitung gelten und welche Ergebniszustände weitergegeben werden können.
+In der Implementierung werden diese Festlegungen teilweise als
+\emph{Contracts} bezeichnet. Ihre automatisierte Prüfung stellt sicher, dass
+die einzelnen Verarbeitungsschritte nur auf den dafür vorgesehenen
+Informations- und Entscheidungszuständen aufbauen.
+
+Die Prüfungen erfolgen auf drei Ebenen
+(Tabelle~\ref{tab:validation_software_levels}). Auf der ersten Ebene werden
+einzelne Funktionen, Datenstrukturen und technische Verträge geprüft. Die
+zweite Ebene betrachtet das Zusammenspiel mehrerer Verarbeitungsschritte und
+insbesondere die Übergänge zwischen ihnen. Auf der dritten Ebene wird nach
+Änderungen der vollständige automatisierte Testsatz erneut ausgeführt, um
+sicherzustellen, dass bereits geprüfte Funktionen und Verarbeitungspfade
+weiterhin wie vorgesehen arbeiten.
 
 \begin{table}[htbp]
     \centering
     \small
-    \caption[Ebenen der automatisierten Softwareverifikation]{Ebenen der automatisierten Softwareverifikation. Die Prüfungen
-    reichen von einzelnen deterministischen Verträgen über kontrollierte
-    Zustandsübergänge bis zur Regression des verbundenen Repository-Zustands.}
+    \caption[Ebenen der automatisierten Softwareverifikation]{
+        Ebenen der automatisierten Softwareverifikation von einzelnen
+        technischen Regeln über kontrollierte Übergänge bis zur
+        wiederholten Prüfung des Gesamtsystems.}
     \label{tab:validation_software_levels}
-    \begin{tabular}{p{3.4cm}p{5.0cm}p{5.0cm}}
+    \begin{tabular}{p{3.6cm}p{5.0cm}p{4.8cm}}
         \hline
         \textbf{Prüfebene} &
         \textbf{Prüfgegenstand} &
         \textbf{Beispielhafte Kriterien} \\
         \hline
 
-        Unit / Contract &
-        einzelne deterministische Mechanismen &
-        Identitäten, Manifeste, Fingerprints,
-        Persistenz, Schema- und Typregeln \\
+        Komponenten- und Vertragsprüfung &
+        einzelne Funktionen, Datenstrukturen und definierte
+        Übergabebedingungen &
+        eindeutige Identitäten, Persistenz,
+        Schema- und Typregeln sowie
+        inhaltsgebundene Prüfwerte (\emph{Fingerprints}) \\
 
-        Integration / Boundary &
-        Übergänge zwischen Architekturverantwortungen &
-        Authority-Bindungen, Provenance-Erhalt,
-        zulässige Zustandsübergänge,
-        fail-closed Verhalten \\
+        Integrations- und Grenzprüfung &
+        Zusammenspiel mehrerer Verarbeitungsschritte und Übergänge
+        zwischen ihnen &
+        erforderliche Autorisierungen,
+        Erhalt der Provenienz,
+        zulässige Zustandsübergänge und
+        Einhaltung des \emph{fail-closed}-Prinzips \\
 
-        Repository-Regression &
-        Zusammenspiel bereits implementierter Verträge &
-        keine unbeabsichtigte Regression bestehender
-        Verarbeitungs- und Authority-Pfade \\
+        Regression des Gesamtsystems &
+        bereits implementierte und zuvor geprüfte Funktionen nach
+        Änderungen am Prototyp &
+        weiterhin erfolgreich ausführbare Verarbeitungs- und
+        Autorisierungspfade \\
         \hline
     \end{tabular}
 \end{table}
 
-Besondere Bedeutung besitzen Negativ- und Grenzfallprüfungen. Neben der
-erfolgreichen Verarbeitung gültiger Zustände wird geprüft, ob beispielsweise
-fehlende Authority-Bindungen, widersprüchliche Identitäten, nicht passende
-Fingerprints, unvollständige Referenzen oder nicht unterstützte
-Modellierungszustände die nachgelagerte Verarbeitung entsprechend der
-fail-closed Logik blockieren.
+Neben regulären Verarbeitungspfaden werden gezielt Grenz- und Fehlerfälle
+geprüft. Dazu gehören beispielsweise fehlende erforderliche
+Autorisierungen, widersprüchliche Identitäten, veränderte inhaltsgebundene
+Prüfwerte, unvollständige Referenzen oder Modellierungszustände, für die
+keine zulässige Weiterverarbeitung definiert ist. In solchen Fällen muss die
+Verarbeitung entsprechend dem in
+Abschnitt~\ref{sec:architecture_controlled_transformation} eingeführten
+\emph{fail-closed}-Prinzip an der betroffenen Stelle blockiert werden.
 
-Für LLM-gestützte Verarbeitungsschritte beschränkt sich die automatisierte
-Verifikation auf den deterministisch prüfbaren technischen Rahmen. Sie
-bewertet nicht die fachliche Richtigkeit einer freien sprachlichen
-Interpretation, sondern unter anderem Schema-Konformität, Quellenbindung,
-vollständige Referenzen und die Trennung maschineller
-Verarbeitungsergebnisse von autorisierter Engineering-Information.
+Für KI-gestützte Verarbeitungsschritte konzentriert sich die automatisierte
+Verifikation auf technisch eindeutig überprüfbare Eigenschaften. Dazu
+gehören insbesondere die Einhaltung vorgegebener Datenstrukturen, die
+Bindung eines Verarbeitungsergebnisses an seine Engineering-Quelle,
+vollständige Referenzen sowie die Trennung zwischen maschinell erzeugten
+Interpretationsergebnissen und menschlich autorisierter
+Engineering-Information. Die fachliche Bewertung einer erzeugten
+Interpretation erfolgt in den dafür vorgesehenen menschlichen Prüf- und
+Autorisierungsschritten.
 
-Nach Änderungen wurden zunächst fokussierte Tests des betroffenen Bereichs,
-anschließend angrenzende Integrationsprüfungen und schließlich die
-Repository-Regression ausgeführt. Ergänzende statische Prüfungen dienten der
-technischen Konsistenz des Repository-Zustands. Die Anzahl bestandener Tests
-wird dabei nicht als eigenständige Qualitätsmetrik interpretiert, sondern
-ausschließlich als Evidenz für die jeweils spezifizierten und ausgeführten
-technischen Prüfungen.
+Nach einer Änderung am Prototyp werden zunächst die unmittelbar betroffenen
+Funktionen und Verträge geprüft. Anschließend werden die angrenzenden
+Verarbeitungsschritte gemeinsam getestet. Abschließend wird der vollständige
+automatisierte Testsatz des Prototyps erneut ausgeführt. Ergänzende statische
+Prüfungen kontrollieren außerdem die technische Konsistenz des
+Implementierungsstands.
 
-Die Softwareverifikation kann damit die Einhaltung getesteter
-Implementierungs- und Contract-Eigenschaften nachweisen. Aussagen über die
-fachliche Richtigkeit einer KI-Interpretation oder die Engineering-Qualität
-des resultierenden Modells erfordern dagegen die nachfolgenden
-Evaluationsschritte.
+Die Anzahl erfolgreich ausgeführter Tests dient dabei nicht als allgemeines
+Maß für die Qualität des Prototyps. Ein bestandener Test bestätigt jeweils
+die konkret spezifizierte und geprüfte technische Eigenschaft. Die
+automatisierte Software- und Vertragsverifikation zeigt damit, ob die
+implementierten Verarbeitungsregeln und Übergänge entsprechend ihrer
+Spezifikation funktionieren. Die Untersuchung ihres Zusammenspiels im
+durchgängigen Transformationsprozess sowie die fachliche und
+modellbezogene Bewertung erfolgen in den nachfolgenden Prüfungen.
 
-\subsection{Formative End-to-End- und Multi-Source-Verifikation}
+\subsection{Formative Verifikation des Verarbeitungspfads und der Verarbeitung mehrerer Quellen}
 \label{sec:validation_e2e_multisource}
 
-Ergänzend zur automatisierten Softwareverifikation wurde der Turing
-Generator in verbundenen End-to-End-Szenarien ausgeführt. Ziel war zu prüfen,
-ob die einzeln verifizierten Architekturverantwortungen auch im
-Zusammenspiel einen kontrollierten Verarbeitungspfad bilden.
+Ergänzend zur automatisierten Software- und Vertragsverifikation wurde der
+Prototyp in zusammenhängenden Verarbeitungsszenarien ausgeführt. Ziel war zu
+untersuchen, ob die einzeln geprüften Verarbeitungsschritte,
+Autorisierungsgrenzen und technischen Verträge auch im Zusammenspiel einen
+kontrollierten Transformationsprozess bilden.
 
-Für die formative End-to-End-Verifikation wurde ein vollständiger Pfad vom
-registrierten Eingangsdokument bis zum publizierten SysML-v2-Artefakt über
-die reguläre Anwendungsschnittstelle des Prototyps ausgeführt. Dabei wurden
-menschliche Engineering-Entscheidungen mit den automatisierten
-Verarbeitungsschritten des Systems kombiniert. An den wesentlichen
-Architekturgrenzen wurde geprüft, ob die jeweils erforderlichen
-Vorgängerzustände, Herkunftsbindungen und Autorisierungsentscheidungen
-vorlagen. Eine nachgelagerte Verarbeitung durfte nur fortgesetzt werden,
-wenn die für den Übergang erforderliche Evidenz beziehungsweise Authority
-vorhanden war.
+Für die formative Verifikation wurde zunächst ein vollständiger
+Verarbeitungspfad von einer registrierten Engineering-Quelle bis zum
+erzeugten und freigegebenen SysML-v2-Artefakt über die reguläre
+Anwendungsschnittstelle des Prototyps ausgeführt. Eine Engineering-Quelle
+bezeichnet dabei, wie in Kapitel~\ref{sec:architecture} eingeführt, ein
+Dokument oder einen Datenbestand, der als fachliche Ausgangsbasis des
+Transformationsprozesses verwendet wird.
 
-Die Erprobung war bewusst formativ angelegt. Beobachtete Abweichungen wurden
-der betroffenen Architektur- oder Implementierungsgrenze zugeordnet und
-dokumentiert. Nach einer begrenzten Korrektur wurden zunächst fokussierte
-Softwaretests und anschließend derselbe relevante Verarbeitungsschritt erneut
-im verbundenen Workflow ausgeführt. Erst nach erfolgreichem Retest wurde der
-End-to-End-Pfad fortgesetzt. Der ursprüngliche Fehlerzustand blieb dabei als
-Teil der Evaluationsevidenz erhalten.
+Während der Verarbeitung wurden automatisierte Schritte mit den vorgesehenen
+menschlichen Autorisierungsentscheidungen verbunden. An den Übergängen
+zwischen den Verarbeitungsschritten wurde geprüft, ob die jeweils
+erforderlichen Vorgängerzustände, Provenienzbeziehungen und
+Autorisierungsentscheidungen vorhanden waren. Die weitere Verarbeitung
+erfolgte nur, wenn die für den jeweiligen Übergang festgelegten
+Voraussetzungen erfüllt waren.
 
-\paragraph{Multi-Source-Verifikation}
+Die Untersuchung war formativ angelegt. Beobachtete Abweichungen wurden dem
+betroffenen Architekturmechanismus oder Verarbeitungsschritt zugeordnet und
+dokumentiert. Nach einer begrenzten Korrektur wurden zunächst die unmittelbar
+betroffenen Softwarefunktionen und anschließend der entsprechende Abschnitt
+des zusammenhängenden Verarbeitungspfads erneut geprüft. Frühere
+Fehlerzustände blieben dabei erhalten und konnten in die spätere Auswertung
+einbezogen werden.
 
-Zusätzlich wurde ein kontrollierter Multi-Source-End-to-End-Test mit vier
-aufbereiteten, inhaltlich aufeinander bezogenen Legacy-Testdokumenten
-durchgeführt. Die Dokumente repräsentieren unterschiedliche
-Informationsperspektiven auf dasselbe technische Projekt und wurden als
-getrennte Engineering Sources unabhängig voneinander registriert und
-zunächst quellenbezogen verarbeitet. Erst anschließend erfolgte die
-projektweite Zusammenführung autorisierter Informationen.
+\paragraph{Verifikation der Verarbeitung mehrerer Quellen}
 
-Die zentralen Akzeptanzkriterien waren:
+Zusätzlich wurde untersucht, ob mehrere Engineering-Quellen innerhalb
+desselben Projekts zunächst getrennt verarbeitet und anschließend gemeinsam
+für die Modellbildung berücksichtigt werden können. Hierfür wurden vier
+aufbereitete und inhaltlich aufeinander bezogene Testdokumente verwendet.
+Sie repräsentieren unterschiedliche Informationsperspektiven auf dasselbe
+technische Projekt und wurden jeweils als eigenständige Engineering-Quelle
+registriert.
+
+Die Quellen wurden zunächst unabhängig voneinander verarbeitet und fachlich
+geprüft. Erst danach wurden die autorisierten Engineering-Informationen für
+die projektweite Verarbeitung berücksichtigt. Dabei wurde auch die
+\emph{Projektzulassung} (\emph{Project Fit}) geprüft. Sie entscheidet, ob
+eine Engineering-Quelle dem betrachteten Projektkontext zugeordnet und für
+die weitere projektweite Verarbeitung berücksichtigt werden kann.
+
+Für diese Prüfung wurden folgende Akzeptanzkriterien festgelegt:
 
 \begin{itemize}
-    \item jede Engineering Source und ihr Verarbeitungskontext bleiben
-          eindeutig identifizierbar,
-    \item Zustände verschiedener Verarbeitungsläufe überschreiben sich
-          nicht und Evidenz sowie Human-Review-Zustände bleiben an ihre
-          jeweilige Quellen- und Laufprovenienz gebunden,
-    \item projektweite Verarbeitung erfolgt erst nach der erforderlichen
-          quellenbezogenen Autorisierung,
-    \item mehrere autorisierte Quellen können in einen gemeinsamen
-          Modellbildungsprozess überführt werden, ohne ihre jeweilige
-          Herkunft zu verlieren,
-    \item lokal wiederverwendete Identifikatoren führen nicht zu einer
-          unbeabsichtigten Zusammenführung projektweiter Artefakte und
-    \item kein Quellenpfad erhält allein aufgrund von Reihenfolge,
-          Häufigkeit oder technischer Verarbeitung zusätzliche Engineering
-          Authority.
+    \item Jede Engineering-Quelle und der zugehörige Verarbeitungslauf
+          bleiben eindeutig identifizierbar.
+
+    \item Quellengebundene Evidenz, menschliche Prüfentscheidungen und
+          autorisierte Engineering-Information bleiben mit ihrer jeweiligen
+          Quelle und ihrem Verarbeitungslauf verknüpft.
+
+    \item Projektweite Verarbeitung verwendet ausschließlich zuvor fachlich
+          autorisierte Engineering-Information aus zugelassenen Quellen.
+
+    \item Informationen mehrerer zugelassener Quellen können gemeinsam für
+          die Modellbildung verwendet werden, während ihre jeweilige
+          Herkunft erhalten bleibt.
+
+    \item Identische oder lokal wiederverwendete technische Identifikatoren
+          aus unterschiedlichen Verarbeitungsläufen bleiben durch ihren
+          Quellen- und Verarbeitungskontext eindeutig unterscheidbar.
+
+    \item Fachliche Entscheidungsbefugnis entsteht ausschließlich durch die
+          dafür vorgesehenen menschlichen Autorisierungsentscheidungen und
+          bleibt unabhängig von Reihenfolge, Häufigkeit oder technischer
+          Verarbeitung einer Quelle.
 \end{itemize}
 
-Damit adressiert die Multi-Source-Verifikation insbesondere Identität,
-Provenienz und Authority beim Übergang von getrennten Verarbeitungspfaden in
-einen gemeinsamen Projektkontext. Eine technische Erkennung von
-Übereinstimmungen, Ergänzungen, Konflikten oder Unsicherheit durfte
-projektweite Engineering-Entscheidungen vorbereiten, aber nicht automatisch
-ersetzen.
+Die Prüfung adressiert damit insbesondere den Übergang von getrennten
+quellenbezogenen Verarbeitungspfaden in einen gemeinsamen Projektkontext.
+Maschinell bestimmte Ähnlichkeiten, Ergänzungen, mögliche Widersprüche oder
+Unsicherheiten können die projektweite fachliche Bewertung vorbereiten. Die
+Entscheidung über die weitere fachliche Verwendung der Informationen erfolgt
+durch die dafür vorgesehene menschliche Autorisierung.
 
-Auch dieser Test folgte der fail-closed Logik der formativen
-End-to-End-Erprobung. Eine blockierende Abweichung an einer Identitäts-,
-Provenienz- oder Authority-Grenze führte zum Abbruch des betroffenen Pfads.
-Nach der Korrektur wurde der relevante Abschnitt gegen dieselben
-Akzeptanzkriterien erneut ausgeführt. Die beobachteten Abweichungen,
-Korrekturen und Retests werden in Kapitel~\ref{sec:results} dargestellt.
+Auch bei der Verarbeitung mehrerer Quellen gilt das
+\emph{fail-closed}-Prinzip. Kann beispielsweise die Herkunft eines Zustands
+nicht eindeutig bestimmt oder eine erforderliche Autorisierung nicht
+nachgewiesen werden, wird der betroffene Verarbeitungspfad an dieser Stelle
+nicht fortgesetzt. Nach einer Korrektur wird der relevante Abschnitt erneut
+gegen dieselben Akzeptanzkriterien geprüft.
 
-\subsection{Live-Demonstration und Traceability-Prüfung}
+Die während der formativen Untersuchung beobachteten Abweichungen,
+Korrekturen und Wiederholungsprüfungen werden in
+Kapitel~\ref{sec:results} dargestellt.
+
+\subsection{Abschließende Demonstration und Prüfung der Nachverfolgbarkeit}
 \label{sec:validation_reference_run}
 
-Nach Abschluss der formativen End-to-End-Erprobung und der
-Multi-Source-Verifikation wurde der konsolidierte Prototyp in einer
-abschließenden Live-Demonstration über die reguläre Anwendungsschnittstelle
-ausgeführt. Im Unterschied zu den vorausgehenden formativen Prüfungen diente
-diese Durchführung nicht der iterativen Weiterentwicklung des Prototyps,
-sondern der zusammenhängenden Ausführung des erreichten
-Untersuchungsstands.
+Nach Abschluss der formativen Verifikation wurde der konsolidierte Prototyp
+in einer extern begleiteten Demonstration über seine reguläre
+Anwendungsschnittstelle ausgeführt. Im Unterschied zu den vorausgehenden
+formativen Prüfungen diente diese Durchführung der zusammenhängenden
+Ausführung des erreichten Entwicklungsstands. Die während der Demonstration
+entstandenen Zustände wurden anschließend für eine getrennte Prüfung der
+durchgängigen Nachverfolgbarkeit verwendet.
 
-Während der Demonstration wurden Engineering- und Kontextinformationen über
-die regulären Eingabepfade in das Projekt eingebracht und entlang des
-implementierten Workflows verarbeitet. Engineering Sources konnten dabei
-fachliche Evidenz für das zu modellierende System begründen, während Context
-Sources ausschließlich unterstützenden Kontext bereitstellten. Die
-fachlichen und modellbezogenen Entscheidungen innerhalb des Workflows wurden
-durch den Autor getroffen und als eigene Zustände persistiert.
+Während der Demonstration wurden Engineering-Quellen und Kontextquellen über
+die vorgesehenen Eingabepfade in das Projekt eingebracht. Engineering-Quellen
+bilden dabei die fachliche Ausgangsbasis für quellengebundene Evidenz,
+während Kontextquellen ausschließlich zusätzliche Informationen für die
+Interpretation und Einordnung bereitstellen. Die weitere Verarbeitung
+erfolgte über die im Prototyp realisierten Verarbeitungsschritte und
+Autorisierungsgrenzen. Die erforderlichen fachlichen und modellbezogenen
+Entscheidungen wurden durch den Autor getroffen und gemeinsam mit den
+zugehörigen Informations- und Modellzuständen dauerhaft gespeichert.
 
-Die Live-Demonstration und die anschließende Traceability-Prüfung bilden
-dabei zwei methodisch unterscheidbare Schritte. Die Demonstration erzeugte
-einen tatsächlich durchlaufenen, zusammenhängenden Informations-,
-Entscheidungs- und Modellierungspfad. Anschließend wurde anhand der dabei
-persistierten Zustände geprüft, ob die während der Demonstration live
-eingebrachten Informationen über ihre maschinellen Zwischenzustände,
-menschlichen Entscheidungen und Modelltransformationen bis zum erzeugten
-SysML-v2-Artefakt nachvollzogen werden können.
+Die Demonstration und die anschließende Nachverfolgbarkeitsprüfung bilden
+zwei getrennte Untersuchungsschritte. Die Demonstration erzeugt zunächst
+einen tatsächlich durchlaufenen Informations-, Entscheidungs- und
+Modellbildungspfad. Anschließend wird anhand der gespeicherten Zustände
+rekonstruiert, wie die eingebrachten Informationen über maschinelle
+Verarbeitungsschritte, menschliche Autorisierungsentscheidungen und
+Modelltransformationen mit dem resultierenden SysML-v2-Artefakt verbunden
+sind.
 
-Die Traceability-Prüfung adressiert damit nicht lediglich die Zuordnung eines
-finalen Modellelements zu einer ursprünglichen Quelle. Geprüft wird, ob die
-für einen konkreten Modellinhalt relevanten Quellen-, Evidenz-, Review-,
-Authority-, Modell-, Generierungs-, Validierungs- und Freigabezustände
-eindeutig miteinander verbunden bleiben. Umgekehrt muss für eine während der
-Demonstration eingebrachte fachliche Information nachvollziehbar sein, ob und
-über welche Entscheidungen sie in das Modell übernommen, verändert,
-verworfen oder zurückgestellt wurde.
+Diese Prüfung greift unmittelbar den in
+Abschnitt~\ref{sec:architecture_traceability} entwickelten Architekturanspruch
+auf. Dort wird Nachverfolgbarkeit als durchgängige Verknüpfung der
+Informations-, Entscheidungs- und Modellzustände entlang des
+Transformationsprozesses beschrieben. Die Beziehungen können dabei in zwei
+Richtungen verfolgt werden: von einer Engineering-Quelle zu den daraus
+entstandenen Modellinhalten und von einem konkreten Modellinhalt zurück zu
+seiner fachlichen und modellbezogenen Herleitung.
 
-Die exemplarische Rekonstruktion eines zusammenhängenden Informationspfads
-dient dabei als konkrete Prüfung dieser persistierten Verkettung. Sie bezieht sich
-bewusst auf Informationen und Entscheidungen, die während der
-Live-Demonstration tatsächlich über die regulären Verarbeitungspfade des
-Prototyps entstanden sind, und nicht auf einen nachträglich konstruierten
-Beispielzustand. Die entsprechende Rückverfolgung wird in
-Kapitel~\ref{sec:results} anhand eines ausgewählten Modellinhalts dargestellt.
+Für die Demonstration wird diese Nachverfolgbarkeit anhand tatsächlich
+entstandener Zustände geprüft. Für einen ausgewählten Modellinhalt wird
+rekonstruiert, auf welcher quellengebundenen Evidenz er beruht, welche
+menschlichen Entscheidungen seine fachliche Verwendung und strukturelle
+Einordnung autorisiert haben und über welche internen Modellzustände er in
+die SysML-v2-Repräsentation überführt wurde. Ergänzend wird geprüft, ob das
+erzeugte Artefakt mit seinem Validierungsergebnis sowie der abschließenden
+menschlichen Modellprüfung und Freigabe verbunden bleibt.
 
-Für die Traceability-Prüfung wurden insbesondere folgende
+Für die Prüfung der Nachverfolgbarkeit wurden insbesondere folgende
 Akzeptanzkriterien verwendet:
 
 \begin{itemize}
-    \item fachlich abgeleitete Modellinhalte bleiben an ihre
-          quellengebundene Evidenz rückverfolgbar,
-    \item menschliche Autorisierungsentscheidungen referenzieren den jeweils
-          tatsächlich geprüften Informations- oder Modellzustand,
-    \item projektweite Verarbeitung erhält die Herkunft der zuvor
-          quellenbezogen verarbeiteten Information,
-    \item Modellplatzierung und nachfolgende Modelltransformationen bleiben
-          auf die autorisierten Engineering-Zustände zurückführbar,
-    \item generierte SysML-v2-Elemente und Beziehungen lassen sich den
-          zugehörigen internen Modellzuständen zuordnen,
-    \item framework- oder regelbedingte Modellanteile bleiben von
-          quellenabgeleiteter Engineering-Information unterscheidbar,
-    \item Revisionen und Nachfolgerzustände überschreiben ihre
-          Vorgängerzustände nicht und
-    \item technischer Validierungszustand und abschließende Freigabe bleiben
-          an den konkret geprüften Modell- beziehungsweise Artefaktzustand
-          gebunden.
+    \item Modellinhalte lassen sich auf die zugrunde liegende
+          quellengebundene Evidenz und damit auf ihre Engineering-Quelle
+          zurückführen.
+
+    \item Menschliche Autorisierungsentscheidungen bleiben mit genau den
+          Informations- oder Modellzuständen verbunden, auf deren Grundlage
+          sie getroffen wurden.
+
+    \item Bei der projektweiten Verarbeitung bleibt die Herkunft der
+          beteiligten quellenbezogenen Informationen erhalten.
+
+    \item Entscheidungen über die strukturelle Einordnung eines
+          Modellinhalts und die daraus entstehenden internen Modellzustände
+          bleiben auf die zuvor autorisierte Engineering-Information
+          zurückführbar.
+
+    \item Die Elemente und Beziehungen der erzeugten
+          SysML-v2-Repräsentation lassen sich den zugehörigen internen
+          Modellzuständen zuordnen.
+
+    \item Modellanteile, die aus vorgegebenen Struktur- oder
+          Transformationsregeln entstehen, bleiben von unmittelbar aus
+          Engineering-Quellen abgeleiteten Informationen unterscheidbar.
+
+    \item Neue oder überarbeitete Zustände bleiben mit ihren jeweiligen
+          Vorgängerzuständen verbunden, sodass frühere Informations-,
+          Entscheidungs- und Modellstände erhalten bleiben.
+
+    \item Das Ergebnis der SysML-v2-Validierung, die menschliche
+          Modellprüfung und die abschließende Freigabe beziehen sich jeweils
+          eindeutig auf den konkret geprüften Artefaktzustand.
 \end{itemize}
 
-Die Prüfung ist auf den während der Demonstration registrierten und für die
-Verarbeitung zugelassenen Informationsbestand begrenzt. Sie weist daher
-keine Vollständigkeit der für ein reales Engineering-Projekt verfügbaren
-Information nach. Gegenstand ist ausschließlich die Nachverfolgbarkeit der
-im untersuchten Verarbeitungskontext tatsächlich eingebrachten,
-weiterverarbeiteten und autorisierten Informationen.
+Die exemplarische Rekonstruktion basiert ausschließlich auf Zuständen, die
+während der Demonstration über die regulären Verarbeitungspfade des
+Prototyps entstanden sind. Der dabei untersuchte Informationsbestand umfasst
+die für die Demonstration registrierten und zur Verarbeitung zugelassenen
+Quellen. Gegenstand der Prüfung ist damit die Nachverfolgbarkeit innerhalb
+dieses konkreten Verarbeitungslaufs.
 
-Die während der Live-Demonstration erzeugten und anschließend analysierten
-persistierten Zustände bilden die Evidenzbasis für die in
-Kapitel~\ref{sec:results} dargestellte End-to-End-Nachverfolgbarkeit.
+Die in der Demonstration erzeugten Informations-, Entscheidungs- und
+Modellzustände bilden die Prüfgrundlage für die in
+Kapitel~\ref{sec:results} dargestellte exemplarische Rekonstruktion des
+Verarbeitungspfads.
 
-\subsection{Technische SysML-v2-Validierung und menschliche Freigabe}
+\subsection{Validierung des SysML-v2-Artefakts und menschliche Freigabe}
 \label{sec:validation_sysml_human}
 
-Die abschließende Prüfung des erzeugten Modellartefakts trennt technische
-Validierung und fachliche Freigabe. Die formale beziehungsweise
-metamodellbezogene Validierung eines SysML-v2-Artefakts adressiert dessen
-technische und strukturelle Konformität \cite{SysMLv2,Cibrian.2025b}.
-Daraus folgt jedoch noch keine fachliche Korrektheit der darin
-repräsentierten Engineering-Information \cite{Topcu2025}.
+Die abschließende Prüfung des erzeugten SysML-v2-Artefakts unterscheidet
+zwischen technischer Validierung, menschlicher Modellprüfung und
+abschließender Freigabe. Validierung bezeichnet in diesem Zusammenhang die
+Prüfung des erzeugten Artefakts anhand formaler und technischer Kriterien
+sowie seiner Verarbeitbarkeit in einer SysML-v2-Toolumgebung. Die formale
+beziehungsweise metamodellbezogene Prüfung eines SysML-v2-Artefakts
+adressiert dessen technische und strukturelle Konformität
+\cite{SysMLv2,Cibrian.2025b}. Die fachliche und modellbezogene Beurteilung
+erfolgt davon getrennt durch die vorgesehenen menschlichen
+Entscheidungsschritte \cite{Topcu2025}.
 
 \paragraph{Technische SysML-v2-Validierung}
 
-Prüfgegenstand ist das tatsächlich erzeugte und serialisierte
-SysML-v2-Artefakt. Zunächst werden interne deterministische Prüfungen
-durchgeführt, die insbesondere die Konsistenz des Artefakts, seine Bindung an
-den zugrunde liegenden Modell- und Generierungszustand sowie die für die
-nachgelagerte Prüfung erforderlichen Metadaten kontrollieren. Erkannte Fehler
-werden dabei nicht automatisch korrigiert, sondern führen zu einem negativen
-oder unvollständigen Validierungszustand.
+Prüfgegenstand ist das tatsächlich erzeugte SysML-v2-Artefakt. Zunächst
+führt der Prototyp interne regelbasierte Prüfungen durch. Dabei werden
+insbesondere die Konsistenz des Artefakts, seine eindeutige Bindung an den
+zugrunde liegenden Modell- und Generierungszustand sowie die für die weitere
+Prüfung erforderlichen Metadaten kontrolliert.
 
-Ergänzend wird das erzeugte Artefakt mit der SYSIDE Modeler CLI in einer
-externen SysML-v2-Werkzeugumgebung geprüft. Als technische
-Akzeptanzkriterien gelten die erfolgreiche Ausführung des Validators und das
-Fehlen blockierender Parser- oder Modeler-Diagnosen. Diese Prüfung belegt
-ausschließlich die technische Verarbeitbarkeit innerhalb der verwendeten
-Werkzeugumgebung und erlaubt keine Aussage über die fachliche Korrektheit des
-Modells.
+Zusätzlich wird das erzeugte Artefakt mit der \emph{SYSIDE Modeler CLI} in
+einer externen SysML-v2-Toolumgebung geprüft. Als technische
+Akzeptanzkriterien gelten die erfolgreiche Verarbeitung des Artefakts und das
+Ausbleiben blockierender Diagnosemeldungen. Die externe Prüfung ergänzt
+damit die internen Prüfungen um die Verarbeitbarkeit des erzeugten
+SysML-v2-Artefakts außerhalb des Prototyps.
 
-Das Validierungsergebnis wird als eigener persistierter Zustand an das
-konkret geprüfte Artefakt gebunden. Wird das Modell anschließend verändert
-oder neu generiert, ist daher eine erneute Validierung erforderlich; ein
-früheres Ergebnis darf nicht auf einen veränderten Artefaktzustand übertragen
-werden.
+Das Validierungsergebnis wird als eigener Zustand mit genau dem geprüften
+Artefakt verknüpft. Dadurch bleibt nachvollziehbar, auf welchen
+Modell- und Generierungszustand sich das Ergebnis bezieht. Wird das Artefakt
+verändert oder aus einem neuen Modellzustand erneut erzeugt, entsteht ein
+neuer Artefaktzustand, der erneut validiert wird.
 
-\paragraph{Menschliche Modellprüfung und Freigabe}
+\paragraph{Menschliche Modellprüfung}
 
-Ein technisch valides Artefakt wird nicht automatisch publiziert. Zunächst
-wird der konkret generierte Modellzustand zusammen mit dem zugehörigen
-Validierungsergebnis einer abschließenden menschlichen Modellprüfung
-unterzogen. Dabei wird insbesondere bewertet, ob der Modellzustand dem zuvor
-autorisierten Engineering-Inhalt entspricht und ob während Modellbildung und
-Serialisierung keine fachlich unerwünschte Veränderung eingeführt wurde.
+Nach erfolgreicher technischer Validierung wird der erzeugte Modellzustand
+einer abschließenden menschlichen Modellprüfung unterzogen. Die menschliche
+Modellprüfung bewertet, ob die im SysML-v2-Artefakt enthaltene
+Modellrepräsentation den zuvor autorisierten Engineering- und
+Modellentscheidungen entspricht. Sie bildet damit die letzte inhaltliche
+Prüfgrenze vor der Freigabe des erzeugten Artefakts.
 
-Eine positive Modellprüfung führt noch nicht unmittelbar zur Publikation.
-Die darauf aufbauende menschliche Freigabeentscheidung bildet einen
-getrennten persistierten Autorisierungszustand und entscheidet, ob genau der
-geprüfte und validierte Artefaktzustand veröffentlicht werden darf.
+Dabei wird insbesondere geprüft, ob die autorisierten Modellinhalte
+vollständig und in der vorgesehenen strukturellen Einordnung enthalten sind
+und ob durch Modellbildung und SysML-v2-Erzeugung keine unbeabsichtigte
+inhaltliche Veränderung entstanden ist. Die Modellprüfung wird mit dem
+konkret betrachteten Modell- und Artefaktzustand verknüpft und bleibt dadurch
+auch bei späteren Änderungen nachvollziehbar.
 
-Für die Freigabe gelten folgende Mindestbedingungen:
+\paragraph{Freigabe}
+
+Die Freigabe bildet einen von der Modellprüfung getrennten menschlichen
+Entscheidungsschritt. Sie entscheidet, ob genau der zuvor technisch
+validierte und menschlich geprüfte Artefaktzustand als Ergebnis des
+Transformationsprozesses freigegeben werden kann. Die
+Freigabeentscheidung wird als eigener Zustand gespeichert und eindeutig mit
+dem geprüften Artefakt, dessen Validierungsergebnis und der vorausgehenden
+Modellprüfung verknüpft.
+
+Für eine Freigabe müssen insbesondere folgende Bedingungen erfüllt sein:
 
 \begin{itemize}
-    \item das vorgelegte Artefakt und das zugehörige Validierungsergebnis
-          referenzieren eindeutig denselben Zustand,
-    \item die relevanten Engineering- und Modellentscheidungen bleiben
-          nachvollziehbar gebunden,
-    \item es liegen keine bekannten blockierenden Validierungsfehler vor,
-    \item offene fachliche Entscheidungen wurden nicht durch Generierung oder
-          technische Validierung implizit aufgelöst und
-    \item die Publikation erfolgt erst nach einer expliziten menschlichen
-          Freigabeentscheidung.
+    \item das vorgelegte SysML-v2-Artefakt und das zugehörige
+          Validierungsergebnis beziehen sich eindeutig auf denselben
+          Artefaktzustand,
+
+    \item die für den Modellinhalt maßgeblichen fachlichen und
+          modellbezogenen Autorisierungsentscheidungen bleiben
+          nachvollziehbar verknüpft,
+
+    \item die technische Validierung wurde ohne blockierende Fehler
+          abgeschlossen,
+
+    \item die menschliche Modellprüfung bezieht sich auf genau den
+          freizugebenden Modell- und Artefaktzustand und
+
+    \item die Freigabe erfolgt durch eine explizite menschliche
+          Entscheidung.
 \end{itemize}
 
-Bei Ablehnung oder Überarbeitung entsteht kein freigegebener publizierter
-Output. Eine erforderliche Änderung wird in den zuständigen vorgelagerten
-Verarbeitungsschritt zurückgeführt und erzeugt anschließend einen neuen
-Modell-, Generierungs- und Validierungszustand. Bei erfolgreicher Freigabe
-wird der publizierte Output dagegen eindeutig an den geprüften
-Artefaktzustand, dessen Validierungsergebnis und die Freigabeentscheidung
-gebunden.
+Erfordert die Modellprüfung eine Änderung, wird diese dem zuständigen
+vorgelagerten Verarbeitungsschritt zugeführt. Aus der Änderung entstehen
+neue Modell-, Generierungs- und Validierungszustände, die erneut geprüft
+werden. Nach erfolgreicher Freigabe bleibt der resultierende
+SysML-v2-Artefaktzustand eindeutig mit seiner technischen Validierung,
+menschlichen Modellprüfung und Freigabeentscheidung verbunden.
 
-Damit bleiben technische Validierung, abschließende Modellprüfung und
-menschliche Freigabe bis zur Publikation getrennte Prüf- und
-Autorisierungszustände.
+Technische Validierung, menschliche Modellprüfung und Freigabe bilden damit
+drei aufeinander aufbauende, jedoch getrennt gespeicherte Prüf- und
+Entscheidungsstufen des Transformationsprozesses.

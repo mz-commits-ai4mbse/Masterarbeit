@@ -7,6 +7,7 @@
 \begin{xltabular}{\textwidth}{p{3.0cm}X}
 \textbf{Abkürzung} & \textbf{Bedeutung} \\
 \hline
+
 API   & Application Programming Interface \\
 CLI   & Command Line Interface \\
 CSV   & Comma-Separated Values \\
@@ -23,6 +24,7 @@ SOP   & Standard Operating Procedure \\
 SysML & Systems Modeling Language \\
 W3C   & World Wide Web Consortium \\
 XMI   & XML Metadata Interchange \\
+
 \end{xltabular}
 
 \vspace{0.8cm}
@@ -37,31 +39,35 @@ XMI   & XML Metadata Interchange \\
 Brownfield-Transformation &
 Überführung bereits vorhandener Engineering-Information in einen
 modellbasierten Kontext unter Berücksichtigung bestehender Systeme,
-Artefakte und Informationsstrukturen. \\
+Dokumente, Datenbestände und Informationsstrukturen. \\
 
 Engineering-Quelle &
-Informationsquelle, die fachliche Aussagen über das betrachtete System
-enthält und als Grundlage quellengebundener Evidenz verwendet werden darf. \\
+Rolle eines Dokuments, Datensatzes oder sonstigen Informationsbestands als
+fachliche Ausgangsbasis des Transformationsprozesses. Eine
+Engineering-Quelle darf quellengebundene Evidenz über das betrachtete System
+begründen. \\
 
 Kontextquelle &
-Informationsquelle, die zusätzliche Informationen zur Interpretation oder
-Einordnung bereitstellt, selbst jedoch keine fachliche Evidenz über das
-betrachtete System begründet. \\
+Rolle einer Informationsquelle, die zusätzliche Informationen zur
+Interpretation oder Einordnung bereitstellt. Eine Kontextquelle unterstützt
+die Verarbeitung, begründet selbst jedoch keine fachliche Evidenz über das
+betrachtete System. \\
 
 Quellengebundene Evidenz &
-Aus einer Engineering-Quelle identifizierte Information, deren Herkunft
-explizit erhalten bleibt und die als fachliche Grundlage nachfolgender
+Aus einer Engineering-Quelle identifizierte Information, deren konkrete
+Herkunft erhalten bleibt und die als fachliche Grundlage nachfolgender
 Interpretations- und Autorisierungsentscheidungen dient. \\
 
 Engineering Subject &
 Quellengebundener fachlicher Referenzgegenstand, auf den unterschiedliche
-Interpretations- und Bewertungsperspektiven angewendet werden können. \\
+Persona-Perspektiven angewendet und deren Interpretationsergebnisse
+miteinander verglichen werden können. \\
 
 Persona &
-Konfigurierte fachliche Perspektive, aus der eine Agentenrolle eine
-definierte Verarbeitungsaufgabe bearbeitet. Die Agentenrolle legt die
-Aufgabe fest, während die Persona die Perspektive ihrer Bearbeitung
-bestimmt. \\
+Konfigurierte fachliche Perspektive, aus der ein bestimmter
+Interpretations- oder Modellierungsschritt durchgeführt wird. Mehrere
+Personas können denselben fachlichen Gegenstand mit unterschiedlichen
+Schwerpunkten betrachten. \\
 
 Human Authority &
 Oberbegriff für die explizite menschliche Entscheidungsbefugnis an einem
@@ -69,58 +75,73 @@ definierten fachlichen oder modellbezogenen Übergang des
 Transformationsprozesses. \\
 
 Human Engineering Authority &
-Menschliche Entscheidungsbefugnis zur Autorisierung der fachlichen
-Bedeutung und weiteren Verwendung von Engineering-Information. \\
+Menschliche Entscheidungsbefugnis zur Autorisierung der fachlichen Bedeutung
+und weiteren Verwendung von Engineering-Information. \\
 
 Engineering Meaning &
-Fachliche Bedeutung einer autorisierten Engineering-Information,
-unabhängig von ihrer konkreten strukturellen Repräsentation im Zielmodell. \\
+Fachliche Bedeutung einer autorisierten Engineering-Information unabhängig
+von ihrer konkreten strukturellen Repräsentation im Zielmodell. \\
 
-Model Candidates &
-Mögliche Modellelemente, Beziehungen und strukturelle Zuordnungen, die aus
-autorisierter Engineering-Information abgeleitet und als
-Entscheidungsgrundlage für die Model Authority bereitgestellt werden. \\
+Model Candidate &
+Vorschlag für ein mögliches Modellelement, eine Beziehung oder eine
+strukturelle Zuordnung, der aus autorisierter Engineering-Information
+abgeleitet und als Entscheidungsgrundlage für die Model Authority
+bereitgestellt wird. \\
 
 Model Authority &
 Menschliche Entscheidungsbefugnis zur Autorisierung der strukturellen
 Einordnung und Repräsentation einer Engineering-Information im Zielmodell. \\
 
 Internal Engineering Model (IEM) &
-Gemeinsamer interner Modellzustand, in dem autorisierte Modellinhalte unter
-Erhalt ihrer fachlichen Bedeutung und strukturellen Einordnung
-zusammengeführt und für die zielmodellspezifische Formulierung bereitgestellt
-werden. \\
+Interne Modellrepräsentation, in der autorisierte Modellinhalte unter Erhalt
+ihrer fachlichen Bedeutung und strukturellen Einordnung zusammengeführt
+werden. Das IEM bildet die Grundlage für die nachgelagerte
+zielmodellspezifische Formulierung und SysML-v2-Erzeugung. \\
 
 Projektzulassung (\emph{Project Fit}) &
-Kontrollierter Bewertungsschritt, der festlegt, ob eine Quelle dem
-betrachteten System- und Projektkontext zugeordnet und für die projektweite
-Verarbeitung berücksichtigt werden kann. \\
+Kontrollierter Bewertungsschritt, der prüft, ob eine Engineering-Quelle
+plausibel dem betrachteten System- und Projektkontext zugeordnet und für die
+projektweite Verarbeitung berücksichtigt werden kann. \\
+
+Reusable Engineering Document Processing Architecture (REDPA) &
+Im Ausblick verwendeter Arbeitsbegriff für einen möglichen
+wiederverwendbaren Kern der entwickelten Informationsverarbeitungsarchitektur.
+REDPA überträgt insbesondere generische Mechanismen der Quellenverarbeitung,
+Provenienz, persistenten Verarbeitungszustände und menschlichen
+Autorisierung auf weitere dokumentenzentrierte Engineering-Aufgaben, während
+fach- und zielspezifische Bestandteile angepasst oder ersetzt werden können. \\
+
+Akzeptanzniveau &
+Im Ausblick vorgeschlagene Bewertungsgröße für lernende Erweiterungen des
+Transformationssystems. Sie beschreibt, in welchem Umfang maschinell erzeugte
+Vorschläge durch die zuständige Human Authority ohne oder mit nur geringer
+fachlicher Änderung übernommen werden. \\
 
 Provenienz &
 Nachvollziehbare Herkunft und Entstehung einer Information einschließlich
-der Informations-, Entscheidungs- und Verarbeitungszustände, aus denen sie
+der relevanten Verarbeitungs- und Entscheidungszustände, aus denen sie
 hervorgegangen ist. \\
 
-Traceability &
-Nachvollziehbare Verknüpfung zwischen Informationsquellen,
+Nachverfolgbarkeit (\emph{Traceability}) &
+Nachvollziehbare Verknüpfung zwischen Engineering-Quellen,
 Verarbeitungszuständen, Autorisierungsentscheidungen, Modellzuständen und
-resultierenden Artefakten. \\
+resultierenden Modellartefakten. \\
+
+Persistenz &
+Dauerhafte Speicherung relevanter Informations-, Entscheidungs- und
+Modellzustände. Frühere Zustände bleiben dabei erhalten und können mit
+nachfolgenden Zuständen und Entscheidungen verknüpft werden. \\
 
 Validierung &
-Prüfung eines konkret erzeugten Artefaktzustands anhand definierter
-Invarianten und seiner vorgesehenen Verarbeitbarkeit in der
-SysML-v2-Zielumgebung. \\
+Prüfung eines erzeugten SysML-v2-Artefakts anhand festgelegter formaler und
+technischer Kriterien sowie seiner Verarbeitbarkeit in der verwendeten
+SysML-v2-Toolumgebung. \\
 
 Fail-closed &
-Verarbeitungsprinzip, bei dem ein Zustandsübergang nur bei vollständig
-erfüllten Voraussetzungen ausgeführt wird. Sind erforderliche
-Autorisierungen, Referenzen oder eindeutig anwendbare Transformationsregeln
-nicht vorhanden, entsteht ein expliziter blockierender Zustand. \\
-
-Turing Generator &
-Im Rahmen dieser Arbeit entwickelte prototypische Realisierung der
-Informationsverarbeitungsarchitektur zur Untersuchung der kontrollierten
-KI-gestützten Transformation von Engineering-Bestandsinformation in
-SysML~v2. \\
+Verarbeitungsprinzip, bei dem ein Verarbeitungsschritt nur ausgeführt wird,
+wenn die dafür erforderlichen Voraussetzungen erfüllt sind. Fehlen
+notwendige Autorisierungen, Referenzen oder eindeutig anwendbare
+Transformationsregeln, wird die weitere Verarbeitung an dieser Stelle
+blockiert. \\
 
 \end{xltabular}

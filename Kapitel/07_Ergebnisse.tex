@@ -1,47 +1,39 @@
 \section{Ergebnisse}
 \label{sec:results}
 
-\subsection{Überblick über die Evaluationsergebnisse}
+Dieses Kapitel stellt die Ergebnisse der in
+Kapitel~\ref{sec:validation} beschriebenen Verifikation und Validierung dar.
+Die Ergebnisdarstellung folgt den dort festgelegten Prüfbereichen. Die
+wissenschaftliche Einordnung und die Rückbindung an die Forschungsfragen
+erfolgen anschließend in Kapitel~\ref{sec:discussion}.
+
+\subsection{Überblick über die Ergebnisse}
 \label{sec:results_overview}
 
-Die in Kapitel~\ref{sec:validation} beschriebene Evaluation liefert
-unterschiedliche Evidenz für die technische Realisierung und die
-Tragfähigkeit des entwickelten Architekturkonzepts. Die Ergebnisse werden
-deshalb entlang der zuvor definierten Verifikations- und Validierungsebenen
-dargestellt und nicht zu einem einzelnen Erfolgswert zusammengefasst.
+Die automatisierte Software- und Vertragsverifikation prüfte die
+regelbasiert überprüfbaren Eigenschaften der Implementierung und die
+definierten Übergänge zwischen den Verarbeitungsschritten. Die formative
+Verifikation untersuchte anschließend deren Zusammenspiel innerhalb eines
+durchgängigen Transformationsprozesses. Dabei wurden insbesondere solche
+Abweichungen sichtbar, die eine Präzisierung von Identitäts-,
+Provenienz-, Autorisierungs- oder Modellbildungsgrenzen erforderlich
+machten.
 
-Die automatisierte Softwareverifikation adressiert die implementierten
-deterministischen Verträge und Zustandsübergänge. Die formative
-End-to-End-Erprobung untersucht dagegen ihr Zusammenspiel im verbundenen
-Engineering-Informationsfluss und dokumentiert insbesondere solche Befunde,
-durch die Informations-, Provenance-, Autorisierungs- oder
-Modellbildungsgrenzen präzisiert werden mussten. Dazu gehören unter anderem
-die Trennung quellengebundener Evidenz von der Persona-Interpretation, die
-explizite Autorisierung fachlicher Beziehungen sowie die Trennung von
-fachlicher Bedeutung, Modellplatzierung und zielmodellspezifischer
-Formulierung.
+Ergänzend wurde die Verarbeitung mehrerer Engineering-Quellen untersucht.
+Nach der Korrektur einer zunächst blockierenden Identitäts- und
+Provenienzproblematik konnten mehrere Quellen getrennt verarbeitet,
+fachlich autorisiert und anschließend innerhalb desselben Projektkontexts
+für die Modellbildung berücksichtigt werden.
 
-Ergänzend wurde die Verarbeitung mehrerer Quellen untersucht. Nach Korrektur
-einer zunächst blockierenden Identitäts- und Provenance-Problematik konnte
-der kontrollierte Multi-Source-End-to-End-Pfad vollständig durchlaufen
-werden. Den abschließenden zusammenhängenden Nachweis bildet die
-Live-Demonstration des konsolidierten Prototyps, in der der Verarbeitungspfad
-von den registrierten Quellen bis zum technisch validierten und menschlich
-freigegebenen SysML-v2-Artefakt ausgeführt wurde. Die dabei persistierten Informations-,
-Entscheidungs-, Provenance-, Autorisierungs-, Modell-, Validierungs- und
-Freigabezustände ermöglichen eine durchgängige Rekonstruktion des
-Verarbeitungspfads. Diese Nachverfolgbarkeit wird in
-Abschnitt~\ref{sec:results_traceability} exemplarisch anhand eines
-vollständigen fachlichen Pfads dargestellt.
-
-Die Ergebnisdarstellung konzentriert sich auf solche Befunde, die für das
-Architekturkonzept oder seine Ergebnisgrenzen relevant sind. Reine
-Implementierungsfehler wurden korrigiert und erneut geprüft, ohne daraus
-einen eigenständigen Architekturbeitrag abzuleiten. Verbleibende
-nicht blockierende Befunde werden als Limitationen beziehungsweise
-Ausgangspunkte für die weitere Entwicklung behandelt. Die vollständige
-Finding-Historie einschließlich Beobachtung, Reaktion, Retest und finalem
-Status ist in Anhang~\ref{app:findings_register} dokumentiert.
+Die abschließende Demonstration führte den konsolidierten Prototyp über den
+regulären Verarbeitungspfad von den registrierten Quellen bis zum
+validierten und menschlich freigegebenen SysML-v2-Artefakt aus. Die dabei
+gespeicherten Informations-, Entscheidungs- und Modellzustände ermöglichen
+die in Abschnitt~\ref{sec:results_traceability} dargestellte
+Rekonstruktion eines konkreten Verarbeitungspfads. Damit wird insbesondere
+der in Abschnitt~\ref{sec:architecture_traceability} entwickelte
+Architekturanspruch einer durchgängigen Provenienz und Nachverfolgbarkeit
+an einem tatsächlich ausgeführten Fall untersucht.
 
 Tabelle~\ref{tab:results_overview} fasst die wesentlichen Ergebnisbereiche
 zusammen.
@@ -49,101 +41,110 @@ zusammen.
 \begin{table}[htbp]
     \centering
     \small
-    \caption[Überblick über die Evaluationsergebnisse]{Überblick über die Evaluationsergebnisse}
+    \caption[Überblick über die Ergebnisse]{
+        Überblick über die wesentlichen Ergebnisse der Verifikation und
+        Validierung.}
     \label{tab:results_overview}
-    \begin{tabular}{p{3.8cm}p{5.0cm}p{4.7cm}}
+    \begin{tabular}{p{4.0cm}p{5.0cm}p{4.5cm}}
         \hline
-        \textbf{Evaluationsbereich} &
-        \textbf{Zentraler Prüfgegenstand} &
-        \textbf{Ergebnischarakter} \\
+        \textbf{Prüfbereich} &
+        \textbf{Prüfgegenstand} &
+        \textbf{Ergebnis} \\
         \hline
 
-        Software- und Contract-Verifikation &
-        deterministische Implementierungs- und
-        Authority-Verträge &
-        technische Verifikation der implementierten
-        Architekturmechanismen \\
+        Software- und Vertragsverifikation &
+        implementierte Regeln, technische Verträge und
+        Zustandsübergänge &
+        geprüfte technische Eigenschaften und Übergänge \\
 
-        Formative End-to-End-Erprobung &
-        Zusammenspiel von Evidence, Interpretation,
-        Human Authority und Modellbildung &
-        Identifikation und Präzisierung relevanter
-        Architekturgrenzen \\
+        Formative Verifikation des Verarbeitungspfads &
+        Zusammenspiel der Verarbeitungsschritte und
+        Autorisierungsgrenzen &
+        identifizierte und korrigierte Abweichungen im
+        zusammenhängenden Verarbeitungspfad \\
 
-        Multi-Source-Verifikation &
-        quellenbezogene Verarbeitung, Provenance und
-        projektweite Modellbildung &
-        erfolgreicher kontrollierter
-        Multi-Source-End-to-End-Pfad \\
+        Verarbeitung mehrerer Quellen &
+        quellenbezogene Verarbeitung, Provenienz und
+        projektweite Weiterverarbeitung &
+        erfolgreicher Verarbeitungspfad mehrerer
+        Engineering-Quellen nach Korrektur einer
+        Identitätskollision \\
 
-        Live-Demonstration &
-        vollständiger Informations- und
-        Authority-Pfad des konsolidierten Prototyps &
-        ausgeführter Gesamtworkflow und persistierte
-        End-to-End-Nachverfolgbarkeit \\
+        Abschließende Demonstration und Nachverfolgbarkeit &
+        zusammenhängender Informations-, Entscheidungs- und
+        Modellbildungspfad &
+        ausgeführter Gesamtpfad und rekonstruierbare
+        Herleitung ausgewählter Modellinhalte \\
 
-        SysML-v2-Validierung und Release &
-        technische Verarbeitbarkeit und getrennte
-        fachliche Freigabe &
-        externe technische Validierung und explizite
-        Human Release \\
+        SysML-v2-Validierung und menschliche Freigabe &
+        Verarbeitbarkeit des erzeugten Artefakts,
+        Modellprüfung und Freigabe &
+        erfolgreiche externe Validierung und explizite
+        menschliche Freigabe \\
         \hline
     \end{tabular}
 \end{table}
 
-Die folgenden Abschnitte stellen diese Ergebnisse im Einzelnen dar. Die
-wissenschaftliche Interpretation der Befunde und ihre Rückbindung an die
-Forschungsfragen erfolgen davon getrennt in Kapitel~\ref{sec:discussion}.
+Die folgenden Abschnitte stellen die beobachteten Ergebnisse im Einzelnen
+dar. Implementierungsfehler werden dabei nur dann ausführlicher behandelt,
+wenn sie für eine Architekturgrenze oder für die Bewertung des
+Transformationsprozesses relevant sind. Die vollständige Historie der
+dokumentierten Befunde einschließlich Korrektur, Wiederholungsprüfung und
+abschließendem Status ist in Anhang~\ref{app:findings_register}
+dokumentiert.
 
-\subsection{Ergebnisse der Software- und Contract-Verifikation}
+\subsection{Ergebnisse der automatisierten Software- und Vertragsverifikation}
 \label{sec:results_software}
 
-Die automatisierte Softwareverifikation bestätigte die im Prototyp
-implementierten deterministischen Daten-, Identitäts-, Persistenz- und
-Zustandsverträge sowie die vorgesehenen Übergänge zwischen den
-Architekturverantwortungen. Nach Änderungen wurden zunächst die betroffenen
-Funktionen und Verträge fokussiert geprüft und anschließend die relevanten
-Integrationspfade sowie die vollständige Repository-Regression erneut
-ausgeführt.
+Die automatisierte Software- und Vertragsverifikation bestätigte die
+regelbasiert überprüfbaren Eigenschaften des Prototyps sowie die in
+Kapitel~\ref{sec:implementation} eingeführten technischen Verträge zwischen
+den Verarbeitungsschritten. Geprüft wurden insbesondere Datenstrukturen,
+Identitäten, Persistenzregeln, Zustandsübergänge und die dafür festgelegten
+Referenz- und Autorisierungsbedingungen. Nach Änderungen wurden zunächst die
+betroffenen Funktionen und Verträge, anschließend die angrenzenden
+Verarbeitungsschritte und schließlich der vollständige automatisierte
+Testsatz erneut geprüft.
 
-Für einen vor Abschluss der Multi-Source-Erweiterung akzeptierten
-End-to-End-Baseline-Stand wurden dabei 6100 automatisierte Tests erfolgreich
-ausgeführt. Auch nachfolgende Multi-Source-Korrekturen wurden durch
-fokussierte Tests und kombinierte Regressionen geprüft; die jeweilige
-technische Repository-Konsistenzprüfung blieb ohne Befund. Während der
-verbundenen End-to-End-Erprobung identifizierte Integrationsprobleme wurden
-davon getrennt behandelt und nach ihrer Korrektur erneut geprüft.
+Für einen vor Abschluss der Verarbeitung mehrerer Quellen akzeptierten
+Entwicklungsstand wurden 6100 automatisierte Tests erfolgreich ausgeführt.
+Auch die nachfolgenden Änderungen im Zusammenhang mit der Verarbeitung
+mehrerer Quellen wurden durch gezielte Prüfungen und anschließende
+Regressionstests abgesichert. Die ergänzende technische Konsistenzprüfung
+des Repository-Zustands blieb dabei ohne Befund.
 
-Die Anzahl bestandener Tests wird nicht als Maß für die Qualität oder
-wissenschaftliche Validität des Architekturkonzepts interpretiert. Sie zeigt
-lediglich, dass die jeweils spezifizierten technischen Verträge im geprüften
-Implementierungsstand ausführbar und regressionsgesichert waren. Die
-architektonisch relevanten Erkenntnisse ergeben sich erst aus der verbundenen
-End-to-End-Erprobung im folgenden Abschnitt.
+Die Anzahl erfolgreich ausgeführter Tests wird nicht als eigenständiges Maß
+für die Qualität des Architekturkonzepts verwendet. Sie zeigt für den jeweils
+geprüften Entwicklungsstand, dass die spezifizierten technischen
+Eigenschaften und Verträge entsprechend ihrer Implementierung ausführbar
+waren und nach Änderungen weiterhin erfolgreich geprüft werden konnten. Das
+Zusammenspiel dieser Mechanismen im durchgängigen Transformationsprozess
+wurde anschließend in der formativen Verifikation untersucht.
 
-\subsection{Ergebnisse der formativen End-to-End-Erprobung}
+\subsection{Ergebnisse der formativen Verifikation des Verarbeitungspfads}
 \label{sec:results_formative}
 
-Die formative End-to-End-Erprobung zeigte neben technischen
-Implementierungsfehlern mehrere Befunde mit unmittelbarer Bedeutung für das
-Architekturkonzept. Als architekturrelevant wurden solche Beobachtungen
-behandelt, bei denen eine angenommene Informations-, Verantwortungs-,
-Provenance- oder Autorisierungsgrenze nicht ausreichte. Diese Befunde führten
-zu dokumentierten Architekturentscheidungen und, soweit erforderlich, zu
-Anpassungen der daraus abgeleiteten Systemanforderungen beziehungsweise
-technischen Verträge. Die betroffenen Verarbeitungspfade wurden anschließend
-erneut geprüft. Die vollständige Historie aus Beobachtung, Korrektur und
-Retest ist in Anhang~\ref{app:findings_register} dokumentiert.
+Die formative Verifikation des durchgängigen Verarbeitungspfads zeigte neben
+technischen Implementierungsfehlern mehrere Befunde mit unmittelbarer
+Bedeutung für das Architekturkonzept. Als architekturrelevant wurden
+Beobachtungen behandelt, bei denen eine vorgesehene Informations-,
+Provenienz- oder Autorisierungsgrenze für eine kontrollierte
+Weiterverarbeitung nicht ausreichte. Daraus wurden dokumentierte
+Architekturentscheidungen sowie erforderliche Anpassungen der technischen
+Verträge abgeleitet. Die betroffenen Verarbeitungsschritte wurden
+anschließend erneut geprüft.
 
 Tabelle~\ref{tab:results_architecture_findings} fasst die für die
 Architekturentwicklung wesentlichen Befunde zusammen. Die zugrunde liegenden
-Architekturprinzipien werden in Kapitel~\ref{sec:architecture} hergeleitet und
-daher an dieser Stelle nicht erneut begründet.
+Architekturprinzipien werden in Kapitel~\ref{sec:architecture} hergeleitet
+und an dieser Stelle nicht erneut begründet.
 
 \begin{table}[htbp]
     \centering
     \small
-    \caption[Architekturrelevante Befunde der End-to-End-Erprobung]{Architekturrelevante Befunde der formativen End-to-End-Erprobung}
+    \caption[Architekturrelevante Befunde der formativen Verifikation]{
+        Architekturrelevante Befunde der formativen Verifikation des
+        Verarbeitungspfads.}
     \label{tab:results_architecture_findings}
     \begin{tabular}{p{4.1cm}p{4.8cm}p{4.7cm}}
         \hline
@@ -154,105 +155,117 @@ daher an dieser Stelle nicht erneut begründet.
 
         Verarbeitungskontext konnte als fachliche Information interpretiert
         werden &
-        Trennung fachlicher Evidenz von Interpretations- und
-        Verarbeitungskontext &
-        nur quellengebundene Evidenz kann fachliche Aussagen begründen \\
+        Trennung von Engineering-Quelle, Kontextquelle und
+        Verarbeitungs\-kontext &
+        nur aus einer Engineering-Quelle abgeleitete quellengebundene
+        Evidenz kann fachliche Aussagen über das betrachtete System
+        begründen \\
 
-        Persona-Verarbeitung erzeugte unterschiedliche Populationen
-        fachlicher Gegenstände &
-        gemeinsame Bildung fachlicher Referenzgegenstände vor der
+        Persona-Verarbeitung erzeugte unterschiedliche Mengen fachlicher
+        Gegenstände &
+        Bildung gemeinsamer fachlicher Referenzgegenstände vor der
         Persona-Interpretation &
-        mehrere Perspektiven interpretieren denselben fachlichen Gegenstand \\
+        alle Persona-Perspektiven interpretieren dieselben
+        \emph{Engineering Subjects} \\
 
         akzeptierte fachliche Beziehungen fehlten im autorisierten
         Übergang zur Modellbildung &
-        Erweiterung des autorisierten Informationszustands um freigegebene
-        Beziehungen &
-        fachliche Gegenstände und akzeptierte Beziehungen werden gemeinsam
-        weitergegeben \\
+        Einbeziehung autorisierter fachlicher Beziehungen in den
+        weitergegebenen Informationszustand &
+        autorisierte fachliche Gegenstände und Beziehungen stehen gemeinsam
+        für die nachfolgende Modellbildung zur Verfügung \\
 
-        fachliche Bedeutung wurde zu direkt auf die Zielrepräsentation
-        abgebildet &
+        fachliche Bedeutung wurde unmittelbar mit der Zielrepräsentation
+        verknüpft &
         Trennung von fachlicher Bedeutung, Modellplatzierung und
         zielmodellspezifischer Formulierung &
-        getrennte fachliche und modellbezogene Autorisierungsstufen \\
+        fachliche Autorisierung und modellbezogene Autorisierung bilden
+        getrennte Entscheidungsstufen \\
 
-        Modellbildung traf erneut probabilistische semantische
-        Entscheidungen &
-        Begrenzung der Modellbildung auf deterministisch ableitbare
-        Übergänge und explizite Eskalation ungelöster Zustände &
-        keine implizite semantische Neuentscheidung in der nachgelagerten
-        Modellbildung \\
+        während der nachgelagerten Modellbildung entstanden erneut
+        semantische Entscheidungsbedarfe &
+        Begrenzung der nachgelagerten Transformation auf eindeutig
+        regelgebundene Übergänge &
+        offene fachliche oder modellbezogene Entscheidungen werden an die
+        zuständige Autorisierungsgrenze zurückgeführt \\
         \hline
     \end{tabular}
 \end{table}
 
-Die Befunde betreffen damit insbesondere die in
-Abschnitt~\ref{sec:architecture_information_authority} beschriebene
-Informationsautorität, die Trennung von fachlicher Bedeutung und
-Zielmodellbildung nach
-Abschnitt~\ref{sec:architecture_meaning_representation} sowie die
-deterministische Weiterverarbeitung nach den jeweils zuständigen
-Autorisierungsgrenzen. Die formative Erprobung lieferte damit keine
-eigenständige Neubewertung dieser Prinzipien, sondern die empirische
-Rückkopplung, durch die mehrere zunächst zusammengefasste Verantwortungen im
-Architekturkonzept präzisiert wurden.
+Die Befunde spiegeln damit zentrale Architekturmechanismen aus
+Kapitel~\ref{sec:architecture} wider. Die Trennung der Informationsrollen
+entspricht Abschnitt~\ref{sec:architecture_information_authority}, die
+gemeinsame Bildung fachlicher Referenzgegenstände der quellengebundenen
+Interpretation nach
+Abschnitt~\ref{sec:architecture_grounded_interpretation}. Die getrennte
+fachliche und modellbezogene Autorisierung sowie die anschließende
+regelgebundene Transformation entsprechen den in
+Abschnitt~\ref{sec:architecture_human_authority},
+Abschnitt~\ref{sec:architecture_meaning_representation} und
+Abschnitt~\ref{sec:architecture_controlled_transformation} beschriebenen
+Architekturgrenzen.
 
-Daneben wurden technische, integrative und bedienungsbezogene Befunde
-dokumentiert, die keine Änderung des Architekturkonzepts erforderten.
-Technische Fehler wurden korrigiert und erneut geprüft; verbleibende
-nicht blockierende Beobachtungen werden in den Limitationen und im Ausblick
-aufgegriffen. Die vollständige Finding-Historie einschließlich der
-zugehörigen Architekturentscheidungen ist in
-Anhang~\ref{app:findings_register} dokumentiert.
+Die formative Verifikation diente damit zugleich der Präzisierung dieser
+Grenzen während der prototypischen Realisierung. Technische oder
+bedienungsbezogene Befunde ohne Auswirkung auf das Architekturkonzept wurden
+korrigiert und erneut geprüft, werden hier jedoch nicht einzeln dargestellt.
+Die vollständige Historie der dokumentierten Befunde einschließlich
+Korrektur, Wiederholungsprüfung und abschließendem Status ist in
+Anhang~\ref{app:findings_register} enthalten.
 
-\subsection{Ergebnisse der Multi-Source-Verifikation}
+\subsection{Ergebnisse der Verifikation der Verarbeitung mehrerer Quellen}
 \label{sec:results_multisource}
 
-Die Multi-Source-Verifikation untersuchte, ob mehrere getrennte
-Engineering-Quellen innerhalb eines gemeinsamen Projekts verarbeitet und
-anschließend gemeinsam modelliert werden können, ohne ihre jeweilige
-Provenance und fachliche Autorisierung aufzulösen. Hierfür wurden mehrere 
-aufbereitete Engineering-Testdokumente separat registriert und zunächst 
-quellenbezogen verarbeitet und menschlich geprüft.
+Die Verifikation der Verarbeitung mehrerer Quellen untersuchte, ob
+Engineering-Information aus getrennten Quellen innerhalb desselben Projekts
+gemeinsam weiterverarbeitet werden kann, während Quellenidentität,
+Provenienz und fachliche Autorisierung erhalten bleiben. Die verwendeten
+Testdokumente wurden hierzu separat registriert, quellenbezogen verarbeitet
+und menschlich autorisiert.
 
-Der erste verbundene Testlauf konnte nicht vollständig abgeschlossen werden.
-Zwischen Artefakten unterschiedlicher Verarbeitungsläufe trat eine
-Identitätskollision auf, sodass nachgelagerte Artefakte nicht mehr eindeutig
-ihrem jeweiligen Quellen- und Verarbeitungskontext zugeordnet werden konnten.
-Der Verarbeitungspfad wurde deshalb nicht fortgesetzt. Aus diesem Befund
-wurde eine Architekturkorrektur abgeleitet, durch die die projektweite
-Artefaktidentität um den jeweiligen Verarbeitungskontext erweitert und die
-Übergabe an konkrete Quellen-, Verarbeitungs-, Prüf- und
-Fingerprint-Zustände gebunden wurde. Die vollständige Historie aus
-Erstbeobachtung, Architekturkorrektur und Retest ist in
-Anhang~\ref{app:findings_register} dokumentiert.
+Der erste zusammenhängende Testlauf wurde durch eine Identitätskollision
+zwischen Zuständen unterschiedlicher Verarbeitungsläufe blockiert.
+Technische Identifikatoren, die innerhalb eines einzelnen Laufs eindeutig
+waren, konnten an einer projektweiten Verarbeitungsgrenze nicht mehr
+eindeutig ihrem Quellen- und Verarbeitungskontext zugeordnet werden. Der
+betroffene Verarbeitungspfad wurde entsprechend dem
+\emph{fail-closed}-Prinzip nicht fortgesetzt.
 
-Nach dieser Korrektur konnte der Multi-Source-Pfad vollständig durchlaufen
-werden. Die Engineering-Quellen wurden weiterhin unabhängig voneinander
-verarbeitet und fachlich autorisiert. Die daraus entstandenen
-Informationszustände blieben quellenbezogen erhalten und wurden anschließend
-über eine explizite Projektzulassung (\emph{Project Fit}) für die gemeinsame
-Modellbildung freigegeben. Dabei entstand kein neuer zusammengeführter
-Autorisierungszustand über alle Quellen. Stattdessen blieben Herkunft und
-Autorisierung der einzelnen Beiträge getrennt referenzierbar, während die
-zugelassenen Informationen in eine gemeinsame Menge von Modellkandidaten und
-den nachfolgenden projektweiten Modellbildungsprozess überführt wurden.
+Zur Korrektur wurde die projektweite Referenzierung um den jeweiligen
+Verarbeitungskontext ergänzt. Dadurch konnten auch lokal identische
+Artefaktkennungen eindeutig über ihren Verarbeitungslauf unterschieden und
+mit den zugehörigen Quellen-, Prüf- und Inhaltszuständen verknüpft werden.
+Die vollständige Historie aus Beobachtung, Korrektur und
+Wiederholungsprüfung ist in Anhang~\ref{app:findings_register}
+dokumentiert.
 
-Tabelle~\ref{tab:results_multisource} fasst die einzelnen Prüfgegenstände und
-die im erfolgreichen Retest beobachteten Ergebnisse zusammen.
+Nach dieser Korrektur konnte der Verarbeitungspfad mit mehreren Quellen
+vollständig durchlaufen werden. Die Engineering-Quellen blieben zunächst
+voneinander getrennt und ihre autorisierten Engineering-Informationen
+behielten ihre jeweilige Quellen- und Verarbeitungsprovenienz. Anschließend
+wurde über die bereits in
+Abschnitt~\ref{sec:architecture_multisource} eingeführte
+\emph{Projektzulassung} (\emph{Project Fit}) geprüft, ob die jeweiligen
+Quellen für die projektweite Weiterverarbeitung berücksichtigt werden
+konnten.
+
+Die zugelassenen quellenbezogenen Informationszustände wurden danach
+gemeinsam für die Modellbildung bereitgestellt. Dabei wurden die
+bestehenden fachlichen Autorisierungen nicht durch einen synthetisch
+zusammengeführten Autorisierungszustand ersetzt. Stattdessen blieben die
+einzelnen autorisierten Engineering-Informationen getrennt referenzierbar
+und wurden unter Erhalt ihrer Herkunft in eine gemeinsame Menge von
+\emph{Model Candidates} überführt.
+
+Tabelle~\ref{tab:results_multisource} fasst die im erfolgreichen
+Wiederholungslauf beobachteten Ergebnisse zusammen.
 
 \begin{table}[htbp]
     \centering
     \small
-    \caption[Ergebnisse der Multi-Source-Verifikation]{Ergebnisse der kontrollierten Multi-Source-Verifikation mit
-    mehreren separat registrierten aufbereiteten Engineering-Quellen.
-    Dargestellt sind die nach Korrektur einer zunächst blockierenden
-    Identitätskollision im erfolgreichen Retest beobachteten Zustände.
-    Quellenidentität, Verarbeitungskontext, Provenance und quellenbezogene
-    Autorisierung blieben bis zur Projektzulassung erhalten, während die
-    zugelassenen Informationen anschließend gemeinsam in den projektweiten
-    Modellbildungsprozess überführt werden konnten.}
+    \caption[Ergebnisse der Verarbeitung mehrerer Quellen]{
+        Ergebnisse der Verifikation der Verarbeitung mehrerer
+        Engineering-Quellen nach Korrektur der Identitätskollision.}
     \label{tab:results_multisource}
     \begin{tabular}{p{4.4cm}p{8.6cm}}
         \hline
@@ -264,119 +277,114 @@ die im erfolgreichen Retest beobachteten Ergebnisse zusammen.
         Getrennt registrierte Engineering-Quellen blieben während der
         quellenbezogenen Verarbeitung eindeutig unterscheidbar. \\
 
-        Verarbeitungsprovenance &
-        Nach Korrektur der initialen Identitätskollision konnten
-        projektweite Referenzen eindeutig auf den jeweiligen Quellen- und
-        Verarbeitungskontext zurückgeführt werden. \\
+        Provenienz &
+        Zustände aus unterschiedlichen Verarbeitungsläufen konnten nach der
+        Korrektur eindeutig ihrem jeweiligen Quellen- und
+        Verarbeitungskontext zugeordnet werden. \\
 
         Fachliche Autorisierung &
-        Nur zuvor quellenbezogen geprüfte und autorisierte
-        Engineering-Information wurde für die projektweite
-        Weiterverarbeitung zugelassen. \\
+        Die bereits quellenbezogen autorisierten
+        Engineering-Informationen blieben als eigenständige
+        referenzierbare Zustände erhalten. \\
 
         Projektzulassung &
-        Die Aufnahme in die gemeinsame Modellbildung erfolgte über einen
-        expliziten Project-Fit-Zustand, der an die zugrunde liegenden
-        Quellen-, Verarbeitungs- und Autorisierungszustände gebunden war. \\
+        Die projektweite Weiterverarbeitung erfolgte nur für Quellen mit
+        einem entsprechenden Project-Fit-Zustand. \\
 
-        Erhalt der Provenance &
-        Die projektweite Verarbeitung erzeugte keinen neuen 
-        zusammengeführten Autorisierungszustand. Die einzelnen
-        quellenbezogenen Informations- und Autorisierungszustände blieben
-        getrennt referenzierbar. \\
+        Projektweite Übergabe &
+        Die Übergabe erhielt die Bindungen an Quelle, Verarbeitungslauf,
+        fachlich autorisierte Information und Projektzulassung. \\
 
         Gemeinsame Modellbildung &
-        Die zugelassenen Informationen wurden in eine gemeinsame Menge von
-        Modellkandidaten und den nachfolgenden projektweiten
-        Modellbildungsprozess überführt. Die Quellengrenzen bestimmten damit
-        weiterhin die Provenance, jedoch nicht die Grenze des Zielmodells. \\
+        Informationen mehrerer zugelassener Quellen konnten gemeinsam in
+        eine projektweite Menge von Model Candidates eingehen, ohne ihre
+        jeweilige Herkunft oder fachliche Autorisierung aufzulösen. \\
 
         Gesamtergebnis &
-        Der korrigierte Multi-Source-Verarbeitungspfad wurde im Retest
-        vollständig bis zur gemeinsamen projektweiten Modellbildung
-        durchlaufen. \\
+        Der korrigierte Verarbeitungspfad mit mehreren Quellen konnte bis
+        zur gemeinsamen projektweiten Modellbildung vollständig
+        durchlaufen werden. \\
         \hline
     \end{tabular}
 \end{table}
 
-Der erfolgreiche Retest zeigt damit für den untersuchten Testfall, dass der
-Erhalt quellenbezogener Provenance und Autorisierung mit einer gemeinsamen
-projektweiten Modellbildung vereinbar ist. Die Aussage bleibt auf die
-verwendeten Testdaten und die implementierten Verarbeitungspfade begrenzt und
-belegt keine allgemeine Konfliktfreiheit oder Vollständigkeit beliebiger
-industrieller Datenbestände. Die architektonische Bedeutung dieses Ergebnisses
-wird in Abschnitt~\ref{sec:discussion_multisource} diskutiert.
+Im erfolgreichen Wiederholungslauf blieben die quellenbezogenen
+Informations- und Autorisierungszustände getrennt referenzierbar. Nach der
+Projektzulassung konnten Informationen mehrerer Engineering-Quellen
+gemeinsam in die projektweite Modellbildung überführt werden. Die jeweilige
+Quellen- und Verarbeitungsprovenienz blieb dabei erhalten.
 
-Der nachfolgend dargestellte abschließende Verarbeitungslauf erweitert diese
-Ergebnisse um die persistierte Nachverfolgbarkeit eines vollständig
-durchgeführten Projektpfads.
+Der in Abschnitt~\ref{sec:architecture_multisource} beschriebene
+weitergehende semantische Abgleich zwischen Informationen verschiedener
+Quellen und eine daraus gegebenenfalls erforderliche erneute fachliche
+Autorisierung waren nicht Gegenstand dieses Wiederholungslaufs. Der
+untersuchte Verarbeitungspfad umfasste die quellenbezogene Verarbeitung und
+Autorisierung, die Projektzulassung sowie die gemeinsame Bereitstellung der
+zugelassenen Informationen für die nachfolgende Modellbildung.
 
-\subsection{Live-Demonstration und exemplarische End-to-End-Nachverfolgbarkeit}
+Die Einordnung dieser Ergebnisse und die daraus resultierenden Grenzen der
+Evaluation erfolgen in Abschnitt~\ref{sec:discussion_multisource}.
+
+\subsection{Abschließende Demonstration und exemplarische Nachverfolgbarkeit}
 \label{sec:results_traceability}
 
-Den abschließenden vollständigen Verarbeitungslauf bildete eine
-Live-Demonstration des Prototyps bei Rücker + Schindele. Im Unterschied zu
-den automatisierten Softwareprüfungen und den vorausgehenden formativen
-Testläufen wurde der vollständige Workflow dabei über die reguläre
-Benutzeroberfläche in Anwesenheit externer Vertreter der vorgesehenen
-Zielgruppe demonstriert. Zu den Teilnehmern gehörte auch der externe Betreuer
-dieser Arbeit. Die Bedienung des Prototyps sowie die im System persistierten
-fachlichen und modellbezogenen Entscheidungen erfolgten durch den Autor.
+Den abschließenden zusammenhängenden Verarbeitungslauf bildete eine
+Demonstration des Prototyps bei Rücker + Schindele. Der vollständige
+Verarbeitungspfad wurde dabei über die reguläre Benutzeroberfläche in
+Anwesenheit externer Vertreter der vorgesehenen Zielgruppe ausgeführt. Zu den
+Teilnehmern gehörte auch der externe Betreuer dieser Arbeit. Die Bedienung des
+Prototyps sowie die fachlichen und modellbezogenen Entscheidungen erfolgten
+durch den Autor.
 
-Für die Demonstration wurde im Prototyp das Projekt mit der technischen
-Projekt-ID~930444 verwendet. Diese Kennung besitzt keine eigenständige
-methodische Bedeutung, sondern dient ausschließlich der eindeutigen Zuordnung
-der während des Demonstrationslaufs persistierten Artefakte.
+Für die Demonstration wurde das Projekt mit der technischen
+Projekt-ID~930444 verwendet. Die Kennung dient ausschließlich der eindeutigen
+Zuordnung der während des Laufs gespeicherten Zustände.
 
-Der vollständige Verarbeitungspfad wurde von der Registrierung der Quellen
-über die KI-gestützte Informationsverarbeitung und die menschlichen
-Prüfentscheidungen bis zur Modellbildung, technischen Validierung und
-abschließenden Freigabe durchlaufen. Der dabei entstandene persistierte
-Zustand wurde anschließend genutzt, um die End-to-End-Nachverfolgbarkeit
-exemplarisch zu untersuchen. Geprüft wurde, ob sich die während der
-Live-Demonstration entstandenen Entscheidungen im Nachgang über ihre
-Zwischenzustände bis zu den zugrunde liegenden Quellen und bis zum
-resultierenden SysML-v2-Artefakt rekonstruieren lassen.
+Nach Abschluss der Verarbeitung wurden diese Zustände zur Rekonstruktion der
+Nachverfolgbarkeit herangezogen. Die Darstellung folgt dem in
+Abschnitt~\ref{sec:architecture_traceability} beschriebenen Zusammenhang
+zwischen Quelle, quellengebundener Evidenz, Interpretation, menschlicher
+Autorisierung, Modellentscheidung, internem Modellzustand, erzeugter
+SysML-v2-Repräsentation, Validierung und Freigabe.
 
 Für den Demonstrationslauf waren insgesamt sechs Quellen registriert. Vier
-davon wurden mit der Systemrolle \texttt{engineering\_source} verarbeitet,
-zwei weitere mit \texttt{context\_only}. Die vier Engineering-Quellen
-enthielten unterschiedliche Ausschnitte desselben beispielhaften
+davon wurden im System mit der Rolle
+\texttt{engineering\_source}, zwei mit \texttt{context\_only} geführt.
+Diese Systembezeichnungen entsprechen den in
+Abschnitt~\ref{sec:architecture_information_authority} eingeführten Rollen
+Engineering-Quelle und Kontextquelle. Die vier Engineering-Quellen enthielten
+unterschiedliche Ausschnitte desselben beispielhaften
 Remote-Microscopy-Kontexts: Stakeholder, User Workflow, System Requirements
 und Architecture Notes. Die beiden Kontextquellen beschrieben den
 übergeordneten Produktkontext. Die vollständigen Testdateien und ihre
-Zuordnung zu den persistierten Quellenidentitäten sind in
+Zuordnung zu den gespeicherten Quellenidentitäten sind in
 Anhang~\ref{app:traceability_930444_inputs} dokumentiert.
 
 Im vollständigen Lauf wurden elf Einträge quellengebundener Evidenz und
-zwanzig fachliche Referenzgegenstände persistiert. Die vier
+zwanzig fachliche Referenzgegenstände gespeichert. Die vier
 Engineering-Quellen wurden jeweils getrennt verarbeitet und einer
-menschlichen fachlichen Prüfung zugeführt. Aus den finalisierten Prüfungen
-entstanden insgesamt zwanzig freigegebene Eingaben und vier
+menschlichen fachlichen Prüfung zugeführt. Daraus entstanden zwanzig im
+System als \texttt{Approved Inputs} geführte autorisierte Zustände sowie vier
 Project-Fit-Zustände. Für die Modellbildung wurden zwanzig menschliche
-Entscheidungen zur Modellplatzierung persistiert. Der abschließende
+Entscheidungen zur Modellplatzierung gespeichert. Der abschließende
 Modellzustand umfasste zwanzig Elemente und sechs Beziehungen. Für das
 generierte Artefakt wurden 26 Einträge zur Nachverfolgbarkeit erzeugt.
 
 \paragraph{LLM-Nutzung des Demonstrationslaufs}
 
-Für den Demonstrationslauf wurde zusätzlich die Nutzung der angebundenen
-Sprachmodelle aus den persistierten Nutzungsinformationen rekonstruiert.
-Mehrfach gespeicherte Kopien derselben Modellantwort wurden anhand ihrer
-eindeutigen Identität nur einmal berücksichtigt. Insgesamt wurden 35
-unterschiedliche LLM-Aufrufe mit 69\,507 Input- und 21\,693 Output-Tokens
-identifiziert. Tabelle~\ref{tab:results_930444_token_usage} zeigt deren
-Verteilung auf die verwendeten Modelle.
+Ergänzend wurde die Nutzung der angebundenen Sprachmodelle aus den
+gespeicherten Nutzungsinformationen rekonstruiert. Mehrfach gespeicherte
+Kopien derselben Modellantwort wurden anhand ihrer eindeutigen Identität nur
+einmal berücksichtigt. Insgesamt wurden 35 unterschiedliche LLM-Aufrufe mit
+69\,507 Input- und 21\,693 Output-Tokens identifiziert.
+Tabelle~\ref{tab:results_930444_token_usage} zeigt deren Verteilung.
 
 \begin{table}[htbp]
     \centering
     \small
-    \caption[LLM-Nutzung während der Live-Demonstration]{Nutzung der angebundenen Sprachmodelle während der
-    Live-Demonstration. Berücksichtigt werden ausschließlich eindeutig
-    identifizierbare, im Demonstrationslauf persistierte Modellantworten;
-    mehrfach referenzierte Kopien derselben Antwort werden nur einmal
-    gezählt. Die 35 LLM-Aufrufe umfassen insgesamt 91\,200 Tokens, davon
-    69\,507 Input- und 21\,693 Output-Tokens.}
+    \caption[LLM-Nutzung während der Demonstration]{Nutzung der angebundenen
+    Sprachmodelle während der Demonstration. Mehrfach referenzierte Kopien
+    derselben Modellantwort werden nur einmal berücksichtigt.}
     \label{tab:results_930444_token_usage}
     \begin{tabular}{lrrrr}
         \hline
@@ -395,48 +403,36 @@ Verteilung auf die verwendeten Modelle.
     \end{tabular}
 \end{table}
 
-Der ergänzend herangezogene tagesaggregierte Nutzungsbericht des
+Der zusätzlich herangezogene tagesaggregierte Nutzungsbericht des
 API-Anbieters enthält weitere Aktivität desselben Projekts am
-11.~September~2026 und kann daher nicht vollständig der Live-Demonstration
-zugeordnet werden. Er dient ausschließlich der Plausibilisierung der
-persistierten Nutzungsdaten. Die Einordnung des Verarbeitungsaufwands erfolgt
-in Abschnitt~\ref{sec:discussion_limitations}.
+11.~September~2026 und lässt sich daher nicht vollständig der Demonstration
+zuordnen. Die weitere Einordnung des Verarbeitungsaufwands erfolgt in
+Abschnitt~\ref{sec:discussion_limitations}.
 
-Der während der Live-Demonstration entstandene Evidenz-, Entscheidungs-,
-Provenance- und Nachverfolgbarkeitsbestand ist wesentlich umfangreicher, als
-im Haupttext sinnvoll vollständig wiedergegeben werden kann. Die
-End-to-End-Nachverfolgbarkeit wird deshalb exemplarisch an einem
-zusammenhängenden fachlichen Gegenstand rekonstruiert.
+Der gespeicherte Informations-, Entscheidungs- und Modellbestand ist zu
+umfangreich für eine vollständige Darstellung im Haupttext. Die
+Nachverfolgbarkeit wird deshalb exemplarisch anhand der
+\emph{Microscope Workstation} rekonstruiert. Der Hauptpfad verfolgt diesen
+Gegenstand von der Quellenaussage bis zum erzeugten SysML-v2-Element.
+Entscheidungsarten, die für diesen Gegenstand nicht als eigener Schritt
+vorliegen, werden anschließend anhand anderer Zustände desselben
+Demonstrationslaufs ergänzt.
 
-Als Beispiel dient die \emph{Microscope Workstation}. Für diesen Gegenstand
-lässt sich der Verarbeitungspfad von der ursprünglichen Quellenaussage über
-quellengebundene Evidenz, den gemeinsamen fachlichen Referenzgegenstand,
-unterschiedliche Persona-Interpretationen und die menschliche fachliche
-Prüfung bis zur Modellplatzierung, zum internen Modellzustand, zur
-Modellqualitätsentscheidung und schließlich zum generierten
-SysML-v2-Artefakt verfolgen.
-
-Nicht jede im Demonstrationslauf auftretende Entscheidungsart liegt für
-diesen einzelnen Gegenstand als separater Schritt vor. Ergänzende Beispiele
-für eine Entscheidung über eine fachliche Beziehung sowie für eine
-zielmodellspezifische Formulierung werden deshalb anhand anderer Gegenstände
-desselben Demonstrationslaufs dargestellt. Die zugehörigen Originalauszüge
-sind in Anhang~\ref{app:traceability_930444_workstation} und
-Anhang~\ref{app:traceability_930444_additional} dokumentiert.
+\subsubsection{Quellenbezogene Verarbeitung und fachliche Autorisierung}
+\label{sec:results_traceability_engineering}
 
 \paragraph{Fehlgeschlagener Verarbeitungsversuch und erneuter Versuch}
 
 Die Verarbeitung von \texttt{SRC-000005} erfolgte innerhalb von
 \texttt{RUN-000001}. Der erste Verarbeitungsversuch
-\texttt{ATT-000001} wurde während der KI-gestützten
-Informationsverarbeitung als fehlgeschlagen persistiert. Der anschließende
-erneute Versuch erhielt mit \texttt{ATT-000002} eine eigene Identität,
-während der vorherige Fehlerzustand erhalten blieb.
+\texttt{ATT-000001} wurde als fehlgeschlagen gespeichert. Der anschließende
+Versuch erhielt mit \texttt{ATT-000002} eine eigene Identität; der vorherige
+Fehlerzustand blieb erhalten.
 
-Abbildung~\ref{fig:result_930444_failed_attempt} zeigt sowohl die
-persistierten Zustandsübergänge als auch einen Ausschnitt der unveränderten
-Rohantwort, anhand derer die konkrete Fehlerursache rekonstruiert werden
-kann.
+Abbildung~\ref{fig:result_930444_failed_attempt} gibt die entsprechenden
+Originalzustände und einen Ausschnitt der unveränderten Modellantwort wieder.
+Die Begriffe innerhalb der grauen Felder entsprechen den Bezeichnungen der
+gespeicherten Systemartefakte.
 
 \begin{figure}[htbp]
     \centering
@@ -470,35 +466,32 @@ reason_code:      agentic_ingestion_retry_started
 }
         \end{evidencebox}
     \end{minipage}
-    \caption[Fehlerzustand und erneuter Verarbeitungsversuch]{Persistierter Fehlerzustand des ersten Verarbeitungsversuchs
-    \texttt{ATT-000001}, Beginn des erneuten Versuchs
-    \texttt{ATT-000002} und Ausschnitt der zugehörigen unveränderten
-    Modellantwort. Der allgemeine Fehlerzustand bleibt in der
-    Ereignishistorie erhalten; die Rohantwort dokumentiert zusätzlich die
-    konkrete Schemaabweichung \texttt{extracton\_rationale} statt des
-    erwarteten Felds \texttt{extraction\_rationale}. Originaldokumente:
+    \caption[Fehlerzustand und erneuter Verarbeitungsversuch]{
+    Gespeicherter Fehlerzustand von \texttt{ATT-000001}, Beginn von
+    \texttt{ATT-000002} und unveränderter Ausschnitt der zugehörigen
+    Modellantwort. Die Rohantwort enthält das Feld
+    \texttt{extracton\_rationale} anstelle des erwarteten
+    \texttt{extraction\_rationale}. Originaldokumente:
     \texttt{EVT-000003.json}, \texttt{EVT-000004.json} und
     \texttt{agent\_legacy\_literal\_interpreter\_run\_01.json};
-    vollständiger Evidenzauszug siehe
+    vollständiger Auszug siehe
     Anhang~\ref{app:traceability_930444_workstation}.}
     \label{fig:result_930444_failed_attempt}
     \label{fig:result_930444_raw_failure}
 \end{figure}
 
-Der verwendete Datenvertrag erwartet das Feld
-\texttt{extraction\_rationale}; die persistierte Modellantwort enthält
-dagegen \texttt{extracton\_rationale}. Der fehlerhafte Zustand wurde deshalb
-nicht in den nachgelagerten fachlichen Informationsfluss übernommen. Während
-der allgemeine Fehlergrund als
-\texttt{shared\_evidence\_interpretation\_failed} persistiert ist, bleibt die
-konkrete Ursache über die unveränderte Rohantwort nachvollziehbar.
+Der für diesen Verarbeitungsschritt festgelegte technische Vertrag erwartet
+das Feld \texttt{extraction\_rationale}. Die gespeicherte Modellantwort
+enthielt stattdessen \texttt{extracton\_rationale}. Der betroffene Versuch
+endete deshalb im Zustand \texttt{failed}; der nachfolgende Versuch wurde
+unter einer neuen Identität gespeichert.
 
-\paragraph{Quellengebundene Evidenz und gemeinsamer fachlicher Referenzgegenstand}
+\paragraph{Quellengebundene Evidenz und fachlicher Referenzgegenstand}
 
-Im erfolgreichen zweiten Verarbeitungsversuch wurde die ursprüngliche
-Quellenaussage zur \emph{Microscope Workstation} als quellengebundene
-Evidenz persistiert. Abbildung~\ref{fig:result_930444_source} zeigt die
-entsprechende Aussage aus der verwendeten Architekturquelle.
+Im zweiten Verarbeitungsversuch wurde die Quellenaussage zur
+\emph{Microscope Workstation} als quellengebundene Evidenz erfasst.
+Abbildung~\ref{fig:result_930444_source} gibt die ursprüngliche Aussage
+unverändert wieder.
 
 \begin{figure}[htbp]
     \centering
@@ -507,31 +500,29 @@ entsprechende Aussage aus der verwendeten Architekturquelle.
 The Microscope Workstation provides local session control.
         \end{evidencebox}
     \end{minipage}
-    \caption[Quellenevidenz zur Microscope Workstation]{Quellenaussage zur \emph{Microscope Workstation} aus der
-    registrierten Architekturquelle. Die Aussage wird als
-    \texttt{EVD-000002} mit der konkreten Quelle
-    \texttt{SRC-000005}, ihrer Projektion und dem zugehörigen
-    Quellensegment verknüpft und bildet die Evidenzgrundlage für den
-    nachfolgenden fachlichen Referenzgegenstand
-    \texttt{SUBJ-000001}. Originaldokument:
-    \texttt{legacy/demo/safe\_demo/05\_architecture\_notes.md};
-    vollständige Testquelle siehe
-    Anhang~\ref{app:traceability_930444_inputs}.}
+    \caption[Quellenaussage zur Microscope Workstation]{
+    Quellenaussage zur \emph{Microscope Workstation}. Sie ist als
+    \texttt{EVD-000002} mit \texttt{SRC-000005}, der zugehörigen
+    Quellenprojektion und dem Quellensegment verknüpft. Daraus wurde der
+    fachliche Referenzgegenstand \texttt{SUBJ-000001} gebildet.
+    Originaldokument:
+    \texttt{legacy/demo/safe\_demo/05\_architecture\_notes.md}.}
     \label{fig:result_930444_source}
 \end{figure}
 
-Aus dieser Evidenz wurde der gemeinsame fachliche Referenzgegenstand
-\texttt{SUBJ-000001} mit dem Label \emph{Microscope Workstation} gebildet.
-Die nachfolgenden Persona-Interpretationen beziehen sich damit auf dieselbe
-fachliche Identität.
+Der daraus gebildete fachliche Referenzgegenstand
+\texttt{SUBJ-000001} trägt das Label \emph{Microscope Workstation}. Die
+nachfolgenden Persona-Interpretationen beziehen sich damit auf dieselbe
+fachliche Identität, entsprechend der in
+Abschnitt~\ref{sec:architecture_grounded_interpretation} beschriebenen
+Verarbeitung.
 
 \paragraph{Persona-Interpretationen und Interpretationsvarianz}
 
-Für den gemeinsamen Referenzgegenstand \texttt{SUBJ-000001} wurden drei
-Persona-Interpretationen persistiert. Bei der Einordnung des
-Informationstyps kamen die Perspektiven zu unterschiedlichen Ergebnissen.
-Abbildung~\ref{fig:result_930444_consensus} zeigt die Einzelinterpretationen
-und den daraus persistierten Varianzzustand.
+Für \texttt{SUBJ-000001} wurden drei Persona-Interpretationen gespeichert.
+Beim Informationstyp ergaben sich unterschiedliche Einordnungen.
+Abbildung~\ref{fig:result_930444_consensus} gibt den gespeicherten
+Vergleichszustand wieder.
 
 \begin{figure}[htbp]
     \centering
@@ -558,31 +549,25 @@ uncertainty:
   software, or a combined workstation are not specified.
         \end{evidencebox}
     \end{minipage}
-    \caption[Persona-Interpretationen zur Microscope Workstation]{Persistierte Persona-Interpretationen für den gemeinsamen
-    fachlichen Referenzgegenstand \texttt{SUBJ-000001}. Die drei
-    Perspektiven klassifizieren die \emph{Microscope Workstation}
-    unterschiedlich als \texttt{function}, \texttt{logical\_element} und
-    \texttt{physical\_element}. Der resultierende Zustand wird deshalb mit
-    niedriger Konfidenz als \texttt{divergent} gekennzeichnet und für die
-    menschliche Prüfung markiert; keine der Interpretationen wird automatisch
-    autorisiert. Originaldokument: \texttt{subject\_consensus.json};
-    vollständiger Evidenzauszug siehe
-    Anhang~\ref{app:traceability_930444_workstation}.}
+    \caption[Persona-Interpretationen zur Microscope Workstation]{
+    Gespeicherter Vergleich der Persona-Interpretationen zu
+    \texttt{SUBJ-000001}. Der Report bezeichnet den Vergleichszustand als
+    \texttt{divergent}; dies entspricht der in
+    Abschnitt~\ref{sec:architecture_grounded_interpretation} beschriebenen
+    Interpretationsvarianz. Originaldokument:
+    \texttt{subject\_consensus.json}.}
     \label{fig:result_930444_consensus}
 \end{figure}
 
-Die Interpretationsvarianz bleibt damit als eigener Zwischenzustand
-persistiert und wird der nachfolgenden menschlichen fachlichen Prüfung
-übergeben.
+Der Varianzzustand wurde gemeinsam mit den Einzelinterpretationen an die
+menschliche fachliche Prüfung weitergegeben.
 
-\paragraph{Menschliche fachliche Prüfung}
+\paragraph{Menschliche fachliche Autorisierung}
 
-In der menschlichen fachlichen Prüfung wird der Referenzgegenstand
-\texttt{SUBJ-000001} als \texttt{RIT-000016} geführt. Für die Entscheidung
-stehen neben dem Gegenstand die zugehörige quellengebundene Evidenz sowie die
-vorbereiteten Persona-Interpretationen und deren Varianzzustand zur
-Verfügung. Abbildung~\ref{fig:result_930444_human_review} zeigt den
-finalisierten Prüfzustand.
+Der Referenzgegenstand \texttt{SUBJ-000001} wurde in der menschlichen
+fachlichen Prüfung als \texttt{RIT-000016} geführt.
+Abbildung~\ref{fig:result_930444_human_review} gibt den finalisierten
+Prüfzustand wieder.
 
 \begin{figure}[htbp]
     \centering
@@ -610,54 +595,51 @@ Human Rationale:
   Logical
         \end{evidencebox}
     \end{minipage}
-    \caption[Human Review der Microscope Workstation]{Finalisierter menschlicher Prüfzustand für
-    \emph{Microscope Workstation}. Der zuvor divergente Informationstyp
-    wird mit \texttt{accepted\_with\_modification} als
-    \texttt{logical\_element} autorisiert. Die während der
-    Live-Demonstration eingegebene Begründung \texttt{Logical}
-    dokumentiert die Auswahl gegenüber den ebenfalls vorliegenden
-    Interpretationen \texttt{function} und \texttt{physical\_element}.
-    Originaldokument: \texttt{reviewed\_report.md};
-    vollständiger Prüfauszug siehe
-    Anhang~\ref{app:traceability_930444_workstation}.}
+    \caption[Menschliche fachliche Prüfung der Microscope Workstation]{
+    Finalisierter Prüfzustand für \emph{Microscope Workstation}. Der im
+    Report verwendete Status \texttt{accepted\_with\_modification}
+    kennzeichnet die menschliche Übernahme mit verändertem Inhalt. Als
+    Informationstyp wurde \texttt{logical\_element} festgelegt.
+    Originaldokument: \texttt{reviewed\_report.md}.}
     \label{fig:result_930444_human_review}
 \end{figure}
 
-Die zugehörige Prüfungsrevision persistiert zusätzlich die
-Reviewer-Identität \texttt{MZ}, die ausgewählten Werte, den Ursprung der
-Änderung und den Entscheidungszeitpunkt. \texttt{MZ} ist das im Prototyp
-verwendete Reviewer-Kürzel des Autors. Der
-vorbereitete Zustand wurde damit nicht unverändert übernommen, sondern durch
-eine explizite menschliche Entscheidung als logisches Element für die weitere
-Verarbeitung autorisiert.
+Die zugehörige Revision enthält zusätzlich die Reviewer-Identität
+\texttt{MZ}, die ausgewählten Werte und den Entscheidungszeitpunkt.
+\texttt{MZ} ist das im Prototyp verwendete Reviewer-Kürzel des Autors. Mit
+dieser Entscheidung wurde der fachliche Inhalt für die weitere Verarbeitung
+autorisiert. Sie entspricht damit der in
+Abschnitt~\ref{sec:architecture_human_authority} beschriebenen Human
+Engineering Authority.
 
-\paragraph{Autorisierte Engineering-Information und Project Fit}
+\subsubsection{Autorisierte Engineering-Information und Modellbildung}
+\label{sec:results_traceability_model}
+\paragraph{Autorisierte Engineering-Information und Projektzulassung}
 
-Aus der finalisierten menschlichen Prüfung wird der autorisierte Zustand als
-\texttt{AIN-000011} persistiert. Das zugehörige Artefakt bindet den
-freigegebenen Inhalt an \texttt{RIT-000016}, die Review-Revision
-\texttt{RVR-000009}, die Quelle \texttt{SRC-000005}, den
-Verarbeitungslauf \texttt{RUN-000001} und den erfolgreichen
-Verarbeitungsversuch \texttt{ATT-000002}. Persistiert bleiben außerdem Titel,
-Beschreibung, Informationstyp, Modalität und epistemischer Status des
-autorisierten fachlichen Zustands.
+Aus der finalisierten menschlichen Prüfung entstand der autorisierte Zustand
+\texttt{AIN-000011}. Dieser ist mit \texttt{RIT-000016}, der Revision
+\texttt{RVR-000009}, der Quelle \texttt{SRC-000005}, dem
+Verarbeitungslauf \texttt{RUN-000001} und dem erfolgreichen Versuch
+\texttt{ATT-000002} verbunden.
 
-Für \texttt{SRC-000005} wird anschließend ein eigener
-Project-Fit-Zustand mit dem Ergebnis
-\texttt{plausible\_in\_scope} persistiert. Die zugehörige Begründung ordnet
-die \emph{Microscope Workstation} und den \emph{Remote Client} dem
-registrierten Projektkontext der Remote Collaboration in Digital Microscopy
-zu. Quelle, Quellenprojektion, Verarbeitungslauf und Verarbeitungsversuch
-bleiben dabei referenziert. Der quellenbezogen autorisierte Zustand wird
-damit für die projektweite Weiterverarbeitung zugelassen, ohne einen neuen
-zusammengeführten Autorisierungszustand zu erzeugen.
+Für \texttt{SRC-000005} wurde anschließend ein Project-Fit-Zustand mit dem
+Ergebnis \texttt{plausible\_in\_scope} gespeichert. Der Status bezeichnet
+die im Prototyp verwendete positive maschinelle Bewertung der
+Projektzugehörigkeit; die Funktion der Projektzulassung ist in
+Abschnitt~\ref{sec:architecture_multisource} beschrieben. Quelle,
+Quellenprojektion, Verarbeitungslauf und Verarbeitungsversuch blieben dabei
+referenziert.
 
-\paragraph{Menschliche Modellplatzierung und interner Modellzustand}
+\paragraph{Modellplatzierung und interner Modellzustand}
 
+Aus der autorisierten Engineering-Information wurden im
+Modellbildungsprozess Vorschläge für die strukturelle Einordnung abgeleitet.
 Für \texttt{AIN-000011} wurde anschließend die
-Modellplatzierungsentscheidung \texttt{MPD-000016} getroffen.
-Abbildung~\ref{fig:result_930444_placement} zeigt den persistierten
-Entscheidungszustand.
+Modellplatzierungsentscheidung \texttt{MPD-000016} gespeichert. Der
+dazwischenliegende Schritt entspricht der in
+Abschnitt~\ref{sec:architecture_meaning_representation} eingeführten Bildung
+von \emph{Model Candidates}; im hier dargestellten Nachverfolgbarkeitsauszug
+wird dafür kein eigener Reportausschnitt wiedergegeben.
 
 \begin{figure}[htbp]
     \centering
@@ -671,30 +653,31 @@ reviewer_identity: MZ
 rationale:         Systemlevel
         \end{evidencebox}
     \end{minipage}
-    \caption[Modellplatzierungsentscheidung]{Persistierte Modellplatzierungsentscheidung für
-    \texttt{AIN-000011}. Mit \texttt{MPD-000016} wird die bereits
-    fachlich autorisierte \emph{Microscope Workstation} über die Regel
-    \texttt{ELEMENT\_SYSTEM\_LOGICAL} der logischen Systemebene
-    zugeordnet. Die während der Live-Demonstration eingegebene Begründung
-    \texttt{Systemlevel} dokumentiert diese Einordnung.
-    Originaldokument: \texttt{MPD-000016.json};
-    vollständiger Evidenzauszug siehe
-    Anhang~\ref{app:traceability_930444_workstation}.}
+    \caption[Modellplatzierungsentscheidung]{
+    Gespeicherte Modellplatzierungsentscheidung für
+    \texttt{AIN-000011}. Die Regel
+    \texttt{ELEMENT\_SYSTEM\_LOGICAL} ordnet die
+    \emph{Microscope Workstation} der logischen Systemebene zu.
+    \texttt{MPD-000016} bildet damit die konkrete Entscheidung der in
+    Abschnitt~\ref{sec:architecture_human_authority} beschriebenen
+    Model Authority ab. Originaldokument: \texttt{MPD-000016.json}.}
     \label{fig:result_930444_placement}
 \end{figure}
 
-Im daraus erzeugten internen Modellzustand \texttt{IEM-000001} wird der
+Im daraus erzeugten internen Modellzustand \texttt{IEM-000001} wurde der
 Gegenstand als \texttt{logical\_component} im Bereich
 \texttt{system.logical} mit der Framework-Zuordnung
-\texttt{FW\_SYSTEM\_LOGICAL} materialisiert. Das Modellelement
-\texttt{IME-000011} referenziert weiterhin die autorisierende Entscheidung
-\texttt{MPD-000016}.
+\texttt{FW\_SYSTEM\_LOGICAL} materialisiert. Das interne Modellelement
+\texttt{IME-000011} referenziert die vorausgehende Entscheidung
+\texttt{MPD-000016}. Das \emph{Internal Engineering Model} (IEM) bildet
+gemäß Abschnitt~\ref{sec:architecture_meaning_representation} den internen
+Modellzustand vor der konkreten SysML-v2-Formulierung.
 
 \paragraph{Modellqualitätsentscheidung und nachfolgender Modellzustand}
 
-Für das interne Modellelement \texttt{IME-000011} wurden anschließend
-Name und Beschreibung im Modellqualitätsschritt geprüft und als eigene
-menschliche Entscheidung persistiert.
+Für \texttt{IME-000011} wurden anschließend Name und Beschreibung geprüft.
+Die dazu gespeicherte menschliche Entscheidung ist in
+Abbildung~\ref{fig:result_930444_quality} wiedergegeben.
 
 \begin{figure}[htbp]
     \centering
@@ -718,49 +701,39 @@ rationale:
   and no explicit Human-attention flag.
         \end{evidencebox}
     \end{minipage}
-    \caption[Modellqualitätsentscheidung]{Persistierte Modellqualitätsentscheidung für
-    \texttt{IME-000011}. Mit \texttt{MQD-000008} werden Name und
-    Beschreibung der \emph{Microscope Workstation} für den nachfolgenden
-    Modellzustand freigegeben. Die Entscheidung bestätigt zugleich, dass
-    nach dem verwendeten Prüfvertrag keine Bedeutungsänderung, keine
-    unbelegte Information und kein expliziter Bedarf weiterer menschlicher
-    Prüfung festgestellt wurde. Originaldokument:
-    \texttt{MQD-000008.json}; vollständiger Evidenzauszug siehe
-    Anhang~\ref{app:traceability_930444_workstation}.}
+    \caption[Modellqualitätsentscheidung]{
+    Gespeicherte Modellqualitätsentscheidung für
+    \texttt{IME-000011}. Die innerhalb der grauen Box verwendeten
+    Bezeichnungen und die Begründung entsprechen unverändert dem
+    gespeicherten Report. Originaldokument:
+    \texttt{MQD-000008.json}.}
     \label{fig:result_930444_quality}
 \end{figure}
 
-Die freigegebene Benennung und Beschreibung wird nicht rückwirkend in
-\texttt{IEM-000001} übernommen. Stattdessen entsteht der nachfolgende
-Modellzustand \texttt{IEM-000002}; die Elementidentität
-\texttt{IME-000011} bleibt dabei erhalten.
+Die Entscheidung führte nicht zu einer rückwirkenden Änderung von
+\texttt{IEM-000001}. Stattdessen entstand der nachfolgende Modellzustand
+\texttt{IEM-000002}; die Identität \texttt{IME-000011} blieb erhalten.
 
-\paragraph{Ergänzende Autorisierungsentscheidungen}
+\subsubsection{Ergänzende Entscheidungszustände}
+\label{sec:results_traceability_additional}
+\paragraph{Ergänzende Entscheidungszustände}
 
-Nicht jede im Demonstrationslauf persistierte Entscheidungsart liegt für den
-durchgehend betrachteten Gegenstand \emph{Microscope Workstation} als
-separater Schritt vor. Zur Vervollständigung der Nachverfolgbarkeitskette
-werden deshalb ergänzend eine Entscheidung über eine gerichtete fachliche
-Beziehung und eine zielmodellspezifische Formulierungsentscheidung aus
-demselben Demonstrationslauf betrachtet.
+Nicht jede im Demonstrationslauf gespeicherte Entscheidungsart trat für die
+\emph{Microscope Workstation} als eigener Schritt auf. Zwei weitere
+Entscheidungsarten werden deshalb anhand anderer Gegenstände desselben Laufs
+dargestellt.
 
-Im Review der System Requirements wurde die mit
-\texttt{SRD-000001} vorgeschlagene Beziehung von
-\texttt{SUBJ-000002} zu \texttt{SUBJ-000001} mit der Beziehungsart
-\texttt{performs} verworfen. Die während der Live-Demonstration eingegebene
-Begründung \texttt{vice versa} verweist auf die fachlich erforderliche
-Gegenrichtung. Diese wurde nicht durch nachträgliche Änderung derselben
-Entscheidung erzeugt, sondern als separates Beziehungsangebot persistiert
-und mit \texttt{SRD-000012} akzeptiert.
+Im fachlichen Review wurde die mit \texttt{SRD-000001} gespeicherte
+gerichtete Beziehung von \texttt{SUBJ-000002} zu
+\texttt{SUBJ-000001} mit der Beziehungsart \texttt{performs} abgelehnt.
+Die Gegenrichtung wurde separat mit \texttt{SRD-000012} akzeptiert.
 
-Eine weitere Entscheidungsart betrifft die zielmodellspezifische
-Formulierung. Für den \emph{Microscope Operator} bindet
-\texttt{TFD-000001} das interne Modellelement \texttt{IME-000001} an das
-Zielnotationskonstrukt \texttt{TN\_003}. Mit dem Ergebnis
-\texttt{materialize\_formally} wurde die Formulierung
-\texttt{part def 'Microscope Operator';} zur formalen Materialisierung
-freigegeben. Abbildung~\ref{fig:result_930444_additional_authority} zeigt
-beide ergänzenden Entscheidungsarten.
+Für den \emph{Microscope Operator} dokumentiert
+\texttt{TFD-000001} zusätzlich eine zielmodellspezifische
+Formulierungsentscheidung. Diese Entscheidungsstufe legt gemäß
+Abschnitt~\ref{sec:architecture_meaning_representation} die konkrete
+Ausprägung eines bereits autorisierten Modellinhalts in der Zielnotation
+fest.
 
 \begin{figure}[htbp]
     \centering
@@ -788,33 +761,27 @@ reviewer_identity:
   MZ
         \end{evidencebox}
     \end{minipage}
-    \caption[Ergänzende menschliche Autorisierungsentscheidungen]{Ergänzende menschliche Autorisierungsentscheidungen aus der
-    Live-Demonstration. Oben wird mit \texttt{SRD-000001} eine vorgeschlagene
-    gerichtete Beziehung verworfen; die fachlich gewünschte Gegenrichtung
-    wurde als eigenständiges Beziehungsangebot mit \texttt{SRD-000012}
-    separat akzeptiert. Unten dokumentiert \texttt{TFD-000001} die
-    zielmodellspezifische Formulierung des \emph{Microscope Operator} als
-    \texttt{part def} über das Zielnotationskonstrukt \texttt{TN\_003}.
-    Beide Entscheidungen bleiben als eigene menschlich autorisierte Zustände
-    persistiert. Vollständige Evidenzauszüge siehe
+    \caption[Ergänzende menschliche Entscheidungszustände]{
+    Unveränderte Reportauszüge zu einer Entscheidung über eine fachliche
+    Beziehung und zu einer zielmodellspezifischen Formulierung. Mit
+    \texttt{SRD-000001} wurde die dargestellte Beziehungsrichtung abgelehnt;
+    \texttt{TFD-000001} enthält die Formulierungsentscheidung für den
+    \emph{Microscope Operator}. Vollständige Auszüge siehe
     Anhang~\ref{app:traceability_930444_additional}.}
     \label{fig:result_930444_additional_authority}
     \label{fig:result_930444_relationship}
     \label{fig:result_930444_formulation}
 \end{figure}
 
-Die Formulierungsentscheidung verändert dabei nicht rückwirkend den bereits
-autorisierten fachlichen Gegenstand, sondern legt dessen konkrete formale
-Ausprägung in der zugelassenen Zielnotation fest.
+\subsubsection{SysML-v2-Erzeugung und Nachverfolgbarkeit}
+\label{sec:results_traceability_sysml}
+\paragraph{SysML-v2-Erzeugung und Nachverfolgbarkeit}
 
-\paragraph{Generiertes SysML v2 und Nachverfolgbarkeit des Outputs}
-
-Der autorisierte Modellzustand \texttt{IEM-000002} wurde anschließend
-deterministisch in SysML v2 serialisiert. Für die durchgehend betrachtete
-\emph{Microscope Workstation} entstand dabei das in
-Abbildung~\ref{fig:result_930444_sysml} dargestellte Modellelement.
-Gleichzeitig wurde dessen Verbindung zu den vorausgehenden autorisierten
-Zuständen und seiner Position im generierten Artefakt persistiert.
+Der Modellzustand \texttt{IEM-000002} wurde anschließend in die
+SysML-v2-Repräsentation überführt. Für die \emph{Microscope Workstation}
+entstand das in Abbildung~\ref{fig:result_930444_sysml} wiedergegebene
+Modellelement. Der zweite Reportauszug enthält die dazu gespeicherten
+Nachverfolgbarkeitsinformationen.
 
 \begin{figure}[htbp]
     \centering
@@ -840,34 +807,32 @@ generated_location:
   end_line:   77
         \end{evidencebox}
     \end{minipage}
-    \caption[Generiertes SysML-v2-Element und Traceability]{Generiertes SysML-v2-Element und zugehörige
-    Nachverfolgbarkeitsinformation für die \emph{Microscope Workstation}.
-    Oben ist das aus \texttt{IEM-000002} deterministisch erzeugte
-    Modellelement \texttt{IME\_000011} dargestellt. Der darunter
-    persistierte Nachweis verbindet dieses Symbol mit dem autorisierten
-    Input \texttt{AIN-000011}, der Modellplatzierungsentscheidung
-    \texttt{MPD-000016}, dem zugrunde liegenden internen Modellelement
-    \texttt{IME-000011} und seiner konkreten Position in den Zeilen
-    73--77 des generierten Artefakts. Originaldokumente:
+    \caption[SysML-v2-Element und Nachverfolgbarkeitsinformation]{
+    Unveränderter Ausschnitt des erzeugten SysML-v2-Elements und der
+    zugehörigen Nachverfolgbarkeitsinformation. Der Report verbindet den
+    autorisierten Zustand \texttt{AIN-000011}, die
+    Modellplatzierungsentscheidung \texttt{MPD-000016}, den internen
+    Modellzustand \texttt{IEM-000002}, das interne Modellelement
+    \texttt{IME-000011} und das erzeugte Symbol
+    \texttt{IME\_000011}. Originaldokumente:
     \texttt{OUT-000001/generated\_model.sysml} und
-    \texttt{OUT-000001/traceability.json}; vollständiger Evidenzauszug
-    siehe Anhang~\ref{app:traceability_930444_workstation}.}
+    \texttt{OUT-000001/traceability.json}.}
     \label{fig:result_930444_sysml}
     \label{fig:result_930444_output_traceability}
 \end{figure}
 
-Damit bleibt das finale SysML-v2-Symbol nicht nur über seine Identität
-referenzierbar. Seine Herkunft lässt sich über
-\texttt{AIN-000011}, \texttt{MPD-000016} und \texttt{IEM-000002} bis zu
-den vorausgehenden fachlichen und modellbezogenen Entscheidungen
-zurückverfolgen.
+Der gespeicherte Nachverfolgbarkeitseintrag verbindet das erzeugte Symbol
+damit mit den vorausgehenden fachlichen und modellbezogenen Zuständen sowie
+mit seiner Position im erzeugten Artefakt.
 
-\paragraph{Technische Validierung und menschliche Freigabe}
+\subsubsection{Validierung, Modellprüfung und Freigabe}
+\label{sec:results_traceability_release}
+\paragraph{Validierung, Modellprüfung und Freigabe}
 
-Das generierte SysML-v2-Artefakt wurde anschließend mit dem
-SYSIDE Modeler CLI~0.10.3 technisch validiert.
-Abbildung~\ref{fig:result_930444_validation} zeigt den persistierten
-Validierungszustand.
+Das erzeugte SysML-v2-Artefakt wurde anschließend mit der
+\emph{SYSIDE Modeler CLI}~0.10.3 validiert. Der gespeicherte Reportzustand
+ist in Abbildung~\ref{fig:result_930444_validation} unverändert
+wiedergegeben.
 
 \begin{figure}[htbp]
     \centering
@@ -885,93 +850,80 @@ External validator:
   diagnostics: 0
         \end{evidencebox}
     \end{minipage}
-    \caption[Technischer Validierungszustand]{Technischer Validierungszustand des während der
-    Live-Demonstration erzeugten SysML-v2-Artefakts. Der geprüfte
-    Modellzustand \texttt{IEM-000002} wurde durch den externen
-    SYSIDE Modeler CLI~0.10.3 ohne Findings oder Diagnostics verarbeitet;
-    der persistierte Status lautet \texttt{valid} und der technische
-    Publication Gate \texttt{passed}. Originaldokument:
-    \texttt{OUT-000001/validation\_report.md}; vollständiger Report siehe
-    Anhang~\ref{app:traceability_930444_workstation}.}
+    \caption[Technischer Validierungszustand]{
+    Gespeicherter Validierungszustand des erzeugten SysML-v2-Artefakts.
+    Die Reportwerte \texttt{valid}, \texttt{passed},
+    \texttt{Findings: 0} und \texttt{diagnostics: 0} werden unverändert
+    wiedergegeben. Die Funktion der technischen Validierung ist in
+    Abschnitt~\ref{sec:validation_sysml_human} beschrieben.
+    Originaldokument:
+    \texttt{OUT-000001/validation\_report.md}.}
     \label{fig:result_930444_validation}
 \end{figure}
 
-Der validierte Artefaktzustand wurde anschließend einem getrennten
-menschlichen Modellreview zugeführt. Dafür wurden
-\texttt{FMR-000001} und die zugehörige Revision
-\texttt{FRV-000001} persistiert. Die abschließende
-Freigabeentscheidung \texttt{FRD-000001} trägt das Ergebnis
+An die technische Validierung schlossen sich die getrennte menschliche
+Modellprüfung und Freigabe an. Für die Modellprüfung wurden
+\texttt{FMR-000001} und die Revision \texttt{FRV-000001} gespeichert.
+Die Freigabeentscheidung \texttt{FRD-000001} trägt im System den Status
 \texttt{approved\_for\_publication} und die Reviewer-Identität
-\texttt{MZ}. Sie ist an den Fingerprint des geprüften Artefaktsatzes sowie
-den konkreten Fingerprint des Validierungsergebnisses gebunden. Im
-Demonstrationslauf wurde keine zusätzliche Begründung eingegeben; das
-entsprechende Feld ist im Originalartefakt \texttt{null}.
+\texttt{MZ}. Sie ist mit dem geprüften Artefaktzustand und dem zugehörigen
+Validierungsergebnis verknüpft. Im Demonstrationslauf wurde keine zusätzliche
+Begründung eingegeben; das entsprechende Feld enthält im Originalzustand
+\texttt{null}.
 
-Erst nach dieser Freigabe wurde der Zustand als unveränderlicher
-veröffentlichter Output \texttt{OUT-000001} persistiert. Das zugehörige
-Paket enthält das generierte SysML-v2-Modell, die Generierungszusammenfassung,
-die Nachverfolgbarkeitsinformationen sowie den maschinen- und
-menschenlesbaren Validierungszustand.
+Nach dieser Freigabe wurde der veröffentlichte Zustand als
+\texttt{OUT-000001} gespeichert. Das Paket enthält das erzeugte
+SysML-v2-Modell, die Generierungszusammenfassung,
+Nachverfolgbarkeitsinformationen sowie den gespeicherten
+Validierungszustand.
 
-Damit lässt sich der exemplarische Pfad von der ursprünglichen
-Quellenaussage über quellengebundene Evidenz, Persona-Interpretationen,
-menschliche fachliche Autorisierung, Modellplatzierung und interne
-Modellzustände bis zum generierten, technisch validierten und menschlich
-freigegebenen SysML-v2-Artefakt rekonstruieren. Die ergänzenden Beispiele
-dokumentieren zusätzlich eine menschliche Entscheidung über eine gerichtete
-fachliche Beziehung sowie eine zielmodellspezifische Formulierung.
+Der exemplarisch rekonstruierte Hauptpfad reicht damit von der
+Quellenaussage über quellengebundene Evidenz, Persona-Interpretationen und
+menschliche fachliche Autorisierung zur Modellplatzierung, zum internen
+Modellzustand und zum erzeugten SysML-v2-Element. Validierung, menschliche
+Modellprüfung und Freigabe sind mit dem resultierenden Artefaktzustand
+verknüpft. Die ergänzenden Beispiele dokumentieren zusätzlich eine
+menschliche Entscheidung über eine fachliche Beziehung und eine
+zielmodellspezifische Formulierung.
 
 Die vollständigen kurzen Eingangsdokumente und der kompakte
 Validierungsbericht sind im Anhang wiedergegeben. Für umfangreichere
-Maschinenartefakte werden dort die für die Rekonstruktion erforderlichen
-Originalfelder zusammengeführt; Umfang und Auswahl des Evidenzsatzes sind in
-Anhang~\ref{app:traceability_930444_scope} beschrieben. Die fachliche
-Einordnung dieser Nachverfolgbarkeit erfolgt in
+Maschinenartefakte werden dort die für die Rekonstruktion verwendeten
+Originalfelder zusammengeführt; Umfang und Auswahl sind in
+Anhang~\ref{app:traceability_930444_scope} beschrieben. Die Einordnung der
+beobachteten Nachverfolgbarkeit erfolgt in
 Kapitel~\ref{sec:discussion}.
 
-\subsection{Ergebnisgrenzen der Evaluation}
+\subsection{Abgrenzung der Ergebnisbasis}
 \label{sec:results_validation}
 
-Die Ergebnisse beziehen sich auf den implementierten Proof of Concept und
-die verwendeten kontrollierten Testdaten. Die automatisierte
-Softwareverifikation bestätigte die geprüften deterministischen Verträge und
-Zustandsübergänge. Die formative End-to-End-Erprobung identifizierte
-technische sowie architekturrelevante Befunde und führte zu mehreren
-Präzisierungen des Architekturkonzepts. Die Multi-Source-Verifikation zeigte
-für den untersuchten Testfall, dass getrennt autorisierte
-Informationspfade unter Erhalt ihrer Provenance in einen gemeinsamen
-projektweiten Modellbildungsprozess überführt werden konnten. Die
-abschließende Live-Demonstration führte den vollständigen Workflow bis zum
-technisch validierten und menschlich freigegebenen SysML-v2-Artefakt aus und
-ermöglichte anschließend die exemplarische Rekonstruktion der dabei
-persistierten Zustände und Entscheidungen.
+Die dargestellten Ergebnisse beziehen sich auf den implementierten Prototyp
+und die verwendeten kontrollierten Testdaten. Sie umfassen die automatisierte
+Software- und Vertragsverifikation, die formative Verifikation des
+Verarbeitungspfads, die Verarbeitung mehrerer Engineering-Quellen sowie die
+abschließende Demonstration mit technischer SysML-v2-Validierung,
+menschlicher Modellprüfung und Freigabe.
 
-Aus diesen Ergebnissen wird keine allgemeine Vollständigkeit der
-Engineering-Information abgeleitet. Verarbeitung und Nachverfolgbarkeit
-beziehen sich ausschließlich auf die im jeweiligen Projekt registrierten und
-für die Verarbeitung zugelassenen Informationsquellen. Nicht enthaltene oder
-aus diesen Quellen nicht ableitbare Informationen werden durch die
-Evaluation nicht als vorhanden nachgewiesen.
+Die untersuchte Verarbeitung und Nachverfolgbarkeit beziehen sich auf die im
+jeweiligen Projekt registrierten und für die Verarbeitung zugelassenen
+Quellen. Eine Prüfung auf Vollständigkeit der für ein reales
+Engineering-Projekt verfügbaren Informationen war nicht Bestandteil der
+Evaluation.
 
-Auch der erfolgreiche SYSIDE-Validierungszustand bestätigt ausschließlich
-die technische Verarbeitbarkeit des erzeugten SysML-v2-Artefakts innerhalb
-der verwendeten Werkzeugumgebung. Er stellt keine eigenständige fachliche
-Bestätigung der enthaltenen Engineering-Aussagen dar; deren Autorisierung
-verbleibt bei den im Workflow persistierten menschlichen fachlichen und
-modellbezogenen Entscheidungen.
+Die externe SysML-v2-Validierung mit der \emph{SYSIDE Modeler CLI} prüfte die
+technische Verarbeitbarkeit des erzeugten Artefakts in der verwendeten
+SysML-v2-Toolumgebung. Die fachliche und modellbezogene Autorisierung erfolgte
+davon getrennt durch die im Verarbeitungspfad vorgesehenen menschlichen
+Entscheidungen.
 
-Die Evaluation stellt weder eine statistische Untersuchung der Qualität
-generativer Modelle noch eine unabhängige Usability- oder
-Expertenvalidierungsstudie dar. Die formativen Testläufe sowie die während
-der Live-Demonstration persistierten fachlichen und modellbezogenen
-Entscheidungen wurden durch den Autor durchgeführt. Die Anwesenheit externer
-Vertreter der vorgesehenen Zielgruppe bei der Live-Demonstration erweitert
-den Anwendungskontext der Erprobung, ersetzt jedoch keine unabhängige
-fachliche Validierung.
+Die Evaluation umfasste keine statistische Untersuchung der Qualität der
+verwendeten Sprachmodelle und keine unabhängige Nutzer- oder
+Expertenvalidierung. Die fachlichen und modellbezogenen Entscheidungen in den
+formativen Verarbeitungsläufen und in der abschließenden Demonstration wurden
+durch den Autor getroffen. Die Demonstration fand in Anwesenheit externer
+Vertreter der vorgesehenen Zielgruppe statt, ohne diese als unabhängige
+Prüfpersonen in die Evaluation einzubeziehen.
 
-Damit liegen getrennte Ergebnisse zur technischen Verifikation der
-implementierten Mechanismen, zur verbundenen Ausführung des kontrollierten
-Informationsflusses sowie zur technischen Validierung und menschlichen
-Freigabe des resultierenden Modellartefakts vor. Ihre Einordnung hinsichtlich
-der Forschungsfragen, des Stands der Technik und der Grenzen des entwickelten
-Architekturkonzepts erfolgt in Kapitel~\ref{sec:discussion}.
+Die wissenschaftliche Einordnung der dargestellten Ergebnisse, ihrer
+Aussagekraft und ihrer Grenzen erfolgt in
+Kapitel~\ref{sec:discussion}.

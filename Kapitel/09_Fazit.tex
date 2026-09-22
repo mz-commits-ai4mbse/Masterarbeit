@@ -7,229 +7,292 @@
 Ziel dieser Arbeit war die Entwicklung und Untersuchung eines
 Architekturkonzepts für die kontrollierte KI-gestützte Transformation
 heterogener Engineering-Bestandsinformation in SysML~v2. Ausgangspunkt war
-die Beobachtung, dass die zentrale Herausforderung einer solchen
-Transformation nicht allein in der Erzeugung syntaktisch plausibler
-Modellartefakte liegt. Bereits vor der eigentlichen Modellgenerierung muss
-nachvollziehbar bestimmt werden, welche Engineering-Information aus den
-vorhandenen Quellen abgeleitet werden kann, wie mit Unsicherheit und
-Mehrdeutigkeit umzugehen ist und an welchen Stellen fachliche
-Entscheidungsautorität erforderlich bleibt.
+die Frage, wie bestehende Engineering-Information durch probabilistische
+Verfahren interpretiert und für die Modellbildung nutzbar gemacht werden
+kann, während Herkunft, Unsicherheit und fachliche Entscheidungsbefugnis
+nachvollziehbar erhalten bleiben.
 
-Auf dieser Grundlage wurde eine Informationsverarbeitungsarchitektur
-entwickelt, die probabilistische KI-gestützte Interpretation von
-autoritativen Engineering- und Modellentscheidungen trennt. Wesentliche
-Gestaltungsprinzipien sind eine kontrollierte Informationsbasis mit
-expliziten Quellenrollen, quellengebundener Evidenz, persistierter Provenienz
-und Nachverfolgbarkeit, gemeinsame fachliche Referenzgegenstände vor einer
-mehrperspektivischen Interpretation sowie gestufte menschliche
-Entscheidungsautorität. Fachliche Bedeutung, Modellplatzierung,
-zielmodellspezifische Formulierung und die technische Erzeugung des
-SysML-v2-Artefakts werden dabei als unterschiedliche Verantwortungsbereiche
-behandelt. Nach den jeweiligen Autorisierungsgrenzen können nachgelagerte
-Verarbeitungsschritte deterministisch und fail-closed ausgeführt werden.
+Der wesentliche Erkenntnisgewinn liegt im Zusammenspiel der dafür
+erforderlichen Architekturmechanismen. Eine kontrollierte Informationsbasis
+unterscheidet Engineering-Quellen, Kontextquellen sowie den technischen
+Verarbeitungs- und Orchestrierungskontext. Quellengebundene Evidenz verbindet
+fachliche Aussagen mit ihrer Informationsgrundlage. Mehrere
+Persona-Perspektiven interpretieren gemeinsame fachliche
+Referenzgegenstände und stellen Übereinstimmung, Varianz und gemeinsame
+Mehrdeutigkeit als zusätzliche Bewertungsinformation bereit. Die daraus
+entstehende Engineering-Information wird anschließend durch explizite
+menschliche Entscheidungen autorisiert und kontrolliert in die Modellbildung
+überführt.
 
-Der Turing Generator diente zur prototypischen Instanziierung und Untersuchung
-dieses Architekturkonzepts. Die formative End-to-End-Erprobung, die
-Multi-Source-Verifikation und die abschließende extern begleitete
-Live-Demonstration zeigten innerhalb des untersuchten Prototypumfangs, dass
-die beschriebenen Informations-, Provenienz- und Autorisierungsgrenzen in
-einem verbundenen Verarbeitungspfad technisch realisierbar sind. 
-Mehrere zunächst zusammengefasste Verantwortlichkeiten
-mussten im Verlauf der Evaluation präzisiert oder voneinander getrennt werden.
-Die daraus hervorgegangene Architektur ist damit nicht lediglich das Ergebnis
-einer initialen Konzeption, sondern wurde anhand beobachteter
-Verarbeitungspfade iterativ konsolidiert.
+Dabei hat sich insbesondere die Trennung der einzelnen
+Entscheidungsgegenstände als wesentlich erwiesen. Die Human Engineering
+Authority autorisiert die fachliche Verwendung einer Information, während die
+Model Authority über ihre strukturelle Einordnung und Repräsentation im
+Zielmodell entscheidet. Fachliche Bedeutung, Modellrepräsentation und
+zielmodellspezifische Formulierung bleiben dadurch unterscheidbare
+Verarbeitungs- und Entscheidungsebenen. Nach den erforderlichen
+Autorisierungen kann die weitere Überführung regelgebunden über einen
+kontrollierten internen Modellzustand bis zur SysML-v2-Repräsentation
+erfolgen. Technische Validierung, menschliche Modellprüfung und Freigabe
+bilden daran anschließend getrennte Prüf- und Entscheidungsstufen.
 
-Die während der Live-Demonstration persistierten Zustände ermöglichten
-darüber hinaus die exemplarische Rekonstruktion eines zusammenhängenden Informationspfads von
-der ursprünglichen Quellenaussage über maschinelle Zwischenzustände und
-menschliche Autorisierungsentscheidungen bis zum technisch validierten und
-menschlich freigegebenen SysML-v2-Artefakt.
+Ein weiteres zentrales Ergebnis ist die durchgängige Provenienz der
+verarbeiteten Engineering-Information. Quellen, maschinelle
+Interpretationen, menschliche Autorisierungsentscheidungen und
+Modellzustände bleiben als eigenständige und miteinander verbundene Zustände
+erhalten. Auf dieser Grundlage kann die Entstehung eines resultierenden
+Modellzustands von seiner Informationsgrundlage bis zur
+SysML-v2-Repräsentation und in umgekehrter Richtung zurück zu den zugrunde
+liegenden Informations- und Entscheidungszuständen nachvollzogen werden.
+Provenienz und Nachverfolgbarkeit bilden damit keine nachträgliche
+Dokumentation des Ergebnisses, sondern eine querschnittliche Eigenschaft des
+gesamten Transformationsprozesses.
 
-Als zentrale Schlussfolgerung ergibt sich, dass die Unsicherheit
-probabilistischer KI für den betrachteten Anwendungsfall nicht vollständig
-eliminiert werden muss, um sie kontrolliert in einen Engineering-Prozess
-einzubinden. Entscheidend ist vielmehr, ihre fachliche Wirkung zu begrenzen.
-Maschinelle Interpretation kann Vorschläge und unterschiedliche Perspektiven
-bereitstellen, erhält dadurch jedoch keine Engineering Authority.
-Nicht eindeutig ableitbare Information bleibt explizit unaufgelöst oder wird
-einer menschlichen Entscheidung zugeführt. Ebenso wird technische
-SysML-v2-Validität nicht mit fachlicher Korrektheit gleichgesetzt. Der veröffentlichte 
-Modellzustand entsteht erst aus dem Zusammenspiel
-kontrollierter Informationsherkunft, expliziter Entscheidungen, formaler
-Modellbildung, technischer Validierung, abschließender menschlicher
-Modellprüfung und separater Freigabeentscheidung.
+Die prototypische Untersuchung hat zugleich die Bedeutung enger
+Kontrollmechanismen für den Einsatz generativer KI im Engineering
+verdeutlicht. Probabilistische Verfahren können heterogene Information
+erschließen, unterschiedliche Interpretationen erzeugen und damit
+Engineering-Aufgaben wirkungsvoll unterstützen. Ihre Ergebnisse erhalten
+dadurch jedoch keine eigenständige fachliche Entscheidungsbefugnis. Der
+Mensch wird deshalb nicht lediglich als abschließender Prüfer eines bereits
+erzeugten Modells eingebunden, sondern entscheidet an den Übergängen, an
+denen sich die fachliche Bedeutung oder die modellbezogene Wirkung einer
+Information verändert. Die kontrollierte KI-Unterstützung entsteht damit aus
+dem Zusammenspiel probabilistischer Verarbeitung, expliziter menschlicher
+Autorisierung und regelgebundener Weiterverarbeitung.
 
-Die Ergebnisse sind dabei innerhalb des gewählten Untersuchungsumfangs zu
-interpretieren. Die prototypische Evaluation basierte auf aufbereiteten
-Engineering-Testdaten, abgeleitet aus realen Engineering-Informationen von
-PreciPoint, und auf einem begrenzten Ausschnitt der
-SysML-v2-Modellierungsmöglichkeiten. Untersucht wurden die architektonischen
-Bedingungen eines kontrollierten Transformationspfads, nicht die
-Produktionsreife eines Softwareprodukts. Auch die externe Begleitung der abschließenden Live-Demonstration wird dabei
-nicht als unabhängige fachliche Validierung oder Nutzerstudie interpretiert. Entsprechend werden aus der Arbeit
-weder eine allgemeine fachliche Korrektheit KI-generierter Modelle noch eine
-wirtschaftliche, zeitliche oder qualitative Überlegenheit gegenüber
-manueller Modellierung abgeleitet.
+Die formative End-to-End-Erprobung war für diese Erkenntnis von besonderer
+Bedeutung. Mehrere zunächst zusammengefasste Informations- und
+Entscheidungsfunktionen wurden erst durch die praktische Ausführung des
+Transformationsprozesses als eigenständige Architekturgrenzen sichtbar und
+anschließend präzisiert. Die Verarbeitung mehrerer Engineering-Quellen
+ergänzte diese Untersuchung um den Übergang von quellenbezogen autorisierten
+Informationszuständen zur gemeinsamen projektweiten Modellbildung. In der
+abschließenden Demonstration konnte der zusammenhängende Verarbeitungspfad
+von den registrierten Quellen über KI-gestützte Interpretation und
+menschliche Entscheidungen bis zum technisch validierten und menschlich
+freigegebenen SysML-v2-Artefakt ausgeführt und anhand der persistierten
+Zustände anschließend rekonstruiert werden. Das entwickelte
+Architekturkonzept ist damit nicht ausschließlich Ergebnis einer
+konzeptionellen Herleitung, sondern wurde durch seine prototypische
+Operationalisierung und Untersuchung schrittweise präzisiert.
 
-Der wissenschaftliche Beitrag der Arbeit liegt damit in der konzeptionellen
-Strukturierung eines kontrollierbaren Übergangs zwischen heterogener
-Bestandsinformation und formaler SysML-v2-Repräsentation. Die prototypische
-Umsetzung zeigt exemplarisch, wie probabilistische Informationsverarbeitung,
-menschliche Engineering Authority, persistierte Provenance und
-deterministische Modellbildung innerhalb einer gemeinsamen Architektur
-verbunden werden können.
+Eine weitergehende Erkenntnis betrifft den Aufwand, der einem sinnvollen
+KI-Einsatz vorausgeht. Bevor probabilistische Verfahren zielgerichtet in
+einem Engineering-Prozess eingesetzt werden können, müssen unter anderem die
+Informationsgrundlage, die zulässigen Informationsrollen,
+Entscheidungsbefugnisse, Modellierungsregeln und Prüfmechanismen festgelegt
+werden. Ein wesentlicher Teil der Gestaltungsarbeit liegt damit vor der
+eigentlichen KI-gestützten Verarbeitung. Die entwickelte Architektur bündelt
+mehrere dieser wiederkehrenden Entscheidungen in einem zusammenhängenden
+Konzept und stellt damit einen bereits ausgearbeiteten Ausgangspunkt für
+weitere Anwendungen bereit.
 
-Im Unterschied zu einem direkten, unstrukturierten
-Prompt-zu-Output-Vorgehen wird das resultierende Modell dabei nicht als
-isolierter KI-Output behandelt. Innerhalb des untersuchten Prototypumfangs
-bleibt eine explizit persistierte Kette von der Informationsquelle über
-maschinelle Interpretationen und menschliche Autorisierungsentscheidungen bis
-zum Modellzustand, zur technischen Validierung und zur abschließenden
-Freigabe rekonstruierbar.
+Damit schließt sich der Bogen zu dem in
+Abschnitt~\ref{sec:problemstellung} dargestellten Zielbild einer
+KI-unterstützten Brownfield-Transformation. Der dort skizzierte
+Transformationspfad beginnt zunächst mit zusätzlichem Gestaltungs- und
+Integrationsaufwand, bevor wiederverwendbare Verarbeitungsschritte ihre
+Wirkung entfalten können. Arbeiten wie die vorliegende können dazu beitragen,
+einen Teil dieses konzeptionellen Initialaufwands in wiederverwendbare
+Architekturmechanismen zu überführen. Werden solche Mechanismen weiter
+konsolidiert, empirisch untersucht und für unterschiedliche
+Engineering-Aufgaben verfügbar gemacht, entsteht die Perspektive, dass
+zukünftige KI-gestützte Anwendungen auf einer zunehmend etablierten
+architektonischen Grundlage aufbauen können.
+
+Der wissenschaftliche Beitrag dieser Arbeit liegt damit nicht allein in der
+Erzeugung einer SysML-v2-Repräsentation. Er besteht in der Entwicklung und
+prototypischen Untersuchung einer Informationsverarbeitungsarchitektur, die
+zeigt, wie heterogene Engineering-Bestandsinformation, probabilistische
+Interpretation, menschliche Engineering-Entscheidungen, Provenienz,
+Nachverfolgbarkeit und formale Modellbildung zu einem kontrollierten
+Transformationsprozess verbunden werden können.
+
+Mehrere dieser Mechanismen erfüllen dabei Funktionen, die nicht unmittelbar
+an die SysML-v2-Zielrepräsentation gebunden sind. Insbesondere
+Quellenverarbeitung, Provenienz, persistierte Verarbeitungszustände,
+menschliche Autorisierung und die Trennung zwischen maschinellen Vorschlägen
+und autorisierten Zuständen bilden einen wiederverwendbaren strukturellen
+Kern. Daraus ergibt sich die weiterführende Frage, inwieweit dieser Kern auch
+für andere KI-gestützte Engineering-Aufgaben genutzt werden kann. Diese
+Perspektive bildet den Ausgangspunkt des folgenden Ausblicks.
 
 \subsection{Ausblick}
 \label{sec:ausblick}
 
-Aus den Ergebnissen und Limitationen ergeben sich mehrere Ansatzpunkte für
-weiterführende Arbeiten. Ein erster Schritt besteht in einer breiteren
-empirischen Untersuchung des Architekturkonzepts. Hierzu sollten
-umfangreichere und weniger stark aufbereitete industrielle Datenbestände
-einbezogen werden, die unterschiedliche Dokumenttypen, Versionen,
-Modellartefakte und disziplinübergreifende Informationsquellen enthalten.
-Insbesondere eine Evaluation mit unabhängigen Fachexperten könnte untersuchen,
-wie zuverlässig die vorgesehenen Review- und Authority-Mechanismen in realen
-Engineering-Situationen genutzt werden können und welcher Interaktionsaufwand
-dabei entsteht. Damit ließen sich auch Fragen zur Skalierbarkeit menschlicher
-Reviews und zur praktischen Nutzbarkeit der bereitgestellten
-Entscheidungsgrundlagen gezielter untersuchen.
+Aus den Ergebnissen dieser Arbeit ergeben sich drei aufeinander aufbauende
+Entwicklungsperspektiven. Die unmittelbarste betrifft die Weiterentwicklung
+des untersuchten Prototyps für einen produktiven Einsatz im industriellen
+Umfeld. Darüber hinaus stellt sich die Frage, welche Teile der entwickelten
+Architektur auf andere Engineering-Aufgaben übertragen werden können.
+Langfristig eröffnet die persistierte menschliche Interaktion schließlich die
+Möglichkeit, die KI-gestützte Verarbeitung kontrolliert aus früheren
+Entscheidungen lernen zu lassen.
 
-Ein darüber hinausgehender Entwicklungspfad ergibt sich aus der Frage, welche
-Teile der entwickelten Architektur unabhängig von der konkreten
-SysML-v2-Zielrepräsentation wiederverwendet werden können. Unter dem
-Arbeitsbegriff \emph{Reusable Engineering Document Processing Architecture}
-(REDPA) lässt sich hierzu die Hypothese formulieren, dass wesentliche
-Verantwortungsbereiche des Turing Generators einen wiederverwendbaren Kern für
-weitere dokumentenzentrierte Engineering-Aufgaben bilden können. Dazu zählen
-insbesondere Projekt- und Quellenmanagement, Orchestrierung,
-Informationsverarbeitung, Human Authority sowie Evidence, Provenance und
-Traceability.
+\paragraph{Weiterentwicklung zu einem produktiv einsetzbaren System}
 
-Die konkrete Engineering-Aufgabe würde in einem solchen Ansatz primär durch
-eine task-spezifische Konfiguration bestimmt. Fachwissen, Referenzbestände,
-Personas, Bewertungsregeln, Ziel-Frameworks und Ausgabeformate könnten
-ausgetauscht oder angepasst werden, während die grundlegenden
-Verarbeitungs-, Review- und Nachvollziehbarkeitsmechanismen erhalten bleiben.
-Die in dieser Arbeit untersuchte Transformation nach SysML~v2 wäre damit
-nicht die allgemeine REDPA selbst, sondern eine mögliche konkrete Anwendung
-einer solchen wiederverwendbaren Informationsverarbeitungsarchitektur. Diese
-Übertragbarkeit wurde im Rahmen der vorliegenden Arbeit nicht implementiert
-oder validiert und ist daher als Transferhypothese zu verstehen.
+Der zunächst naheliegendste Entwicklungspfad besteht darin, den
+prototypischen Stand innerhalb des untersuchten SysML-v2-Anwendungsfalls
+weiterzuführen. Ausgangspunkt hierfür können die während Entwicklung und
+Evaluation dokumentierten Befunde bilden. Eine Triage der im Anhang
+festgehaltenen offenen Punkte könnte zunächst unterscheiden, welche Befunde
+für einen produktiven Einsatz funktional, technisch oder hinsichtlich der
+Bedienbarkeit relevant sind und in welcher Reihenfolge sie adressiert werden
+sollten.
 
-Mögliche Anwendungsszenarien ergeben sich insbesondere dort, wo bereits
-vorhandene Engineering-Daten kontrolliert für weitere fachliche Aufgaben
-ausgewertet werden sollen. Ein \emph{Requirements Review Assistant} könnte
-beispielsweise Anforderungen anhand definierter Qualitätsregeln und
-fachspezifischer Review-Perspektiven bewerten, Findings konsolidieren und
-Verbesserungsvorschläge erzeugen. Ein \emph{Technical Documentation SOP
-Tracker} könnte vorhandene Entwicklungs- und Produktdokumentation gegen
-definierte SOP- und Dokumentationsanforderungen prüfen, fehlende Nachweise
-identifizieren und daraus erforderliche Dokumentationsaktivitäten ableiten.
-Ein \emph{QM/RA Documentation Reviewer} könnte dagegen regulatorische oder
-qualitätsbezogene Anforderungen, vorhandene Evidence und definierte
-Review-Regeln zusammenführen, um Dokumentationslücken und mögliche
-Remediation-Maßnahmen strukturiert aufzuzeigen.
+Darauf aufbauend wären insbesondere diejenigen Aspekte weiterzuentwickeln,
+die innerhalb des prototypischen Einsatzes nur in begrenztem Umfang
+untersucht wurden. Dazu gehören die Verarbeitung umfangreicherer und weniger
+stark aufbereiteter Informationsbestände, zusätzliche
+SysML-v2-Modellierungskonstrukte, die technische und fachliche Behandlung
+weiterführender Zustandsänderungen sowie die Skalierung der menschlichen
+Prüf- und Autorisierungsschritte. Ergänzend könnten Softwarequalität,
+Laufzeit, Ressourcenbedarf und Robustheit des Gesamtsystems systematischer
+untersucht werden.
 
-Diese Beispiele verdeutlichen zugleich eine mögliche Weiterentwicklung des
-Architecture-as-Code-Gedankens der Arbeit. Der langfristige Nutzen der
-entwickelten Informationsverarbeitungsmechanismen muss nicht auf die
-Generierung eines Systemmodells beschränkt bleiben. Engineering-Information
-könnte vielmehr als kontrollierte und nachvollziehbare Grundlage für
-unterschiedliche nachgelagerte Engineering-Aufgaben verwendet werden. Zu
-untersuchen wäre dabei jeweils, welche Verantwortlichkeiten tatsächlich
-wiederverwendbar sind und welche aufgrund der fachlichen Aufgabe neu
-spezifiziert oder evaluiert werden müssen.
+Ein wesentlicher nächster Schritt wäre außerdem die Einbettung des Systems in
+einen konkreten Engineering-Workflow eines Unternehmens. Dabei könnten die
+im Prototyp verwendeten fachlichen Referenzen, Beispielmodelle,
+Persona-Perspektiven, Regeln und Modellierungsrahmen an den jeweiligen
+Unternehmenskontext angepasst werden. Der modulare Aufbau der Architektur
+ermöglicht eine solche Konfiguration, ohne den gesamten
+Transformationsprozess neu entwerfen zu müssen. In einer solchen
+Anwendungsumgebung könnte anschließend untersucht werden, wie sich das System
+mit realen Engineering-Quellen, bestehenden Modellierungsrichtlinien und den
+tatsächlichen Entscheidungsprozessen der beteiligten Systems Engineers
+verbindet.
 
-Ein weiterer Entwicklungspfad betrifft die Erweiterung der unterstützten
-Zielmodellierung innerhalb des ursprünglichen SysML-v2-Anwendungsfalls. Der
-Proof of Concept deckt nur einen definierten Ausschnitt von SysML~v2 sowie
-ein festgelegtes Modellierungsframework ab. Eine Weiterentwicklung könnte
-zusätzliche Modellkonstrukte, Beziehungen, Verhaltensbeschreibungen und
-domänenspezifische Modellierungsregeln integrieren. Gleichzeitig wäre zu
-untersuchen, welche Teile der entwickelten semantischen und modellbezogenen
-Leitplanken unabhängig vom konkreten Zielframework wiederverwendet werden
-können und an welchen Stellen eine domänen- oder methodenspezifische
-Anpassung erforderlich bleibt.
+Eine weiterführende Validierung mit unabhängigen Anwendern könnte dabei
+insbesondere untersuchen, ob die bereitgestellten
+Entscheidungsinformationen verständlich sind, wie hoch der tatsächliche
+Prüfaufwand ausfällt und wie sich die vorgesehenen Autorisierungsgrenzen in
+bestehende Arbeitsabläufe integrieren lassen. Auf diese Weise könnte der
+prototypisch untersuchte Transformationsprozess schrittweise zu einem
+industriell einsetzbaren Werkzeug weiterentwickelt werden.
 
-Besonders relevant ist außerdem die Weiterentwicklung der
-Multi-Source-Verarbeitung. Die vorliegende Architektur erhält die
-quellenbezogene Identität, Provenienz und Autorisierung und führt
-autorisierte Information anschließend kontrolliert in einen gemeinsamen
-Projektkontext über. Eine weiterführende Architektur könnte darauf aufbauend explizite
-Mechanismen zur projektweiten semantischen Reconciliation ergänzen. Dabei
-wären beispielsweise äquivalente, komplementäre, widersprüchliche,
-ersetzende oder revisionsabhängige Informationen über mehrere Quellen und
-Versionen hinweg zu behandeln. Eng damit verbunden ist die bislang nur
-begrenzt adressierte Engineering Evolution. Künftige Arbeiten könnten
-untersuchen, wie Änderungen bestehender Quellen oder bereits autorisierter
-Engineering-Information selektiv auf abhängige Entscheidungen und
-Modellzustände propagiert werden können, ohne den gesamten
-Verarbeitungspfad erneut ausführen zu müssen.
+\paragraph{Übertragung auf weitere Engineering-Aufgaben}
 
-Eine weitere Perspektive ergibt sich aus den bereits persistierten
-menschlichen Entscheidungen. Im entwickelten Ansatz dienen Human Reviews
-zunächst der fachlichen Autorisierung einzelner Informations- und
-Modellzustände. Gleichzeitig entstehen dadurch strukturierte, einem
-Engineering-Kontext zugeordnete Daten darüber, welche maschinellen Vorschläge
-akzeptiert, verändert, zurückgewiesen oder als nicht entscheidbar eingestuft
-wurden. Diese Human Decisions bilden damit potenziell einen wachsenden Bestand
-gelabelter Engineering-Daten.
+Eine zweite Entwicklungsperspektive ergibt sich aus der Beobachtung, dass
+mehrere zentrale Architekturmechanismen nicht unmittelbar an die
+SysML-v2-Zielrepräsentation gebunden sind. Quellenverarbeitung,
+Provenienzbeziehungen, stabile Identitäten und Verarbeitungszustände,
+probabilistische Interpretation, menschliche Autorisierung sowie die
+Trennung zwischen maschinellen Vorschlägen und autorisierten Zuständen werden
+auch für andere dokumentenzentrierte Engineering-Aufgaben benötigt.
 
-Langfristig könnten solche Daten als Trainings- oder Feedbackbasis für eine
-adaptive Weiterentwicklung der KI-gestützten Verarbeitung genutzt werden.
-Dabei wäre insbesondere interessant, nicht nur Accept- oder Reject-Entscheidungen
-zu betrachten, sondern die konkreten Änderungen des Engineers auszuwerten.
-Wiederkehrende Korrekturmuster könnten auf diese Weise in explizite,
-wiederverwendbare Regeln oder in ein angepasstes Modellverhalten überführt
-werden. Implizites Expertenwissen, das sich bislang erst im Review einzelner
-Fälle zeigt, könnte dadurch schrittweise für spätere Verarbeitungsschritte
-nutzbar gemacht werden.
+Diese Perspektive wird im Abgabestand des Prototyps unter dem Arbeitsbegriff
+\emph{Reusable Engineering Document Processing Architecture} (REDPA)
+konkretisiert. Hierfür liegen bereits Adaptionsbeschreibungen für drei
+alternative Anwendungsszenarien vor. Die Dokumente unterscheiden jeweils
+zwischen generischen Bestandteilen, die weiterverwendet werden können, und
+fach- beziehungsweise zielspezifischen Bestandteilen, die konfiguriert,
+ersetzt oder ergänzt werden müssten. Zu den vorgesehenen wiederverwendbaren
+Mechanismen gehören insbesondere Quellenverarbeitung, Provenienz,
+Identitäts- und Fingerprintmechanismen, persistierte Verarbeitungszustände,
+die technische Abstraktion der Sprachmodelle sowie menschliche Prüf- und
+Freigabemechanismen. :contentReference[oaicite:1]{index=1}
+:contentReference[oaicite:2]{index=2}
+:contentReference[oaicite:3]{index=3}
 
-Eine solche Erweiterung sollte jedoch nicht als unkontrolliertes
-selbstlernendes System umgesetzt werden. Denkbar wäre vielmehr eine
-zusätzliche Learning-Komponente, die historische Human Decisions und deren
-Änderungen auswertet und daraus ein versioniertes Kandidatenmodell oder eine
-angepasste Policy ableitet. Neue gelernte Zustände könnten zunächst offline
-oder in einem Shadow-Betrieb evaluiert und erst nach einer expliziten
-Freigabe in die aktive Verarbeitung übernommen werden. Die in dieser Arbeit
-entwickelten Provenance- und Authority-Grenzen könnten damit auch für eine
-adaptive Weiterentwicklung genutzt werden, ohne die menschliche Engineering
-Authority implizit an einen Lernmechanismus zu übertragen.
+Ein dokumentierter Adaptionspfad beschreibt einen
+\emph{Requirements Review Assistant}, der Requirements quellengebunden
+analysiert, mögliche Qualitäts- und Konsistenzbefunde erzeugt und diese einer
+menschlichen Entscheidung zuführt. Ein weiterer Pfad beschreibt einen
+\emph{Technical Documentation SOP Tracker}, der Verpflichtungen aus
+Verfahrens- und SOP-Dokumenten mit vorhandener technischer Dokumentation
+verknüpft und daraus einen geprüften Nachverfolgungszustand ableitet. Der
+dritte Pfad überträgt die Architektur auf einen
+\emph{QM/RA Documentation Reviewer}, der Dokumentation gegen konfigurierbare
+Qualitäts-, regulatorische und interne Regelwerke prüft und die erzeugten
+Befunde quellengebunden für eine menschliche Bewertung bereitstellt.
+:contentReference[oaicite:4]{index=4}
+:contentReference[oaicite:5]{index=5}
+:contentReference[oaicite:6]{index=6}
 
-Ein langfristiges Ziel könnte darin bestehen, menschliche Reviews stärker auf
-diejenigen Fälle zu konzentrieren, in denen tatsächliche Unsicherheit,
-Abweichung oder erhöhtes fachliches Risiko vorliegt. Voraussetzung hierfür
-wäre jedoch zunächst eine belastbare empirische Grundlage dafür, welche
-Vorschlagsklassen unter welchen Bedingungen wiederholt ohne fachliche
-Korrektur akzeptiert werden. Eine mögliche Reduktion menschlicher
-Prüfschritte wäre deshalb nicht als automatische Folge höherer
-Modellkonfidenz zu verstehen, sondern als eigenständige zukünftige
-Governance- und Evaluationsentscheidung.
+Diese Adaptionsbeschreibungen konkretisieren die Hypothese eines
+wiederverwendbaren Verarbeitungskerns, stellen jedoch noch keine Untersuchung
+seiner Übertragbarkeit dar. Eine weiterführende Arbeit könnte deshalb einen
+oder mehrere dieser Pfade realisieren und systematisch untersuchen, welche
+Architekturelemente tatsächlich unverändert übernommen werden können und
+welche aufgrund der jeweiligen Engineering-Aufgabe angepasst werden müssen.
+Auf diese Weise könnte eine REDPA schrittweise aus den in dieser Arbeit
+entwickelten Mechanismen abstrahiert und empirisch konsolidiert werden.
 
-Schließlich bleiben auch technische Weiterentwicklungen hinsichtlich
-Verarbeitungsaufwand, Review-Darstellung, Fehlerbehandlung und produktivem
-Betrieb offen. Diese Aspekte waren nicht Gegenstand der vorliegenden Arbeit,
-werden jedoch relevant, sobald aus dem untersuchten Proof of Concept ein
-skalierbares Engineering-Werkzeug oder aus REDPA eine praktisch einsetzbare
-Plattform für mehrere Engineering-Aufgaben entstehen soll.
+Eine solche Wiederverwendung würde zugleich den in
+Abschnitt~\ref{sec:problemstellung} beschriebenen Gedanken aufgreifen, dass
+vor einem zielgerichteten KI-Einsatz zunächst ein geeigneter
+Verarbeitungsrahmen geschaffen werden muss. Mit einer zunehmend
+konsolidierten Grundarchitektur könnte sich dieser Gestaltungsaufwand stärker
+auf die jeweilige fachliche Aufgabe, ihre Regeln und ihre
+Entscheidungsgegenstände konzentrieren.
 
-Die Arbeit bildet damit keinen Abschluss der betrachteten
-Transformationsproblematik, sondern eine architektonische Grundlage für
-weiterführende Untersuchungen. Neben der Vertiefung des untersuchten
-SysML-v2-Anwendungsfalls eröffnet insbesondere die mögliche Übertragung des
-wiederverwendbaren Verarbeitungskerns auf weitere Engineering-Aufgaben sowie
-die kontrollierte Nutzung menschlicher Entscheidungen als Lern- und
-Feedbackbasis eine Perspektive für die Weiterentwicklung. Entscheidend bleibt
-dabei, dass eine zunehmende Automatisierung die Nachvollziehbarkeit der
-Informationsherkunft und die fachliche Entscheidungshoheit des Engineers nicht
-ersetzt.
+\paragraph{Lernen aus menschlichen Engineering-Entscheidungen}
+
+Eine dritte, weiterführende Perspektive ergibt sich aus den im
+Transformationsprozess persistierten menschlichen Entscheidungen. Die
+Human-in-the-Loop-Mechanismen erfüllen zunächst die Funktion, maschinell
+erzeugte Interpretationen und Modellentscheidungen kontrolliert zu
+autorisieren. Gleichzeitig entsteht durch jede dieser Interaktionen ein
+strukturierter Zusammenhang zwischen der zugrunde liegenden
+Engineering-Information, einem maschinellen Vorschlag und seiner
+menschlichen Bewertung oder Korrektur.
+
+Mit zunehmender Nutzung entsteht dadurch ein wachsender Bestand an
+fachspezifisch gelabelten Daten. Neben angenommenen und zurückgewiesenen
+Vorschlägen sind insbesondere menschliche Änderungen sowie bewusst
+unaufgelöst gebliebene Fälle relevant. Vergleichbare Ansätze des Lernens aus
+menschlichen Präferenzen beziehungsweise menschlichem Feedback zeigen
+grundsätzlich, dass solche Rückmeldungen zur Anpassung des Verhaltens
+lernender Systeme genutzt werden können
+\cite{Christiano2017,Ouyang2022}.
+
+Für eine zukünftige Erweiterung des hier entwickelten Systems könnte daraus
+ein kontrollierter Feedbackmechanismus entstehen. Als eine mögliche
+Bewertungsgröße lässt sich dabei das \emph{Akzeptanzniveau} definieren. Es
+beschreibt, in welchem Umfang maschinell erzeugte Vorschläge innerhalb eines
+definierten Aufgabenbereichs durch die Human Engineering Authority ohne oder
+nur mit geringer fachlicher Änderung übernommen werden. Ergänzend liefert die
+bereits im Architekturkonzept betrachtete Varianz zwischen den
+Persona-Perspektiven Information darüber, wie einheitlich oder unterschiedlich
+ein fachlicher Gegenstand interpretiert wird.
+
+Beide Größen könnten gemeinsam mit den tatsächlich vorgenommenen
+Korrekturen als Lernsignal verwendet werden. Ziel wäre dabei nicht eine
+pauschale Minimierung der Varianz. Unterschiedliche Perspektiven können
+berechtigte Mehrdeutigkeit oder fachliche Unsicherheit sichtbar machen und
+sollen in solchen Fällen erhalten bleiben. Ein lernendes System sollte
+vielmehr erreichen, dass vermeidbare Abweichungen zurückgehen und
+maschinelle Vorschläge häufiger mit der späteren fachlichen Entscheidung
+übereinstimmen. Ein steigendes Akzeptanzniveau bei gleichzeitig angemessener
+Abbildung tatsächlich vorhandener Varianz könnte hierfür eine mögliche
+Bewertungsgrundlage darstellen.
+
+Wiederkehrende menschliche Korrekturen könnten anschließend beispielsweise
+zur Anpassung von Regeln, Beispielen, Interpretationsanweisungen oder
+spezialisierten Modellen genutzt werden. Die bereits entwickelte Provenienz
+ermöglicht es dabei, ein Lernsignal mit seinem jeweiligen fachlichen
+Ausgangskontext und der tatsächlich getroffenen menschlichen Entscheidung zu
+verbinden. Neue oder angepasste Verarbeitungsstände könnten versioniert,
+zunächst außerhalb der aktiven Verarbeitung untersucht und erst nach einer
+expliziten Freigabe übernommen werden.
+
+Mit zunehmender Qualität der maschinellen Interpretation könnte sich dadurch
+langfristig auch die Rolle des Menschen verändern. Statt jeden
+Informationszustand in gleicher Intensität zu prüfen, könnte sich die
+menschliche Aufmerksamkeit stärker auf Fälle mit hoher Unsicherheit,
+relevanter Varianz, widersprüchlicher Informationslage oder geringer
+bisheriger Akzeptanz konzentrieren. Ob und unter welchen Bedingungen einzelne
+Entscheidungen schließlich weiter automatisiert werden können, wäre dabei
+anhand der über die Nutzung entstehenden Daten empirisch zu untersuchen.
+
+Die drei Entwicklungspfade adressieren damit unterschiedliche
+Reifegrade derselben Grundidee. Kurzfristig kann der bestehende Prototyp für
+einen produktiven Einsatz im SysML-v2-Kontext erweitert und in reale
+Engineering-Workflows integriert werden. Darauf aufbauend kann untersucht
+werden, welche Architekturmechanismen sich über REDPA auf weitere
+Engineering-Aufgaben übertragen lassen. Langfristig eröffnet die dabei
+entstehende strukturierte menschliche Rückmeldung die Möglichkeit eines
+kontrolliert lernenden Systems, dessen zunehmende Automatisierung weiterhin
+auf nachvollziehbaren Informationsgrundlagen und explizit überprüften
+Engineering-Entscheidungen aufbaut.
