@@ -181,19 +181,28 @@ probabilistische Interpretation, menschliche Autorisierung sowie die
 Trennung zwischen maschinellen Vorschlägen und autorisierten Zuständen werden
 auch für andere dokumentenzentrierte Engineering-Aufgaben benötigt.
 
+Eine konkrete Grundlage für eine solche Übertragung bildet die in
+Abschnitt~\ref{sec:implementation_configuration} beschriebene Trennung
+zwischen der grundlegenden Verarbeitungspipeline und fach-, modell- sowie
+zielspezifischer Konfiguration. Persona-Perspektiven, Teamzusammenstellungen,
+Modellierungsrahmen und Teile der Zielabbildung werden im Prototyp über
+versionierte Markdown- beziehungsweise JSON-Konfigurationen festgelegt.
+Exemplarische Originalausschnitte dieser Konfigurationen sind in
+Anhang~\ref{app:configuration_examples} dokumentiert. Damit ist bereits im
+untersuchten Prototyp eine technische Trennung angelegt, an die eine
+Übertragung auf andere Engineering-Aufgaben anknüpfen kann.
+
 Diese Perspektive wird im Abgabestand des Prototyps unter dem Arbeitsbegriff
 \emph{Reusable Engineering Document Processing Architecture} (REDPA)
-konkretisiert. Hierfür liegen bereits Adaptionsbeschreibungen für drei
-alternative Anwendungsszenarien vor. Die Dokumente unterscheiden jeweils
-zwischen generischen Bestandteilen, die weiterverwendet werden können, und
-fach- beziehungsweise zielspezifischen Bestandteilen, die konfiguriert,
-ersetzt oder ergänzt werden müssten. Zu den vorgesehenen wiederverwendbaren
+konkretisiert. Hierfür liegen Adaptionsbeschreibungen für drei alternative
+Anwendungsszenarien vor. Die Dokumente unterscheiden jeweils zwischen
+generischen Bestandteilen, die weiterverwendet werden können, und fach-
+beziehungsweise zielspezifischen Bestandteilen, die konfiguriert, ersetzt
+oder ergänzt werden müssten. Zu den vorgesehenen wiederverwendbaren
 Mechanismen gehören insbesondere Quellenverarbeitung, Provenienz,
 Identitäts- und Fingerprintmechanismen, persistierte Verarbeitungszustände,
 die technische Abstraktion der Sprachmodelle sowie menschliche Prüf- und
-Freigabemechanismen. :contentReference[oaicite:1]{index=1}
-:contentReference[oaicite:2]{index=2}
-:contentReference[oaicite:3]{index=3}
+Freigabemechanismen.
 
 Ein dokumentierter Adaptionspfad beschreibt einen
 \emph{Requirements Review Assistant}, der Requirements quellengebunden
@@ -206,9 +215,6 @@ dritte Pfad überträgt die Architektur auf einen
 \emph{QM/RA Documentation Reviewer}, der Dokumentation gegen konfigurierbare
 Qualitäts-, regulatorische und interne Regelwerke prüft und die erzeugten
 Befunde quellengebunden für eine menschliche Bewertung bereitstellt.
-:contentReference[oaicite:4]{index=4}
-:contentReference[oaicite:5]{index=5}
-:contentReference[oaicite:6]{index=6}
 
 Diese Adaptionsbeschreibungen konkretisieren die Hypothese eines
 wiederverwendbaren Verarbeitungskerns, stellen jedoch noch keine Untersuchung

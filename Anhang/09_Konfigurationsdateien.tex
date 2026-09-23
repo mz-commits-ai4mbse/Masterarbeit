@@ -1,0 +1,196 @@
+\section{Exemplarische Konfigurationsdateien des Prototyps}
+\label{app:configuration_examples}
+
+Abschnitt~\ref{sec:implementation_configuration} beschreibt die Trennung
+zwischen ausführbarer Programmlogik und fach-, modell- beziehungsweise
+zielspezifischer Konfiguration im Prototyp. Die nachfolgenden Ausschnitte
+zeigen exemplarisch, wie diese Konfiguration im finalen Implementierungsstand
+abgebildet ist.
+
+Die vollständigen Konfigurationsdateien sind Bestandteil des mit der Arbeit
+eingereichten Prototyps. Im Anhang werden nur diejenigen Ausschnitte
+wiedergegeben, die für die in Kapitel~\ref{sec:implementation} beschriebene
+Trennung zwischen Verarbeitungskern und Konfiguration relevant sind.
+Die verwendeten Persona-Definitionen sind bereits vollständig in
+Anhang~\ref{app:persona_definitions} dokumentiert.
+
+
+\subsection{Zuordnung von Rollen und Personas}
+\label{app:configuration_team}
+
+Die Zusammenstellung der Persona-basierten Verarbeitung erfolgt über
+strukturierte Teamkonfigurationen. Für die Interpretation quellengebundener
+Engineering-Information wird im Prototyp die Datei
+\texttt{source\_evidence\_interpretation\_team.json} verwendet.
+Sie ordnet einer gemeinsamen Agentenrolle drei unterschiedliche
+Persona-Definitionen zu.
+
+Der folgende Ausschnitt zeigt die Zuordnung der Personas zu den jeweiligen
+Markdown-Dateien und ihren Perspektiven.
+
+\begin{lstlisting}[
+basicstyle=\ttfamily\footnotesize,
+breaklines=true,
+columns=fullflexible,
+keepspaces=true,
+showstringspaces=false
+]
+{
+  "team_id": "TEAM_SOURCE_EVIDENCE_INTERPRETATION",
+  "team_name": "Source Evidence Interpretation Team",
+  "task_name": "Interpret fixed source-grounded Evidence",
+  "role_id": "ROLE_SOURCE_EVIDENCE_INTERPRETER",
+  "role_file": "agents/roles/source_evidence_interpreter.md",
+  "default_execution_mode": "multi_persona",
+  "members": [
+    {
+      "member_id": "LEGACY_INTERPRETER_001",
+      "agent_id": "AGENT_LEGACY_LITERAL_INTERPRETER",
+      "persona_id": "PERSONA_LEGACY_LITERAL_INTERPRETER",
+      "persona_file":
+        "agents/personas/legacy_interpretation/literal_interpreter.md",
+      "perspective": "literal_source_faithful"
+    },
+    {
+      "member_id": "LEGACY_INTERPRETER_002",
+      "agent_id": "AGENT_LEGACY_SYSTEMS_ENGINEERING_INTERPRETER",
+      "persona_id":
+        "PERSONA_LEGACY_SYSTEMS_ENGINEERING_INTERPRETER",
+      "persona_file":
+        "agents/personas/legacy_interpretation/systems_engineering_interpreter.md",
+      "perspective": "systems_engineering"
+    },
+    {
+      "member_id": "LEGACY_INTERPRETER_003",
+      "agent_id": "AGENT_LEGACY_SKEPTICAL_AMBIGUITY_INTERPRETER",
+      "persona_id":
+        "PERSONA_LEGACY_SKEPTICAL_AMBIGUITY_INTERPRETER",
+      "persona_file":
+        "agents/personas/legacy_interpretation/skeptical_ambiguity_interpreter.md",
+      "perspective": "skeptical_ambiguity"
+    }
+  ]
+}
+\end{lstlisting}
+
+Die eigentliche Perspektive der Verarbeitung wird damit nicht innerhalb der
+ausführbaren Programmlogik festgelegt. Die Teamkonfiguration verweist auf
+separate Persona-Dateien, deren Inhalte in
+Anhang~\ref{app:persona_definitions} wiedergegeben sind.
+
+
+\subsection{Konfiguration des Modellrahmens}
+\label{app:configuration_framework}
+
+Der für die Modellbildung verwendete RFLP-basierte Modellrahmen liegt als
+versionierte JSON-Konfiguration vor. Die Datei
+\texttt{turing\_rflp\_framework.json} beschreibt die verfügbaren
+Modellierungsebenen und die darin vorgesehenen Modellbereiche.
+
+Der folgende Ausschnitt zeigt exemplarisch die Systemebene des
+Modellrahmens.
+
+\begin{lstlisting}[
+basicstyle=\ttfamily\footnotesize,
+breaklines=true,
+columns=fullflexible,
+keepspaces=true,
+showstringspaces=false
+]
+{
+  "node_id": "FW_LEVEL_SYSTEM",
+  "mapping_key": "system_level",
+  "name": "System Level",
+  "node_type": "level",
+  "parent_node_id": null,
+  "mapping_target": false,
+  "order": 2
+},
+{
+  "node_id": "FW_SYSTEM_REQUIREMENTS",
+  "mapping_key": "system.requirements",
+  "name": "Requirements",
+  "node_type": "framework_node",
+  "parent_node_id": "FW_LEVEL_SYSTEM",
+  "mapping_target": true,
+  "order": 1
+},
+{
+  "node_id": "FW_SYSTEM_FUNCTIONAL",
+  "mapping_key": "system.functional",
+  "name": "Functional",
+  "node_type": "framework_node",
+  "parent_node_id": "FW_LEVEL_SYSTEM",
+  "mapping_target": true,
+  "order": 2
+},
+{
+  "node_id": "FW_SYSTEM_LOGICAL",
+  "mapping_key": "system.logical",
+  "name": "Logical",
+  "node_type": "framework_node",
+  "parent_node_id": "FW_LEVEL_SYSTEM",
+  "mapping_target": true,
+  "order": 3
+},
+{
+  "node_id": "FW_SYSTEM_PHYSICAL",
+  "mapping_key": "system.physical",
+  "name": "Physical",
+  "node_type": "framework_node",
+  "parent_node_id": "FW_LEVEL_SYSTEM",
+  "mapping_target": true,
+  "order": 4
+}
+\end{lstlisting}
+
+Die Struktur des Modellrahmens wird damit über stabile Identitäten und
+explizite Beziehungen zwischen den Modellbereichen beschrieben. Das
+ergänzende Modellstrukturprofil legt darauf aufbauend fest, welche
+Elementtypen in den jeweiligen Modellbereichen zulässig sind.
+
+
+\subsection{Konfiguration der SysML-v2-Erzeugung}
+\label{app:configuration_generation}
+
+Auch die Abbildung des internen Modellzustands auf die unterstützte
+SysML-v2-Zielrepräsentation wird über eine versionierte Konfiguration
+beschrieben. Die Datei
+\texttt{turing\_sysml\_v2\_generation\_profile.json} enthält explizite
+Abbildungsregeln für unterstützte und nicht unterstützte Modellinhalte.
+
+Der folgende Ausschnitt zeigt eine Regel für die Abbildung einer Funktion
+auf ein unterstütztes SysML-v2-Konstrukt.
+
+\begin{lstlisting}[
+basicstyle=\ttfamily\footnotesize,
+breaklines=true,
+columns=fullflexible,
+keepspaces=true,
+showstringspaces=false
+]
+{
+  "rule_id": "J2_ELEMENT_006",
+  "model_area": "system.functional",
+  "element_type": "function",
+  "mapping_status": "supported",
+  "target_construct_id": "TN_006",
+  "production_generation_allowed": true,
+  "rationale":
+    "An IEM function is an individual reviewed engineering behavior. It maps to an Action Usage/Feature so relationships can reference the generated occurrence without treating it as a reusable type.",
+  "target_element_kind": "feature"
+}
+\end{lstlisting}
+
+Nicht unterstützte Abbildungen werden im selben Profil explizit als solche
+gekennzeichnet. Der Prototyp kann dadurch zwischen freigegebenen
+Zielabbildungen und noch nicht unterstützten Modellinhalten unterscheiden,
+ohne dafür eine implizite Ersatzabbildung innerhalb der Programmlogik
+vorzunehmen.
+
+Die exemplarischen Konfigurationen verdeutlichen damit die in
+Abschnitt~\ref{sec:implementation_configuration} beschriebene Trennung:
+Die grundlegenden Verarbeitungsmechanismen werden durch die Implementierung
+bereitgestellt, während Perspektiven, Modellstruktur und Teile der
+zielmodellspezifischen Abbildung über versionierte Konfigurationsdateien
+festgelegt werden.
