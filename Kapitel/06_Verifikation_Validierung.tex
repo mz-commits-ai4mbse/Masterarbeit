@@ -4,9 +4,9 @@
 Dieses Kapitel beschreibt die Verifikation und Validierung der
 prototypischen Realisierung. Untersucht werden die regelbasiert prüfbaren
 Implementierungseigenschaften, das Zusammenspiel der Verarbeitungsschritte,
-die durchgängige Nachverfolgbarkeit sowie die Validierung und menschliche
-Freigabe des erzeugten SysML-v2-Artefakts. Die Ergebnisse dieser Prüfungen
-werden in Kapitel~\ref{sec:results} dargestellt.
+die Verarbeitung mehrerer Engineering-Quellen sowie die Validierung des
+erzeugten SysML-v2-Artefakts. Die Ergebnisse werden jeweils gemeinsam mit
+dem zugehörigen Prüfverfahren dargestellt.
 
 \subsection{Ziel und Aufbau der Evaluation}
 \label{sec:validation_objectives}
@@ -54,7 +54,7 @@ Die Evaluation verbindet mehrere einander ergänzende Prüfbereiche:
           gemeinsam berücksichtigt werden können, während ihre Identität,
           Provenienz und fachlichen Autorisierungszustände erhalten bleiben.
 
-    \item Die technische Validierung des erzeugten SysML-v2-Artefakts
+    \item Die Validierung des erzeugten SysML-v2-Artefakts
           untersucht dessen formale und technische Verarbeitbarkeit in der
           verwendeten SysML-v2-Toolumgebung. Ergänzend wird geprüft, ob der
           Prototyp die für menschliche Autorisierungsentscheidungen sowie die
@@ -72,24 +72,24 @@ Verarbeitungsschritten zugeordnet, korrigiert und anschließend erneut
 geprüft. Die formative Verifikation unterstützte damit zugleich die
 schrittweise Konsolidierung des Prototyps. Für eindeutig spezifizierbare
 Eigenschaften wurden soweit möglich automatisierte Modul-, Vertrags-,
-Integrations- und Regressionstests eingesetzt. :contentReference[oaicite:2]{index=2}
+Integrations- und Regressionstests eingesetzt. 
 
 Die einzelnen Prüfverfahren liefern unterschiedliche Aussagen über den
 Prototyp. Bestandene Software- und Vertragstests bestätigen jeweils die
 konkret spezifizierte und geprüfte technische Eigenschaft. Die
 End-to-End- und Mehrquellenverifikation untersuchen das Zusammenspiel der
-Verarbeitungsschritte und ihrer Übergänge. Die technische
+Verarbeitungsschritte und ihrer Übergänge. Die
 SysML-v2-Validierung bestätigt die Verarbeitbarkeit des erzeugten
 Zielartefakts in der verwendeten Toolumgebung. Die Ergebnisse werden in den
 folgenden Abschnitten jeweils unmittelbar gemeinsam mit dem zugehörigen
 Prüfverfahren und den verwendeten Akzeptanzkriterien dargestellt.
 
 Nach Abschluss dieser Prüfungen wurde der konsolidierte Prototyp zusätzlich
-in einer extern begleiteten Demonstration über seinen regulären
+in einer extern begleiteten Demonstration über den
 Verarbeitungspfad ausgeführt. Dabei entstand ein vollständig durchlaufener
 und dauerhaft gespeicherter Referenzlauf. Dieser bildet die Grundlage für
 die in Kapitel~\ref{sec:results} dargestellte exemplarische Rekonstruktion
-der durchgängigen Nachverfolgbarkeit. :contentReference[oaicite:3]{index=3}
+der durchgängigen Nachverfolgbarkeit.
 
 \subsection{Automatisierte Software- und Vertragsverifikation}
 \label{sec:validation_software}
@@ -516,10 +516,6 @@ Informations-, Autorisierungs- und Modellzustände konnten demselben
 Verarbeitungspfad zugeordnet werden. Die im Demonstrationslauf erfasste
 Freigabeentscheidung wurde entsprechend an den konkret geprüften
 Artefaktzustand gebunden.
-
-Die vollständige Rekonstruktion dieser Verknüpfungen anhand des
-abschließenden Demonstrationslaufs wird in
-Kapitel~\ref{sec:results} dargestellt.
 
 Die im Demonstrationslauf gespeicherten Informations-, Entscheidungs- und
 Modellzustände bilden die Grundlage für die in
