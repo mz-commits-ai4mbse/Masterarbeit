@@ -456,11 +456,10 @@ Abbildung~\ref{fig:architecture_target_model_formation} stellt den daraus
 resultierenden Übergang von fachlich autorisierter Engineering-Information
 zur SysML-v2-Repräsentation zusammenfassend dar.
 
-\begin{wrapfigure}{r}{0.47\textwidth}
+\begin{figure}[htbp]
     \centering
-    \vspace{-0.8\baselineskip}
     \includegraphics[
-        width=\linewidth,
+        width=0.68\textwidth,
         keepaspectratio
     ]{Graphiken/4.5_Zielmodellbildung_halbseite_v5.pdf}
     \caption[Kontrollierte Zielmodellbildung]{
@@ -471,8 +470,7 @@ zur SysML-v2-Repräsentation zusammenfassend dar.
         die jeweils zugehörigen Verarbeitungsschritte.
         Eigene Darstellung.}
     \label{fig:architecture_target_model_formation}
-    \vspace{-0.6\baselineskip}
-\end{wrapfigure}
+\end{figure}
 
 Aus der fachlich autorisierten Engineering-Information werden zunächst
 mögliche Modellrepräsentationen abgeleitet. Eine fachliche Aussage kann dabei
@@ -712,9 +710,12 @@ weitere Verarbeitung rekonstruierbar machen.
         keepaspectratio
     ]{Graphiken/4.7_Provenienz_und_Nachverfolgbarkeit_halbseite_v4.pdf}
     \caption[Durchgängige Provenienz und Nachverfolgbarkeit]{
-        Durchgängige Provenienz- und Nachverfolgbarkeitsbeziehungen entlang
-        der Zielmodellbildung. Eigene Darstellung.
-    }
+    Durchgängige Provenienz- und Nachverfolgbarkeitsbeziehungen entlang der
+    Zielmodellbildung. Quellengebundene Information, fachliche Autorisierung,
+    modellbezogene Entscheidungen, interne Modellzustände und
+    SysML-v2-Repräsentation bleiben über explizite Referenzen miteinander
+    verbunden und können dadurch vorwärts und rückwärts rekonstruiert werden.
+    Eigene Darstellung.}
     \label{fig:architecture_traceability}
 \end{figure}
 

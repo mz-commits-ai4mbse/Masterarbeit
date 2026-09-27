@@ -54,10 +54,10 @@ Die Evaluation verbindet mehrere einander ergänzende Prüfbereiche:
           gemeinsam berücksichtigt werden können, während ihre Identität,
           Provenienz und fachlichen Autorisierungszustände erhalten bleiben.
 
-    \item Die Validierung des erzeugten SysML-v2-Artefakts
-          untersucht dessen formale und technische Verarbeitbarkeit in der
-          verwendeten SysML-v2-Toolumgebung. Ergänzend wird geprüft, ob der
-          Prototyp die für menschliche Autorisierungsentscheidungen sowie die
+    \item Die Validierung des erzeugten SysML-v2-Artefakts untersucht
+          dessen formale und technische Verarbeitbarkeit in der verwendeten
+          SysML-v2-Toolumgebung. Ergänzend wird geprüft, ob der Prototyp die
+          für menschliche Autorisierungsentscheidungen sowie die
           abschließende Modellprüfung und Freigabe erforderlichen
           Informations- und Modellzustände bereitstellt und die jeweiligen
           Entscheidungen eindeutig mit den geprüften Zuständen verknüpfen
@@ -72,24 +72,24 @@ Verarbeitungsschritten zugeordnet, korrigiert und anschließend erneut
 geprüft. Die formative Verifikation unterstützte damit zugleich die
 schrittweise Konsolidierung des Prototyps. Für eindeutig spezifizierbare
 Eigenschaften wurden soweit möglich automatisierte Modul-, Vertrags-,
-Integrations- und Regressionstests eingesetzt. 
+Integrations- und Regressionstests eingesetzt.
 
 Die einzelnen Prüfverfahren liefern unterschiedliche Aussagen über den
 Prototyp. Bestandene Software- und Vertragstests bestätigen jeweils die
 konkret spezifizierte und geprüfte technische Eigenschaft. Die
 End-to-End- und Mehrquellenverifikation untersuchen das Zusammenspiel der
-Verarbeitungsschritte und ihrer Übergänge. Die
-SysML-v2-Validierung bestätigt die Verarbeitbarkeit des erzeugten
-Zielartefakts in der verwendeten Toolumgebung. Die Ergebnisse werden in den
-folgenden Abschnitten jeweils unmittelbar gemeinsam mit dem zugehörigen
-Prüfverfahren und den verwendeten Akzeptanzkriterien dargestellt.
+Verarbeitungsschritte und ihrer Übergänge. Die Validierung des
+SysML-v2-Artefakts bestätigt die Verarbeitbarkeit des erzeugten Artefakts in
+der verwendeten Toolumgebung. Die Ergebnisse werden in den folgenden
+Abschnitten jeweils unmittelbar gemeinsam mit dem zugehörigen Prüfverfahren
+und den verwendeten Akzeptanzkriterien dargestellt.
 
 Nach Abschluss dieser Prüfungen wurde der konsolidierte Prototyp zusätzlich
-in einer extern begleiteten Demonstration über den
-Verarbeitungspfad ausgeführt. Dabei entstand ein vollständig durchlaufener
-und dauerhaft gespeicherter Referenzlauf. Dieser bildet die Grundlage für
-die in Kapitel~\ref{sec:results} dargestellte exemplarische Rekonstruktion
-der durchgängigen Nachverfolgbarkeit.
+in einer extern begleiteten Demonstration über den Verarbeitungspfad
+ausgeführt. Dabei entstand ein vollständig durchlaufener und dauerhaft
+gespeicherter Referenzlauf. Dieser bildet die Grundlage für die in
+Kapitel~\ref{sec:results} dargestellte exemplarische Rekonstruktion der
+durchgängigen Nachverfolgbarkeit.
 
 \subsection{Automatisierte Software- und Vertragsverifikation}
 \label{sec:validation_software}
@@ -127,8 +127,10 @@ wiederholte Ausführung des vollständigen automatisierten Testsatzes nach
     \centering
     \small
     \caption[Ebenen der automatisierten Softwareverifikation]{
-        Automatisierte Softwareverifikation von technischen Regeln,
-        kontrollierten Übergängen und dem Gesamtsystem.}
+        Drei Ebenen der automatisierten Softwareverifikation mit den jeweils
+        untersuchten Gegenständen und beispielhaften Akzeptanzkriterien:
+        Komponenten- und Vertragsprüfung, Integrations- und Grenzprüfung sowie
+        Regression des Gesamtsystems.}
     \label{tab:validation_software_levels}
     \begin{tabular}{p{3.6cm}p{5.0cm}p{4.8cm}}
         \hline
@@ -204,14 +206,6 @@ Verträge sowie anschließende Regressionstests abgesichert. Die ergänzende
 technische Konsistenzprüfung bestätigte dabei einen konsistenten
 Repository-Zustand.
 
-Die Anzahl erfolgreich ausgeführter Tests dient dabei als Nachweis für die
-jeweils spezifizierten und geprüften technischen Eigenschaften. Die
-Ergebnisse zeigen, dass diese Eigenschaften und Verträge in den geprüften
-Entwicklungsständen erfolgreich ausgeführt und nach Änderungen erneut
-verifiziert werden konnten. Das Zusammenspiel der einzelnen Mechanismen im
-durchgängigen Transformationsprozess wird im folgenden Abschnitt anhand der
-End-to-End-Verifikation untersucht.
-
 \subsection{Verifikation des durchgängigen Verarbeitungspfads}
 \label{sec:validation_e2e_multisource}
 
@@ -222,14 +216,14 @@ einzelnen Verarbeitungsschritte, technischen Verträge und
 Autorisierungsgrenzen im Zusammenspiel einen kontrollierten
 Transformationsprozess bilden.
 
-Für die formative Verifikation wurde zunächst ein vollständiger
-Verarbeitungspfad von einer registrierten Engineering-Quelle bis zum
-erzeugten SysML-v2-Artefakt über die reguläre Anwendungsschnittstelle des
-Prototyps ausgeführt. Während der Verarbeitung wurden die für die
-vorgesehenen menschlichen Entscheidungen erforderlichen
-Informationszustände bereitgestellt und die entsprechenden
-Autorisierungsentscheidungen durch den Autor eingegeben. An den Übergängen
-zwischen den Verarbeitungsschritten wurde geprüft, ob die erforderlichen
+Für die Verifikation wurde zunächst ein vollständiger Verarbeitungspfad von
+einer registrierten Engineering-Quelle bis zum erzeugten
+SysML-v2-Artefakt über die reguläre Anwendungsschnittstelle des Prototyps
+ausgeführt. Während der Verarbeitung wurde geprüft, ob die für die
+vorgesehenen menschlichen Entscheidungen erforderlichen Informationszustände
+bereitgestellt wurden. Die entsprechenden Autorisierungsentscheidungen
+wurden durch den Autor getroffen. An den Übergängen zwischen den
+Verarbeitungsschritten wurde geprüft, ob die erforderlichen
 Vorgängerzustände, Provenienzbeziehungen und Autorisierungsentscheidungen
 vorlagen und korrekt miteinander verknüpft waren. Die weitere Verarbeitung
 erfolgte jeweils auf Grundlage der für den Übergang festgelegten
@@ -239,14 +233,14 @@ Die Untersuchung war formativ angelegt. Beobachtete Abweichungen wurden dem
 betroffenen Architekturmechanismus oder Verarbeitungsschritt zugeordnet und
 dokumentiert. Nach einer Korrektur wurden zunächst die unmittelbar
 betroffenen Softwarefunktionen und anschließend der entsprechende Abschnitt
-des Verarbeitungspfads erneut geprüft. Frühere Fehlerzustände blieben dabei
-als eigene Zustände erhalten und standen für die spätere Auswertung zur
-Verfügung.
+des Verarbeitungspfads erneut geprüft. Die Zustandsinformationen früherer
+Fehlerzustände blieben erhalten und standen somit für die spätere
+Auswertung zur Verfügung.
 
 \paragraph{Ergebnisse der formativen Verifikation}
 
-Die formative Verifikation des durchgängigen Verarbeitungspfads identifizierte
-neben technischen Implementierungsfehlern mehrere Befunde mit unmittelbarer
+Die Verifikation des durchgängigen Verarbeitungspfads identifizierte neben
+technischen Implementierungsfehlern mehrere Befunde mit unmittelbarer
 Bedeutung für das Architekturkonzept. Als architekturrelevant wurden
 Beobachtungen behandelt, bei denen eine vorgesehene Informations-,
 Provenienz- oder Autorisierungsgrenze für die kontrollierte
@@ -262,8 +256,10 @@ Architekturentwicklung wesentlichen Befunde zusammen.
     \centering
     \small
     \caption[Architekturrelevante Befunde der formativen Verifikation]{
-        Architekturrelevante Befunde der formativen Verifikation des
-        Verarbeitungspfads und die daraus abgeleiteten Anpassungen.}
+        Architekturrelevante Befunde der formativen Verifikation.
+        Gegenübergestellt werden beobachtete Probleme im Verarbeitungspfad, die
+        daraus abgeleiteten Architekturpräzisierungen und der jeweils
+        resultierende konsolidierte Zustand.}
     \label{tab:validation_architecture_findings}
     \begin{tabular}{p{4.1cm}p{4.8cm}p{4.7cm}}
         \hline
@@ -311,13 +307,12 @@ Architekturentwicklung wesentlichen Befunde zusammen.
     \end{tabular}
 \end{table}
 
-Die Befunde führten damit während der prototypischen Realisierung zur
-Präzisierung zentraler Architekturmechanismen. Dazu gehören die Trennung der
+Die Befunde führten während der prototypischen Realisierung auch zur
+Präzisierung zentraler Architekturmechanismen. Dazu gehörten die Trennung der
 Informationsrollen, die gemeinsame Bildung fachlicher Referenzgegenstände,
 die getrennte fachliche und modellbezogene Autorisierung sowie die
-regelgebundene Transformation nach abgeschlossener Autorisierung. Die
-resultierenden Mechanismen sind in
-Kapitel~\ref{sec:architecture} beschrieben.
+regelgebundene Transformation nach abgeschlossener Autorisierung. Diese
+Mechanismen sind in Kapitel~\ref{sec:architecture} beschrieben.
 
 Technische oder bedienungsbezogene Befunde wurden ebenfalls korrigiert und
 erneut geprüft. Die vollständige Historie der dokumentierten Befunde mit
@@ -326,11 +321,11 @@ Anhang~\ref{app:findings_register} dokumentiert.
 
 \paragraph{Verifikation der Verarbeitung mehrerer Quellen}
 
-Zusätzlich wurde untersucht, ob mehrere Engineering-Quellen innerhalb
-desselben Projekts zunächst getrennt verarbeitet und anschließend gemeinsam
-für die Modellbildung berücksichtigt werden können. Hierfür wurden vier
-aufbereitete und inhaltlich aufeinander bezogene Testdokumente verwendet.
-Sie repräsentierten unterschiedliche Informationsperspektiven auf dasselbe
+Hier wurde untersucht, ob mehrere Engineering-Quellen innerhalb desselben
+Projekts zunächst getrennt verarbeitet und anschließend gemeinsam für die
+Modellbildung berücksichtigt werden können. Dafür wurden vier aufbereitete
+und inhaltlich aufeinander bezogene Testdokumente verwendet. Sie
+repräsentierten unterschiedliche Informationsperspektiven auf dasselbe
 technische Projekt und wurden jeweils als eigenständige Engineering-Quelle
 registriert.
 
@@ -369,7 +364,7 @@ Akzeptanzkriterien verwendet:
 
 Die Prüfung adressierte damit den Übergang von einzelnen quellenbezogenen
 Verarbeitungspfaden zu einem gemeinsamen Projektkontext. Die projektweite
-fachliche Bewertung wird durch die maschinelle Identifikation von
+fachliche Bewertung wurde durch die maschinelle Identifikation von
 Ähnlichkeiten, Ergänzungen, möglichen Widersprüchen und Unsicherheiten
 vorbereitet. Für die technische Verifikation wurde dabei insbesondere
 geprüft, ob erforderliche Entscheidungsgrundlagen bereitgestellt, die
@@ -377,7 +372,7 @@ entstehenden Zustände nachvollziehbar verknüpft und die vorgesehenen
 Verarbeitungsgrenzen eingehalten werden.
 
 Bei einem Halt der Verarbeitung wurde anhand des gespeicherten Zustands
-geprüft, welcher Auslöser vorlag. Ein durch eine fehlende Voraussetzung
+geprüft, welcher Grund dafür vorlag. Ein durch eine fehlende Voraussetzung
 ausgelöster Halt bestätigte die vorgesehene Anwendung des
 \emph{fail-closed}-Prinzips. Technische Implementierungsfehler wurden
 korrigiert und der betroffene Verarbeitungsschritt anschließend gegen
@@ -397,11 +392,11 @@ Zur Korrektur wurde die projektweite Referenzierung um den jeweiligen
 Verarbeitungskontext ergänzt. Dadurch konnten auch lokal identische
 Kennungen eindeutig über ihren Verarbeitungslauf unterschieden und mit den
 zugehörigen Quellen-, Prüf- und Informationszuständen verknüpft werden.
-Anschließend wurde der Verarbeitungspfad erneut geprüft.
+Anschließend wurde der Verarbeitungspfad erneut durchlaufen.
 
-Im Wiederholungslauf konnten die Engineering-Quellen zunächst getrennt
-verarbeitet und ihre autorisierten Engineering-Informationen mit der
-jeweiligen Quellen- und Verarbeitungsprovenienz erhalten werden. Über die
+Im Wiederholungslauf wurden die Engineering-Quellen zunächst getrennt
+verarbeitet, und ihre autorisierten Engineering-Informationen blieben mit
+der jeweiligen Quellen- und Verarbeitungsprovenienz erhalten. Über die
 projektbezogene Quellenzulassung wurde anschließend geprüft, welche Quellen
 für die projektweite Verarbeitung berücksichtigt wurden. Die zugelassenen
 Informationszustände konnten daraufhin gemeinsam für die Modellbildung
@@ -414,8 +409,10 @@ Wiederholungslauf beobachteten Ergebnisse zusammen.
     \centering
     \small
     \caption[Ergebnisse der Verarbeitung mehrerer Quellen]{
-        Ergebnisse der Verifikation der Verarbeitung mehrerer
-        Engineering-Quellen nach Korrektur der Identitätskollision.}
+        Ergebnisse der Verifikation mit mehreren Engineering-Quellen nach
+        Korrektur der Identitätskollision. Geprüft wurden Quellenidentität,
+        Provenienz, fachliche Autorisierung, projektbezogene Quellenzulassung,
+        projektweite Übergabe und gemeinsame Modellbildung.}
     \label{tab:validation_multisource_results}
     \begin{tabular}{p{4.4cm}p{8.6cm}}
         \hline
@@ -457,16 +454,16 @@ Wiederholungslauf beobachteten Ergebnisse zusammen.
     \end{tabular}
 \end{table}
 
-Der Wiederholungslauf bestätigte damit die eindeutige Zuordnung der
+Der Wiederholungslauf bestätigte somit die eindeutige Zuordnung der
 quellenbezogenen Informations- und Autorisierungszustände auch bei ihrer
 projektweiten Verarbeitung. Die jeweilige Quellen- und
-Verarbeitungsprovenienz blieb erhalten und die zugelassenen Informationen
+Verarbeitungsprovenienz blieb erhalten, und die zugelassenen Informationen
 konnten gemeinsam für die nachfolgende Modellbildung bereitgestellt werden.
 
 Der weitergehende semantische Abgleich zwischen Informationen verschiedener
-Quellen und eine daraus gegebenenfalls entstehende neue Engineering-Aussage
-wurden in diesem Wiederholungslauf nicht vollständig durchlaufen. Die
-Evaluation dieses Verarbeitungspfads konzentrierte sich auf die
+Quellen und eine daraus gegebenenfalls abgeleitete neue Engineering-Aussage
+wurden in diesem Wiederholungslauf nicht vollständig geprüft. Die Evaluation
+dieses Verarbeitungspfads konzentrierte sich vielmehr auf die
 quellenbezogene Verarbeitung und Autorisierung, die projektbezogene
 Quellenzulassung sowie die gemeinsame Bereitstellung der zugelassenen
 Informationen für die Modellbildung.
@@ -494,9 +491,9 @@ der eigenen Generierungslogik formal verarbeitet werden kann.
 
 Ergänzend wurde geprüft, ob der Prototyp die für die anschließende
 menschliche Modellprüfung und Freigabe erforderlichen Zustände eindeutig
-bereitstellt und miteinander verknüpft. Dazu gehören insbesondere der
-erzeugte Artefaktzustand, das zugehörige Validierungsergebnis sowie die für
-den Modellinhalt maßgeblichen fachlichen und modellbezogenen
+bereitstellt und miteinander korrekt verknüpft. Dazu gehören insbesondere
+der erzeugte Artefaktzustand, das zugehörige Validierungsergebnis sowie die
+für den Modellinhalt maßgeblichen fachlichen und modellbezogenen
 Autorisierungsentscheidungen. Eine erfasste Modellprüfung und
 Freigabeentscheidung kann dadurch eindeutig an den tatsächlich geprüften
 Artefaktzustand gebunden werden.
@@ -505,17 +502,16 @@ Artefaktzustand gebunden werden.
 
 Das mit dem konsolidierten Prototyp erzeugte SysML-v2-Artefakt konnte mit
 der \emph{SYSIDE Modeler CLI}~0.10.3 erfolgreich verarbeitet werden. Der
-gespeicherte Validierungszustand weist den Status \texttt{valid}, einen
+gespeicherte Validierungszustand wies den Status \texttt{valid}, einen
 bestandenen \texttt{Publication gate}, keine Findings und keine
 Diagnosemeldungen der externen Toolumgebung aus.
 
 Auch die für die anschließende menschliche Modellprüfung und Freigabe
-erforderlichen Zustände lagen eindeutig verknüpft vor. Das erzeugte
-SysML-v2-Artefakt, sein Validierungsergebnis sowie die zugrunde liegenden
-Informations-, Autorisierungs- und Modellzustände konnten demselben
-Verarbeitungspfad zugeordnet werden. Die im Demonstrationslauf erfasste
-Freigabeentscheidung wurde entsprechend an den konkret geprüften
-Artefaktzustand gebunden.
+erforderlichen Informationen und Zustände lagen eindeutig verknüpft vor.
+Das erzeugte SysML-v2-Artefakt, sein Validierungsergebnis sowie die zugrunde
+liegenden Informations-, Autorisierungs- und Modellzustände konnten
+demselben Verarbeitungspfad zugeordnet werden. Die Freigabeentscheidung
+wurde entsprechend an den konkret geprüften Artefaktzustand gebunden.
 
 Die im Demonstrationslauf gespeicherten Informations-, Entscheidungs- und
 Modellzustände bilden die Grundlage für die in

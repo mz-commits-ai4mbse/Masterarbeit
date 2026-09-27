@@ -19,23 +19,6 @@
 
 In diesem Abschnitt wird die methodische Planung der Literatursuche dargelegt. Die Struktur orientiert sich an etablierten Standards für die Erstellung systematischer Übersichtsarbeiten im Systems Engineering.
 
-\subsubsection{Meta Daten}
-
-Die grundlegenden Informationen zur Planung werden in der folgenden Tabelle zusammengefasst.
-
-\begin{table}[h]
-\centering
-\begin{tabular}{|l|l|}
-\hline
-\textbf{Kategorie} & \textbf{Inhalt} \\ \hline
-%Momentum ID & REC AIC 2026 \\ \hline
-Projekt & Turing \\ \hline
-Status & v1 \\ \hline
-Ersteller & Moritz Diez \\ \hline
-Datum & 03. März 2026 \\ \hline
-\end{tabular}
-\end{table}
-
 \subsubsection{Zweck}
 
 Die systematische Identifikation sowie die Sammlung relevanter Daten zur Beschreibung des Stands der Technik (State of the Art) wird durch diese Literatursuche angestrebt. Der Fokus wird auf die KI gestützte Synthese modularer SysML Modelle aus heterogenen Bestandsdaten im Bereich des Brownfield Engineering gelegt. Die Ergebnisse dienen als wissenschaftliche Grundlage für die methodische Entwicklung des AaC Generators.
@@ -56,10 +39,14 @@ Zur Strukturierung der Forschungsfragen wird das PICOC Framework angewendet \cit
 \paragraph{PICOC Framework}
 
 Zur systematischen Definition der Forschungsziele sowie zur Herleitung präziser Suchparameter wird das PICOC Framework angewendet. Durch diese Methodik wird eine strukturierte Zerlegung der Problemstellung in fünf Dimensionen ermöglicht. Die Population beschreibt hierbei die betrachteten technischen Systeme sowie die Domäne des Brownfield Engineering. Als Intervention wird die Anwendung von Large Language Models zur Synthese von SysML v2 Code definiert. Der Vergleich dient der Gegenüberstellung mit manuellen Modellierungsprozessen sowie klassischen MBSE Ansätzen. Durch die Komponente des Ergebnisses werden die angestrebten Ziele wie Modularität sowie Codevalidität spezifiziert. Der Kontext umfasst die Rahmenbedingungen der Transformation heterogener Bestandsdaten im industriellen Umfeld. Durch die Anwendung dieses Modells wird eine hohe Präzision bei der anschließenden Identifikation relevanter Publikationen in den gewählten Datenbanken sichergestellt.
+Die verwendete Zuordnung der PICOC-Dimensionen ist in
+Tabelle~\ref{tab:picoc_kriterien} zusammengefasst.
 
 \begin{table}[h]
-\caption[Beschreibung der PICOC Kriterien]{Beschreibung der PICOC Kriterien} % Dieser Text erscheint im Verzeichnis
-\label{tab:picoc_kriterien} % Erlaubt referenzen im Text via \ref{tab:picoc_kriterien}
+\caption[PICOC-Kriterien der Literaturrecherche]{
+PICOC-Kriterien zur Strukturierung der Literaturrecherche und Ableitung der
+Suchparameter.}
+\label{tab:picoc_kriterien}
 \centering
 \begin{tabular}{|l|p{10cm}|}
 \hline
@@ -171,8 +158,13 @@ Die initiale Filterung der Suchergebnisse erfolgt durch eine Sichtung von Titel 
 
 Eine Publikation wird für die Volltextprüfung ausgewählt, wenn mindestens eines der folgenden Kriterien erfüllt ist \cite{Higgins.2019b}.
 
+Tabelle~\ref{tab:inc_criteria} fasst die verwendeten Einschlusskriterien
+für die Auswahl zur Volltextprüfung zusammen.
+
 \begin{table}[h]
-\caption[Einschlusskriterien für das Level 1 Screening]{Einschlusskriterien für das Level 1 Screening}
+\caption[Einschlusskriterien des Level-1-Screenings]{
+Einschlusskriterien des Level-1-Screenings für die Auswahl zur
+Volltextprüfung.}
 \label{tab:inc_criteria}
 \centering
 \begin{tabular}{|l|p{10cm}|}
@@ -190,8 +182,11 @@ INC 5 & Methodiken zur Sicherstellung der Modularität sowie der Plug and Play F
 
 Publikationen werden von der weiteren Betrachtung ausgeschlossen, wenn eine der folgenden Bedingungen zutrifft \cite{Petticrew.2012}.
 
+Tabelle~\ref{tab:exc_criteria} fasst die verwendeten Ausschlusskriterien
+für die weitere Literaturauswahl zusammen.
 \begin{table}[h]
-\caption[Ausschlusskriterien für das Level 1 Screening]{Ausschlusskriterien für das Level 1 Screening}
+\caption[Ausschlusskriterien des Level-1-Screenings]{
+Ausschlusskriterien des Level-1-Screenings für die weitere Literaturauswahl.}
 \label{tab:exc_criteria}
 \centering
 \begin{tabular}{|l|p{10cm}|}

@@ -1,35 +1,36 @@
-\section*{Abkürzungsverzeichnis und Begriffsdefinitionen}
-\addcontentsline{toc}{section}{Abkürzungsverzeichnis und Begriffsdefinitionen}
-
-\subsection*{Abkürzungsverzeichnis}
+\section*{Abkürzungsverzeichnis}
+\addcontentsline{toc}{section}{Abkürzungsverzeichnis}
 
 \renewcommand{\arraystretch}{1.2}
 \begin{xltabular}{\textwidth}{p{3.0cm}X}
 \textbf{Abkürzung} & \textbf{Bedeutung} \\
 \hline
 
-API   & Application Programming Interface \\
-CLI   & Command Line Interface \\
-CSV   & Comma-Separated Values \\
-IEM   & Internal Engineering Model \\
-KI    & Künstliche Intelligenz \\
-LLM   & Large Language Model \\
-MBSE  & Model-Based Systems Engineering \\
-OCR   & Optical Character Recognition \\
-PLM   & Product Lifecycle Management \\
-QVT   & Query/View/Transformation \\
-REDPA & Reusable Engineering Document Processing Architecture \\
-RFLP  & Requirements, Functional, Logical, Physical \\
-SOP   & Standard Operating Procedure \\
-SysML & Systems Modeling Language \\
-W3C   & World Wide Web Consortium \\
-XMI   & XML Metadata Interchange \\
+CLI    & Command Line Interface \\
+CSV    & Comma-Separated Values \\
+IEM    & Internal Engineering Model \\
+JSON   & JavaScript Object Notation \\
+KI     & Künstliche Intelligenz \\
+LLM    & Large Language Model \\
+MBSE   & Model-Based Systems Engineering \\
+OCR    & Optical Character Recognition \\
+PICOC  & Population, Intervention, Comparison, Outcomes, Context \\
+PRISMA & Preferred Reporting Items for Systematic Reviews and Meta-Analyses \\
+QVT    & Query/View/Transformation \\
+REDPA  & Reusable Engineering Document Processing Architecture \\
+RFLP   & Requirements, Functional, Logical, Physical \\
+SOP    & Standard Operating Procedure \\
+SysML  & Systems Modeling Language \\
+TSV    & Tab-Separated Values \\
+W3C    & World Wide Web Consortium \\
+XMI    & XML Metadata Interchange \\
 
 \end{xltabular}
 
-\vspace{0.8cm}
+\newpage
 
-\subsection*{Begriffsdefinitionen}
+\section*{Begriffsdefinitionen}
+\addcontentsline{toc}{section}{Begriffsdefinitionen}
 
 \renewcommand{\arraystretch}{1.25}
 \begin{xltabular}{\textwidth}{p{4.2cm}X}
@@ -58,16 +59,17 @@ Aus einer Engineering-Quelle identifizierte Information, deren konkrete
 Herkunft erhalten bleibt und die als fachliche Grundlage nachfolgender
 Interpretations- und Autorisierungsentscheidungen dient. \\
 
-Engineering Subject &
-Quellengebundener fachlicher Referenzgegenstand, auf den unterschiedliche
-Persona-Perspektiven angewendet und deren Interpretationsergebnisse
-miteinander verglichen werden können. \\
+Fachlicher Referenzgegenstand (\emph{Engineering Subject}) &
+Quellengebundener fachlicher Gegenstand, der die gemeinsame
+Informationsgrundlage für nachfolgende Persona-Interpretationen bildet.
+Er gehört zur Informations- und Interpretationsebene und geht der
+Modellbildung voraus. \\
 
-Persona &
-Konfigurierte fachliche Perspektive, aus der ein bestimmter
-Interpretations- oder Modellierungsschritt durchgeführt wird. Mehrere
-Personas können denselben fachlichen Gegenstand mit unterschiedlichen
-Schwerpunkten betrachten. \\
+Persona / Persona-Perspektive &
+Konfigurierte fachliche Perspektive, aus der eine definierte
+Verarbeitungsaufgabe bearbeitet wird. Mehrere Persona-Perspektiven können
+denselben fachlichen Referenzgegenstand mit unterschiedlichen Schwerpunkten
+interpretieren. \\
 
 Human Authority &
 Oberbegriff für die explizite menschliche Entscheidungsbefugnis an einem
@@ -78,9 +80,15 @@ Human Engineering Authority &
 Menschliche Entscheidungsbefugnis zur Autorisierung der fachlichen Bedeutung
 und weiteren Verwendung von Engineering-Information. \\
 
-Engineering Meaning &
-Fachliche Bedeutung einer autorisierten Engineering-Information unabhängig
-von ihrer konkreten strukturellen Repräsentation im Zielmodell. \\
+Autorisierung &
+Explizite menschliche Entscheidung, durch die ein konkreter Informations-
+oder Modellzustand für einen nachfolgenden Verarbeitungsschritt zugelassen
+wird. Die Autorisierung bleibt mit dem Zustand verbunden, auf den sich die
+Entscheidung bezieht. \\
+
+Fachliche Bedeutung (\emph{Engineering Meaning}) &
+Durch autorisierte Engineering-Information getragene fachliche Aussage,
+unabhängig von ihrer konkreten strukturellen Repräsentation im Zielmodell. \\
 
 Model Candidate &
 Vorschlag für ein mögliches Modellelement, eine Beziehung oder eine
@@ -93,15 +101,20 @@ Menschliche Entscheidungsbefugnis zur Autorisierung der strukturellen
 Einordnung und Repräsentation einer Engineering-Information im Zielmodell. \\
 
 Internal Engineering Model (IEM) &
-Interne Modellrepräsentation, in der autorisierte Modellinhalte unter Erhalt
-ihrer fachlichen Bedeutung und strukturellen Einordnung zusammengeführt
-werden. Das IEM bildet die Grundlage für die nachgelagerte
+Kontrollierte interne Modellrepräsentation, in der autorisierte Modellinhalte
+unter Erhalt ihrer fachlichen Bedeutung und strukturellen Einordnung
+zusammengeführt werden. Das IEM bildet die Grundlage für die nachgelagerte
 zielmodellspezifische Formulierung und SysML-v2-Erzeugung. \\
 
-Projektzulassung (\emph{Project Fit}) &
-Kontrollierter Bewertungsschritt, der prüft, ob eine Engineering-Quelle
-plausibel dem betrachteten System- und Projektkontext zugeordnet und für die
-projektweite Verarbeitung berücksichtigt werden kann. \\
+Projektbezogene Quellenzulassung (\emph{Project Fit}) &
+Kontrollgrenze vor der projektweiten Zusammenführung, an der bewertet wird,
+ob eine Engineering-Quelle für den betrachteten System- und Projektkontext
+relevant und für die projektweite Verwendung geeignet ist. \\
+
+Modellwirkungsabgleich &
+Prüfschritt nach einer fachlichen Änderung, in dem deren mögliche
+Auswirkungen auf einen bestehenden Modellzustand bestimmt und als Grundlage
+für nachfolgende Entscheidungen der Model Authority bereitgestellt werden. \\
 
 Reusable Engineering Document Processing Architecture (REDPA) &
 Im Ausblick verwendeter Arbeitsbegriff für einen möglichen
@@ -113,29 +126,43 @@ fach- und zielspezifische Bestandteile angepasst oder ersetzt werden können. \\
 
 Akzeptanzniveau &
 Im Ausblick vorgeschlagene Bewertungsgröße für lernende Erweiterungen des
-Transformationssystems. Sie beschreibt, in welchem Umfang maschinell erzeugte
-Vorschläge durch die zuständige Human Authority ohne oder mit nur geringer
-fachlicher Änderung übernommen werden. \\
+Transformationssystems. Sie beschreibt, in welchem Umfang maschinell
+erzeugte Vorschläge durch die zuständige Human Authority ohne oder mit nur
+geringer fachlicher Änderung übernommen werden. \\
 
 Provenienz &
-Nachvollziehbare Herkunft und Entstehung einer Information einschließlich
-der relevanten Verarbeitungs- und Entscheidungszustände, aus denen sie
-hervorgegangen ist. \\
+Nachvollziehbare Herkunft und Entstehungszusammenhänge einer Information
+oder eines Modellinhalts einschließlich ihrer Bindung an die jeweilige
+Quelle und den relevanten Verarbeitungskontext. \\
 
 Nachverfolgbarkeit (\emph{Traceability}) &
-Nachvollziehbare Verknüpfung zwischen Engineering-Quellen,
-Verarbeitungszuständen, Autorisierungsentscheidungen, Modellzuständen und
-resultierenden Modellartefakten. \\
+Explizite Verknüpfung zwischen Engineering-Quellen, quellengebundener
+Evidenz, Interpretationen, Autorisierungsentscheidungen, Modellzuständen und
+resultierenden Modellartefakten. Sie ermöglicht die Rekonstruktion des
+Transformationspfads in beide Richtungen. \\
 
 Persistenz &
 Dauerhafte Speicherung relevanter Informations-, Entscheidungs- und
 Modellzustände. Frühere Zustände bleiben dabei erhalten und können mit
 nachfolgenden Zuständen und Entscheidungen verknüpft werden. \\
 
+Verifikation &
+Prüfung, ob die spezifizierten Eigenschaften, Verarbeitungsschritte und
+Architekturmechanismen des Prototyps entsprechend ihrer Festlegung
+implementiert sind und im vorgesehenen Zusammenspiel funktionieren. \\
+
 Validierung &
-Prüfung eines erzeugten SysML-v2-Artefakts anhand festgelegter formaler und
-technischer Kriterien sowie seiner Verarbeitbarkeit in der verwendeten
+Technische Prüfung eines erzeugten SysML-v2-Artefakts anhand festgelegter
+formaler Kriterien sowie seiner Verarbeitbarkeit in der verwendeten
 SysML-v2-Toolumgebung. \\
+
+Menschliche Modellprüfung &
+Menschliche Prüfung des konkret erzeugten und technisch validierten
+Modellzustands vor seiner abschließenden Freigabe. \\
+
+Freigabe &
+Abschließende menschliche Entscheidung, mit der ein konkret geprüfter
+Modellzustand für den vorgesehenen Verwendungskontext freigegeben wird. \\
 
 Fail-closed &
 Verarbeitungsprinzip, bei dem ein Verarbeitungsschritt nur ausgeführt wird,

@@ -1,0 +1,57 @@
+\section{Dokumentation KI-basierter Hilfsmittel}
+\label{app:ki_hilfsmittel}
+
+Im Rahmen der prototypischen Realisierung des in dieser Arbeit untersuchten
+Transformationssystems wurde ChatGPT von OpenAI als KI-basiertes Hilfsmittel
+bei der Softwareentwicklung des SysMLv2-Generators eingesetzt. Der Einsatz
+betraf insbesondere die Erstellung und Überarbeitung von Programmcode, die
+Ableitung und Ergänzung automatisierter Tests sowie die Analyse technischer
+Zwischenstände.
+
+Tabelle~\ref{tab:ki_hilfsmittel} fasst die wesentlichen Einsatzbereiche und
+die jeweilige menschliche Kontrolle zusammen.
+
+\begin{table}[htbp]
+    \centering
+    \caption[Einsatz KI-basierter Hilfsmittel bei der Prototypentwicklung]{
+        Einsatz von ChatGPT bei der prototypischen Realisierung des
+        SysMLv2-Generators und die jeweils zugehörige menschliche Prüfung.}
+    \label{tab:ki_hilfsmittel}
+    \begin{tabularx}{\textwidth}{p{3.2cm}p{4.2cm}X}
+        \hline
+        \textbf{Hilfsmittel} &
+        \textbf{Einsatzbereich} &
+        \textbf{Verwendung und Kontrolle} \\
+        \hline
+
+        ChatGPT, OpenAI &
+        Programmcode &
+        Unterstützung bei der Erstellung und Überarbeitung einzelner
+        Implementierungsbestandteile. Vorgeschlagene Änderungen wurden vor
+        ihrer Übernahme gegen die fachliche Spezifikation und die bestehende
+        Architektur geprüft. \\
+
+        ChatGPT, OpenAI &
+        Automatisierte Tests &
+        Unterstützung bei der Ableitung und Ergänzung von Tests für
+        spezifizierte technische Eigenschaften und Verarbeitungsschritte.
+        Die Akzeptanz der Tests und ihrer erwarteten Ergebnisse erfolgte
+        durch den Autor. \\
+
+        ChatGPT, OpenAI &
+        Technische Analyse &
+        Unterstützung bei der Analyse von Implementierungszuständen,
+        Fehlerbildern und möglichen Anpassungen. Architekturentscheidungen
+        sowie die Auswahl und Freigabe umgesetzter Änderungen verblieben
+        beim Autor. \\
+
+        \hline
+    \end{tabularx}
+\end{table}
+
+Die KI-generierten Vorschläge besaßen innerhalb des Entwicklungsprozesses
+keine eigene Entscheidungsautorität. Fachliche Spezifikation,
+Architekturentscheidungen, Bewertung der vorgeschlagenen Änderungen und
+deren endgültige Übernahme erfolgten durch den Autor. Die dabei beobachtete
+Rolle menschlicher Prüfung wird in
+Abschnitt~\ref{sec:reflection_ai_development} reflektiert.

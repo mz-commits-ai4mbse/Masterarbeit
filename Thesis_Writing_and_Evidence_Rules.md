@@ -26,9 +26,26 @@ Der rote Faden folgt stattdessen dem Weg der Engineering Information durch das S
 
 Die Arbeit wird auf Deutsch verfasst.
 
-Der Schreibstil ist sachlich, präzise und technisch verständlich. Formulierungen sollen dem persönlichen Schreibstil des Autors entsprechen und nicht unnötig akademisch oder künstlich wirken.
+Der Schreibstil ist sachlich, präzise und technisch verständlich. Maßgebliche Stilreferenz ist die Bachelorarbeit des Autors im Repository unter `Thesis - Sample/`. Sie dient ausschließlich als sprachliche und formale Referenz und nicht als wissenschaftliche Quelle.
 
-Im Fließtext gelten folgende verbindliche Regeln:
+Ziel für die Masterarbeit ist die Verbindung aus der wissenschaftlichen Präzision der Masterarbeit und dem natürlicheren sprachlichen Fluss der Bachelorarbeit. Der Text soll erkennbar vom Autor stammen und nicht unnötig akademisch, abstrakt oder künstlich wirken.
+
+### 3.1 Aus der Bachelorarbeit abgeleitete Stilmerkmale
+
+Für neue und überarbeitete Abschnitte gelten insbesondere folgende Leitlinien:
+
+1. Der Gedankengang steht vor sprachlicher Verdichtung. Ein Absatz entwickelt grundsätzlich einen klar erkennbaren Gedanken.
+2. Sätze sollen überwiegend mittellang und gut lesbar bleiben. Mehrere fachlich unterschiedliche Aussagen werden nicht unnötig in einen einzigen langen Satz gepackt.
+3. Aufeinanderfolgende Sätze sollen logisch verbunden sein. Übergänge entstehen primär aus dem Inhalt und nicht aus wiederholten formelhaften Konnektoren.
+4. Satzanfänge und Übergänge werden variiert. Wiederkehrende Muster wie „Dabei“, „Hierbei“, „Zugleich“, „Darüber hinaus“ oder „Damit“ werden nur verwendet, wenn sie den logischen Zusammenhang tatsächlich tragen.
+5. Kontrastive Formulierungen werden nur eingesetzt, wenn ein echter fachlicher Gegensatz besteht.
+6. Nominalstil wird reduziert, wenn eine aktive und direkte Formulierung dieselbe Aussage präziser transportiert.
+7. Fachbegriffe und technische Bezeichnungen bleiben exakt. Englische Begriffe werden vor allem dann beibehalten, wenn sie definierte Architektur-, Modell-, Artefakt- oder Implementierungsbegriffe darstellen.
+8. Erklärende Passagen sollen vom konkreten Sachverhalt zur Einordnung führen und nicht mit abstrakten Metaformulierungen beginnen.
+9. Wiederholte Absicherungen derselben Aussage werden vermieden. Eine fachliche Einschränkung wird dort formuliert, wo sie argumentativ benötigt wird.
+10. Der Text folgt dem Grundsatz: so kurz wie möglich, so lang wie nötig.
+
+### 3.2 Verbindliche Regeln für den Fließtext
 
 1. Gedankenstriche werden nicht als Satzzeichen verwendet.
 2. Formulierungen mit dem unpersönlichen Pronomen „man“ werden vermieden.
@@ -38,6 +55,34 @@ Im Fließtext gelten folgende verbindliche Regeln:
 6. Abkürzungen werden bei der ersten Verwendung eingeführt.
 7. Begriffe werden innerhalb der Arbeit konsistent verwendet.
 8. Die Beschreibung des Prototyps erfolgt nicht als chronologischer Erfahrungsbericht.
+9. Formulierungen werden bevorzugt aktiv und direkt gewählt, sofern dadurch keine fachliche Präzision verloren geht.
+10. Eine Aussage wird nicht allein deshalb verlängert, um akademischer zu wirken.
+
+### 3.3 Abschnitts- und Kapitelübergänge
+
+Blindüberschriften werden vermieden. Unter einer Hauptüberschrift wird bei Bedarf eine sehr kurze Einleitung eingefügt, die lediglich die Funktion und Argumentationsfolge des Kapitels beschreibt. Sie nimmt keine späteren Inhalte vorweg und wiederholt nicht die nachfolgenden Unterabschnitte.
+
+Ein solcher Einleitungstext soll in der Regel nur wenige Sätze umfassen.
+
+Abschnittsübergänge sollen erkennen lassen, warum der folgende Abschnitt für die Gesamtargumentation notwendig ist. Dabei wird auf künstliche Vorschauen und wiederholte Formulierungen wie „im folgenden Abschnitt wird ...“ verzichtet, wenn der Zusammenhang bereits aus dem Text hervorgeht.
+
+### 3.4 Roter Faden der Gesamtarbeit
+
+Die sprachliche Überarbeitung muss den fachlichen roten Faden der Arbeit unterstützen:
+
+Problemstellung
+→ Forschungsbedarf und Forschungsfragen
+→ Methodik
+→ Architekturkonzept
+→ prototypische Realisierung
+→ Verifikation und Validierung
+→ Ergebnisse
+→ Diskussion und Beantwortung der Forschungsfragen
+→ Fazit und Ausblick
+
+Jeder wesentliche Abschnitt soll erkennen lassen, welchen Beitrag er zur Beantwortung der Forschungsfragen und zum Weg von heterogener Engineering-Information zu einem kontrolliert freigegebenen SysML-v2-Modell leistet.
+
+Insbesondere die Darstellung der Multi-Source-Verarbeitung in den Kapiteln 4 und 5 muss mit dem tatsächlich realisierten und in den Kapiteln 7 bis 9 ausgewerteten Stand konsistent bleiben.
 
 ## 4. Wissenschaftliche Aussagen und Quellen
 
@@ -430,14 +475,23 @@ Prüfung auf:
 
 ### Schritt 10: Sprachliche QA
 
+Die sprachliche QA erfolgt ausdrücklich gegen die in Abschnitt 3 festgelegte Stilreferenz der Bachelorarbeit.
+
 Prüfung auf:
 
 1. Gedankenstriche
 2. Formulierungen mit „man“
-3. unnötig künstliche Sprache
-4. Wiederholungen
+3. unnötig künstliche oder akademisierende Sprache
+4. Wiederholungen und doppelte Absicherungen
 5. inkonsistente Terminologie
 6. zu lange oder unnötig komplexe Sätze
+7. unnötigen Nominalstil
+8. monotone Satzanfänge und formelhafte Übergänge
+9. unnötige englische Begriffe außerhalb definierter technischer Bezeichnungen
+10. Absätze ohne klaren Hauptgedanken
+11. fehlende oder zu lange Einleitungen unter Hauptüberschriften
+12. Brüche im roten Faden zwischen Problem, Architektur, Prototyp, Evaluation und Diskussion
+13. Inkonsistenzen zwischen der dargestellten Architektur und dem final akzeptierten Implementierungs- und Evaluationsstand
 
 ### Schritt 11: Darstellungs QA
 
@@ -521,6 +575,8 @@ Schusterjungen und Hurenkinder sollen durch geeignete LaTeX Einstellungen soweit
 Layoutänderungen werden zentral definiert und nicht individuell innerhalb einzelner Kapitel umgesetzt.
 
 ## 15. Autoritätsreihenfolge
+
+Die Bachelorarbeit im Verzeichnis `Thesis - Sample/` besitzt ausschließlich sprachliche und formale Referenzfunktion. Sie ist weder technische Autorität für das entwickelte System noch wissenschaftlicher Beleg für Aussagen der Masterarbeit.
 
 Für Aussagen über das entwickelte System gilt folgende technische Autoritätsreihenfolge:
 

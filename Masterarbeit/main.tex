@@ -57,10 +57,11 @@
 }
 \newcounter{servicepage}
 
-% Vermeidung von Schusterjungen und Hurenkindern
+% Vermeidung ungünstiger Seitenumbrüche
 \clubpenalty=10000
 \widowpenalty=10000
 \displaywidowpenalty=10000
+\brokenpenalty=10000
 
 \renewcommand{\topfraction}{0.9}
 \renewcommand{\bottomfraction}{0.8}
@@ -111,21 +112,21 @@
 \pagenumbering{arabic}
 
 \input{Kapitel/01_Einleitung}
-\newpage
+\clearpage
 \input{Kapitel/02_Grundlagen_StandDerTechnik}
-\newpage
+\clearpage
 \input{Kapitel/03_MethodischesVorgehen}
-\newpage
+\clearpage
 \input{Kapitel/04_Informationsverarbeitungsarchitektur}
-\newpage
+\clearpage
 \input{Kapitel/05_PrototypischeRealisierung}
-\newpage
+\clearpage
 \input{Kapitel/06_Verifikation_Validierung}
-\newpage
+\clearpage
 \input{Kapitel/07_Ergebnisse}
-\newpage
+\clearpage
 \input{Kapitel/08_Discussion}
-\newpage
+\clearpage
 \input{Kapitel/09_Fazit}
 
 % ============================================================================
@@ -147,9 +148,9 @@
 
 \clearpage
 
-\input{sperrvermerk}
+%\input{sperrvermerk}
 
-\clearpage
+%\clearpage
 
 % ============================================================================
 % Anhang
@@ -185,5 +186,8 @@
 
 \newpage
 \input{Anhang/09_Konfigurationsdateien}
+
+\newpage
+\input{Anhang/10_KI_Hilfsmittel}
 
 \end{document}

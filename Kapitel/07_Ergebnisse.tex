@@ -4,21 +4,20 @@
 Nach Abschluss der in Kapitel~\ref{sec:validation} beschriebenen
 Verifikation und Validierung wurde der konsolidierte Prototyp in einem
 zusammenhängenden Demonstrationslauf bei Rücker \& Schindele über den
-vorgesehenen Verarbeitungspfad ausgeführt. Der Lauf erfolgte über die
+gesamten Verarbeitungspfad ausgeführt. Der Lauf erfolgte über die
 Benutzeroberfläche des Prototyps in Anwesenheit externer Vertreter der
-vorgesehenen Zielgruppe. Zu den Teilnehmern gehörte auch der externe
-Betreuer dieser Arbeit. Die Bedienung des Prototyps sowie die fachlichen und
+vorgesehenen Zielgruppe, zu denen auch der externe Betreuer dieser Arbeit
+gehörte. Die Bedienung des Prototyps sowie die fachlichen und
 modellbezogenen Entscheidungen erfolgten durch den Autor.
 
-Der Demonstrationslauf wird im Folgenden als Referenzlauf für die
-Rekonstruktion der in
+Der Demonstrationslauf diente zugleich der Rekonstruktion der in
 Abschnitt~\ref{sec:architecture_traceability} beschriebenen Provenienz- und
-Nachverfolgbarkeitsbeziehungen verwendet. Betrachtet werden die während der
-Verarbeitung gespeicherten Informations-, Entscheidungs-, Modell- und
-Artefaktzustände sowie ihre Verknüpfungen. Die Darstellung folgt dem
-Zusammenhang zwischen Engineering-Quelle, quellengebundener Evidenz,
-Interpretation, menschlicher Autorisierung, Modellentscheidung, internem
-Modellzustand, SysML-v2-Repräsentation, Validierung, menschlicher
+Nachverfolgbarkeitsbeziehungen. Geprüft wurden die während der Verarbeitung
+gespeicherten Informations-, Entscheidungs-, Modell- und Artefaktzustände
+sowie ihre Verknüpfungen. Betrachtet wurde dabei der vollständige
+Verarbeitungspfad von der Engineering-Quelle über quellengebundene Evidenz,
+Interpretation, menschliche Autorisierung, Modellentscheidung und interne
+Modellzustände bis zur SysML-v2-Repräsentation, Validierung, menschlichen
 Modellprüfung und Freigabe.
 
 
@@ -26,40 +25,39 @@ Modellprüfung und Freigabe.
 \label{sec:results_traceability}
 
 Für den Referenzlauf wurde das Projekt mit der technischen
-Projekt-ID~930444 verwendet. Die Kennung ermöglicht die eindeutige
-Zuordnung der während des Laufs gespeicherten Zustände.
+Projekt-ID~930444 verwendet. Die während des Laufs gespeicherten Zustände
+wurden unter dieser Kennung referenziert.
 
-Insgesamt waren sechs Quellen registriert. Vier davon wurden im System mit
-der Rolle \texttt{engineering\_source}, zwei mit
-\texttt{context\_only} geführt. Diese Systembezeichnungen entsprechen den
-in Abschnitt~\ref{sec:architecture_information_authority} eingeführten
-Rollen Engineering-Quelle und Kontextquelle. Die vier Engineering-Quellen
-enthielten unterschiedliche Ausschnitte desselben beispielhaften
-Remote-Microscopy-Kontexts: Stakeholder, User Workflow, System Requirements
-und Architecture Notes. Die beiden Kontextquellen beschrieben den
-übergeordneten Produktkontext. Die vollständigen Testdateien und ihre
-Zuordnung zu den gespeicherten Quellenidentitäten sind in
+Insgesamt waren sechs Quellen registriert. Vier davon wurden gemäß den in
+Abschnitt~\ref{sec:architecture_information_authority} definierten Rollen
+mit \texttt{engineering\_source}, zwei mit \texttt{context\_only} geführt.
+Die vier Engineering-Quellen enthielten unterschiedliche Ausschnitte
+derselben technischen Beschreibung eines beispielhaften
+Remote-Microscopy-Systems: Stakeholder, User Workflow, System Requirements
+und Architecture Notes. Die beiden Kontextquellen enthielten ergänzende
+Informationen zum Produkt- und Anwendungskontext des betrachteten
+Remote-Microscopy-Systems. Die vollständigen Testdateien und ihre Zuordnung
+zu den gespeicherten Quellen sind in
 Anhang~\ref{app:traceability_930444_inputs} dokumentiert.
 
 Im vollständigen Lauf wurden elf Einträge quellengebundener Evidenz und
 zwanzig fachliche Referenzgegenstände gespeichert. Die vier
 Engineering-Quellen wurden jeweils quellenbezogen verarbeitet und einer
-menschlichen fachlichen Prüfung zugeführt. Daraus entstanden zwanzig
+menschlichen fachlichen Prüfung unterzogen. Daraus entstanden zwanzig
 fachlich autorisierte Engineering-Informationszustände, die in den
 zugehörigen Reports als \texttt{Approved Inputs} geführt werden, sowie vier
 Zustände der projektbezogenen Quellenzulassung. Für die Modellbildung wurden
-zwanzig menschliche Entscheidungen zur Modellplatzierung gespeichert. Der
-abschließende Modellzustand umfasste zwanzig Elemente und sechs Beziehungen.
-Für das generierte SysML-v2-Artefakt wurden 26 Einträge zur
-Nachverfolgbarkeit erzeugt.
+zwanzig menschliche Entscheidungen zur Modellplatzierung durch den Prototyp
+angefordert. Der abschließende Modellzustand umfasste zwanzig Elemente und
+sechs Beziehungen. Für das generierte SysML-v2-Artefakt wurden 26 Einträge
+zur Nachverfolgbarkeit erzeugt.
 
-Der gespeicherte Informations-, Entscheidungs- und Modellbestand wird im
-Folgenden exemplarisch anhand der \emph{Microscope Workstation}
-rekonstruiert. Der zentrale Verarbeitungspfad verfolgt diesen fachlichen
-Referenzgegenstand von der Quellenaussage bis zum erzeugten
-SysML-v2-Element. Weitere im Referenzlauf gespeicherte Entscheidungsarten
-werden anhand ergänzender Zustände desselben Projekts dargestellt.
-
+Im Folgenden wird der Verarbeitungspfad der
+\emph{Microscope Workstation} anhand der gespeicherten Informations-,
+Entscheidungs- und Modellzustände rekonstruiert. Zusätzlich werden
+Entscheidungsarten, die für diesen Gegenstand nicht als eigener Schritt
+vorliegen, anhand anderer gespeicherter Zustände desselben Referenzlaufs
+dargestellt.
 
 \subsection{Quellenbezogene Verarbeitung und fachliche Autorisierung}
 \label{sec:results_traceability_engineering}
@@ -71,13 +69,17 @@ zwei aufeinanderfolgende Verarbeitungsversuche gespeichert.
 
 \paragraph{Verarbeitungsversuche}
 
-Der erste Verarbeitungsversuch \texttt{ATT-000001} wurde mit dem Zustand
-\texttt{failed} gespeichert. Der anschließende Versuch erhielt mit
-\texttt{ATT-000002} eine eigene Identität.
+Der erste Verarbeitungsversuch \texttt{ATT-000001} endete im Zustand
+\texttt{failed}, weil die gespeicherte Modellantwort das vom technischen
+Vertrag erwartete Feld \texttt{extraction\_rationale} nicht enthielt.
+Stattdessen lag die abweichende Feldbezeichnung
+\texttt{extracton\_rationale} vor. Der anschließende Versuch
+\texttt{ATT-000002} konnte fortgesetzt werden. Er erhielt eine eigene
+Identität, sodass beide Versuche und ihre jeweiligen Zustände getrennt
+referenzierbar blieben.
 Abbildung~\ref{fig:result_930444_failed_attempt} gibt die entsprechenden
 Originalzustände und einen Ausschnitt der gespeicherten Modellantwort
-wieder. Die Bezeichnungen innerhalb der grauen Felder entsprechen den
-gespeicherten Systemzuständen.
+wieder.
 
 \begin{figure}[htbp]
     \centering
@@ -119,26 +121,17 @@ reason_code:      agentic_ingestion_retry_started
     \texttt{extraction\_rationale}. Originaldokumente:
     \texttt{EVT-000003.json}, \texttt{EVT-000004.json} und
     \texttt{agent\_legacy\_literal\_interpreter\_run\_01.json};
-    vollständiger Auszug siehe
+    zugehörige Originalauszüge siehe
     Anhang~\ref{app:traceability_930444_workstation}.}
     \label{fig:result_930444_failed_attempt}
-    \label{fig:result_930444_raw_failure}
 \end{figure}
-
-Der für diesen Verarbeitungsschritt definierte technische Vertrag erwartet
-das Feld \texttt{extraction\_rationale}. Die gespeicherte Modellantwort
-enthielt die abweichende Feldbezeichnung
-\texttt{extracton\_rationale}. Der erste Versuch wurde mit dem zugehörigen
-Fehlerzustand persistiert und der folgende Versuch unter einer neuen
-Identität fortgeführt. Beide Versuche bleiben dadurch innerhalb derselben
-Verarbeitungshistorie referenzierbar.
 
 \paragraph{Quellengebundene Evidenz und fachlicher Referenzgegenstand}
 
 Im zweiten Verarbeitungsversuch wurde die Quellenaussage zur
 \emph{Microscope Workstation} als quellengebundene Evidenz erfasst.
-Abbildung~\ref{fig:result_930444_source} gibt die ursprüngliche Aussage
-unverändert wieder.
+Abbildung~\ref{fig:result_930444_source} gibt die Aussage unverändert
+wieder.
 
 \begin{figure}[htbp]
     \centering
@@ -148,28 +141,34 @@ The Microscope Workstation provides local session control.
         \end{evidencebox}
     \end{minipage}
     \caption[Quellenaussage zur Microscope Workstation]{
-    Quellenaussage zur \emph{Microscope Workstation}. Sie ist als
-    \texttt{EVD-000002} mit \texttt{SRC-000005}, der zugehörigen
-    Quellenprojektion und dem Quellensegment verknüpft. Daraus wurde der
-    fachliche Referenzgegenstand \texttt{SUBJ-000001} gebildet.
-    Originaldokument:
-    \texttt{legacy/demo/safe\_demo/05\_architecture\_notes.md}.}
+        Quellenaussage zur \emph{Microscope Workstation}. Sie ist als
+        \texttt{EVD-000002} mit \texttt{SRC-000005}, der zugehörigen
+        Quellenprojektion und dem Quellensegment verknüpft. Daraus wurde der
+        fachliche Referenzgegenstand \texttt{SUBJ-000001} gebildet.
+        Originaldokument:
+        \texttt{legacy/demo/safe\_demo/05\_architecture\_notes.md}.
+        Vollständiges Eingangsdokument siehe
+        Anhang~\ref{app:traceability_930444_inputs}.}
     \label{fig:result_930444_source}
 \end{figure}
 
 Der daraus gebildete fachliche Referenzgegenstand
 \texttt{SUBJ-000001} trägt das Label \emph{Microscope Workstation}.
-Die nachfolgenden Persona-Interpretationen beziehen sich auf diese
-gemeinsame fachliche Identität. Quelle, quellengebundene Evidenz und
-fachlicher Referenzgegenstand bleiben über die gespeicherten Referenzen
-miteinander verbunden.
+Die nachfolgenden Persona-Interpretationen beziehen sich damit auf dieselbe
+fachliche Identität. Quelle, quellengebundene Evidenz und fachlicher
+Referenzgegenstand bleiben über die gespeicherten Referenzen miteinander
+verbunden.
 
 \paragraph{Persona-Interpretationen und Interpretationsvarianz}
 
-Für \texttt{SUBJ-000001} wurden drei Persona-Interpretationen gespeichert.
-Beim Informationstyp ergaben sich unterschiedliche Einordnungen.
-Abbildung~\ref{fig:result_930444_consensus} gibt den gespeicherten
-Vergleichszustand wieder.
+Für \texttt{SUBJ-000001} wurden drei Persona-Interpretationen durchgeführt
+und gespeichert. Die drei Personas ordneten denselben Referenzgegenstand
+unterschiedlichen Informationstypen zu: \texttt{function},
+\texttt{logical\_element} und \texttt{physical\_element}. Der daraus
+ermittelte Vergleichszustand wurde als \texttt{divergent} mit niedriger
+Konfidenz und erforderlicher menschlicher Prüfung gespeichert.
+Abbildung~\ref{fig:result_930444_consensus} gibt diesen Zustand wieder.
+:contentReference[oaicite:0]{index=0}
 
 \begin{figure}[htbp]
     \centering
@@ -202,13 +201,13 @@ uncertainty:
     \texttt{divergent}; dies entspricht der in
     Abschnitt~\ref{sec:architecture_grounded_interpretation} beschriebenen
     Interpretationsvarianz. Originaldokument:
-    \texttt{subject\_consensus.json}.}
+    \texttt{subject\_consensus.json}. Zugehörige Originalauszüge siehe
+    Anhang~\ref{app:traceability_930444_workstation}.
     \label{fig:result_930444_consensus}
 \end{figure}
 
-Der gespeicherte Varianzzustand wurde gemeinsam mit den
-Einzelinterpretationen für die menschliche fachliche Prüfung
-bereitgestellt.
+Der Vergleichszustand und die Einzelinterpretationen wurden gemeinsam für
+die menschliche fachliche Prüfung bereitgestellt.
 
 \paragraph{Menschliche fachliche Autorisierung}
 
@@ -248,15 +247,19 @@ Human Rationale:
     Report verwendete Status \texttt{accepted\_with\_modification}
     kennzeichnet die menschliche Übernahme mit verändertem Inhalt. Als
     Informationstyp wurde \texttt{logical\_element} festgelegt.
-    Originaldokument: \texttt{reviewed\_report.md}.}
+    Originaldokument: \texttt{reviewed\_report.md}.
+    Zugehörige Originalauszüge siehe
+    Anhang~\ref{app:traceability_930444_workstation}.}
     \label{fig:result_930444_human_review}
 \end{figure}
 
-Die zugehörige Revision enthält zusätzlich die Reviewer-Identität
-\texttt{MZ}, die ausgewählten Werte und den Entscheidungszeitpunkt.
-\texttt{MZ} ist das im Prototyp verwendete Reviewer-Kürzel des Autors.
-Mit dieser Entscheidung wurde der fachliche Inhalt für die weitere
-Verarbeitung autorisiert. Sie entspricht der in
+Der Autor übernahm die Aussage in der im Report wiedergegebenen
+Formulierung und legte den Informationstyp als
+\texttt{logical\_element} fest. Als Begründung ist im Prüfzustand
+\texttt{Logical} gespeichert. Die zugehörige Revision enthält zusätzlich
+die Reviewer-Identität \texttt{MZ}, die ausgewählten Werte und den
+Entscheidungszeitpunkt. Mit dieser Entscheidung wurde der fachliche Inhalt
+für die weitere Verarbeitung autorisiert. Sie entspricht der in
 Abschnitt~\ref{sec:architecture_human_authority} eingeführten
 \emph{Human Engineering Authority}.
 
@@ -274,10 +277,10 @@ Verarbeitungslauf \texttt{RUN-000001} und dem erfolgreichen Versuch
 
 Für \texttt{SRC-000005} wurde anschließend ein Zustand der
 projektbezogenen Quellenzulassung (\emph{Project Fit}) mit dem Ergebnis
-\texttt{plausible\_in\_scope} gespeichert. Der Status bezeichnet die im
-Prototyp verwendete positive maschinelle Bewertung der Projektzugehörigkeit.
-Quelle, Quellenprojektion, Verarbeitungslauf und Verarbeitungsversuch
-blieben dabei referenziert.
+\texttt{plausible\_in\_scope} gespeichert. Damit wurde die Quelle für die
+weitere projektweite Verarbeitung berücksichtigt. Quelle,
+Quellenprojektion, Verarbeitungslauf und Verarbeitungsversuch blieben dabei
+referenziert.
 
 Der autorisierte Zustand \texttt{AIN-000011} bleibt damit mit seiner
 quellenbezogenen Verarbeitungshistorie verbunden. Der gespeicherte
@@ -288,7 +291,8 @@ den gemeinsamen Projektkontext.
 
 Aus der autorisierten Engineering-Information wurden
 \emph{Model Candidates} für die strukturelle Einordnung im Modell
-abgeleitet. Für \texttt{AIN-000011} wurde anschließend die
+abgeleitet. Für \texttt{AIN-000011} wurde anschließend die in
+Abbildung~\ref{fig:result_930444_placement} dargestellte
 Modellplatzierungsentscheidung \texttt{MPD-000016} gespeichert.
 
 \begin{figure}[htbp]
@@ -311,22 +315,26 @@ rationale:         Systemlevel
     \texttt{MPD-000016} entspricht der in
     Abschnitt~\ref{sec:architecture_human_authority} beschriebenen
     Entscheidung der \emph{Model Authority}. Originaldokument:
-    \texttt{MPD-000016.json}.}
+    \texttt{MPD-000016.json}. Zugehörige Originalauszüge siehe
+    Anhang~\ref{app:traceability_930444_workstation}.}
     \label{fig:result_930444_placement}
 \end{figure}
 
-Die gespeicherte Entscheidung referenziert den autorisierten
-Engineering-Informationszustand und die ausgewählte Regel für seine
-strukturelle Einordnung.
+Der Autor akzeptierte die Zuordnung zur logischen Systemebene. Sie
+entspricht der zuvor fachlich festgelegten Einordnung als
+\texttt{logical\_element}; als Begründung ist in
+\texttt{MPD-000016} \texttt{Systemlevel} gespeichert. Die Entscheidung
+referenziert den autorisierten Engineering-Informationszustand und die
+ausgewählte Regel für seine strukturelle Einordnung.
 
 \paragraph{Interner Modellzustand}
 
-Im daraus erzeugten internen Modellzustand \texttt{IEM-000001} wurde der
-Gegenstand als \texttt{logical\_component} im Bereich
-\texttt{system.logical} mit der Framework-Zuordnung
-\texttt{FW\_SYSTEM\_LOGICAL} materialisiert. Das interne Modellelement
-\texttt{IME-000011} referenziert die vorausgehende Entscheidung
-\texttt{MPD-000016}.
+Auf Grundlage dieser Modellplatzierungsentscheidung wurde der Gegenstand im
+internen Modellzustand \texttt{IEM-000001} als
+\texttt{logical\_component} im Bereich \texttt{system.logical} mit der
+Framework-Zuordnung \texttt{FW\_SYSTEM\_LOGICAL} materialisiert. Das
+interne Modellelement \texttt{IME-000011} referenziert die vorausgehende
+Entscheidung \texttt{MPD-000016}.
 
 Das \emph{Internal Engineering Model} (IEM) bildet gemäß
 Abschnitt~\ref{sec:architecture_meaning_representation} den internen
@@ -336,12 +344,11 @@ Engineering-Informationszustand und die zugehörige
 Modellplatzierungsentscheidung über die gespeicherten Referenzen
 rekonstruierbar.
 
-
 \subsection{Weiterentwicklung des Modellzustands und ergänzende Entscheidungen}
 \label{sec:results_traceability_additional}
 
 Im Referenzlauf wurde neben der Entstehung neuer Zustände auch die
-Weiterentwicklung eines bestehenden Modellzustands gespeichert. Für
+Weiterentwicklung eines bestehenden Modellzustands betrachtet. Für
 \texttt{IME-000011} betrifft dies die Prüfung von Name und Beschreibung vor
 der weiteren SysML-v2-Erzeugung.
 
@@ -378,16 +385,19 @@ rationale:
     \texttt{IME-000011}. Die innerhalb der grauen Box verwendeten
     Bezeichnungen und die Begründung entsprechen unverändert dem
     gespeicherten Report. Originaldokument:
-    \texttt{MQD-000008.json}.}
+    \texttt{MQD-000008.json}. Zugehörige Originalauszüge siehe
+    Anhang~\ref{app:traceability_930444_workstation}.}
     \label{fig:result_930444_quality}
 \end{figure}
 
-Die Entscheidung wurde in dem nachfolgenden Modellzustand
-\texttt{IEM-000002} wirksam. Die Identität
-\texttt{IME-000011} blieb über beide Modellzustände erhalten.
-\texttt{IEM-000001}, \texttt{MQD-000008} und
-\texttt{IEM-000002} dokumentieren damit die aufeinanderfolgenden Zustände
-des betrachteten Modellelements.
+Der Autor bestätigte Name und Beschreibung, nachdem die vorausgehende
+regelbasierte Prüfung eine erhaltene Bedeutung, keine nicht gestützten
+Informationen und keinen expliziten Bedarf für zusätzliche menschliche
+Aufmerksamkeit ausgewiesen hatte. Die Entscheidung wurde im nachfolgenden
+Modellzustand \texttt{IEM-000002} wirksam. Die Identität
+\texttt{IME-000011} blieb dabei erhalten. \texttt{IEM-000001},
+\texttt{MQD-000008} und \texttt{IEM-000002} dokumentieren somit die
+aufeinanderfolgenden Zustände des betrachteten Modellelements.
 
 \paragraph{Weitere Entscheidungsarten}
 
@@ -397,14 +407,19 @@ anderer Gegenstände desselben Referenzlaufs gespeichert.
 Im fachlichen Review wurde die mit \texttt{SRD-000001} gespeicherte
 gerichtete Beziehung von \texttt{SUBJ-000002} zu
 \texttt{SUBJ-000001} mit der Beziehungsart \texttt{performs} abgelehnt.
-Die Gegenrichtung wurde separat mit \texttt{SRD-000012} akzeptiert.
+Als Begründung ist \texttt{vice versa} gespeichert, da die Beziehung in
+umgekehrter Richtung gelten sollte. Die Gegenrichtung wurde entsprechend
+separat mit \texttt{SRD-000012} akzeptiert.
 
-Für den \emph{Microscope Operator} dokumentiert
-\texttt{TFD-000001} zusätzlich eine zielmodellspezifische
-Formulierungsentscheidung. Diese Entscheidungsstufe wurde in
-Abschnitt~\ref{sec:architecture_meaning_representation} für die konkrete
-Ausprägung eines bereits autorisierten Modellinhalts in der Zielnotation
-eingeführt.
+Für den \emph{Microscope Operator} wurde mit \texttt{TFD-000001}
+entschieden, den bereits autorisierten Modellinhalt formal in der
+Zielnotation zu materialisieren. Dafür wurden das Zielkonstrukt
+\texttt{TN\_003} und die Formulierung
+\texttt{part def 'Microscope Operator';} ausgewählt.
+
+Abbildung~\ref{fig:result_930444_additional_authority} zeigt beide
+Entscheidungsarten exemplarisch anhand der gespeicherten Zustände
+\texttt{SRD-000001} und \texttt{TFD-000001}.
 
 \begin{figure}[htbp]
     \centering
@@ -437,17 +452,14 @@ reviewer_identity:
     Beziehung und zu einer zielmodellspezifischen Formulierung. Mit
     \texttt{SRD-000001} wurde die dargestellte Beziehungsrichtung abgelehnt;
     \texttt{TFD-000001} enthält die Formulierungsentscheidung für den
-    \emph{Microscope Operator}. Vollständige Auszüge siehe
+    \emph{Microscope Operator}. Zugehörige Originalauszüge siehe
     Anhang~\ref{app:traceability_930444_additional}.}
     \label{fig:result_930444_additional_authority}
-    \label{fig:result_930444_relationship}
-    \label{fig:result_930444_formulation}
 \end{figure}
 
-Die ergänzenden Zustände dokumentieren damit Entscheidungen über eine
-fachliche Beziehung und eine zielmodellspezifische Formulierung sowie die
-zugehörigen gespeicherten Referenzen.
-
+Die ergänzenden Zustände dokumentieren damit die Entscheidung über die
+Richtung einer fachlichen Beziehung sowie die konkrete Überführung eines
+autorisierten Modellinhalts in die Zielnotation.
 
 \subsection{SysML-v2-Erzeugung und Nachverfolgbarkeit}
 \label{sec:results_traceability_sysml}
@@ -492,15 +504,18 @@ generated_location:
     \texttt{IME-000011} und das erzeugte Symbol
     \texttt{IME\_000011}. Originaldokumente:
     \texttt{OUT-000001/generated\_model.sysml} und
-    \texttt{OUT-000001/traceability.json}.}
+    \texttt{OUT-000001/traceability.json}. Zugehörige Originalauszüge siehe
+    Anhang~\ref{app:traceability_930444_workstation}.}
     \label{fig:result_930444_sysml}
-    \label{fig:result_930444_output_traceability}
 \end{figure}
 
-Der gespeicherte Nachverfolgbarkeitseintrag referenziert den autorisierten
-Engineering-Informationszustand, die Modellplatzierungsentscheidung, den
-internen Modellzustand und das zugrunde liegende interne Modellelement.
-Zusätzlich ist die Position des Symbols im erzeugten Artefakt gespeichert.
+Der gespeicherte Nachverfolgbarkeitseintrag verbindet das erzeugte Symbol
+mit dem autorisierten Engineering-Informationszustand, der
+Modellplatzierungsentscheidung sowie dem zugrunde liegenden internen
+Modellzustand und Modellelement. Zusätzlich verweist
+\texttt{generated\_location} auf die Zeilen 73 bis 77 des erzeugten
+Artefakts. Dadurch lässt sich das konkrete SysML-v2-Element unmittelbar den
+für seine Entstehung gespeicherten Zuständen und Entscheidungen zuordnen.
 
 Für die \emph{Microscope Workstation} lässt sich der zentrale
 Verarbeitungspfad anhand der gespeicherten Referenzen in folgender
@@ -531,12 +546,11 @@ $\rightarrow$
 \texttt{IME\_000011}
 \end{center}
 
-Die Darstellung konzentriert sich auf die für den exemplarisch verfolgten
-Modellinhalt direkt referenzierten Zustände. Ergänzende Zustände,
-insbesondere die projektbezogene Quellenzulassung und weitere
-Entscheidungsarten des Referenzlaufs, sind in den vorangehenden Abschnitten
+Die Abfolge fasst damit die für den exemplarisch verfolgten Modellinhalt
+direkt gespeicherten Übergänge von der Engineering-Quelle bis zum erzeugten
+SysML-v2-Element zusammen. Die projektbezogene Quellenzulassung und weitere
+Entscheidungsarten des Referenzlaufs wurden in den vorangehenden Abschnitten
 separat dargestellt.
-
 
 \subsection{Validierung, Modellprüfung und Freigabe}
 \label{sec:results_traceability_release}
@@ -572,17 +586,25 @@ External validator:
     Die Funktion der Validierung ist in
     Abschnitt~\ref{sec:validation_sysml_human} beschrieben.
     Originaldokument:
-    \texttt{OUT-000001/validation\_report.md}.}
+    \texttt{OUT-000001/validation\_report.md}.
+    Vollständiger Validierungsbericht siehe
+    Anhang~\ref{app:traceability_930444_workstation}.}
     \label{fig:result_930444_validation}
 \end{figure}
 
-Für die anschließende menschliche Modellprüfung wurden
-\texttt{FMR-000001} und die Revision \texttt{FRV-000001} gespeichert.
-Die Freigabeentscheidung \texttt{FRD-000001} trägt im System den Status
-\texttt{approved\_for\_publication} und die Reviewer-Identität
-\texttt{MZ}. Sie ist mit dem geprüften Artefaktzustand und dem zugehörigen
-Validierungsergebnis verknüpft. Das Begründungsfeld enthält im gespeicherten
-Originalzustand den Wert \texttt{null}.
+Für die anschließende menschliche Modellprüfung wurde mit
+\texttt{FMR-000001} ein Prüfzustand und mit \texttt{FRV-000001} die
+konkrete Revision des zu prüfenden Modellzustands gespeichert. Die Revision
+bindet das erzeugte SysML-v2-Artefakt an den zugehörigen
+Validierungszustand und die Nachverfolgbarkeitsinformationen.
+
+Der Autor prüfte diese konkrete Modellrevision und gab sie anschließend zur
+Veröffentlichung frei. Die Freigabe wurde als \texttt{FRD-000001} mit dem
+Status \texttt{approved\_for\_publication} und der Reviewer-Identität
+\texttt{MZ} gespeichert. Sie ist eindeutig mit der geprüften Revision und
+dem zugehörigen Validierungsergebnis verknüpft. Eine zusätzliche textuelle
+Begründung wurde im Referenzlauf nicht erfasst; das Begründungsfeld enthält
+den Wert \texttt{null}.
 
 Nach der Freigabe wurde der veröffentlichte Zustand als
 \texttt{OUT-000001} gespeichert. Das Paket enthält das erzeugte
@@ -590,14 +612,14 @@ SysML-v2-Modell, die Generierungszusammenfassung,
 Nachverfolgbarkeitsinformationen sowie den gespeicherten
 Validierungszustand.
 
-Für den Abschluss des Verarbeitungspfads sind damit folgende gespeicherte
-Zustände miteinander verknüpft:
+Der Abschluss des Verarbeitungspfads lässt sich damit vereinfacht wie folgt
+darstellen:
 
 \begin{center}
 \small
 \texttt{IEM-000002}
 $\rightarrow$
-\texttt{OUT-000001 / validation\_report.md}
+SysML-v2-Artefakt und Validierung
 $\rightarrow$
 \texttt{FMR-000001 / FRV-000001}
 $\rightarrow$
@@ -609,10 +631,10 @@ $\rightarrow$
 Der Referenzlauf enthält damit gespeicherte Zustände und Verknüpfungen von
 der registrierten Engineering-Quelle über die fachliche und modellbezogene
 Verarbeitung bis zum erzeugten und freigegebenen SysML-v2-Artefakt. Die
-vollständigen kurzen Eingangsdokumente und der kompakte
-Validierungsbericht sind im Anhang wiedergegeben. Für umfangreichere
-gespeicherte Zustände werden dort die für die Rekonstruktion verwendeten
-Originalfelder zusammengeführt; Umfang und Auswahl sind in
+vollständigen kurzen Eingangsdokumente und der kompakte Validierungsbericht
+sind im Anhang wiedergegeben. Für umfangreichere gespeicherte Zustände
+werden dort die für die Rekonstruktion verwendeten Originalfelder
+zusammengeführt; Umfang und Auswahl sind in
 Anhang~\ref{app:traceability_930444_scope} beschrieben.
 
 Die wissenschaftliche Einordnung der beobachteten Provenienz- und

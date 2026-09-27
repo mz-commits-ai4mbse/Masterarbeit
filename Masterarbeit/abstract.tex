@@ -1,34 +1,42 @@
 \section*{Abstract}
 \addcontentsline{toc}{section}{Kurzfassung}
 
-Die Überführung bestehender Engineering-Information in modellbasierte
-Repräsentationen ist insbesondere unter Brownfield-Bedingungen mit
-heterogenen, unterschiedlich strukturierten und teilweise
-interpretationsbedürftigen Informationsbeständen verbunden. Der Einsatz
-generativer KI kann diese Verarbeitung unterstützen, führt jedoch zu
-zusätzlichen Anforderungen an Nachvollziehbarkeit, menschliche
-Entscheidungsautorität und die kontrollierte Erzeugung formaler Modelle.
+Die KI-gestützte Überführung heterogener Engineering-Bestandsinformation in
+SysML~v2 verbindet die automatisierte Erschließung bestehender Informationen
+mit Anforderungen an fachliche Entscheidungsbefugnis, Nachvollziehbarkeit und
+kontrollierte Modellbildung. Probabilistische Verfahren können dabei
+unterschiedliche Interpretationen erzeugen und als Grundlage für nachgelagerte
+fachliche und modellbezogene Entscheidungen dienen.
 
-Diese Arbeit entwickelt eine Informationsverarbeitungsarchitektur für die
-KI-gestützte Transformation heterogener Engineering-Bestandsinformation in
-SysML~v2. Das Architekturkonzept trennt probabilistische Interpretation von
-autoritativen Engineering- und Modellentscheidungen und verbindet
-quellengebundene Evidenz, persistierte Provenienz, mehrperspektivische
-Informationsverarbeitung, menschliche Review- und Autorisierungsschritte sowie
-eine deterministische Modellbildung.
+Diese Arbeit entwickelt und untersucht deshalb eine
+Informationsverarbeitungsarchitektur für einen kontrollierten
+Transformationsprozess. Eine definierte Informationsbasis unterscheidet
+Engineering- und Kontextquellen und bindet abgeleitete Aussagen über
+quellengebundene Evidenz an ihre Herkunft. Mehrperspektivische
+KI-Interpretationen dienen als Entscheidungsgrundlage für menschliche
+Experten. Die Human Engineering Authority autorisiert die fachliche
+Verwendung einer Information, während die Model Authority über deren
+strukturelle Einordnung und Repräsentation entscheidet. Autorisierte Inhalte
+werden in einem Internal Engineering Model zusammengeführt und anschließend
+regelgebunden in SysML~v2 überführt. Provenienz und Nachverfolgbarkeit
+verbinden dabei Quellen, Interpretationen, menschliche Entscheidungen und
+Modellzustände über den gesamten Transformationsprozess.
 
-Zur Untersuchung des Konzepts wurde die Architektur im Turing Generator
-prototypisch instanziiert. Die Evaluation kombiniert automatisierte
-Software- und Contract-Verifikation, formative End-to-End-Erprobung,
-Multi-Source-Verifikation sowie eine abschließende extern begleitete
-Live-Demonstration. Innerhalb des untersuchten Prototypumfangs konnte ein
-durchgängiger Verarbeitungspfad von den registrierten Informationsquellen über
-maschinelle Interpretation und menschliche Entscheidungen bis zu einem
-technisch validierten und freigegebenen SysML-v2-Artefakt nachvollzogen werden.
+Das Architekturkonzept wurde prototypisch realisiert und durch
+Software- und Integrationsprüfungen, formative End-to-End-Erprobung, die
+Verarbeitung mehrerer Engineering-Quellen sowie einen abschließenden
+Referenzlauf untersucht. Dabei konnte ein zusammenhängender
+Verarbeitungspfad von registrierten Engineering-Quellen über
+KI-Interpretation und menschliche Autorisierung bis zu einem technisch
+validierten und menschlich freigegebenen SysML-v2-Artefakt ausgeführt und
+anhand persistierter Zustände rekonstruiert werden.
 
-Die Ergebnisse zeigen, dass probabilistische KI-Verarbeitung in einen
-kontrollierten Engineering-Prozess eingebunden werden kann, wenn ihre
-fachliche Wirkung durch explizite Informations-, Provenienz- und
-Autorisierungsgrenzen begrenzt wird. Eine allgemeine fachliche Korrektheit
-KI-generierter Modelle oder eine Überlegenheit gegenüber manueller
-Modellierung wird daraus nicht abgeleitet.
+Die Ergebnisse zeigen, dass kontrollierte KI-Unterstützung im betrachteten
+Engineering-Kontext aus dem Zusammenspiel probabilistischer Interpretation,
+expliziter menschlicher Entscheidungsbefugnis und regelgebundener
+Weiterverarbeitung entsteht. Für die Modellbildung wirken semantische
+Vorgaben, ein definierter Modellierungsrahmen, explizite Modellentscheidungen,
+zielmodellspezifische Formulierungsregeln und technische Prüfmechanismen
+zusammen. Die entwickelte Architektur stellt damit einen nachvollziehbaren
+Rahmen bereit, in dem heterogene Engineering-Information kontrolliert für die
+formale Modellbildung nutzbar gemacht werden kann.
