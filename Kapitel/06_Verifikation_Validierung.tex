@@ -106,7 +106,9 @@ entwickelten Prototyps
 
 Zu den automatisiert überprüfbaren Elementen gehören auch die in
 Kapitel~\ref{sec:implementation} eingeführten technischen Verträge zwischen
-den Verarbeitungsschritten. Ein solcher Vertrag legt fest, welche
+den Verarbeitungsschritten.
+
+\noindent Ein solcher Vertrag legt fest, welche
 Eingangszustände ein Verarbeitungsschritt verwenden darf, welche Identitäten
 und Referenzen erhalten bleiben müssen, welche Bedingungen für eine gültige
 Verarbeitung gelten und welche Ergebniszustände weitergegeben werden können.
@@ -171,7 +173,7 @@ keine zulässige Weiterverarbeitung definiert ist. Dabei wurde geprüft, ob
 die Verarbeitung entsprechend dem in
 Abschnitt~\ref{sec:architecture_controlled_transformation} eingeführten
 \emph{fail-closed}-Prinzip an der vorgesehenen Stelle blockiert wird.
-
+\newpage
 Für KI-gestützte Verarbeitungsschritte konzentrierte sich die
 automatisierte Verifikation auf technisch eindeutig spezifizierbare
 Eigenschaften. Dazu gehörten insbesondere die Einhaltung vorgegebener
@@ -221,7 +223,9 @@ einer registrierten Engineering-Quelle bis zum erzeugten
 SysML-v2-Artefakt über die reguläre Anwendungsschnittstelle des Prototyps
 ausgeführt. Während der Verarbeitung wurde geprüft, ob die für die
 vorgesehenen menschlichen Entscheidungen erforderlichen Informationszustände
-bereitgestellt wurden. Die entsprechenden Autorisierungsentscheidungen
+bereitgestellt wurden.
+
+\noindent Die entsprechenden Autorisierungsentscheidungen
 wurden durch den Autor getroffen. An den Übergängen zwischen den
 Verarbeitungsschritten wurde geprüft, ob die erforderlichen
 Vorgängerzustände, Provenienzbeziehungen und Autorisierungsentscheidungen
@@ -248,7 +252,7 @@ Weiterverarbeitung präzisiert werden musste. Daraus wurden dokumentierte
 Architekturentscheidungen sowie Anpassungen der technischen Verträge
 abgeleitet. Die betroffenen Verarbeitungsschritte wurden anschließend erneut
 geprüft.
-
+\noindent
 Tabelle~\ref{tab:validation_architecture_findings} fasst die für die
 Architekturentwicklung wesentlichen Befunde zusammen.
 
@@ -318,7 +322,7 @@ Technische oder bedienungsbezogene Befunde wurden ebenfalls korrigiert und
 erneut geprüft. Die vollständige Historie der dokumentierten Befunde mit
 Korrektur, Wiederholungsprüfung und abschließendem Status ist in
 Anhang~\ref{app:findings_register} dokumentiert.
-
+\FloatBarrier
 \paragraph{Verifikation der Verarbeitung mehrerer Quellen}
 
 Hier wurde untersucht, ob mehrere Engineering-Quellen innerhalb desselben
@@ -328,7 +332,7 @@ und inhaltlich aufeinander bezogene Testdokumente verwendet. Sie
 repräsentierten unterschiedliche Informationsperspektiven auf dasselbe
 technische Projekt und wurden jeweils als eigenständige Engineering-Quelle
 registriert.
-
+\newpage
 Die Quellen wurden zunächst unabhängig voneinander verarbeitet und die
 vorgesehenen fachlichen Autorisierungszustände erzeugt. Anschließend wurde
 die projektweite Zusammenführung geprüft. Dabei wurden folgende
@@ -401,7 +405,7 @@ projektbezogene Quellenzulassung wurde anschließend geprüft, welche Quellen
 für die projektweite Verarbeitung berücksichtigt wurden. Die zugelassenen
 Informationszustände konnten daraufhin gemeinsam für die Modellbildung
 bereitgestellt werden.
-
+\noindent
 Tabelle~\ref{tab:validation_multisource_results} fasst die im
 Wiederholungslauf beobachteten Ergebnisse zusammen.
 
@@ -488,7 +492,7 @@ verarbeitet. Als Akzeptanzkriterien gelten die erfolgreiche Verarbeitung
 des Artefakts und ein Validierungszustand ohne blockierende Diagnosen.
 Damit wird geprüft, ob die erzeugte SysML-v2-Repräsentation auch außerhalb
 der eigenen Generierungslogik formal verarbeitet werden kann.
-
+\newpage
 Ergänzend wurde geprüft, ob der Prototyp die für die anschließende
 menschliche Modellprüfung und Freigabe erforderlichen Zustände eindeutig
 bereitstellt und miteinander korrekt verknüpft. Dazu gehören insbesondere

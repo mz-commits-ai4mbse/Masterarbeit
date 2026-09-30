@@ -63,8 +63,8 @@ außerhalb des eigentlichen Prototyps angebunden sind.
     \centering
     \includegraphics[
         width=\textwidth,
-        height=0.82\textheight,
-        keepaspectratio
+        trim={0 0 14cm 0},
+        clip
     ]{Graphiken/5.2b_Logical_Architecture.pdf}
     \caption[Logische Systemarchitektur des Prototyps]{
         Logische Systemarchitektur des Prototyps. Die internen Komponenten
@@ -90,7 +90,9 @@ unterstützende fachliche Kontextinformationen und modellbezogene Vorgaben
 Für die detailliertere Modellierung wurde die Systemarchitektur anschließend
 weiter untergliedert. Dabei wurden Anforderungen, Funktionen und die
 zugehörigen logischen Systemelemente miteinander verknüpft
-(R/F/L-Modellierung). Dazu wurde das System im Modell in neun funktional
+(R/F/L-Modellierung).
+
+\noindent Dazu wurde das System im Modell in neun funktional
 abgegrenzte Subsysteme gegliedert. Die dafür verwendeten Bezeichnungen
 lauten:
 
@@ -181,7 +183,7 @@ prototypische Realisierung zentralen Konfigurationsbereiche zusammen.
         \hline
     \end{tabular}
 \end{table}
-
+\newpage
 Zu den verwendeten Konfigurationen gehören unter anderem der RFLP-basierte
 Modellrahmen, das Profil der zulässigen Modellstruktur, Regeln für die
 Bildung des internen Modellzustands sowie Profile für Modellqualität,
@@ -312,7 +314,7 @@ die Verarbeitung der Engineering-Quellen bis zur fachlichen Prüfung.
 Abschnitt~\ref{sec:implementation_authority} beschreibt die menschlichen
 Autorisierungsentscheidungen. Der Aufbau des internen Modells sowie dessen
 Überführung in SysML~v2 werden in
-Abschnitt~\ref{sec:implementation_model_generation} erläutert. Die
+Abschnitt~\ref{sec:implementation_model_realization} erläutert. Die
 Verarbeitung mehrerer Engineering-Quellen wird in
 Abschnitt~\ref{sec:implementation_multisource} ergänzt.
 
@@ -471,7 +473,9 @@ menschliche Bewertung.
 
 Die für die fachliche Prüfung relevanten Informationen werden anschließend
 zu einem gemeinsamen Prüfzustand zusammengeführt, der im Modell als
-\emph{Human Review Package} bezeichnet wird. Er enthält den betrachteten
+\emph{Human Review Package} bezeichnet wird.
+
+\noindent Er enthält den betrachteten
 fachlichen Referenzgegenstand, die zugehörige quellengebundene Evidenz, die
 Persona-Interpretationen sowie Informationen zu Übereinstimmungen,
 Abweichungen, Mehrdeutigkeiten und möglichen Informationslücken. Dieser
@@ -521,6 +525,8 @@ logischen Systemelementen dar.
     \includegraphics[
         width=\textwidth,
         height=0.82\textheight,
+        trim={0 5cm 0 0},
+        clip,
         keepaspectratio
     ]{Graphiken/5.5_Human_Authority_RFL.pdf}
     \caption[R/F/L-Zusammenhang der menschlichen Autorisierungsgrenzen]{
@@ -538,7 +544,9 @@ logischen Systemelementen dar.
 Die erste Autorisierungsgrenze liegt zwischen den in
 Abschnitt~\ref{sec:implementation_information_processing} erzeugten
 Bewertungsinformationen und der fachlich autorisierten
-Engineering-Information. Für die menschliche Prüfung stellt der Prototyp
+Engineering-Information.
+
+\noindent Für die menschliche Prüfung stellt der Prototyp
 den zuvor aufbereiteten fachlichen Referenzgegenstand
 (\emph{Engineering Subject}) gemeinsam mit seinen Quellenbezügen,
 Persona-Interpretationen sowie den festgestellten Übereinstimmungen,
@@ -592,7 +600,7 @@ Entscheidungsbefugnis entspricht der in
 Abschnitt~\ref{sec:architecture_human_authority} eingeführten
 \emph{Model Authority}. Die nachgelagerte Modellbildung wird in
 Abschnitt~\ref{sec:implementation_model_realization} beschrieben.
-
+\newpage
 Eine weitere menschliche Kontrollgrenze liegt am Ende der Modellerzeugung.
 Dort wird das erzeugte SysML-v2-Artefakt gemeinsam mit dem Ergebnis seiner
 Validierung betrachtet. Die Validierung prüft die dafür festgelegten
@@ -654,7 +662,8 @@ bis zur SysML-v2-Erzeugung und anschließenden Validierung.
     \centering
     \includegraphics[
         width=\textwidth,
-        height=0.82\textheight,
+        trim={0 0 6cm 0},
+        clip,
         keepaspectratio
     ]{Graphiken/5.6_Model_Realization_Cross_Subsystem.pdf}
     \caption[Modellbildung und SysML-v2-Realisierung]{
@@ -731,7 +740,7 @@ SysML-v2-Konstrukte vom Prototyp unterstützt werden. Das
 diese Konstrukte abgebildet werden. Das
 \emph{Artifact Structure Profile} legt fest, wie die erzeugten Inhalte
 beispielsweise in Packages und Dateien organisiert werden.
-
+\newpage
 Vor der Erzeugung des SysML-v2-Artefakts prüft der Prototyp, ob für alle zu
 überführenden Modellelemente und Modellbeziehungen eine eindeutige und
 unterstützte Abbildungsregel vorhanden ist. Fehlt eine solche Regel, wird
@@ -891,7 +900,7 @@ Manifeste, explizite Referenzen und inhaltsgebundene Prüfwerte
 (\emph{Fingerprints}). Diese ermöglichen es, gespeicherte Zustände eindeutig
 miteinander zu verknüpfen und Änderungen gegenüber früheren Zuständen
 festzustellen.
-
+\newpage
 Dieses Prinzip wird über die weiteren Verarbeitungsschritte fortgeführt.
 Auch menschliche Prüf- und Autorisierungsentscheidungen, autorisierte
 Engineering-Information, Modellentscheidungen, interne Modellstände,
@@ -966,13 +975,15 @@ auf die beteiligten Engineering-Quellen zurückgeführt werden. Gleichzeitig
 bleibt sichtbar, welche Zwischenstände, Konfigurationen und menschlichen
 Entscheidungen an seiner Entstehung beteiligt waren.
 
+\FloatBarrier
+
 \paragraph{Technische Grenzen des Prototyps}
 
 Die prototypische Realisierung ist auf einen bewusst abgegrenzten
 Funktionsumfang beschränkt. Tabelle~\ref{tab:implementation_limits} fasst
 die für die weitere Bewertung wesentlichen technischen Grenzen zusammen.
 
-\begin{table}[htbp]
+\begin{table}[H]
     \centering
     \small
     \caption[Technische Grenzen des Prototyps]{
@@ -980,6 +991,7 @@ die für die weitere Bewertung wesentlichen technischen Grenzen zusammen.
         Gegenübergestellt werden der implementierte Stand und die daraus
         resultierenden Auswirkungen auf Verarbeitung, Modellbildung,
         Validierung und menschliche Autorisierung.}
+    \label{tab:implementation_limits}
     \begin{tabular}{p{3.3cm}p{4.2cm}p{6.2cm}}
         \hline
         \textbf{Bereich} &
@@ -1006,8 +1018,7 @@ die für die weitere Bewertung wesentlichen technischen Grenzen zusammen.
         Vorgegebene RFLP-Struktur &
         Modellableitung und strukturelle Einordnung erfolgen
         innerhalb des für den Prototyp definierten
-        Stakeholder-, System- und Subsystemrahmens. Beliebige
-        Zielstrukturen werden nicht unterstützt \\
+        Stakeholder-, System- und Subsystemrahmens. \\
 
         SysML-v2-Umfang &
         Begrenzter unterstützter Ausschnitt der Zielsprache &
@@ -1023,8 +1034,7 @@ die für die weitere Bewertung wesentlichen technischen Grenzen zusammen.
         Bestandteil des vorgesehenen Verarbeitungsablaufs &
         Fachlich oder modellbezogen relevante Entscheidungen sowie
         die abschließende Freigabe erfordern explizite menschliche
-        Entscheidungen; der Prototyp arbeitet daher nicht als
-        autonomer Modellgenerator \\
+        Entscheidungen \\
         \hline
     \end{tabular}
 \end{table}

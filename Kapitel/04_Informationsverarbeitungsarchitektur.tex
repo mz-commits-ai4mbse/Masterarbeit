@@ -89,6 +89,7 @@ Rolle innerhalb der Modellableitung explizit bestimmt.
 Die entwickelte Architektur unterscheidet hierzu drei Informationsrollen:
 
 \begin{itemize}
+    \Needspace{7\baselineskip}
     \item \emph{Engineering Sources} werden im Folgenden als
     Engineering-Quellen bezeichnet. Sie bilden die fachliche Ausgangsbasis
     für Aussagen über das zu modellierende System. Aus ihnen abgeleitete und
@@ -98,19 +99,21 @@ Die entwickelte Architektur unterscheidet hierzu drei Informationsrollen:
     diese quellengebundene Information als \emph{source-grounded Evidence}
     bezeichnet.
 
+    \Needspace{7\baselineskip}
     \item \emph{Context Sources} werden als Kontextquellen bezeichnet und
     stellen zusätzliche Information für Interpretation und Einordnung bereit.
     Sie können die Interpretation einer Engineering-Quelle unterstützen,
     bilden jedoch nicht selbst die fachliche Ausgangsbasis für Aussagen über
     das betrachtete System.
 
+    \Needspace{7\baselineskip}
     \item Der Verarbeitungs- und Orchestrierungskontext umfasst die technische
     Konfiguration und Steuerung des Verarbeitungsvorgangs. Er beeinflusst die
     Art der Verarbeitung, begründet jedoch ebenfalls keine fachliche Aussage
     über das betrachtete System.
 \end{itemize}
 
-Tabelle~\ref{tab:information_authority_roles} fasst Funktion und fachliche
+\noindent Tabelle~\ref{tab:information_authority_roles} fasst Funktion und fachliche
 Reichweite dieser Informationsrollen zusammen.
 
 \begin{table}[htbp]
@@ -218,7 +221,7 @@ Informationsgrundlage von ihrer multiperspektivischen Interpretation.
 Innerhalb einer registrierten Engineering-Quelle wird relevante Information
 identifiziert und über konkrete Quellenbezüge an ihre Herkunft gebunden.
 Darauf aufbauend werden fachliche Referenzgegenstände
-(\emph{Engineering Subjects}) gebildet. Ein Engineering Subject fasst dabei
+(\emph{Engineering Subjects}) gebildet. \newpage \noindent Ein Engineering Subject fasst dabei
 die quellengebundene Information zusammen, auf die sich die nachfolgenden
 Interpretationen beziehen. Es stellt zu diesem Zeitpunkt noch kein
 Modellelement des späteren Zielmodells dar.
@@ -270,7 +273,8 @@ Consensus zeigt, dass mehrere Perspektiven zu einer vergleichbaren
 Interpretation gelangt sind, ohne damit deren fachliche Richtigkeit
 vorwegzunehmen. Variance macht unterschiedliche fachliche Lesarten oder eine
 für eine eindeutige Einordnung unzureichende Informationsbasis sichtbar.
-Gemeinsame Mehrdeutigkeit zeigt, dass mehrere Perspektiven dieselbe
+
+\noindent Gemeinsame Mehrdeutigkeit zeigt, dass mehrere Perspektiven dieselbe
 unaufgelöste Informationslage erkennen. Die multiperspektivische
 Verarbeitung stellt damit zusätzliche Entscheidungsgrundlagen für die
 nachgelagerte menschliche Prüfung bereit.
@@ -371,7 +375,9 @@ autorisierten Zustand.
 
 Eine weitere Entscheidungsgrenze liegt am Ende der Modellerzeugung.
 Validierung, menschliche Modellprüfung und Freigabe adressieren dabei
-aufeinander aufbauende Prüfgegenstände. Die Validierung bewertet den konkret
+aufeinander aufbauende Prüfgegenstände.
+
+\noindent Die Validierung bewertet den konkret
 erzeugten Artefaktzustand anhand der vorgesehenen Invarianten und seiner
 Verarbeitbarkeit in der SysML-v2-Zielumgebung. Die anschließende menschliche
 Modellprüfung vergleicht den erzeugten Modellzustand mit den zuvor
@@ -647,7 +653,7 @@ erfolgt die weitere Verarbeitung regelgebunden. Fehlende Voraussetzungen
 führen zu einem expliziten Haltepunkt und werden, soweit eine menschliche
 Entscheidung erforderlich ist, an die zuständige Autorisierungsgrenze
 zurückgeführt.
-
+\newpage
 Damit autorisierte Engineering-Information bis zum validierten
 Modellartefakt nachvollziehbar weiterverarbeitet werden kann, müssen die
 Beziehungen zwischen Quellen, Interpretationen,
@@ -707,6 +713,8 @@ weitere Verarbeitung rekonstruierbar machen.
     \centering
     \includegraphics[
         width=0.78\textwidth,
+        trim=0 65bp 0 0,
+        clip,
         keepaspectratio
     ]{Graphiken/4.7_Provenienz_und_Nachverfolgbarkeit_halbseite_v4.pdf}
     \caption[Durchgängige Provenienz und Nachverfolgbarkeit]{
@@ -819,7 +827,9 @@ damit einen Hinweis auf mögliche fachliche Zusammenhänge, deren Bedeutung
 im jeweiligen Projektkontext bewertet werden muss.
 
 Für die Verarbeitung mehrerer Quellen ergeben sich zwei miteinander
-verbundene Anforderungen. Die Provenienz jeder Information bleibt über den
+verbundene Anforderungen.
+
+\noindent Die Provenienz jeder Information bleibt über den
 gesamten Transformationsprozess erhalten, während fachlich zusammengehörige
 Informationen projektweit gemeinsam betrachtet werden können. Dadurch können
 Informationen unterschiedlicher Herkunft zusammengeführt werden, ohne ihre
@@ -974,7 +984,9 @@ Prüfung und Einordnung des resultierenden Systemmodells. Der
 semantische Konsistenz der verarbeiteten Information. Die Rollen wurden
 damit so gewählt, dass die fachliche, informationsbezogene und
 modellbezogene menschliche Beteiligung innerhalb des Architekturkonzepts
-abgebildet werden kann. Sie sind nicht mit den in
+abgebildet werden kann.
+
+\noindent Sie sind nicht mit den in
 Abschnitt~\ref{sec:architecture_human_authority} definierten
 Entscheidungsbefugnissen gleichzusetzen: Eine Rolle kann abhängig vom
 jeweiligen Anwendungsfall eine entsprechende Human Authority ausüben.
@@ -998,7 +1010,7 @@ jeweiligen Anwendungsfall eine entsprechende Human Authority ausüben.
         Zwischenautorisierung. Eigene Darstellung.}
     \label{fig:integrated_architecture}
 \end{figure}
-
+\newpage
 Provenienz und Nachverfolgbarkeit wirken als Querschnittsfunktion über den
 gesamten Transformationsprozess. Sie erhalten die Beziehungen zwischen
 Quellen, maschinellen Verarbeitungsergebnissen, menschlichen

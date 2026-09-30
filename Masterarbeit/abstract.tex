@@ -1,42 +1,78 @@
-\section*{Abstract}
+\section*{Kurzfassung}
 \addcontentsline{toc}{section}{Kurzfassung}
 
-Die KI-gestützte Überführung heterogener Engineering-Bestandsinformation in
-SysML~v2 verbindet die automatisierte Erschließung bestehender Informationen
-mit Anforderungen an fachliche Entscheidungsbefugnis, Nachvollziehbarkeit und
-kontrollierte Modellbildung. Probabilistische Verfahren können dabei
-unterschiedliche Interpretationen erzeugen und als Grundlage für nachgelagerte
-fachliche und modellbezogene Entscheidungen dienen.
+Bei der Transformation heterogener Engineering-Bestandsinformation in SysML v2
+müssen unterschiedlich strukturierte Systembeschreibungen in eine formale
+Repräsentation überführt werden. Menschliches Expertenwissen bleibt dabei
+insbesondere für fachliche und modellbezogene Entscheidungen wesentlich.
+KI-basierte probabilistische Verfahren können jedoch Interpretationen bestehender
+Informationen erzeugen und damit Entscheidungsgrundlagen für nachgelagerte
+menschliche Bewertungen bereitstellen.
 
-Diese Arbeit entwickelt und untersucht deshalb eine
-Informationsverarbeitungsarchitektur für einen kontrollierten
-Transformationsprozess. Eine definierte Informationsbasis unterscheidet
-Engineering- und Kontextquellen und bindet abgeleitete Aussagen über
-quellengebundene Evidenz an ihre Herkunft. Mehrperspektivische
-KI-Interpretationen dienen als Entscheidungsgrundlage für menschliche
-Experten. Die Human Engineering Authority autorisiert die fachliche
-Verwendung einer Information, während die Model Authority über deren
-strukturelle Einordnung und Repräsentation entscheidet. Autorisierte Inhalte
-werden in einem Internal Engineering Model zusammengeführt und anschließend
-regelgebunden in SysML~v2 überführt. Provenienz und Nachverfolgbarkeit
-verbinden dabei Quellen, Interpretationen, menschliche Entscheidungen und
-Modellzustände über den gesamten Transformationsprozess.
+Diese Arbeit entwickelt und untersucht eine Informationsverarbeitungsarchitektur
+für einen kontrollierten KI-gestützten Transformationsprozess. Eine definierte
+Informationsbasis unterscheidet Engineering- und Kontextquellen und bindet
+abgeleitete Aussagen über quellengebundene Evidenz an ihre Herkunft.
+Mehrperspektivische KI-Interpretationen dienen als Entscheidungsgrundlage für
+menschliche Experten. Die Human Engineering Authority autorisiert die fachliche
+Verwendung einer Information, während die Model Authority über deren strukturelle
+Einordnung und Repräsentation entscheidet. Autorisierte Inhalte werden in einem
+Internal Engineering Model zusammengeführt und anschließend regelgebunden in
+SysML v2 überführt. Provenienz und Nachverfolgbarkeit verbinden dabei Quellen,
+Interpretationen, menschliche Entscheidungen und Modellzustände über den gesamten
+Transformationsprozess.
 
-Das Architekturkonzept wurde prototypisch realisiert und durch
-Software- und Integrationsprüfungen, formative End-to-End-Erprobung, die
-Verarbeitung mehrerer Engineering-Quellen sowie einen abschließenden
-Referenzlauf untersucht. Dabei konnte ein zusammenhängender
-Verarbeitungspfad von registrierten Engineering-Quellen über
-KI-Interpretation und menschliche Autorisierung bis zu einem technisch
-validierten und menschlich freigegebenen SysML-v2-Artefakt ausgeführt und
-anhand persistierter Zustände rekonstruiert werden.
+Das Architekturkonzept wurde prototypisch realisiert und durch wiederholte
+Transformationsläufe untersucht. Dabei konnten Informations-, Entscheidungs- und
+Modellbildungsfunktionen als eigenständige Architekturgrenzen identifiziert und
+präzisiert werden. Die Einbeziehung mehrerer Engineering-Quellen erweiterte die
+Untersuchung um den Übergang von quellenbezogen autorisierten Informationszuständen
+zu einer gemeinsamen projektweiten Modellbildung. Ein zusammenhängender
+Verarbeitungspfad von registrierten Engineering-Quellen über KI-gestützte
+Interpretation und menschliche Autorisierung bis zu einem technisch validierten
+und menschlich freigegebenen SysML-v2-Artefakt konnte ausgeführt und anhand
+persistierter Zustände rekonstruiert werden.
 
-Die Ergebnisse zeigen, dass kontrollierte KI-Unterstützung im betrachteten
-Engineering-Kontext aus dem Zusammenspiel probabilistischer Interpretation,
-expliziter menschlicher Entscheidungsbefugnis und regelgebundener
-Weiterverarbeitung entsteht. Für die Modellbildung wirken semantische
-Vorgaben, ein definierter Modellierungsrahmen, explizite Modellentscheidungen,
-zielmodellspezifische Formulierungsregeln und technische Prüfmechanismen
-zusammen. Die entwickelte Architektur stellt damit einen nachvollziehbaren
-Rahmen bereit, in dem heterogene Engineering-Information kontrolliert für die
-formale Modellbildung nutzbar gemacht werden kann.
+Die Ergebnisse zeigen, dass probabilistische KI-Verfahren für die Transformation
+heterogener Engineering-Bestandsinformation nutzbar gemacht werden können, wenn
+ihre Ergebnisse in einen kontrollierten Rahmen aus expliziter menschlicher
+Autorisierung, semantischen und modellbezogenen Leitplanken, regelgebundener
+Transformation sowie technischer Validierung eingebettet werden.
+
+\clearpage
+\section*{Abstract}
+\addcontentsline{toc}{section}{Abstract}
+
+The transformation of heterogeneous legacy engineering information into SysML v2
+requires differently structured system descriptions to be transferred into a formal
+representation. Human expertise remains essential, particularly for domain-specific
+and model-related decisions. However, AI-based probabilistic methods can generate
+interpretations of existing information and thereby provide decision support for
+subsequent human evaluation.
+
+This thesis develops and investigates an information processing architecture for a
+controlled AI-supported transformation process. A defined information basis
+distinguishes between engineering sources and contextual sources and links derived
+statements to their origin through source-grounded evidence. Multi-perspective AI
+interpretations provide decision support for human experts. The Human Engineering
+Authority authorizes the domain-specific use of information, while the Model Authority
+decides on its structural placement and representation within the model. Authorized
+content is consolidated in an Internal Engineering Model and subsequently transformed
+into SysML v2 in a rule-based manner. Provenance and traceability connect sources,
+interpretations, human decisions, and model states throughout the entire transformation
+process.
+
+The architecture was implemented as a prototype and investigated through repeated
+transformation runs. This made it possible to identify and refine information-processing,
+decision-making, and model-building functions as distinct architectural boundaries.
+The inclusion of multiple engineering sources extended the investigation to the
+transition from source-specific authorized information states to joint project-level
+model formation. A continuous processing path from registered engineering sources
+through AI-supported interpretation and human authorization to a technically validated
+and human-approved SysML v2 artifact was executed and reconstructed on the basis of
+persisted states.
+
+The results show that probabilistic AI methods can be applied to the transformation of
+heterogeneous legacy engineering information when their outputs are embedded in a
+controlled framework combining explicit human authorization, semantic and
+model-related constraints, rule-based transformation, and technical validation.
