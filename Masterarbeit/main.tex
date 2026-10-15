@@ -20,6 +20,9 @@
 \usepackage{tabularx}
 \usepackage{microtype}
 \usepackage{float}
+\usepackage{needspace}
+\usepackage{makecell}
+\usepackage{placeins}
 \usepackage{xltabular}
 \usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
 \usepackage{listings}
@@ -29,6 +32,16 @@
     literate={—}{{\textemdash}}1
 }
 \usepackage{csquotes}
+% PDF-Navigation und interne Verlinkungen
+\usepackage[
+    hidelinks,
+    bookmarks=true,
+    bookmarksopen=true,
+    bookmarksnumbered=true,
+    pdfpagelabels=true
+]{hyperref}
+
+\usepackage{bookmark}
 \AtBeginDocument{\counterwithin{lstlisting}{section}}
 
 \addbibresource{literatur.bib} % Einbindung der Datenbankdatei
@@ -94,10 +107,12 @@
 \tableofcontents
 \clearpage
 
+\phantomsection
 \addcontentsline{toc}{section}{Abbildungsverzeichnis}
 \listoffigures
 \clearpage
 
+\phantomsection
 \addcontentsline{toc}{section}{Tabellenverzeichnis}
 \listoftables
 \clearpage
@@ -159,6 +174,7 @@
 \appendix
 
 \part*{Anhang}
+\phantomsection
 \addcontentsline{toc}{part}{Anhang}
 
 \input{Anhang/01_Literaturrecherche}

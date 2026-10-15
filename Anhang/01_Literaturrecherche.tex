@@ -101,20 +101,33 @@ Die Suche wird in deutscher sowie in englischer Sprache durchgeführt. Die Filte
 \end{itemize}
 
 \subsubsection{Suchstrings}
+\label{app:lsp_suchstrings}
 
-Die Verknüpfung der Begriffe erfolgt durch Boolesche Operatoren wie AND sowie OR unter Verwendung von Platzhaltern \cite{Jha.2022}.
+Die Verknüpfung der Begriffe erfolgt durch Boolesche Operatoren wie AND sowie OR
+unter Verwendung von Platzhaltern \cite{Jha.2022}.
+
+\begingroup
+\shorthandoff{"}
 
 \paragraph{Scopus (Priorität 1):}
-TITLE ABS KEY ( ( "SysML v1" OR "SysML v2" OR "SysML 2.0" OR "KerML" ) AND ( "Large Language Models" OR "LLM" OR "Generative AI" ) AND ( "Legacy Data" OR "Brownfield" OR "Ontology Mapping" ) )
+TITLE ABS KEY ( ( "SysML v1" OR "SysML v2" OR "SysML 2.0" OR "KerML" )
+AND ( "Large Language Models" OR "LLM" OR "Generative AI" )
+AND ( "Legacy Data" OR "Brownfield" OR "Ontology Mapping" ) )
 
 \paragraph{ScienceDirect (Priorität 2):}
-( "SysML v1" OR "SysML v2" OR "MBSE" ) AND ( "LLM" OR "Generative AI" ) AND ( "Legacy Data" OR "Brownfield" )
+( "SysML v1" OR "SysML v2" OR "MBSE" )
+AND ( "LLM" OR "Generative AI" )
+AND ( "Legacy Data" OR "Brownfield" )
 
 \paragraph{IEEExplore (Priorität 3):}
-( "Document Title":"SysML" OR "Document Title":"MBSE" ) AND ( "Abstract":"LLM" OR "Abstract":"Generative AI" )
+( "Document Title":"SysML" OR "Document Title":"MBSE" )
+AND ( "Abstract":"LLM" OR "Abstract":"Generative AI" )
 
 \paragraph{ACM Digital Library (Priorität 4):}
-content.all:( "SysML" OR "MBSE" ) AND content.all:( "LLM" OR "Generative AI" )
+content.all:( "SysML" OR "MBSE" )
+AND content.all:( "LLM" OR "Generative AI" )
+
+\endgroup
 
 
 \subsubsection{Ergänzende Suche mittels Scopus AI}
@@ -134,7 +147,13 @@ Die Forschungsfragen dienen als direkte Eingabeaufforderungen für den KI Agente
 
 \paragraph{Dublettenvermeidung und Integration}
 
-Um die wissenschaftliche Effizienz zu steigern sowie Redundanzen zu vermeiden, wird ein systematischer Abgleich der Ergebnisse durchgeführt. Die durch Scopus AI identifizierten Publikationen werden mit den Resultaten der regulären Suche aus Abschnitt 5.4 verglichen. Identische Treffer werden vor dem Einleiten des Level 1 Screenings bereinigt. Nur zusätzliche sowie relevante Quellen werden in den weiteren Auswahlprozess gemäß den PRISMA Richtlinien \cite{Page.2021} überführt.
+Um die wissenschaftliche Effizienz zu steigern sowie Redundanzen zu vermeiden,
+wird ein systematischer Abgleich der Ergebnisse durchgeführt. Die durch Scopus AI
+identifizierten Publikationen werden mit den Resultaten der regulären Datenbanksuche
+aus Abschnitt~\ref{app:lsp_suchstrings} verglichen. Identische Treffer werden vor dem
+Einleiten des Level-1-Screenings bereinigt. Nur zusätzliche sowie relevante Quellen
+werden in den weiteren Auswahlprozess gemäß den PRISMA-Richtlinien
+\cite{Page.2021} überführt.
 
 \subsubsection{Dokumentation und Screening}
 Die Dokumentation der Ergebnisse erfolgt gemäß den PRISMA Richtlinien \cite{Page.2021}. Das Screening wird in zwei Stufen unterteilt:
