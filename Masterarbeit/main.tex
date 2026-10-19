@@ -1,4 +1,4 @@
-\documentclass[12pt, a4paper, oneside]{article}
+\documentclass[12pt, a4paper, twoside]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[english, ngerman]{babel}
@@ -44,8 +44,14 @@
 \usepackage{bookmark}
 \AtBeginDocument{\counterwithin{lstlisting}{section}}
 
-\addbibresource{literatur.bib} % Einbindung der Datenbankdatei
-\geometry{a4paper, left=30mm, right=25mm, top=25mm, bottom=25mm}
+\addbibresource{literatur.bib} 
+\geometry{
+    a4paper,
+    inner=30mm,
+    outer=25mm,
+    top=25mm,
+    bottom=25mm
+}
 \onehalfspacing
 \usepackage[most]{tcolorbox}
 \tcbuselibrary{listings}
@@ -84,71 +90,99 @@
 \setcounter{topnumber}{3}
 \setcounter{bottomnumber}{2}
 \setcounter{totalnumber}{5}
+% Seitenzahlen im doppelseitigen Druck am aeusseren Rand
+\pagestyle{myheadings}
+\makeatletter
+\def\@oddhead{}
+\def\@evenhead{}
+\def\@oddfoot{\hfil\thepage}
+\def\@evenfoot{\thepage\hfil}
+\makeatother
+
 
 \begin{document}
 
-% Titelseite ohne Seitenzahl
+% ============================================================================
+% Titelblatt und Zitat
+% ============================================================================
+
 \input{titelblatt}
-\clearpage
 
-% Zitatseite ohne Seitenzahl
+\cleardoublepage
 \input{zitat}
-\clearpage
 
-% Vorderer Serviceteil: römische Seitenzahlen
+% ============================================================================
+% Vorderer Serviceteil: roemische Seitennummerierung
+% ============================================================================
+
+\cleardoublepage
 \pagenumbering{Roman}
 
 \input{abstract}
-\clearpage
 
+\cleardoublepage
 \input{danksagung}
-\clearpage
 
+\cleardoublepage
 \tableofcontents
-\clearpage
 
+\cleardoublepage
 \phantomsection
 \addcontentsline{toc}{section}{Abbildungsverzeichnis}
 \listoffigures
-\clearpage
 
+\cleardoublepage
 \phantomsection
 \addcontentsline{toc}{section}{Tabellenverzeichnis}
 \listoftables
-\clearpage
 
+\cleardoublepage
 \input{abkuerzungen_begriffe}
-\clearpage
 
-% Nächste römische Seitenzahl für den späteren Serviceteil merken
+% Roemische Seitenzahl fuer den spaeteren Serviceteil merken
+\cleardoublepage
 \setcounter{servicepage}{\value{page}}
 
-% Hauptteil beginnt bei Seite 1
+% ============================================================================
+% Hauptteil: arabische Seitennummerierung
+% ============================================================================
+
 \pagenumbering{arabic}
 
 \input{Kapitel/01_Einleitung}
-\clearpage
+
+\cleardoublepage
 \input{Kapitel/02_Grundlagen_StandDerTechnik}
-\clearpage
+
+\cleardoublepage
 \input{Kapitel/03_MethodischesVorgehen}
-\clearpage
+
+\cleardoublepage
 \input{Kapitel/04_Informationsverarbeitungsarchitektur}
-\clearpage
+
+\cleardoublepage
 \input{Kapitel/05_PrototypischeRealisierung}
-\clearpage
+
+\cleardoublepage
 \input{Kapitel/06_Verifikation_Validierung}
-\clearpage
+
+\cleardoublepage
 \input{Kapitel/07_Ergebnisse}
-\clearpage
+
+\cleardoublepage
 \input{Kapitel/08_Discussion}
-\clearpage
+
+\cleardoublepage
 \input{Kapitel/09_Fazit}
+
 
 % ============================================================================
 % Literaturverzeichnis und nachgelagerter Serviceteil
 % ============================================================================
 
-\clearpage
+\cleardoublepage
+
+% Roemische Nummerierung fortsetzen
 \pagenumbering{Roman}
 \setcounter{page}{\value{servicepage}}
 
@@ -157,15 +191,10 @@
     title={Literaturverzeichnis}
 ]
 
-\clearpage
-
+\cleardoublepage
 \input{selbststaendigkeitserklaerung}
 
-\clearpage
-
-%\input{sperrvermerk}
-
-%\clearpage
+\cleardoublepage
 
 % ============================================================================
 % Anhang
